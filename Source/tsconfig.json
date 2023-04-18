@@ -61,5 +61,8 @@
 
   "exclude":
   [
+    "Engine/Source/GameDemo.ts",
+    "Engine/Source/Imports.ts",
+    "Engine/Stub/"
   ]
 }
