@@ -56,78 +56,124 @@ class Game
 
 class Items
 {
-	
+	Beer: Item;
+	Buckazoids: Item;
+	Cartridge: Item;
+	DehydratedWater: Item;
+	Gadget: Item; // Translator.
+	GasGrenade: Item;
+	Keycard: Item;
+	Jetpack: Item;
+	OratPart: Item;
+	PulseRifle: Item;
+	SkimmerKey: Item;
+	SurvivalKit: Item;
+	XenonArmyKnife: Item;
 }
 
 class Places
 {
-	ArcadiaBridge: string;
+	ArcadiaBridge: Place;
 
-	ArcadiaDockingBayHangar: string;
-	ArcadiaDockingBayVestibule: string;
+	ArcadiaDockingBayAntechamber: Place;
+	ArcadiaDockingBayHangar: Place;
 
-	ArcadiaEngineeringDeckHallAft: string;
-	ArcadiaEngineeringDeckHallAmidships: string;
-	ArcadiaEngineeringDeckHallForward: string;
+	ArcadiaEngineeringDeckHallAft: Place;
+	ArcadiaEngineeringDeckHallAmidships: Place;
+	ArcadiaEngineeringDeckHallForward: Place;
 
-	ArcadiaJanitorsCloset: string;
+	ArcadiaEscapePod: Place;
 
-	ArcadiaLibrary: string;
+	ArcadiaJanitorsCloset: Place;
 
-	ArcadiaLowerDeckHallAft: string;
-	ArcadiaLowerDeckHallAmidships: string;
-	ArcadiaLowerDeckHallForward: string;
+	ArcadiaLibrary: Place;
 
-	ArcadiaUpperDeckHallAft: string;
-	ArcadiaUpperDeckHallAmidships: string;
-	ArcadiaUpperDeckHallForward: string;
+	ArcadiaLowerDeckHallAft: Place;
+	ArcadiaLowerDeckHallAmidships: Place;
+	ArcadiaLowerDeckHallForward: Place;
 
-	EscapePod: string;
+	ArcadiaUpperDeckHallAft: Place;
+	ArcadiaUpperDeckHallAmidships: Place;
+	ArcadiaUpperDeckHallForward: Place;
 
-	KeronaCliffsBottomNorth: string;
-	KeronaCliffsBottomNortheast: string;
-	KeronaCliffsBottomNorthwest: string;
-	KeronaCliffsBottomSouth: string;
-	KeronaCliffsBottomSoutheast: string;
-	KeronaCliffsBottomSouthwest: string;
+	DeepSpaceEscapePod: Place;
 
-	KeronaCliffsTopNorth: string;
-	KeronaCliffsTopNortheast: string;
-	KeronaCliffsTopNorthwest: string;
-	KeronaCliffsTopSouth: string;
-	KeronaCliffsTopSoutheast: string;
-	KeronaCliffsTopSouthwest: string;
+	DeltaurAirlockChamber: Place;
+	DeltaurAirlockExterior: Place;
+	DeltaurAirlockInterior: Place;
 
-	KeronaDesertCrashSite: string;
-	KeronaDesertEast: string;
-	KeronaDesertNorth: string;
-	KeronaDesertWest: string;
+	DeltaurArmory: Place;
 
-	KeronaUlenceFlatsBarFront: string;
-	KeronaUlenceFlatsBarInterior: string;
-	KeronaUlenceFlatsBarRear: string;
-	KeronaUlenceFlatsDroidsBWeFront: string;
-	KeronaUlenceFlatsDroidsBWeInterior: string;
-	KeronaUlenceFlatsNorthwest: string;
-	KeronaUlenceFlatsNorthwest: string;
-	KeronaUlenceFlatsTinysUsedShips: string;
+	DeltaurLaundry: Place;
+
+	DeltaurLowerDeckHallAft: Place;
+	DeltaurLowerDeckHallAmidships: Place;
+	DeltaurLowerDeckHallFore: Place;
+
+	DeltaurNearbySpace: Place;
+
+	DeltaurShuttleBay: Place;
+
+	DeltaurStarGeneratorChamber: Place;
+	DeltaurStarGeneratorChamberCatwalk: Place;
+
+	DeltaurUpperDeckHallAft: Place;
+	DeltaurUpperDeckHallAmidships: Place;
+	DeltaurUpperDeckHallFore: Place;
+
+	DeltaurVentilationShaft1: Place;
+	DeltaurVentilationShaft2: Place;
+	DeltaurVentilationShaft3: Place;
+	DeltaurVentilationShaft4: Place;
+
+	KeronaCliffsBottomNorth: Place;
+	KeronaCliffsBottomNortheast: Place;
+	KeronaCliffsBottomNorthwest: Place;
+	KeronaCliffsBottomSouth: Place;
+	KeronaCliffsBottomSoutheast: Place;
+	KeronaCliffsBottomSouthwest: Place;
+
+	KeronaCliffsTopNorth: Place;
+	KeronaCliffsTopNortheast: Place;
+	KeronaCliffsTopNorthwest: Place;
+	KeronaCliffsTopSouth: Place;
+	KeronaCliffsTopSoutheast: Place;
+	KeronaCliffsTopSouthwest: Place;
+
+	KeronaDesertCrashSite: Place;
+	KeronaDesertEast: Place;
+	KeronaDesertNorth: Place;
+	KeronaDesertWest: Place;
+
+	KeronaEscapePod: Place;
+
+	KeronaUlenceFlatsBarFront: Place;
+	KeronaUlenceFlatsBarInterior: Place;
+	KeronaUlenceFlatsBarRear: Place;
+	KeronaUlenceFlatsDroidsBWeFront: Place;
+	KeronaUlenceFlatsDroidsBWeInterior: Place;
+	KeronaUlenceFlatsDroidsBWeWest: Place;
+	KeronaUlenceFlatsNorthOfTinysUsedShips: Place;
+	KeronaUlenceFlatsTinysUsedShips: Place;
 
 	constructor
 	(
 		var p = (n: string) => Place.fromName(n);
 
-		this.ArcadiaBridge = p("Arcadia - Bridge");
+		this.ArcadiaBridge = this.arcadiaBridge;
 
 		this.ArcadiaJanitorsCloset = this.arcadiaJanitorsCloset();
 
-		this.ArcadiaDockingBayHangar = p("Arcadia - Docking Bay - Hangar");
-		this.ArcadiaDockingBayVestibule = p("Arcadia - Docking Bay - Vestibule");
+		this.ArcadiaDockingBayAntechamber = this.arcadiaDockingBayAntechamber();
+		this.ArcadiaDockingBayHangar = this.arcadiaDockingBayHangar();
 
-		this.ArcadiaEngineeringDeckAft = p("Arcadia - Engineering Deck - Aft");
-		this.ArcadiaEngineeringDeckAmidships = p("Arcadia - Engineering Deck - Amidships");
-		this.ArcadiaEngineeringDeckForward = p("Arcadia - Engineering Deck - Forward");
+		this.ArcadiaEngineeringDeckAft = this.arcadiaEngineeringDeckAft();
+		this.ArcadiaEngineeringDeckAmidships = this.arcadiaEngineeringDeckAmidships();
+		this.ArcadiaEngineeringDeckForward = this.arcadiaEngineeringDeckForward();
 
-		this.ArcadiaLibrary = p("Arcadia - Library");
+		this.ArcadiaEscapePod = this.arcadiaEscapePod();
+
+		this.ArcadiaLibrary = this.arcadiaLibrary();
 
 		this.ArcadiaUpperDeckHallAft = p("Arcadia - Upper Deck - Hall - Aft");
 		this.ArcadiaUpperDeckHallAmidships = p("Arcadia - Upper Deck - Hall - Amidships");
@@ -137,7 +183,7 @@ class Places
 		this.ArcadiaLowerDeckHallAmidships = p("Arcadia - Lower Deck - Hall - Amidships");
 		this.ArcadiaLowerDeckHallForward = p("Arcadia - Lower Deck - Hall - Forward");
 
-		this.EscapePod = p("Escape Pod");
+		this.DeepSpaceEscapePod = p("Deep Space - Escape Pod");
 
 		this.KeronaCliffsBottomNorth = p("Kerona - Cliffs - North");
 		this.KeronaCliffsBottomNortheast = p("Kerona - Cliffs - Northeast");
@@ -158,13 +204,15 @@ class Places
 		this.KeronaDesertSouth = p("Kerona - Desert - South");
 		this.KeronaDesertWest = p("Kerona - Desert - West");
 
+		this.KeronaEscapePod = p("Kerona - Escape Pod");
+
 		this.KeronaUlenceFlatsBarFront = p("Kerona - Ulence Flats - Bar - Front");
 		this.KeronaUlenceFlatsBarInterior = p("Kerona - Ulence Flats - Bar - Interior");
 		this.KeronaUlenceFlatsBarRear = p("Kerona - Ulence Flats - Bar - Rear");
 		this.KeronaUlenceFlatsDroidsBWeFront = p("Kerona - Ulence Flats - Droids-B-We - Front");
 		this.KeronaUlenceFlatsDroidsBWeInterior = p("Kerona - Ulence Flats - Droids-B-We - Interior");
-		this.KeronaUlenceFlatsNorthwest = p("Kerona - Ulence Flats - North");
-		this.KeronaUlenceFlatsNorthwest = p("Kerona - Ulence Flats - Northwest");
+		this.KeronaUlenceFlatsDroidsBWeWest = p("Kerona - Ulence Flats - Droids-B-We - West");
+		this.KeronaUlenceFlatsNorthOfTinysUsedShips = p("Kerona - Ulence Flats - North of Tiny's Used Ships");
 		this.KeronaUlenceFlatsTinysUsedShips = p("Kerona - Ulence Flats - Tiny's Used Ships");
 	)
 
@@ -177,6 +225,11 @@ class Places
 		}
 		return Places._instance;
 	} 
+
+	emplacement(name: string): Emplacement
+	{
+		return Emplacement.fromName(name);
+	}
 
 	place(name: string, description: string, objects: any[]): Place
 	{
@@ -200,7 +253,7 @@ class Places
 	{
 		return this.place
 		(
-			"Arcadia - Bridge",
+			this.arcadiaBridge_Name(),
 
 			"This is the command bridge of the starship Arcadia.  "
 			+ "A large transparent hemispherical dome arches overhead, "
@@ -216,11 +269,185 @@ class Places
 		);
 	}
 
-	arcadiaJanitorsCloset()
+	arcadiaBridge_Name(): string
+	{
+		return "Arcadia - Bridge";
+	}
+
+	arcadiaDockingBayAntechamber()
 	{
 		return this.place
 		(
-			"Arcadia - Janitor's Closet",
+			this.arcadiaDockingBayAntechamber_Name(),
+
+			"This is the antechamber of the Arcadia's docking bay.  "
+			+ "A large airlock door leads to the hangar.  "
+			+ "A control console occupies one wall, while "
+			+ "on the opposite wall are two closets, with a pair of " 
+			+ " buttons at chest height between them. "
+			+ " An elevator leads back to the engineering deck."
+
+			[
+				this.portal("airlock", this.arcadiaDockingBayHangar_Name())
+				this.portal("elevator", this.arcadiaEngineeringDeckAft_Name())
+
+				this.emplacement("controls"),
+				this.emplacement("hatch")
+			]
+		);
+	}
+
+	arcadiaDockingBayAntechamber_Name(): string
+	{
+		return "Arcadia - Docking Bay - Antechamber";
+	}
+
+	arcadiaDockingBayHangar(): Place
+	{
+		return this.place
+		(
+			this.arcadiaDockingBayHangar_Name(),
+
+			"This is the Arcadia's docking bay hangar.  "
+			+ "Though its floor is easily large enough to accomodate "
+			+ "a 20-passenger luxury yacht, it is currently empty "
+			+ "except for a relatively small hatch in the floor "
+			+ "and a control console near the airlock door leading back to the antechamber."
+			+ "A similarly gigantic pair of doors at the far end of the bay "
+			+ " allows ships to enter and depart when open, "
+			+ " and keeps everything safely sheltered when closed."
+
+			[
+				this.portal("door", this.arcadiaDockingBayAntechamber_Name())
+
+				this.emplacement("controls"),
+				this.emplacement("hatch")
+			]
+		);
+	}
+
+	arcadiaDockingBayHangar_Name(): string
+	{
+		return "Arcadia - Docking Bay - Hangar";
+	}
+
+	arcadiaEngineeringDeckAft(): Place
+	{
+		return this.place
+		(
+			this.arcadiaEngineeringDeckAft_Name(),
+
+			"This is the aft end of the Arcadia's engineering deck."
+			+ "A passage to fore leads back to the rest of the deck.  "
+			+ "In the aft wall is an elevator door, and next to that "
+			+ "is a small panel with a slot in it.",
+
+			[
+				this.portal("elevator", this.arcadiaDockingBayAntechamber_Name() ),
+				this.portal("fore", this.arcadiaEngineeringDeckAmidships_Name() ),
+
+				this.emplacement("slot")
+			]
+		);
+	}
+
+	arcadiaEngineeringDeckAft_Name(): string
+	{
+		return "Arcadia - Engineering Deck - Aft";
+	}
+
+	arcadiaEngineeringDeckAmidships(): Place
+	{
+		return this.place
+		(
+			this.arcadiaEngineeringDeckAmidships_Name(),
+
+			"This is the middle of the Arcadia's engineering deck."
+			+ "To fore and aft are the other sections of the deck.  "
+			+ "Three large transparent domes on the floor cover the tops of "
+			+ "the ship's reactor tubes.  These domes are currently pulsing "
+			+ "an unsettling reddish-orange, accompanied by a loud "
+			+ "and ominous droning sound.  A thick window "
+			+ "looks down over the ship's docking bay, with a control console "
+			+ "running beneath that window.  The bodies of two crewmen lie on the floor." 
+
+			[
+				this.emplacement("body")
+				this.emplacement("controls")
+				this.emplacement("dome")
+				this.emplacement("window")
+			]
+		);
+	}
+
+	arcadiaEngineeringDeckAft_Name(): string
+	{
+		return "Arcadia - Engineering Deck - Aft";
+	}
+
+	arcadiaEngineeringDeckForward(): Place
+	{
+		return this.place
+		(
+			this.arcadiaEngineeringDeckForward_Name(),
+
+			"This is the fore end of the Arcadia's engineering deck."
+			+ "The rest of the deck lies to aft.  "
+			+ "At the fore end, an door opens on an elevator back to the other decks.",
+
+			[
+				this.portal("elevator", this.arcadiaLowerDeckHallForward_Name() ),
+				this.portal("aft", this.arcadiaEngineeringDeckAmidships_Name() ),
+
+				this.emplacement("slot")
+			]
+		);
+	}
+
+	arcadiaEngineeringDeckForward_Name(): string
+	{
+		return "Arcadia - Engineering Deck - Forward";
+	}
+
+	arcadiaEscapePod(): Place
+	{
+		return this.place
+		(
+			this.arcadiaEngineeringDeckAft_Name(),
+
+			"This is the interior of one of the Arcadia's escape pods."
+			+ "Through its front window, you can see the doors of hangar bay."
+			+ "Beneath the window is a console with various controls, "
+			+ "including a throttle, a monitor screen, and some buttons. "
+			+ "A padded seat with safety belts fills the center of the pod's cabin.  "
+			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
+			+ "Opposite the door, on the starboard wall, a survival kit is mounted."
+
+			[
+				this.portal("door", this.arcadiaDockingBayHangar_Name() ),
+
+				this.emplacement("autonav button"),
+				this.emplacement("buttons"),
+				this.emplacement("console"),
+				this.emplacement("don't button"),
+				this.emplacement("monitor screen"),
+				this.emplacement("safety belt"),
+				this.emplacement("survival kit"),
+				this.emplacement("throttle"),
+			]
+		);
+	}
+
+	arcadiaEscapePod_Name(): string
+	{
+		return "Arcadia - Escape Pod";
+	}
+
+	arcadiaJanitorsCloset(): Place
+	{
+		return this.place
+		(
+			this.arcadiaJanitorsCloset_Name(),
 
 			"This is a janitor's closet on the starship Arcadia.  "
 			+ "It's a bit cramped and uncomfortable for napping in, "
@@ -235,11 +462,52 @@ class Places
 		);
 	}
 
-	arcadiaUpperDeckHallAmidships()
+	arcadiaJanitorsCloset_Name(): string
+	{
+		return "Arcadia - Janitor's Closet";
+	}
+
+	arcadiaLibrary(): Place
 	{
 		return this.place
 		(
-			"Arcadia - Upper Deck - Hall - Amidships",
+			this.arcadiaLibrary_Name(),
+
+			"This is the Arcadia's library.  "
+			+ "Doors in the fore and aft walls lead to hallways.  "
+			+ "The high walls are occupied almost completely with narrow shelves, "
+			+ "and the shelves are occupied almost completely "
+			+ "with row after row of data cartridges.  "
+			+ "A spacious round table ringed with comfortable seats and cartridge readers "
+			+ "fills a pit in the center of the room.  "
+			+ "On one wall is a control console with a keyboard and screen, ",
+			+ "a spiderlike droid clinging to the wall just above it."
+			+ "A man wearing a scientist's smock lies face-down "
+			+ " on the floor in front of the console. "
+
+			scriptsCustom.PlaceArcadiaJanitorsCloset,
+
+			[
+				this.portal("fore", this.ArcadiaUpperDeckHallForward_Name),
+				this.portal("aft", this.ArcadiaUpperDeckHallAmidships_Name),
+
+				this.emplacement("console"),
+				this.emplacement("table"),
+				this.emplacement("man")
+			]
+		);
+	}
+
+	arcadiaLibrary_Name(): string
+	{
+		return "Arcadia - Library";
+	}
+
+	arcadiaUpperDeckHallAmidships(): Place
+	{
+		return this.place
+		(
+			this.arcadiaUpperDeckHallAmidships_Name(),
 
 			"This is a hallway in the spaceship Arcadia.  "
 			+ "The hall continues to forward and to aft.  "
@@ -249,11 +517,16 @@ class Places
 			scriptsCustom.PlaceArcadiaUpperDeckHallAmidshipsUpdate.name,
 
 			[
-				new Portal("closet", portalDescription, PlaceNames.ArcadiaJanitorsCloset),
-				new Portal("fore", portalDescription, PlaceNames.ArcadiaUpperDeckHallForward),
-				new Portal("aft", portalDescription, PlaceNames.ArcadiaUpperDeckHallAft)
+				this.portal("closet", this.arcadiaJanitorsCloset_Name()),
+				this.portal("fore", this.arcadiaUpperDeckHallForward_Name()),
+				this.portal("aft", this.arcadiaUpperDeckHallAft_Name())
 			]
 		);
+	}
+
+	arcadiaUpperDeckHallAmidships_Name(): string
+	{
+		return "Arcadia - Upper Deck - Hall - Amidships";
 	}
 }
 
