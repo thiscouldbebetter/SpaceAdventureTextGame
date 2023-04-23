@@ -11,8 +11,8 @@ class Game
 			[
 				Item.fromNameAndDescription
 				(
-					"locket",
-					"This small copper locket contains a picture of your sweetie."
+					"washrag",
+					"This is a rag you use to clean things sometimes."
 				)
 			],
 			null // commands
@@ -20,112 +20,14 @@ class Game
 
 		var scriptsCustom = new Scripts();
 
-		var p = (name: string, description: string, objects: any[]) =>
-			Place.fromNameDescriptionAndObjects(name, description, objects);
+		var p = (name: string, description: string, scriptName: string, objects: any[]) =>
+			Place.fromNameDescriptionScriptNameAndObjects(name, description, scriptName, objects);
 
-		var portalDescription = "This is a normal door with a round knob.";
-
-		var placeCenterRoomName = "Center Room";
-		var placeEasternRoomName = "Eastern Room";
-		var placeNorthernRoomName = "Northern Room";
-		var placeSouthernRoomName = "Southern Room";
-		var placeWesternRoomName = "Western Room";
-
-		var placeCenterRoom = Place.fromNameDescriptionScriptNameAndObjects
-		(
-			placeCenterRoomName,
-			"This is the room you landed in when your captor threw you down here."
-				+ "  There are doors to the north, south, east, and west.",
-			scriptsCustom.PlaceCenterRoomUpdate.name,
-			[
-				Emplacement.fromNameAndDescription
-				(
-					"pool", "This is a shallow, dirty, foul-smelling pool of water."
-				),
-				new Portal("east", portalDescription, placeEasternRoomName),
-				new Portal("north", portalDescription, placeNorthernRoomName),
-				new Portal("south", portalDescription, placeSouthernRoomName),
-				new Portal("west", portalDescription, placeWesternRoomName),
-				new Agent
-				(
-					"captor",
-					"Your captor lingers by the trap door, waiting for you to retrieve his property.",
-					scriptsCustom.AgentCaptorUpdate.name,
-					null, // items
-					[
-						new Command( [ "talk to captor" ], scriptsCustom.AgentCaptorTalkTo.name),
-						new Command( [ "give coin to captor" ], scriptsCustom.ItemCoinGiveToCaptor.name)
-					]
-				)
-			]
-		);
-
-		var placeEasternRoom = p
-		(
-			placeEasternRoomName,
-			"This room is east of the center.  A doorway to the west leads back to the Center Room.",
-			[
-				new Portal("west", portalDescription, placeCenterRoomName),
-				Emplacement.fromNameDescriptionAndScriptUse
-				(
-					"chest",
-					"This is a sturdy, and very heavy, oaken chest with a lock.",
-					scriptsCustom.EmplacementChestUse
-				)
-			]
-		);
-
-		var placeNorthernRoom = p
-		(
-			"Northern Room",
-			"This room is north of the center.  A doorway to the south leads back to the Center Room.",
-			[
-				new Portal("south", portalDescription, placeCenterRoomName),
-				Agent.fromNameAndDescription
-				(
-					"troll",
-					"The scabrous troll leers malevolently at you."
-				)
-			]
-		);
-
-		var placeSouthernRoom = p
-		(
-			"Southern Room",
-			"This room is south of the center.  A doorway to the north leads back to the Center Room.",
-			[
-				new Portal("north", portalDescription, placeCenterRoomName),
-				Item.fromNameDescriptionAndScriptUse
-				(
-					"key",
-					"This is a large brass key.",
-					scriptsCustom.ItemKeyUse
-				)
-			]
-		);
-
-		var placeWesternRoom = p
-		(
-			"Western Room",
-			"This room is west of the center.  A doorway to the east leads back to the Center Room.",
-			[
-				new Portal("east", portalDescription, placeCenterRoomName),
-				Item.fromNameDescriptionAndScriptUse
-				(
-					"whetstone",
-					"This is a flat stone for sharpening tools and weapons.",
-					scriptsCustom.ItemWhetstoneUse
-				)
-			]
-		);
+		var portalDescription = "This is an exit.";
 
 		var places =
 		[
-			placeCenterRoom,
-			placeEasternRoom,
-			placeNorthernRoom,
-			placeSouthernRoom,
-			placeWesternRoom
+
 		];
 
 		var commands = Command.Instances()._All;
@@ -150,21 +52,217 @@ class Game
 
 		return returnValue;
 	}
+}
 
+class Items
+{
+	
+}
+
+class Places
+{
+	ArcadiaBridge: string;
+
+	ArcadiaDockingBayHangar: string;
+	ArcadiaDockingBayVestibule: string;
+
+	ArcadiaEngineeringDeckHallAft: string;
+	ArcadiaEngineeringDeckHallAmidships: string;
+	ArcadiaEngineeringDeckHallForward: string;
+
+	ArcadiaJanitorsCloset: string;
+
+	ArcadiaLibrary: string;
+
+	ArcadiaLowerDeckHallAft: string;
+	ArcadiaLowerDeckHallAmidships: string;
+	ArcadiaLowerDeckHallForward: string;
+
+	ArcadiaUpperDeckHallAft: string;
+	ArcadiaUpperDeckHallAmidships: string;
+	ArcadiaUpperDeckHallForward: string;
+
+	EscapePod: string;
+
+	KeronaCliffsBottomNorth: string;
+	KeronaCliffsBottomNortheast: string;
+	KeronaCliffsBottomNorthwest: string;
+	KeronaCliffsBottomSouth: string;
+	KeronaCliffsBottomSoutheast: string;
+	KeronaCliffsBottomSouthwest: string;
+
+	KeronaCliffsTopNorth: string;
+	KeronaCliffsTopNortheast: string;
+	KeronaCliffsTopNorthwest: string;
+	KeronaCliffsTopSouth: string;
+	KeronaCliffsTopSoutheast: string;
+	KeronaCliffsTopSouthwest: string;
+
+	KeronaDesertCrashSite: string;
+	KeronaDesertEast: string;
+	KeronaDesertNorth: string;
+	KeronaDesertWest: string;
+
+	KeronaUlenceFlatsBarFront: string;
+	KeronaUlenceFlatsBarInterior: string;
+	KeronaUlenceFlatsBarRear: string;
+	KeronaUlenceFlatsDroidsBWeFront: string;
+	KeronaUlenceFlatsDroidsBWeInterior: string;
+	KeronaUlenceFlatsNorthwest: string;
+	KeronaUlenceFlatsNorthwest: string;
+	KeronaUlenceFlatsTinysUsedShips: string;
+
+	constructor
+	(
+		var p = (n: string) => Place.fromName(n);
+
+		this.ArcadiaBridge = p("Arcadia - Bridge");
+
+		this.ArcadiaJanitorsCloset = this.arcadiaJanitorsCloset();
+
+		this.ArcadiaDockingBayHangar = p("Arcadia - Docking Bay - Hangar");
+		this.ArcadiaDockingBayVestibule = p("Arcadia - Docking Bay - Vestibule");
+
+		this.ArcadiaEngineeringDeckAft = p("Arcadia - Engineering Deck - Aft");
+		this.ArcadiaEngineeringDeckAmidships = p("Arcadia - Engineering Deck - Amidships");
+		this.ArcadiaEngineeringDeckForward = p("Arcadia - Engineering Deck - Forward");
+
+		this.ArcadiaLibrary = p("Arcadia - Library");
+
+		this.ArcadiaUpperDeckHallAft = p("Arcadia - Upper Deck - Hall - Aft");
+		this.ArcadiaUpperDeckHallAmidships = p("Arcadia - Upper Deck - Hall - Amidships");
+		this.ArcadiaUpperDeckHallForward = p("Arcadia - Upper Deck - Hall - Forward");
+
+		this.ArcadiaLowerDeckHallAft = p("Arcadia - Lower Deck - Hall - Aft");
+		this.ArcadiaLowerDeckHallAmidships = p("Arcadia - Lower Deck - Hall - Amidships");
+		this.ArcadiaLowerDeckHallForward = p("Arcadia - Lower Deck - Hall - Forward");
+
+		this.EscapePod = p("Escape Pod");
+
+		this.KeronaCliffsBottomNorth = p("Kerona - Cliffs - North");
+		this.KeronaCliffsBottomNortheast = p("Kerona - Cliffs - Northeast");
+		this.KeronaCliffsBottomNorthwest = p("Kerona - Cliffs - Northwest");
+		this.KeronaCliffsBottomSouth = p("Kerona - Cliffs - South");
+		this.KeronaCliffsBottomSoutheast = p("Kerona - Cliffs - Southeast");
+		this.KeronaCliffsBottomSouthwest = p("Kerona - Cliffs - Southwest");
+
+		this.KeronaCliffsTopNorthTop = p("Kerona - Cliffs - North - Top");
+		this.KeronaCliffsTopNortheastTop = p("Kerona - Cliffs - Northeast - Top");
+		this.KeronaCliffsTopNorthwestTop = p("Kerona - Cliffs - Northwest - Top");
+		this.KeronaCliffsTopSouthTop = p("Kerona - Cliffs - South - Top");
+		this.KeronaCliffsTopSoutheastTop = p("Kerona - Cliffs - Southeast - Top");
+		this.KeronaCliffsTopSouthwestTop = p("Kerona - Cliffs - Southwest - Top");
+
+		this.KeronaDesertCrashSite = p("Kerona - Desert - Crash Site");
+		this.KeronaDesertNorth = p("Kerona - Desert - North");
+		this.KeronaDesertSouth = p("Kerona - Desert - South");
+		this.KeronaDesertWest = p("Kerona - Desert - West");
+
+		this.KeronaUlenceFlatsBarFront = p("Kerona - Ulence Flats - Bar - Front");
+		this.KeronaUlenceFlatsBarInterior = p("Kerona - Ulence Flats - Bar - Interior");
+		this.KeronaUlenceFlatsBarRear = p("Kerona - Ulence Flats - Bar - Rear");
+		this.KeronaUlenceFlatsDroidsBWeFront = p("Kerona - Ulence Flats - Droids-B-We - Front");
+		this.KeronaUlenceFlatsDroidsBWeInterior = p("Kerona - Ulence Flats - Droids-B-We - Interior");
+		this.KeronaUlenceFlatsNorthwest = p("Kerona - Ulence Flats - North");
+		this.KeronaUlenceFlatsNorthwest = p("Kerona - Ulence Flats - Northwest");
+		this.KeronaUlenceFlatsTinysUsedShips = p("Kerona - Ulence Flats - Tiny's Used Ships");
+	)
+
+	static _instance: Places;
+	static Instances(): Places
+	{
+		if (Places._instance == null)
+		{
+			Places._instance = new Places();
+		}
+		return Places._instance;
+	} 
+
+	place(name: string, description: string, objects: any[]): Place
+	{
+		return Place.fromNameDescriptionScriptNameAndObjects
+		(
+			name,
+			description,
+			null, // scriptName
+			objects
+		);
+	}
+
+	portal(name: string, placeDestinationName: string): Portal
+	{
+		return new Portal(name, null, placeDestinationName);
+	}
+
+	// Places.
+
+	arcadiaBridge()
+	{
+		return this.place
+		(
+			"Arcadia - Bridge",
+
+			"This is the command bridge of the starship Arcadia.  "
+			+ "A large transparent hemispherical dome arches overhead, "
+			+ "showing the brilliantly shining surrounding stars."
+			+ "Banks of mostly incomprehensible controls "
+			+ "line the circular wall, with the nearby seats ",
+			+ "either empty or filled with the slumped bodies of dead crew."
+			+ "There's several bodies scattered on the floor, as well.  "
+			+ "A prominent pedestal in the center "
+			+ "formerly held the Star Generator, but now stands vacant.",
+
+			[]
+		);
+	}
+
+	arcadiaJanitorsCloset()
+	{
+		return this.place
+		(
+			"Arcadia - Janitor's Closet",
+
+			"This is a janitor's closet on the starship Arcadia.  "
+			+ "It's a bit cramped and uncomfortable for napping in, "
+			+ "but, heroically, you make it work.  And you don't "
+			+ " just make it work; you make it work a LOT.",
+
+			scriptsCustom.PlaceArcadiaJanitorsCloset,
+
+			[
+				this.portal("hall", PlaceNames.ArcadiaJanitorsCloset),
+			]
+		);
+	}
+
+	arcadiaUpperDeckHallAmidships()
+	{
+		return this.place
+		(
+			"Arcadia - Upper Deck - Hall - Amidships",
+
+			"This is a hallway in the spaceship Arcadia.  "
+			+ "The hall continues to forward and to aft.  "
+			+ "In the middle is a door leading to the janitor's closet, "
+			+ "which is where you, our hero, came in to this story.",
+
+			scriptsCustom.PlaceArcadiaUpperDeckHallAmidshipsUpdate.name,
+
+			[
+				new Portal("closet", portalDescription, PlaceNames.ArcadiaJanitorsCloset),
+				new Portal("fore", portalDescription, PlaceNames.ArcadiaUpperDeckHallForward),
+				new Portal("aft", portalDescription, PlaceNames.ArcadiaUpperDeckHallAft)
+			]
+		);
+	}
 }
 
 class Scripts
 {
-	AgentCaptorTalkTo: Script;
-	AgentCaptorUpdate: Script;
-	EmplacementChestUse: Script;
-	EmplacementTrollBodyUse: Script;
-	ItemCoinGiveToCaptor: Script;
-	ItemKeyUse: Script;
-	ItemSwordUse: Script;
-	ItemTrollHeadTalkTo: Script;
-	ItemWhetstoneUse: Script;
-	PlaceCenterRoomUpdate: Script;
+	AgentSarienTalkTo: Script;
+	EmplacementDeadCrewpersonUse: Script;
+	ItemKeycardUse: Script;
+	PlaceArcadiaJanitorsClosetUpdate: Script;
 
 	_All: Script[];
 
@@ -172,272 +270,117 @@ class Scripts
 	{
 		var s = (a: string, b: any) => new Script(a, b);
 
-		this.AgentCaptorTalkTo = s("AgentCaptorTalkTo", this.agentCaptorTalkTo);
-		this.AgentCaptorUpdate = s("AgentCaptorUpdate", this.agentCaptorUpdate);
-		this.EmplacementChestUse = s("EmplacementChestUse", this.emplacementChestUse);
-		this.EmplacementTrollBodyUse = s("EmplacementTrollBodyUse", this.emplacementTrollBodyUse);
-		this.ItemCoinGiveToCaptor = s("ItemCoinGiveToCaptor", this.itemCoinGiveToCaptor);
-		this.ItemKeyUse = s("ItemKeyUse", this.itemKeyUse);
-		this.ItemSwordUse = s("ItemSwordUse", this.itemSwordUse);
-		this.ItemTrollHeadTalkTo = s("ItemTrollHeadTalkTo", this.itemTrollHeadTalkTo);
-		this.ItemWhetstoneUse = s("ItemWhetstoneUse", this.itemWhetstoneUse);
-		this.PlaceCenterRoomUpdate = s("PlaceCenterRoomUpdate", this.placeCenterRoomUpdate);
+		this.AgentSarienTalkTo = s("AgentSarienTalkTo", this.agentSarienTalkTo);
+		this.EmplacementDeadCrewpersonUse = s
+		(
+			"EmplacementDeadCrewpersonUse",
+			this.emplacementDeadCrewpersonUse
+		);
+		this.ItemKecyardUse = s("ItemKeycardUse", this.itemKeycardUse);
+		this.PlaceArcadiaJanitorsClosetUpdate = s
+		(
+			"PlaceArcadiaJanitorsClosetUpdate",
+			this.placeArcadiaJanitorsClosetUpdate
+		);
 
 		this._All =
 		[
-			this.AgentCaptorTalkTo,
-			this.AgentCaptorUpdate,
-			this.EmplacementChestUse,
-			this.EmplacementTrollBodyUse,
-			this.ItemCoinGiveToCaptor,
-			this.ItemKeyUse,
-			this.ItemSwordUse,
-			this.ItemTrollHeadTalkTo,
-			this.ItemWhetstoneUse,
-			this.PlaceCenterRoomUpdate
+			this.AgentSarienTalkTo,
+			this.EmplacementDeadCrewpersonUse,
+			this.ItemKeycardUse,
+			this.PlaceArcadiaJanitorsClosetUpdate
 		];
 	}
 
-	agentCaptorTalkTo(u: Universe, w: World, p: Place, agent: any): void
+	agentSarienTalkTo(u: Universe, w: World, p: Place, agent: any): void
 	{
-		var message;
-
-		var player = w.player;
-		var playerItems = player.items;
-		var playerHasCoin = playerItems.some(x => x.name == "coin");
-		if (playerHasCoin == false)
-		{
-			message = "Your captor says, 'Get me my coin back from the troll, and I'll throw you down a rope.'";
-		}
-		else
-		{
-			message = "Your captor says, 'Give that coin to me, and I'll throw you down a rope.'";
-		}
+		var message = "The Sarien's only response is to disintegrate you."
+		w.isOver = true;
 
 		u.messageEnqueue(message);
 	}
 
-	agentCaptorUpdate(u: Universe, w: World, p: Place, agent: any): void
-	{
-		// todo
-	}
-
-	emplacementChestUse(u: Universe, w: World, place: Place, emplacement: any): void
-	{
-		var message: string;
-		var isEmpty = emplacement.stateGroup.valueGetByName(StateNames.isEmpty());
-		var isUnlocked = emplacement.stateGroup.valueGetByName(StateNames.isUnlocked());
-		if (isUnlocked != true)
-		{
-			message = "The chest is locked.";
-		}
-		else if (isEmpty)
-		{
-			message = "The chest is empty.";
-		}
-		else
-		{
-			message = "You open the chest and find a sword.";
-			var itemSword = Item.fromNameDescriptionAndScriptUseName
-			(
-				"sword",
-				"This is a steel sword, too dull to cut anything.",
-				"ItemSwordUse"
-			);
-			place.itemAdd(itemSword);
-			emplacement.stateGroup.stateWithNameSetToValue(StateNames.isEmpty(), true);
-		}
-
-		u.messageEnqueue(message);
-	}
-
-	emplacementTrollBodyUse
+	emplacementDeadCrewpersonUse
 	(
 		u: Universe, w: World, place: Place,
-		emplacementTrollBody: any, target: any
+		emplacementDeadCrewperson: any, target: any
 	): void
 	{
 		var message: string;
 
 		if (target != null)
 		{
-			message = "You can't use the troll's body on anything.";
+			message = "You can't use the crewperson's body on anything.";
 		}
 		else
 		{
-			message = "You find a gold coin in the troll's coin purse.";
+			message = "You find a keycard in the crewperson's pockets.";
 
-			var itemCoin = Item.fromNameAndDescription
+			var itemKeycard = Item.fromNameAndDescription
 			(
-				"coin", "This is a gold coin."
+				"keycard", "This is an access keycard for the starship Arcadia."
 			);
-			place.itemAdd(itemCoin);
+			place.itemAdd(itemKeycard);
 
-			emplacementTrollBody._scriptUseName = null;
+			emplacementDeadCrewpersonUse._scriptUseName = null;
 		}
 
 		u.messageEnqueue(message);
 	}
 
-	itemCoinGiveToCaptor(universe: Universe, world: World, place: Place): void
+	itemKeycardUse(u: Universe, w: World, p: Place, i: any, target: any)
 	{
 		var message;
-
-		var player = world.player;
-		var itemCoin = player.itemByName("coin");
-		if (itemCoin == null)
-		{
-			message = "You don't have any coin.";
-		}
-		else
-		{
-			player.itemRemove(itemCoin);
-
-			message =
-				"You throw the coin up to the captor.  He catches it, laughs, and says, "
-				+ "'A deal's a deal.  Here's that rope I promised you.'  "
-				+ "Without tying it to anything first, he throws down a coil of rope "
-				+ "and walks away.  You hear his laughter fade in the distance."
-
-			place = world.placeCurrent();
-
-			var agentCaptor = place.agentByName("captor");
-			agentCaptor.itemAdd(itemCoin);
-			place.agentRemove(agentCaptor);
-
-			var itemRope = Item.fromNameAndDescription
-			(
-				"rope",
-				"This is a coil of weathered hempen rope."
-			);
-			place.itemAdd(itemRope);
-		}
-
-		universe.messageEnqueue(message);
-	}
-
-	itemKeyUse(u: Universe, w: World, p: Place, i: any, target: any)
-	{
 		if (target == null)
 		{
-			u.messageEnqueue("The key must be used on something.");
+			message = "The keycard must be used on something.";
 		}
-		else if (target.name != "chest")
+		else if (target.name != "slot")
 		{
-			u.messageEnqueue("That does not have a keyhole!");
+			message = "The keycard will only fit in an appropriately sized slot.";
 		}
-		else if (target.stateGroup.valueGetByName(StateNames.isUnlocked() ) )
+		else if (target.stateGroup.valueGetByName(StateNames.isOpen() ) )
 		{
-			u.messageEnqueue
-			(
-				"You use the key to lock the chest."
-			);
-			target.stateGroup.stateWithNameSetToValue(StateNames.isUnlocked(), false);
+			message =  "There's no need to use the keycard again, the door is already open.";
+			target.stateGroup.stateWithNameSetToValue(StateNames.isOpen(), true);
 		}
 		else
 		{
-			u.messageEnqueue
-			(
-				"You put the key in the keyhole and turn to unlock the chest."
-			);
-			target.stateGroup.stateWithNameSetToValue(StateNames.isUnlocked(), true);
+			message = "You insert the keycard into the slot.  The adjacent door opens.";
+			target.stateGroup.stateWithNameSetToValue(StateNames.isOpen(), true);
 		}
-	}
 
-	itemSwordUse(u: Universe, w: World, place: Place, item: any, target: any): void
-	{
-		if (target == null)
-		{
-			u.messageEnqueue("You swing the sword around wildly.");
-		}
-		else if (target.name != "troll")
-		{
-			u.messageEnqueue("That would only dull the sword.");
-		}
-		else if (item.stateGroup.valueGetByName(StateNames.isSharpened()) != true) // hack
-		{
-			var messageLines =
-			[
-				"The dull sword bounces off the troll's thick, rubbery skin.",
-				"He retaliates by disemboweling you with his claws.",
-				"",
-				"You are dead."
-			]
-			w.isOver = true;
-			var message = messageLines.join("\n");
-			u.messageEnqueue(message);
-		}
-		else
-		{
-			var message =
-				"The sharp sword slices the troll's head off, killing it.";
-			u.messageEnqueue(message);
-			place.agentRemove(target);
-
-			var emplacementTrollBody = Emplacement.fromNameDescriptionAndScriptUseName
-			(
-				"troll body",
-				"This is the headless corpse of the troll, naked except for a small coin purse.",
-				"EmplacementTrollBodyUse"
-			);
-			place.emplacementAdd(emplacementTrollBody);
-
-			var itemTrollHead = new Item
-			(
-				"troll head",
-				"This is the head of the troll you killed.",
-				null, // scriptNameUse
-				null, // stateGroup
-				[
-					new Command
-					(
-						[ "talk to troll", "talk to the troll", "talk to troll head", "talk to the troll head" ],
-						"ItemTrollHeadTalkTo"
-					)
-				]
-			);
-			place.itemAdd(itemTrollHead);
-		}
-	}
-
-	itemTrollHeadTalkTo(u: Universe, w: World, place: Place, item: any, target: any): void
-	{
-		var message = "The troll's head nods in agreement with what you're saying.";
 		u.messageEnqueue(message);
 	}
 
-	itemWhetstoneUse(u: Universe, w: World, p: Place, i: any, target: any): void
-	{
-		if (target == null)
-		{
-			u.messageEnqueue("The whetstone must be used on something.");
-		}
-		else if (target.name != "sword")
-		{
-			u.messageEnqueue("That cannot be sharpened!");
-		}
-		else
-		{
-			u.messageEnqueue("You stroke the edge of the sword with the whetstone, sharpening it.");
-			target.stateGroup.stateWithNameSetToValue(StateNames.isSharpened(), true);
-			target.description = "This is a sharp steel sword.";
-		}
-	}
-
-	placeCenterRoomUpdate(u: Universe, w: World, p: Place): any
+	placeArcadiaJanitorsClosetUpdate(u: Universe, w: World, p: Place): any
 	{
 		if (p.hasBeenVisited() == false)
 		{
 			var messageLines =
 			[
-				"You are thrown roughly through a hole, fall perhaps twelve feet, ",
-				"and land painfully in a dirty, shallow pool in an uneven stone floor.  ",
-				"As you stagger to your feet, dripping, and check yourself for injuries, ",
-				"your captor glares down at you from the rim of the hole ",
-				"and says, 'There's a troll somewhere down there.  ",
-				"He has my money.  Kill him, get it, and give it to me.  ",
-				"Maybe then I'll let you go.'",
-				"\n"
+				"You are napping, on duty, in the janitor's closet of the "
+				+ "starship Arcadia when you are awakened by a loud klaxon.  "
+				+ "Party foul."
+			]
+			var message = messageLines.join("");
+			u.messageEnqueue(message);
+		}
+	}
+
+	placeArcadiaUpperDeckHallAmidshipsUpdate(u: Universe, w: World, p: Place): any
+	{
+		if (p.hasBeenVisited() == false)
+		{
+			var messageLines =
+			[
+				"You stumble out of the janitor's closet into the hall, "
+				+ "where, unfortunately, not only is the klaxon louder, "
+				+ "but it's also joined by annoying flashing red lights."
+				+ "On the positive side, a few seconds later, "
+				+ "the klaxon and and the lights both stop abruptly."
+				+ "\n\n"
+				+ "Probably nothing to worry about, right?"
 			]
 			var message = messageLines.join("");
 			u.messageEnqueue(message);
