@@ -1,3 +1,6 @@
 [submodule "Source/Engine"]
 	path = Source/Engine
 	url = https://github.com/thiscouldbebetter/TextAdventureEngine
+[submodule "Tests/Framework"]
+	path = Tests/Framework
+	url = https://github.com/thiscouldbebetter/TestFramework

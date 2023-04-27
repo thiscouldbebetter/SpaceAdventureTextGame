@@ -1,0 +1,61 @@
+<html>
+
+<body>
+
+	<h3>Tests</h3>
+
+	<p>
+		This page runs some automated tests and displays the results.
+	</p>
+
+	<!-- TestFramework classes. -->
+	<script type="text/javascript" src="Framework/Source/Assert.js"></script>
+	<script type="text/javascript" src="Framework/Source/Test.js"></script>
+	<script type="text/javascript" src="Framework/Source/TestFixture.js"></script>
+	<script type="text/javascript" src="Framework/Source/TestSuite.js"></script>
+
+	<!-- Add script elements for the classes of the system under test below. -->
+	<!-- <script type="text/javascript" src="../Source/ClassName.js"></script> -->
+
+<!-- Test suite setup. -->
+<!-- Replace the demo TestFixture and Test instances with custom tests. -->
+
+<script type="text/javascript">
+
+var suite = new TestSuite
+(
+	"TestSuite",
+	[
+		new TestFixture
+		(
+			"TestFixture0",
+			[
+				new Test
+				(
+					"AlwaysPass",
+					() =>
+					{
+						Assert.isTrue(true);
+					}
+				),
+
+				new Test
+				(
+					"AlwaysFail",
+					() =>
+					{
+						Assert.isFalse(true);
+					}
+				)
+			]
+		)
+	]
+);
+
+suite.run();
+
+</script>
+
+</body>
+
+</html>
