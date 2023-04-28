@@ -16,11 +16,64 @@
 
 	<!-- Add script elements for the classes of the system under test below. -->
 	<!-- <script type="text/javascript" src="../Source/ClassName.js"></script> -->
+	<script type="text/javascript" src="../Source/Engine/Source/Agent.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Command.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/ConsoleTextarea.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Emplacement.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/InputTracker.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Item.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/MessageQueue.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Place.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Portal.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/State.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/StateGroup.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/SaveState.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/SaveStateManager.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Script.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/StorageManagerLocalStorage.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/StorageManagerMemory.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/TimerManager.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/Universe.js"></script>
+	<script type="text/javascript" src="../Source/Engine/Source/World.js"></script>
+
+	<script type="text/javascript" src="../Source/Engine/Source/Imports.js"></script>
+
+	<script type="text/javascript" src="../Source/Game/Game.js"></script>
+
+	<script type="text/javascript" src="../Source/Engine/Tests/Mocks/TimerManagerMock.js"></script>
 
 <!-- Test suite setup. -->
 <!-- Replace the demo TestFixture and Test instances with custom tests. -->
 
 <script type="text/javascript">
+
+function playFromStart()
+{
+	var worldCreate = () => Game.worldBuild();
+	var console = new ConsoleTextarea(document.createElement("textarea") );
+	var timerManager = new TimerManagerMock();
+	var universe = new Universe
+	(
+		console,
+		timerManager,
+		worldCreate
+	);
+	universe.initialize();
+	var world = universe.world;
+	var commands =
+	[
+		"go door"
+	];
+	for (var i = 0; i < commands.length; i++)
+	{
+		var command = commands[i];
+		world.updateForUniverseAndCommandText(universe, command);
+	}
+
+	var consoleTextActual = console.textCurrent;
+	var consoleTextExpected = "todo";
+	Assert.true(consoleTextActual.indexOf(consoleTextExpected) >= 0);
+}
 
 var suite = new TestSuite
 (
@@ -32,21 +85,9 @@ var suite = new TestSuite
 			[
 				new Test
 				(
-					"AlwaysPass",
-					() =>
-					{
-						Assert.isTrue(true);
-					}
+					"PlayFromStart",
+					playFromStart
 				),
-
-				new Test
-				(
-					"AlwaysFail",
-					() =>
-					{
-						Assert.isFalse(true);
-					}
-				)
 			]
 		)
 	]
