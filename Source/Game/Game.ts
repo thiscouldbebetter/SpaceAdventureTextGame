@@ -20,19 +20,11 @@ class Game
 
 		var scriptsCustom = new Scripts();
 
-		var p = (name: string, description: string, scriptName: string, objects: any[]) =>
-			Place.fromNameDescriptionScriptNameAndObjects(name, description, scriptName, objects);
-
-		var portalDescription = "This is an exit.";
-
-		var places =
-		[
-
-		];
+		var places = Places.Instance()._All;
 
 		var commands = Command.Instances()._All;
 
-		var scriptsAll = new Array<Script>;
+		var scriptsAll = new Array<Script>();
 
 		var commandsAsScripts = commands.map((x: Command) => x._scriptExecute);
 		scriptsAll.push(...commandsAsScripts);
@@ -78,9 +70,9 @@ class Places
 	ArcadiaDockingBayAntechamber: Place;
 	ArcadiaDockingBayHangar: Place;
 
-	ArcadiaEngineeringDeckHallAft: Place;
-	ArcadiaEngineeringDeckHallAmidships: Place;
-	ArcadiaEngineeringDeckHallForward: Place;
+	ArcadiaEngineeringDeckAft: Place;
+	ArcadiaEngineeringDeckAmidships: Place;
+	ArcadiaEngineeringDeckForward: Place;
 
 	ArcadiaEscapePod: Place;
 
@@ -127,6 +119,7 @@ class Places
 	DeltaurVentilationShaft4: Place;
 
 	KeronaCavernsBarrier: Place;
+	KeronaCavernsDrips: Place;
 	KeronaCavernsElevator: Place;
 	KeronaCavernsGeyser: Place;
 	KeronaCavernsPool: Place;
@@ -152,8 +145,9 @@ class Places
 
 	KeronaDesertCrashSite: Place;
 	KeronaDesertDeep: Place;
-	KeronaDesertEast: Place;
+	KeronaDesertEscapePodInterior: Place;
 	KeronaDesertNorth: Place;
+	KeronaDesertSouth: Place;
 	KeronaDesertWest: Place;
 
 	KeronaEscapePodInterior: Place;
@@ -167,11 +161,11 @@ class Places
 	KeronaUlenceFlatsNorthOfTinysUsedShips: Place;
 	KeronaUlenceFlatsTinysUsedShips: Place;
 
-	constructor
-	(
-		var p = (n: string) => Place.fromName(n);
+	_All: Place[];
 
-		this.ArcadiaBridge = this.arcadiaBridge;
+	constructor()
+	{
+		this.ArcadiaBridge = this.arcadiaBridge();
 
 		this.ArcadiaJanitorsCloset = this.arcadiaJanitorsCloset();
 
@@ -196,13 +190,33 @@ class Places
 
 		this.DeepSpaceEscapePod = this.deepSpaceEscapePod();
 
-		this.KeronaCavernsBarrier = p("Kerona - Caverns - Barrier");
-		this.KeronaCavernsDrips = p("Kerona - Caverns - Drips");
-		this.KeronaCavernsElevator = p("Kerona - Caverns - Elevator");
-		this.KeronaCavernsGeyser = p("Kerona - Caverns - Geyser");
-		this.KeronaCavernsPool = p("Kerona - Caverns - Pool");
-		this.KeronaCavernsProjectionRoom = p("Kerona - Caverns - Projection Room");
-		this.KeronaCavernsSteamworks = p("Kerona - Caverns - Steamworks");
+		this.DeltaurAirlockChamber = this.deltaurAirlockChamber();
+		this.DeltaurAirlockExterior = this.deltaurAirlockExterior();
+		this.DeltaurAirlockInterior = this.deltaurAirlockInterior();
+		this.DeltaurArmory = this.deltaurArmory();
+		this.DeltaurLaundry = this.deltaurLaundry();
+		this.DeltaurLowerDeckHallAft = this.deltaurLowerDeckHallAft();
+		this.DeltaurLowerDeckHallAmidships = this.deltaurLowerDeckHallAmidships();
+		this.DeltaurLowerDeckHallFore = this.deltaurLowerDeckHallFore();
+		this.DeltaurNearbySpace = this.deltaurNearbySpace();
+		this.DeltaurShuttleBay = this.deltaurShuttleBay();
+		this.DeltaurStarGeneratorChamber = this.deltaurStarGeneratorChamber();
+		this.DeltaurStarGeneratorChamberCatwalk = this.deltaurStarGeneratorChamberCatwalk();
+		this.DeltaurUpperDeckHallAft = this.deltaurUpperDeckHallAft();
+		this.DeltaurUpperDeckHallAmidships = this.deltaurUpperDeckHallAmidships();
+		this.DeltaurUpperDeckHallFore = this.deltaurUpperDeckHallFore();
+		this.DeltaurVentilationShaft1 = this.deltaurVentilationShaft1();
+		this.DeltaurVentilationShaft2 = this.deltaurVentilationShaft2();
+		this.DeltaurVentilationShaft3 = this.deltaurVentilationShaft3();
+		this.DeltaurVentilationShaft4 = this.deltaurVentilationShaft4();
+
+		this.KeronaCavernsBarrier = this.keronaCavernsBarrier();
+		this.KeronaCavernsDrips = this.keronaCavernsDrips();
+		this.KeronaCavernsElevator = this.keronaCavernsElevator();
+		this.KeronaCavernsGeyser = this.keronaCavernsGeyser();
+		this.KeronaCavernsPool = this.keronaCavernsPool();
+		this.KeronaCavernsProjectionRoom = this.keronaCavernsProjectionRoom();
+		this.KeronaCavernsSteamworks = this.keronaCavernsSteamworks();
 
 		this.KeronaCliffsBottomNorth = this.keronaCliffsBottomNorth();
 		this.KeronaCliffsBottomNortheast = this.keronaCliffsBottomNortheast();
@@ -212,14 +226,14 @@ class Places
 		this.KeronaCliffsBottomSoutheast = this.keronaCliffsBottomSoutheast();
 		this.KeronaCliffsBottomSouthwest = this.keronaCliffsBottomSouthwest();
 
-		this.KeronaCliffsCaveInterior = p("Kerona - Cliffs - Cave Interior");
+		this.KeronaCliffsCaveInterior = this.keronaCliffsCaveInterior();
 
-		this.KeronaCliffsTopNorthTop = p("Kerona - Cliffs - North - Top");
-		this.KeronaCliffsTopNortheastTop = p("Kerona - Cliffs - Northeast - Top");
-		this.KeronaCliffsTopNorthwestTop = p("Kerona - Cliffs - Northwest - Top");
-		this.KeronaCliffsTopSouthTop = p("Kerona - Cliffs - South - Top");
-		this.KeronaCliffsTopSoutheastTop = p("Kerona - Cliffs - Southeast - Top");
-		this.KeronaCliffsTopSouthwestTop = p("Kerona - Cliffs - Southwest - Top");
+		this.KeronaCliffsTopNorth = this.keronaCliffsTopNorth();
+		this.KeronaCliffsTopNortheast = this.keronaCliffsTopNortheast();
+		this.KeronaCliffsTopNorthwest = this.keronaCliffsTopNorthwest();
+		this.KeronaCliffsTopSouth = this.keronaCliffsTopSouth();
+		this.KeronaCliffsTopSoutheast = this.keronaCliffsTopSoutheast();
+		this.KeronaCliffsTopSouthwest = this.keronaCliffsTopSouthwest();
 
 		this.KeronaDesertCrashSite = this.keronaDesertCrashSite();
 		this.KeronaDesertDeep = this.keronaDesertDeep();
@@ -229,17 +243,94 @@ class Places
 		this.KeronaDesertWest = this.keronaDesertWest();
 
 		this.KeronaUlenceFlatsBarFront = this.keronaUlenceFlatsBarFront();
-		this.KeronaUlenceFlatsBarInterior = p("Kerona - Ulence Flats - Bar - Interior");
-		this.KeronaUlenceFlatsBarRear = p("Kerona - Ulence Flats - Bar - Rear");
-		this.KeronaUlenceFlatsDroidsBWeFront = p("Kerona - Ulence Flats - Droids-B-We - Front");
-		this.KeronaUlenceFlatsDroidsBWeInterior = p("Kerona - Ulence Flats - Droids-B-We - Interior");
-		this.KeronaUlenceFlatsDroidsBWeWest = p("Kerona - Ulence Flats - Droids-B-We - West");
-		this.KeronaUlenceFlatsNorthOfTinysUsedShips = p("Kerona - Ulence Flats - North of Tiny's Used Ships");
-		this.KeronaUlenceFlatsTinysUsedShips = p("Kerona - Ulence Flats - Tiny's Used Ships");
-	)
+		this.KeronaUlenceFlatsBarInterior = this.keronaUlenceFlatsBarInterior();
+		this.KeronaUlenceFlatsBarRear = this.keronaUlenceFlatsBarRear();
+		this.KeronaUlenceFlatsDroidsBWeFront = this.keronaUlenceFlatsDroidsBWeFront();
+		this.KeronaUlenceFlatsDroidsBWeInterior = this.keronaUlenceFlatsDroidsBWeInterior();
+		this.KeronaUlenceFlatsDroidsBWeWest = this.keronaUlenceFlatsDroidsBWeWest();
+		this.KeronaUlenceFlatsNorthOfTinysUsedShips = this.keronaUlenceFlatsNorthOfTinysUsedShips();
+		this.KeronaUlenceFlatsTinysUsedShips = this.keronaUlenceFlatsTinysUsedShips();
+
+		this._All =
+		[
+			this.ArcadiaBridge,
+			this.ArcadiaDockingBayAntechamber,
+			this.ArcadiaDockingBayHangar,
+			this.ArcadiaEngineeringDeckAft,
+			this.ArcadiaEngineeringDeckAmidships,
+			this.ArcadiaEngineeringDeckForward,
+			this.ArcadiaEscapePod,
+			this.ArcadiaJanitorsCloset,
+			this.ArcadiaLibrary,
+			this.ArcadiaLowerDeckHallAft,
+			this.ArcadiaLowerDeckHallAmidships,
+			this.ArcadiaLowerDeckHallForward,
+			this.ArcadiaUpperDeckHallAft,
+			this.ArcadiaUpperDeckHallAmidships,
+			this.ArcadiaUpperDeckHallForward,
+
+			this.DeepSpaceEscapePod,
+
+			this.DeltaurAirlockChamber,
+			this.DeltaurAirlockExterior,
+			this.DeltaurAirlockInterior,
+			this.DeltaurArmory,
+			this.DeltaurLaundry,
+			this.DeltaurLowerDeckHallAft,
+			this.DeltaurLowerDeckHallAmidships,
+			this.DeltaurLowerDeckHallFore,
+			this.DeltaurNearbySpace,
+			this.DeltaurShuttleBay,
+			this.DeltaurStarGeneratorChamber,
+			this.DeltaurStarGeneratorChamberCatwalk,
+			this.DeltaurUpperDeckHallAft,
+			this.DeltaurUpperDeckHallAmidships,
+			this.DeltaurUpperDeckHallFore,
+			this.DeltaurVentilationShaft1,
+			this.DeltaurVentilationShaft2,
+			this.DeltaurVentilationShaft3,
+			this.DeltaurVentilationShaft4,
+
+			this.KeronaCavernsBarrier,
+			this.KeronaCavernsDrips,
+			this.KeronaCavernsElevator,
+			this.KeronaCavernsGeyser,
+			this.KeronaCavernsPool,
+			this.KeronaCavernsProjectionRoom,
+			this.KeronaCavernsSteamworks,
+			this.KeronaCliffsBottomNorth,
+			this.KeronaCliffsBottomNortheast,
+			this.KeronaCliffsBottomNorthwestEastSide,
+			this.KeronaCliffsBottomNorthwestWestSide,
+			this.KeronaCliffsBottomSouth,
+			this.KeronaCliffsBottomSoutheast,
+			this.KeronaCliffsBottomSouthwest,
+			this.KeronaCliffsCaveInterior,
+			this.KeronaCliffsTopNorth,
+			this.KeronaCliffsTopNortheast,
+			this.KeronaCliffsTopNorthwest,
+			this.KeronaCliffsTopSouth,
+			this.KeronaCliffsTopSoutheast,
+			this.KeronaCliffsTopSouthwest,
+			this.KeronaDesertCrashSite,
+			this.KeronaDesertDeep,
+			this.KeronaDesertNorth,
+			this.KeronaDesertSouth,
+			this.KeronaDesertWest,
+			this.KeronaEscapePodInterior,
+			this.KeronaUlenceFlatsBarFront,
+			this.KeronaUlenceFlatsBarInterior,
+			this.KeronaUlenceFlatsBarRear,
+			this.KeronaUlenceFlatsDroidsBWeFront,
+			this.KeronaUlenceFlatsDroidsBWeInterior,
+			this.KeronaUlenceFlatsDroidsBWeWest,
+			this.KeronaUlenceFlatsNorthOfTinysUsedShips,
+			this.KeronaUlenceFlatsTinysUsedShips,
+		];
+	}
 
 	static _instance: Places;
-	static Instances(): Places
+	static Instance(): Places
 	{
 		if (Places._instance == null)
 		{
@@ -250,16 +341,53 @@ class Places
 
 	emplacement(name: string): Emplacement
 	{
-		return Emplacement.fromName(name);
+		return Emplacement.fromNameAndDescription(name, name);
 	}
 
-	place(name: string, description: string, objects: any[], scriptName: string): Place
+	place2
+	(
+		name: string,
+		description: string
+	): Place
 	{
 		return Place.fromNameDescriptionScriptNameAndObjects
 		(
 			name,
 			description,
-			scriptName
+			null, // scriptName
+			[] // objects
+		);
+	}
+
+	place
+	(
+		name: string,
+		description: string,
+		objects: any[]
+	): Place
+	{
+		return Place.fromNameDescriptionScriptNameAndObjects
+		(
+			name,
+			description,
+			null, // scriptName
+			objects
+		);
+	}
+
+	place4
+	(
+		name: string,
+		description: string,
+		objects: any[],
+		scriptName: string
+	): Place
+	{
+		return Place.fromNameDescriptionScriptNameAndObjects
+		(
+			name,
+			description,
+			scriptName,
 			objects
 		);
 	}
@@ -271,7 +399,7 @@ class Places
 
 	// Places.
 
-	arcadiaBridge()
+	arcadiaBridge(): Place
 	{
 		return this.place
 		(
@@ -281,7 +409,7 @@ class Places
 			+ "A large transparent hemispherical dome arches overhead, "
 			+ "showing the brilliantly shining surrounding stars."
 			+ "Banks of mostly incomprehensible controls "
-			+ "line the circular wall, with the nearby seats ",
+			+ "line the circular wall, with the nearby seats "
 			+ "either empty or filled with the slumped bodies of dead crew."
 			+ "There's several bodies scattered on the floor, as well.  "
 			+ "A prominent pedestal in the center "
@@ -296,7 +424,7 @@ class Places
 		return "Arcadia - Bridge";
 	}
 
-	arcadiaDockingBayAntechamber()
+	arcadiaDockingBayAntechamber(): Place
 	{
 		return this.place
 		(
@@ -307,11 +435,11 @@ class Places
 			+ "A control console occupies one wall, while "
 			+ "on the opposite wall are two closets, with a pair of " 
 			+ " buttons at chest height between them. "
-			+ " An elevator leads back to the engineering deck."
+			+ " An elevator leads back to the engineering deck.",
 
 			[
-				this.portal("airlock", this.arcadiaDockingBayHangar_Name())
-				this.portal("elevator", this.arcadiaEngineeringDeckAft_Name())
+				this.portal("airlock", this.arcadiaDockingBayHangar_Name()),
+				this.portal("elevator", this.arcadiaEngineeringDeckAft_Name()),
 
 				this.emplacement("controls"),
 				this.emplacement("hatch")
@@ -337,10 +465,10 @@ class Places
 			+ "and a control console near the airlock door leading back to the antechamber."
 			+ "A similarly gigantic pair of doors at the far end of the bay "
 			+ " allows ships to enter and depart when open, "
-			+ " and keeps everything safely sheltered when closed."
+			+ " and keeps everything safely sheltered when closed.",
 
 			[
-				this.portal("door", this.arcadiaDockingBayAntechamber_Name())
+				this.portal("door", this.arcadiaDockingBayAntechamber_Name() ),
 
 				this.emplacement("controls"),
 				this.emplacement("hatch")
@@ -391,18 +519,18 @@ class Places
 			+ "an unsettling reddish-orange, accompanied by a loud "
 			+ "and ominous droning sound.  A thick window "
 			+ "looks down over the ship's docking bay, with a control console "
-			+ "running beneath that window.  The bodies of two crewmen lie on the floor." 
+			+ "running beneath that window.  The bodies of two crewmen lie on the floor.",
 
 			[
-				this.emplacement("body")
-				this.emplacement("controls")
-				this.emplacement("dome")
+				this.emplacement("body"),
+				this.emplacement("controls"),
+				this.emplacement("dome"),
 				this.emplacement("window")
 			]
 		);
 	}
 
-	arcadiaEngineeringDeckAft_Name(): string
+	arcadiaEngineeringDeckAmidships_Name(): string
 	{
 		return "Arcadia - Engineering Deck - Aft";
 	}
@@ -443,7 +571,7 @@ class Places
 			+ "including a throttle, a monitor screen, and some buttons. "
 			+ "A padded seat with safety belts fills the center of the pod's cabin.  "
 			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
-			+ "Opposite the door, on the starboard wall, a survival kit is mounted."
+			+ "Opposite the door, on the starboard wall, a survival kit is mounted.",
 
 			[
 				this.portal("door", this.arcadiaDockingBayHangar_Name() ),
@@ -455,7 +583,7 @@ class Places
 				this.emplacement("monitor screen"),
 				this.emplacement("safety belt"),
 				this.emplacement("survival kit"),
-				this.emplacement("throttle"),
+				this.emplacement("throttle")
 			]
 		);
 	}
@@ -477,10 +605,10 @@ class Places
 			+ " just make it work; you make it work a LOT.",
 
 			[
-				this.portal("door", this.ArcadiaUpperDeckHallAmidships_Name()),
+				this.portal("door", this.arcadiaUpperDeckHallAmidships_Name()),
 			],
 
-			scriptsCustom.PlaceArcadiaJanitorsCloset
+			// todo - script: PlaceArcadiaJanitorsCloset
 
 		);
 	}
@@ -503,14 +631,14 @@ class Places
 			+ "with row after row of data cartridges.  "
 			+ "A spacious round table ringed with comfortable seats and cartridge readers "
 			+ "fills a pit in the center of the room.  "
-			+ "On one wall is a control console with a keyboard and screen, ",
+			+ "On one wall is a control console with a keyboard and screen, "
 			+ "a spiderlike droid clinging to the wall just above it."
 			+ "A man wearing a scientist's smock lies face-down "
 			+ " on the floor in front of the console. ",
 
 			[
-				this.portal("fore", this.ArcadiaUpperDeckHallForward_Name),
-				this.portal("aft", this.ArcadiaUpperDeckHallAmidships_Name),
+				this.portal("fore", this.arcadiaUpperDeckHallForward_Name() ),
+				this.portal("aft", this.arcadiaUpperDeckHallAmidships_Name() ),
 
 				this.emplacement("console"),
 				this.emplacement("table"),
@@ -522,6 +650,77 @@ class Places
 	arcadiaLibrary_Name(): string
 	{
 		return "Arcadia - Library";
+	}
+
+	arcadiaLowerDeckHallAft(): Place
+	{
+		return this.place
+		(
+			this.arcadiaLowerDeckHallAft_Name(),
+
+			"This is a hallway in the spaceship Arcadia.  "
+			+ "The hall continues to forward.  "
+			+ "There is a door here leading to an elevator.",
+
+			[
+				this.portal("aft", this.arcadiaLowerDeckHallAmidships_Name()),
+				this.emplacement("body")
+			]
+		);
+	}
+
+	arcadiaLowerDeckHallAft_Name(): string
+	{
+		return "Arcadia - Lower Deck - Hall - Aft";
+	}
+
+	arcadiaLowerDeckHallAmidships(): Place
+	{
+		return this.place
+		(
+			this.arcadiaLowerDeckHallAmidships_Name(),
+
+			"This is a hallway in the spaceship Arcadia.  "
+			+ "The hall continues to forward and to aft.  "
+			+ "In the middle is a door leading to the janitor's closet, "
+			+ "which is where you, our hero, came in to this story.",
+
+			[
+				this.portal("closet", this.arcadiaJanitorsCloset_Name()),
+				this.portal("fore", this.arcadiaLowerDeckHallForward_Name()),
+				this.portal("aft", this.arcadiaLowerDeckHallAft_Name())
+			]
+
+			// Scripts.Instance().PlaceArcadiaLowerDeckHallAmidshipsUpdate.name
+		);
+	}
+
+	arcadiaLowerDeckHallAmidships_Name(): string
+	{
+		return "Arcadia - Lower Deck - Hall - Amidships";
+	}
+
+	arcadiaLowerDeckHallForward(): Place
+	{
+		return this.place
+		(
+			this.arcadiaLowerDeckHallAft_Name(),
+
+			"This is a hallway in the spaceship Arcadia.  "
+			+ "The hall continues to aft.  "
+			+ "The body of a dead crewman lies crumpled "
+			+ "against the bulkhead at the forward end of the hall.",
+
+			[
+				this.portal("aft", this.arcadiaLowerDeckHallAmidships_Name()),
+				this.emplacement("body")
+			]
+		);
+	}
+
+	arcadiaLowerDeckHallForward_Name(): string
+	{
+		return "Arcadia - Lower Deck - Hall - Forward";
 	}
 
 	arcadiaUpperDeckHallAft(): Place
@@ -563,7 +762,7 @@ class Places
 				this.portal("aft", this.arcadiaUpperDeckHallAft_Name())
 			]
 
-			Scripts.Instance().PlaceArcadiaUpperDeckHallAmidshipsUpdate.name,
+			//Scripts.Instance().PlaceArcadiaUpperDeckHallAmidshipsUpdate.name
 		);
 	}
 
@@ -607,7 +806,7 @@ class Places
 			+ "including a throttle, a monitor screen, and some buttons. "
 			+ "A padded seat with safety belts fills the center of the pod's cabin.  "
 			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
-			+ "Opposite the door, on the starboard wall, a survival kit is mounted."
+			+ "Opposite the door, on the starboard wall, a survival kit is mounted.",
 
 			[
 				this.portal("door", this.arcadiaDockingBayHangar_Name() ),
@@ -619,7 +818,7 @@ class Places
 				this.emplacement("monitor screen"),
 				this.emplacement("safety belt"),
 				this.emplacement("survival kit"),
-				this.emplacement("throttle"),
+				this.emplacement("throttle")
 			]
 		);
 	}
@@ -629,6 +828,34 @@ class Places
 		return "Deep Space - Escape Pod";
 	}
 
+	deltaurAirlockChamber(): Place { throw new Error("todo"); }
+	deltaurAirlockExterior(): Place { throw new Error("todo"); }
+	deltaurAirlockInterior(): Place { throw new Error("todo"); }
+	deltaurArmory(): Place { throw new Error("todo"); }
+	deltaurLaundry(): Place { throw new Error("todo"); }
+	deltaurLowerDeckHallAft(): Place { throw new Error("todo"); }
+	deltaurLowerDeckHallAmidships(): Place { throw new Error("todo"); }
+	deltaurLowerDeckHallFore(): Place { throw new Error("todo"); }
+	deltaurNearbySpace(): Place { throw new Error("todo"); }
+	deltaurShuttleBay(): Place { throw new Error("todo"); }
+	deltaurStarGeneratorChamber(): Place { throw new Error("todo"); }
+	deltaurStarGeneratorChamberCatwalk(): Place { throw new Error("todo"); }
+	deltaurUpperDeckHallAft(): Place { throw new Error("todo"); }
+	deltaurUpperDeckHallAmidships(): Place { throw new Error("todo"); }
+	deltaurUpperDeckHallFore(): Place { throw new Error("todo"); }
+	deltaurVentilationShaft1(): Place { throw new Error("todo"); }
+	deltaurVentilationShaft2(): Place { throw new Error("todo"); }
+	deltaurVentilationShaft3(): Place { throw new Error("todo"); }
+	deltaurVentilationShaft4(): Place { throw new Error("todo"); }
+
+	keronaCavernsBarrier(): Place { throw new Error("todo"); }
+	keronaCavernsDrips(): Place { throw new Error("todo"); }
+	keronaCavernsElevator(): Place { throw new Error("todo"); }
+	keronaCavernsGeyser(): Place { throw new Error("todo"); }
+	keronaCavernsPool(): Place { throw new Error("todo"); }
+	keronaCavernsProjectionRoom(): Place { throw new Error("todo"); }
+	keronaCavernsSteamworks(): Place { throw new Error("todo"); }
+
 	keronaCliffsBottomNorth(): Place
 	{
 		return this.place
@@ -636,12 +863,12 @@ class Places
 			this.keronaCliffsBottomNorth_Name(),
 
 			"You stand on the sand of the Kerona desert, just to the south  "
-			+ "of a steep stone cliff running from west to east. "
+			+ "of a steep stone cliff running from west to east. ",
 
 			[
 				this.portal("south", this.keronaCliffsBottomSouth_Name()),
 				this.portal("west", this.keronaCliffsBottomNorthwestEastSide_Name()),
-				this.portal("east", this.keronaCliffsBottomNortheast_Name()),
+				this.portal("east", this.keronaCliffsBottomNortheast_Name())
 			]
 		);
 	}
@@ -661,12 +888,12 @@ class Places
 			+ "apart from each other.  As they rise, they bend toward each other like horns, "
 			+ "with jagged, broken tops.  "
 			+ "\n\n"
-			+ "To the east, the sand stretches away as far as you can see."
+			+ "To the east, the sand stretches away as far as you can see.",
 
 			[
 				this.portal("south", this.keronaCliffsBottomSouth_Name()),
 				this.portal("west", this.keronaCliffsBottomNorthwestEastSide_Name()),
-				this.portal("east", this.keronaDesertDeep_Name()),
+				this.portal("east", this.keronaDesertDeep_Name())
 			]
 		);
 	}
@@ -680,16 +907,47 @@ class Places
 			this.keronaCliffsBottomNorthwestEastSide_Name(),
 
 			"You stand on the sand of the Kerona desert, at the base  "
-			+ "of a sheer stone cliff that curves away to the south and east.  "
+			+ "of a sheer stone cliff that curves away to the south and east.  ",
 
 			[
 				this.portal("south", this.keronaCliffsBottomNorth_Name()),
-				this.portal("east", this.keronaCliffsBottomSouthwest_Name()),
+				this.portal("east", this.keronaCliffsBottomSouthwest_Name())
 			]
 		);
 	}
 
-	keronaCliffsBottomNorthwest_Name(): string { return "Kerona - Cliffs - Northwest" };
+	keronaCliffsBottomNorthwestEastSide_Name(): string { return "Kerona - Cliffs - Northwest - East Side" };
+
+	keronaCliffsBottomNorthwestWestSide(): Place
+	{
+		return this.place
+		(
+			this.keronaCliffsBottomNorthwestWestSide_Name(),
+
+			"You stand on the sand of the Kerona desert, at the base  "
+			+ "of a sheer stone cliff that curves away to the south and east,  "
+			+ "and which blocks passage to the east.  "
+			+ "The site where your escape pod crashed is to the west."
+			+ "To the south, more cliffs are visible. "
+			+ " The desert stretches away to the north, and west.",
+
+			[
+				this.portal("south", this.keronaCliffsBottomSouth_Name()),
+				this.portal("west", this.keronaDesertCrashSite_Name()),
+				this.emplacement
+				(
+					"hole"
+
+					// "This is a hole in the side of the cliff face, "
+					// + "about 40 centimeters in diameter.  Its interior is "
+					// + "deeply shadowed, making it impossible to see what, "
+					// + "if anything, might be inside it."
+				)
+			]
+		);
+	}
+
+	keronaCliffsBottomNorthwestWestSide_Name(): string { return "Kerona - Cliffs - Northwest - West Side" };
 
 	keronaCliffsBottomSouth(): Place
 	{
@@ -716,15 +974,15 @@ class Places
 			"You stand on a clear stretch of sand amid a formation of stone cliffs.  "
 			+ "The sandy surface of the desert runs to the north and to the west. "
 			+ "To the east is a tall, confused jumble of rocks, "
-			+ " in which a large, shadowy cave mouth opens.",
+			+ " in which a large, shadowy cave mouth opens."
 			+ "On the west side of the clearing, a stone slope rises jaggedly "
-			+ "upward between jutting upright stones, climbing as it runs northward. ",
+			+ "upward between jutting upright stones, climbing as it runs northward.",
 
 			[
-				this.portal("north", this.keronaCliffsBottomSouth_Name(),
-				this.portal("west", this.keronaCliffsBottomSouth_Name(),
-				this.portal("east", this.keronaCave_Name(),
-				this.portal("slope", this.keronaCliffsTopNortheast_Name(),
+				this.portal("north", this.keronaCliffsBottomSouth_Name() ),
+				this.portal("west", this.keronaCliffsBottomSouth_Name() ),
+				this.portal("east", this.keronaCliffsCaveInterior_Name() ),
+				this.portal("slope", this.keronaCliffsTopNortheast_Name() )
 			]
 		);
 	}
@@ -747,142 +1005,281 @@ class Places
 
 	keronaCliffsBottomSouthwest_Name(): string { return "Kerona - Cliffs - Southwest" };
 
-	keronaDesertCrashSite() : Place
+	keronaCliffsCaveInterior() : Place
 	{
-		this.keronaDesertCrashSite_Name(),
-
-		"Your escape pod has crashed in the middle of the desert "
-		+ "of the planet Kerona, rendering it completely inoperable.  "
-		+ "Its structural frame is severely bent, and the door unclosable.  "
-		+ "The forward window has shattered, "
-		+ "scattering shards of highly reflective glass over the sand "
-		+ "in front of the pod."
-		+ "\n\n"
-		+ "The desert stretches away as far as the eye can see to the "
-		+ "north, west, and south.  A maze of rocky cliffs rises to the east." 
+		throw new Error("todo");
 	}
 
-	keronaDesertCrashSite_Name() { return "Kerona - Desert - Crash Site"; }
+	keronaCliffsCaveInterior_Name() : string { return "Kerona - Cliffs - Cave - Interior"; }
+
+	keronaCliffsTopNorth() : Place
+	{
+		throw new Error("todo");
+	}
+
+	keronaCliffsTopNortheast() : Place
+	{
+		throw new Error("todo");
+	}
+
+	keronaCliffsTopNortheast_Name() : string { return "Kerona - Cliffs - Top - Northeast"; }
+
+	keronaCliffsTopNorthwest() : Place
+	{
+		throw new Error("todo");
+	}
+
+	keronaCliffsTopSouth() : Place
+	{
+		throw new Error("todo");
+	}
+
+	keronaCliffsTopSoutheast() : Place
+	{
+		throw new Error("todo");
+	}
+
+	keronaCliffsTopSouthwest() : Place
+	{
+		throw new Error("todo");
+	}
+
+	keronaDesertCrashSite() : Place
+	{
+		return this.place
+		(
+			this.keronaDesertCrashSite_Name(),
+
+			"Your escape pod has crashed in the middle of the desert "
+			+ "of the planet Kerona, rendering it completely inoperable.  "
+			+ "Its structural frame is severely bent, and the door unclosable.  "
+			+ "The forward window has shattered, "
+			+ "scattering shards of highly reflective glass over the sand "
+			+ "in front of the pod."
+			+ "\n\n"
+			+ "The desert stretches away as far as the eye can see to the "
+			+ "north, west, and south.  A maze of rocky cliffs rises to the east.",
+
+			[]
+		);
+	}
+
+	keronaDesertCrashSite_Name(): string { return "Kerona - Desert - Crash Site"; }
 
 	keronaDesertDeep() : Place
 	{
-		this.keronaDesertDeep_Name(),
+		return this.place
+		(
+			this.keronaDesertDeep_Name(),
 
-		"You stand in the trackless desert of the planet Kerona, "
-		+ "The featureless sand stretches away in every direction.",
+			"You stand in the trackless desert of the planet Kerona, "
+			+ "The featureless sand stretches away in every direction.",
 
-		[],
+			[]
 
-		Scripts.placeKeronaDesertDeepUpdate.name
+			// Scripts.placeKeronaDesertDeepUpdate.name
+		)
 	}
 
-	keronaDesertDeep_Name() { return "Kerona - Desert - Deep Desert"; }
+	keronaDesertDeep_Name(): string { return "Kerona - Desert - Deep Desert"; }
 
 	keronaDesertEscapePodInterior() : Place
 	{
-		this.keronaDesertEscapePodInterior_Name(),
+		return this.place
+		(
+			this.keronaDesertEscapePodInterior_Name(),
 
-		"You sit inside your escape pod where it has crashed on the surface "
-		+ "of the desert planet Kerona.  The pod's controls are dark and silent. "
-		+ "The forward window was shattered in the crash.  "
-		+ "Through the web of cracks and gaps, the yellow "
-		+ "sand of the desert stretches away before you, seemingly forever."
-		+ "\n\n"
-		+ "The door of the pod is open, and, due to structural damage "
-		+ "incurred during the crash, cannot be closed.  The hot, dry "
-		+ "desert air floods the pod, causing you to sweat profusely."
+			"You sit inside your escape pod where it has crashed on the surface "
+			+ "of the desert planet Kerona.  The pod's controls are dark and silent. "
+			+ "The forward window was shattered in the crash.  "
+			+ "Through the web of cracks and gaps, the yellow "
+			+ "sand of the desert stretches away before you, seemingly forever."
+			+ "\n\n"
+			+ "The door of the pod is open, and, due to structural damage "
+			+ "incurred during the crash, cannot be closed.  The hot, dry "
+			+ "desert air floods the pod, causing you to sweat profusely.",
 
-		[
-			this.portal("door", this.keronaDesertCrashSite_Name() ),
-		]
+			[
+				this.portal("door", this.keronaDesertCrashSite_Name() )
+			]
+		);
 	}
 
-	keronaDesertEscapePodInterior_Name() { return "Kerona - Desert - Escape Pod Interior"; }
+	keronaDesertEscapePodInterior_Name(): string { return "Kerona - Desert - Escape Pod Interior"; }
 
 	keronaDesertNorth() : Place
 	{
-		this.keronaDesertNorth_Name(),
+		return this.place
+		(
+			this.keronaDesertNorth_Name(),
 
-		"You stand in the trackless desert of the planet Kerona, "
-		+ "just north of the wreck of your crashed escape pod.  "
-		+ "The featureless sand stretches away in every other direction.",
+			"You stand in the trackless desert of the planet Kerona, "
+			+ "just north of the wreck of your crashed escape pod.  "
+			+ "The featureless sand stretches away in every other direction.",
 
-		[
-			this.portal("south", this.keronaDesertCrashSite_Name() ),
-			this.portal("north", this.keronaDesertDeep_Name() ),
-			this.portal("east", this.keronaDesertDeep_Name() ),
-			this.portal("west", this.keronaDesertDeep_Name() ),
-		]
+			[
+				this.portal("south", this.keronaDesertCrashSite_Name() ),
+				this.portal("north", this.keronaDesertDeep_Name() ),
+				this.portal("east", this.keronaDesertDeep_Name() ),
+				this.portal("west", this.keronaDesertDeep_Name() ),
+			]
+		);
 	}
 
-	keronaDesertNorth_Name() { return "Kerona - Desert - North of Crash Site"; }
+	keronaDesertNorth_Name(): string { return "Kerona - Desert - North of Crash Site"; }
 
 	keronaDesertSouth() : Place
 	{
-		this.keronaDesertSouth_Name(),
+		return this.place
+		(
+			this.keronaDesertSouth_Name(),
 
-		"You stand in the trackless desert of the planet Kerona, "
-		+ "just south of the wreck of your crashed escape pod.  "
-		+ "The featureless sand stretches away in every other direction.",
+			"You stand in the trackless desert of the planet Kerona, "
+			+ "just south of the wreck of your crashed escape pod.  "
+			+ "The featureless sand stretches away in every other direction.",
 
-		[
-			this.portal("north", this.keronaDesertCrashSite_Name() ),
-			this.portal("south", this.keronaDesertDeep_Name() ),
-			this.portal("east", this.keronaDesertDeep_Name() ),
-			this.portal("west", this.keronaDesertDeep_Name() ),
-		]
+			[
+				this.portal("north", this.keronaDesertCrashSite_Name() ),
+				this.portal("south", this.keronaDesertDeep_Name() ),
+				this.portal("east", this.keronaDesertDeep_Name() ),
+				this.portal("west", this.keronaDesertDeep_Name() ),
+			]
+		);
 	}
 
-	keronaDesertSouth_Name() { return "Kerona - Desert - South of Crash Site"; }
+	keronaDesertSouth_Name(): string { return "Kerona - Desert - South of Crash Site"; }
 
 	keronaDesertWest() : Place
 	{
-		this.keronaDesertWest_Name(),
+		return this.place
+		(
+			this.keronaDesertWest_Name(),
 
-		"You stand in the trackless desert of the planet Kerona, "
-		+ "just west of the wreck of your crashed escape pod.  "
-		+ "The featureless sand stretches away in every other direction.",
+			"You stand in the trackless desert of the planet Kerona, "
+			+ "just west of the wreck of your crashed escape pod.  "
+			+ "The featureless sand stretches away in every other direction.",
 
-		[
-			this.portal("east", this.keronaDesertCrashSite_Name() ),
-			this.portal("north", this.keronaDesertDeep_Name() ),
-			this.portal("south", this.keronaDesertDeep_Name() ),
-			this.portal("west", this.keronaDesertDeep_Name() ),
-		]
+			[
+				this.portal("east", this.keronaDesertCrashSite_Name() ),
+				this.portal("north", this.keronaDesertDeep_Name() ),
+				this.portal("south", this.keronaDesertDeep_Name() ),
+				this.portal("west", this.keronaDesertDeep_Name() ),
+			]
+		);
 	}
 
-	keronaDesertWest_Name() { return "Kerona - Desert - West of Crash Site"; }
+	keronaDesertWest_Name(): string { return "Kerona - Desert - West of Crash Site"; }
 
 	keronaUlenceFlatsBarFront() : Place
 	{
-		this.keronaUlenceFlatsBarFront_Name(),
+		return this.place
+		(
+			this.keronaUlenceFlatsBarFront_Name(),
 
-		"You stand in the tiny settlement of Ulence Flats.  "
-		+ "To the east stands a concrete igloo with an arched entrance, "
-		+ "above which is a lighted sign that says 'BAR' in "
-		+ "several of the more common languages of this sector of space."
-		+ "Several spaceships, presumably belonging to the bar's patrons,"
-		+ "stand nearby."
-		+ "\n\n"
-		+ "To the west, you can see another, similar building, with a few more "
-		+ "run-down looking spaceships in front of it, and decorated with "
-		+ "strings of cheap but festive plastic pennants."
-		+ "\n\n"
-		+ "Away to the north is the edge of yet another domelike building, ",
-		+ "possibly a store of some sort."
-		+ "\n\n"
-		+ "To the south, a faint shimmer in the air betrays the forcefield "
-		+ "that protects this settlement from the native predatory sand-swimmers."
+			"You stand in the tiny settlement of Ulence Flats.  "
+			+ "To the east stands a concrete igloo with an arched entrance, "
+			+ "above which is a lighted sign that says 'BAR' in "
+			+ "several of the more common languages of this sector of space."
+			+ "Several spaceships, presumably belonging to the bar's patrons,"
+			+ "stand nearby."
+			+ "\n\n"
+			+ "To the west, you can see another, similar building, with a few more "
+			+ "run-down looking spaceships in front of it, and decorated with "
+			+ "strings of cheap but festive plastic pennants."
+			+ "\n\n"
+			+ "Away to the north is the edge of yet another domelike building, "
+			+ "possibly a store of some sort."
+			+ "\n\n"
+			+ "To the south, a faint shimmer in the air betrays the forcefield "
+			+ "that protects this settlement from the native predatory sand-swimmers.",
 
-		[
-			this.portal("north", this.keronaUlenceFlatsDroidsBWeWest_Name() ),
-			this.portal("west", this.keronaUlenceFlatsTinysUsedShips_Name() ),
-			this.portal("east", this.keronaUlenceFlatsBarRear_Name() ),
-			this.portal("south", this.keronaDesertDeep_Name() ),
-		]
+			[
+				this.portal("north", this.keronaUlenceFlatsDroidsBWeWest_Name() ),
+				this.portal("west", this.keronaUlenceFlatsTinysUsedShips_Name() ),
+				this.portal("east", this.keronaUlenceFlatsBarRear_Name() ),
+				this.portal("south", this.keronaDesertDeep_Name() )
+			]
+		);
 	}
 
-	keronaUlenceFlatsBarFront_Name() { return "Kerona - Ulence Flats - Bar - Front"; }
+	keronaUlenceFlatsBarFront_Name(): string { return "Kerona - Ulence Flats - Bar - Front"; }
+
+	keronaUlenceFlatsBarInterior() : Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsBarInterior_Name(),
+
+			"You stand inside the Ulence Flats bar.  "
+			+ "On a small stage, a band of garishly dressed bipeds loudly plays "
+			+ "what you can only assume is a song, "
+			+ "and that you can only assume to be one of their hits.  "
+			+ "A bar runs along the opposite wall, where a harried bartender "
+			+ "delivers drinks to patrons seated on stools, "
+			+ "some of whom are engaged in conversation, or at least reciprocal bluster.  "
+			+ "A cabinet housing some sort of video gambling machine stands in the back.  "
+			+ "A squat cleaning robot busily sweeps the floor around the machine, "
+			+ "and periodically empties a load of its sweepings into a hatch in the back wall.",
+
+			[
+				this.portal("north", this.keronaUlenceFlatsDroidsBWeWest_Name() ),
+				this.portal("west", this.keronaUlenceFlatsTinysUsedShips_Name() ),
+				this.portal("east", this.keronaUlenceFlatsBarRear_Name() ),
+				this.portal("south", this.keronaDesertDeep_Name() ),
+
+				this.emplacement("band"),
+				this.emplacement("bar"),
+				this.emplacement("heap"),
+				this.emplacement("machine"),
+				this.emplacement("bartender"),
+				this.emplacement("patrons")
+			]
+		);
+	}
+
+	keronaUlenceFlatsBarInterior_Name(): string { return "Kerona - Ulence Flats - Bar - Interior"; }
+
+	keronaUlenceFlatsBarRear() : Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsBarRear_Name(),
+
+			"You stand behind the Ulence Flats bar.  "
+			+ "It is somewhat secluded here."
+			+ "Force-fields block progress to the east and south.  "
+			+ "You can see another, larger building to the north.  "
+			+ "At irregular intervals, a hatch in the back wall of the bar opens "
+			+ "and expels some fine white powder, "
+			+ "which settles onto a larger heap of powder below.",
+
+			[
+				this.portal("north", this.keronaUlenceFlatsDroidsBWeWest_Name() ),
+				this.portal("west", this.keronaUlenceFlatsTinysUsedShips_Name() ),
+				this.portal("east", this.keronaUlenceFlatsBarRear_Name() ),
+				this.portal("south", this.keronaDesertDeep_Name() ),
+
+				this.emplacement("heap")
+			]
+		);
+	}
+
+	keronaUlenceFlatsBarRear_Name(): string { return "Kerona - Ulence Flats - Bar - Rear"; }
+
+	keronaUlenceFlatsDroidsBWeFront(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsDroidsBWeFront_Name(): string { return "Kerona - Droids-B-We - Front"; }
+
+	keronaUlenceFlatsDroidsBWeInterior(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsDroidsBWeInterior_Name(): string { return "Kerona - Droids-B-We - Interior"; }
+
+	keronaUlenceFlatsDroidsBWeWest(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsDroidsBWeWest_Name(): string { return "Kerona - Droids-B-We - West"; }
+
+	keronaUlenceFlatsNorthOfTinysUsedShips(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsNorthOfTinysUsedShips_Name(): string { return "Kerona - Ulence Flats - North of Tiny's Used Ships"; }
+
+	keronaUlenceFlatsTinysUsedShips(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsTinysUsedShips_Name(): string { return "Kerona - Ulence Flats - Tiny's Used Ships"; }
 
 }
 
@@ -905,7 +1302,7 @@ class Scripts
 			"EmplacementDeadCrewpersonUse",
 			this.emplacementDeadCrewpersonUse
 		);
-		this.ItemKecyardUse = s("ItemKeycardUse", this.itemKeycardUse);
+		this.ItemKeycardUse = s("ItemKeycardUse", this.itemKeycardUse);
 		this.PlaceArcadiaJanitorsClosetUpdate = s
 		(
 			"PlaceArcadiaJanitorsClosetUpdate",
@@ -919,6 +1316,16 @@ class Scripts
 			this.ItemKeycardUse,
 			this.PlaceArcadiaJanitorsClosetUpdate
 		];
+	}
+
+	static _instance: Scripts;
+	static Instance(): Scripts
+	{
+		if (Scripts._instance == null)
+		{
+			Scripts._instance = new Scripts();
+		}
+		return Scripts._instance;
 	}
 
 	agentSarienTalkTo(u: Universe, w: World, p: Place, agent: any): void
@@ -951,7 +1358,7 @@ class Scripts
 			);
 			place.itemAdd(itemKeycard);
 
-			emplacementDeadCrewpersonUse._scriptUseName = null;
+			emplacementDeadCrewperson._scriptUseName = null;
 		}
 
 		u.messageEnqueue(message);
@@ -1023,6 +1430,11 @@ class StateNames
 	static isEmpty(): string
 	{
 		return "isEmpty";
+	}
+
+	static isOpen(): string
+	{
+		return "isOpen";
 	}
 
 	static isSharpened(): string
