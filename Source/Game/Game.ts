@@ -122,6 +122,7 @@ class Places
 	KeronaCavernsDrips: Place;
 	KeronaCavernsElevator: Place;
 	KeronaCavernsGeyser: Place;
+	KeronaCavernsGrating: Place;
 	KeronaCavernsPool: Place;
 	KeronaCavernsProjectionRoom: Place;
 	KeronaCavernsSteamworks: Place;
@@ -214,6 +215,7 @@ class Places
 		this.KeronaCavernsDrips = this.keronaCavernsDrips();
 		this.KeronaCavernsElevator = this.keronaCavernsElevator();
 		this.KeronaCavernsGeyser = this.keronaCavernsGeyser();
+		this.KeronaCavernsGrating = this.keronaCavernsGrating();
 		this.KeronaCavernsPool = this.keronaCavernsPool();
 		this.KeronaCavernsProjectionRoom = this.keronaCavernsProjectionRoom();
 		this.KeronaCavernsSteamworks = this.keronaCavernsSteamworks();
@@ -295,6 +297,7 @@ class Places
 			this.KeronaCavernsDrips,
 			this.KeronaCavernsElevator,
 			this.KeronaCavernsGeyser,
+			this.KeronaCavernsGrating,
 			this.KeronaCavernsPool,
 			this.KeronaCavernsProjectionRoom,
 			this.KeronaCavernsSteamworks,
@@ -828,30 +831,373 @@ class Places
 		return "Deep Space - Escape Pod";
 	}
 
-	deltaurAirlockChamber(): Place { throw new Error("todo"); }
-	deltaurAirlockExterior(): Place { throw new Error("todo"); }
-	deltaurAirlockInterior(): Place { throw new Error("todo"); }
-	deltaurArmory(): Place { throw new Error("todo"); }
-	deltaurLaundry(): Place { throw new Error("todo"); }
-	deltaurLowerDeckHallAft(): Place { throw new Error("todo"); }
-	deltaurLowerDeckHallAmidships(): Place { throw new Error("todo"); }
-	deltaurLowerDeckHallFore(): Place { throw new Error("todo"); }
-	deltaurNearbySpace(): Place { throw new Error("todo"); }
-	deltaurShuttleBay(): Place { throw new Error("todo"); }
-	deltaurStarGeneratorChamber(): Place { throw new Error("todo"); }
-	deltaurStarGeneratorChamberCatwalk(): Place { throw new Error("todo"); }
-	deltaurUpperDeckHallAft(): Place { throw new Error("todo"); }
-	deltaurUpperDeckHallAmidships(): Place { throw new Error("todo"); }
-	deltaurUpperDeckHallFore(): Place { throw new Error("todo"); }
-	deltaurVentilationShaft1(): Place { throw new Error("todo"); }
-	deltaurVentilationShaft2(): Place { throw new Error("todo"); }
-	deltaurVentilationShaft3(): Place { throw new Error("todo"); }
-	deltaurVentilationShaft4(): Place { throw new Error("todo"); }
+	deltaurAirlockChamber(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Airlock - Interior",
 
-	keronaCavernsBarrier(): Place { throw new Error("todo"); }
-	keronaCavernsDrips(): Place { throw new Error("todo"); }
-	keronaCavernsElevator(): Place { throw new Error("todo"); }
-	keronaCavernsGeyser(): Place { throw new Error("todo"); }
+			"This is the interior of one of the Deltaur's airlocks.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurAirlockExterior(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Exterior - Airlock Door",
+
+			"This is the exterior of the Deltaur, near an airlock door.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurAirlockInterior(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Airlock - Antechamber",
+
+			"This is the antechamber of an airlock on the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurArmory(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Armory",
+
+			"This is the armory of the Deltaur."
+			+ "A high counter, with a robot standing watch behind it, "
+			+ "blocks the path to the weapon racks.",
+
+			[
+				// todo
+			]
+		);
+
+	}
+
+	deltaurLaundry(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Laundry",
+
+			"This is a laundry room on the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurLowerDeckHallAft(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Hall - Lower Deck - Aft",
+
+			"This is the aft end of a hallway on the lower deck of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurLowerDeckHallAmidships(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Hall - Lower Deck - Amidships",
+
+			"This is the amidships section of a hallway on the lower deck of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+
+	}
+
+	deltaurLowerDeckHallFore(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Hall - Lower Deck - Forward",
+
+			"This is the forward end of a hallway on the lower deck of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurNearbySpace(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Nearby Space",
+
+			"You are in your ship, hovering nearby the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurShuttleBay(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Shuttle Bay",
+
+			"This is the shuttle bay of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurStarGeneratorChamber(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Star Generator Chamber",
+
+			"This is a cavernous room on the Deltaur.  "
+			+ "The Star Generator is mounted on a pedestal, "
+			+ "with an armed guard standing nearby.  "
+			+ "A catwalk runs overhead.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurStarGeneratorChamberCatwalk(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Star Generator Chamber",
+
+			"You are standing on a railed catwalk above a "
+			+ " cavernous chamber on the Deltaur.  "
+			+ "On the floor, far below, the Star Generator"
+			+ "is mounted on a pedestal, "
+			+ "with an armed guard standing nearby.  "
+			+ "The catwalk runs fore and aft.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurUpperDeckHallAft(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Hall - Upper Deck - Aft",
+
+			"This is the aft end of a hallway on the upper deck of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurUpperDeckHallAmidships(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Hall - Upper Deck - Amidships",
+
+			"This is the amidships section of a hallway "
+			+ "on the upper deck of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurUpperDeckHallFore(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Hall - Upper Deck - Forward",
+
+			"This is the forward end of a hallway on the upper deck of the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurVentilationShaft1(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Ventilation Shaft - 1",
+
+			"This is a ventilation shaft on the Deltaur.  "
+			+ "A short side branch leads to a vent cover.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurVentilationShaft2(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Ventilation Shaft - 2",
+
+			"This is a ventilation shaft on the Deltaur.  "
+			+ "A short side branch leads to a vent cover.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurVentilationShaft3(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Ventilation Shaft - 3",
+
+			"This is a featureless stretch of ventilation shaft on the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	deltaurVentilationShaft4(): Place
+	{
+		return this.place
+		(
+			"Deltaur - Ventilation Shaft - 4",
+
+			"This is a featureless stretch of ventilation shaft on the Deltaur.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsBarrier(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Barrier",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona.  "
+			+ "The path forward is blocked by several closely spaced "
+			+ "and intensely bright beams of light,"
+			+ "which are emitted from small round ports the rock walls, "
+			+ "and which pass into similar ports on the other side.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsDrips(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Drips",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona.  "
+			+ "Drips of a clear liquid fall intermittently from the ceiling.  "
+			+ "Each drip passes into a small, precise hole in the floor "
+			+ "that appears as if it were made to fit it.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsElevator(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Elevator",
+
+			"You stand at the bottom of the elevator that brought you down "
+			+ "from the cliffs of Kerona to a cool, dark, rocky cavern.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsGeyser(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Geyser",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona.  "
+			+ "The passage ends abruptly in a solid rock wall."
+			+ "Nearby , a small geyser shoots wetly and steamily out of a hole "
+			+ " in the top of a stalagmite."
+			+ "A passage leads back the way you came.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsGrating(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Grating",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona, "
+			+ "in a passage running from east to west."
+			+ "In the floor leading to the west, a thick metal grating "
+			+ "perforated with holes about 10 centimeters wide "
+			+ "stretches from wall to wall across the entire passage. ",
+
+			[
+				// todo
+			]
+		);
+	}
+
 	keronaCavernsPool(): Place { throw new Error("todo"); }
 	keronaCavernsProjectionRoom(): Place { throw new Error("todo"); }
 	keronaCavernsSteamworks(): Place { throw new Error("todo"); }
