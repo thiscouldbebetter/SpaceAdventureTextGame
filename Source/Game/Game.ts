@@ -33,7 +33,7 @@ class Game
 
 		var returnValue = new World
 		(
-			"Demo World",
+			"Space_Quest",
 			places,
 			player,
 			commands,
@@ -1198,9 +1198,61 @@ class Places
 		);
 	}
 
-	keronaCavernsPool(): Place { throw new Error("todo"); }
-	keronaCavernsProjectionRoom(): Place { throw new Error("todo"); }
-	keronaCavernsSteamworks(): Place { throw new Error("todo"); }
+	keronaCavernsPool(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Pool",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona. "
+			+ "You stand on a wide ledge that runs south, back through a hidden doorway, "
+			+ " where a plugged geyser steams fitfully.  To the west, the ledge runs "
+			+ "through dark natural stone columns and on into the darkness.  "
+			+ "Far below the ledge is a pool of clear liquid, "
+			+ "with drips falling from holes in the ceiling to fill it.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsProjectionRoom(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Projection Room",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona. "
+			+ "This space is completely dark at the moment.  Earlier, it was lit only " 
+			+ " by a holographic projection of a triangular-headed alien.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaCavernsSteamworks(): Place
+	{
+		return this.place
+		(
+			"Kerona - Caverns - Steamworks",
+
+			"You are in a cavern deep beneath the desert of the planet Kerona. "
+			+ "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
+			+ "A computer console with a monitor and standard data cartridge slot "
+			+ "stands against the north wall.  Above it is a catwalk where members "
+			+ "of a gray-skinned, large-eyed, triangular-headed alien species "
+			+ "busily operate various inscrutable control systems."
+			+ "To the east is a small, garage-like space, with a door at the end "
+			+ "that appears to open onto a large elevator platform.",
+
+			[
+				// todo
+			]
+		);
+	}
 
 	keronaCliffsBottomNorth(): Place
 	{
@@ -1293,7 +1345,10 @@ class Places
 		);
 	}
 
-	keronaCliffsBottomNorthwestWestSide_Name(): string { return "Kerona - Cliffs - Northwest - West Side" };
+	keronaCliffsBottomNorthwestWestSide_Name(): string
+	{
+		return "Kerona - Cliffs - Northwest - West Side"
+	};
 
 	keronaCliffsBottomSouth(): Place
 	{
@@ -1353,41 +1408,107 @@ class Places
 
 	keronaCliffsCaveInterior() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			this.keronaCliffsCaveInterior_Name(),
+
+			"This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
+			+ "To the west the cave opens out into the blazing daylight "
+			+ "of the Kerona desert.",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaCliffsCaveInterior_Name() : string { return "Kerona - Cliffs - Cave - Interior"; }
 
 	keronaCliffsTopNorth() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			"Kerona - Cliffs - Top - North",
+
+			"You stand atop a cliff rising from the desert of the planet Kerona",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaCliffsTopNortheast() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			this.keronaCliffsTopNortheast_Name(),
+
+			"You stand atop a cliff rising from the desert of the planet Kerona.  "
+			+ "A pair of bent stone columns rises, bending toward each other like horns.",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaCliffsTopNortheast_Name() : string { return "Kerona - Cliffs - Top - Northeast"; }
 
 	keronaCliffsTopNorthwest() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			"Kerona - Cliffs - Top - Northwest",
+
+			"You stand atop a cliff rising from the desert of the planet Kerona",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaCliffsTopSouth() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			"Kerona - Cliffs - Top - South",
+
+			"You stand atop a cliff rising from the desert of the planet Kerona",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaCliffsTopSoutheast() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			"Kerona - Cliffs - Top - Southeast",
+
+			"You stand atop a cliff rising from the desert of the planet Kerona",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaCliffsTopSouthwest() : Place
 	{
-		throw new Error("todo");
+		return this.place
+		(
+			"Kerona - Cliffs - Top - Southwest",
+
+			"You stand atop a cliff rising from the desert of the planet Kerona",
+
+			[
+				// todo
+			]
+		);
 	}
 
 	keronaDesertCrashSite() : Place
@@ -1593,7 +1714,7 @@ class Places
 
 			"You stand behind the Ulence Flats bar.  "
 			+ "It is somewhat secluded here."
-			+ "Force-fields block progress to the east and south.  "
+			+ "Force-fields block access to the surrounding desert to the east and south.  "
 			+ "You can see another, larger building to the north.  "
 			+ "At irregular intervals, a hatch in the back wall of the bar opens "
 			+ "and expels some fine white powder, "
@@ -1603,7 +1724,6 @@ class Places
 				this.portal("north", this.keronaUlenceFlatsDroidsBWeWest_Name() ),
 				this.portal("west", this.keronaUlenceFlatsTinysUsedShips_Name() ),
 				this.portal("east", this.keronaUlenceFlatsBarRear_Name() ),
-				this.portal("south", this.keronaDesertDeep_Name() ),
 
 				this.emplacement("heap")
 			]
@@ -1612,20 +1732,113 @@ class Places
 
 	keronaUlenceFlatsBarRear_Name(): string { return "Kerona - Ulence Flats - Bar - Rear"; }
 
-	keronaUlenceFlatsDroidsBWeFront(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsDroidsBWeFront(): Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsDroidsBWeFront_Name(),
+
+			"You stand in the desert settlement of Ulence Flats, "
+			+ "to the south of the entrance of a domed building "
+			+ "bearing the sign 'Droids-B-We'.",
+
+			[
+				// todo
+			]
+		);
+	}
+
 	keronaUlenceFlatsDroidsBWeFront_Name(): string { return "Kerona - Droids-B-We - Front"; }
 
-	keronaUlenceFlatsDroidsBWeInterior(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsDroidsBWeInterior(): Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsDroidsBWeInterior_Name(),
+
+			"You stand inside the Ulence Flats branch of 'Droids-B-We'. "
+			+ "Various inactive robots are displayed on pedestals, "
+			+ "each bearing a more-or-less conspicious price tag.  "
+			+ "A salesbeing watches you idly, perhaps waiting to see if you require assistance.  "
+			+ "In the south wall is the door leading back outside.",
+
+			[
+				// todo
+			]
+		);
+	}
 	keronaUlenceFlatsDroidsBWeInterior_Name(): string { return "Kerona - Droids-B-We - Interior"; }
 
-	keronaUlenceFlatsDroidsBWeWest(): Place { throw new Error("todo"); }
+	keronaUlenceFlatsDroidsBWeWest(): Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsDroidsBWeWest_Name(),
+
+			"You stand in the desert settlement of Ulence Flats, "
+			+ "to the west of a large domed building.  "
+			+ "A smaller domed building housing a bar lies to the south. "
+			+ "Further to the west you see a spaceship standing "
+			+ "at the northern edge of a brightly decorated lot containing several more ships."
+			+ "A force field blocks access to the open desert to the north. ",
+
+			[
+				// todo
+			]
+		);
+	}
 	keronaUlenceFlatsDroidsBWeWest_Name(): string { return "Kerona - Droids-B-We - West"; }
 
-	keronaUlenceFlatsNorthOfTinysUsedShips(): Place { throw new Error("todo"); }
-	keronaUlenceFlatsNorthOfTinysUsedShips_Name(): string { return "Kerona - Ulence Flats - North of Tiny's Used Ships"; }
+	keronaUlenceFlatsNorthOfTinysUsedShips(): Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsNorthOfTinysUsedShips_Name(),
 
-	keronaUlenceFlatsTinysUsedShips(): Place { throw new Error("todo"); }
-	keronaUlenceFlatsTinysUsedShips_Name(): string { return "Kerona - Ulence Flats - Tiny's Used Ships"; }
+			"You stand in the desert settlement of Ulence Flats.  "
+			+ "You see a spaceship standing here, and, to the south,"
+			+ "a brightly decorated lot containing several more ships."
+			+ " To the east, you see a large domed building. "
+			+ "A smaller domed building with a sign that says 'Bar' lies to the southeast. "
+			+ "A force field blocks access to the open desert to the north and west.",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaUlenceFlatsNorthOfTinysUsedShips_Name(): string
+	{
+		return "Kerona - Ulence Flats - North of Tiny's Used Ships";
+	}
+
+	keronaUlenceFlatsTinysUsedShips(): Place
+	{
+		return this.place
+		(
+			this.keronaUlenceFlatsNorthOfTinysUsedShips_Name(),
+
+			"You stand in the desert settlement of Ulence Flats, "
+			+ "in a sandy lot brighly decorated with colorful pennants "
+			+ " strung along lines, and containing several ships in various states of wear."
+			+ "Just to the north you see another ship standing by itself."
+			+ "At one edge of the lot is a small cubical building "
+			+ "bearing a sign that says, 'Tiny's Used Ships'."
+			+ "A domed building with a sign that says 'Bar' stands to the east. "
+			+ "A larger domed building stands to the northeast. "
+			+ "A force field blocks access to the open desert to the south and west. ",
+
+			[
+				// todo
+			]
+		);
+	}
+
+	keronaUlenceFlatsTinysUsedShips_Name(): string
+	{
+		return "Kerona - Ulence Flats - Tiny's Used Ships";
+	}
 
 }
 
