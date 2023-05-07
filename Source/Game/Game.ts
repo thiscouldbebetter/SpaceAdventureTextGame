@@ -835,7 +835,7 @@ class Places
 	{
 		return this.place
 		(
-			"Deltaur - Airlock - Interior",
+			this.deltaurAirlockChamber_Name(),
 
 			"This is the interior of one of the Deltaur's airlocks.",
 
@@ -845,11 +845,13 @@ class Places
 		);
 	}
 
+	deltaurAirlockChamber_Name(): string { return "Deltaur - Airlock - Chamber"; }
+
 	deltaurAirlockExterior(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Exterior - Airlock Door",
+			this.deltaurAirlockExterior_Name(),
 
 			"This is the exterior of the Deltaur, near an airlock door.",
 
@@ -859,11 +861,13 @@ class Places
 		);
 	}
 
+	deltaurAirlockExterior_Name(): string { return "Deltaur - Exterior - Airlock Door"; }
+
 	deltaurAirlockInterior(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Airlock - Antechamber",
+			this.deltaurAirlockInterior_Name(),
 
 			"This is the antechamber of an airlock on the Deltaur.",
 
@@ -873,11 +877,13 @@ class Places
 		);
 	}
 
+	deltaurAirlockInterior_Name(): string { return "Deltaur - Airlock - Antechamber"; }
+
 	deltaurArmory(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Armory",
+			this.deltaurArmory_Name(),
 
 			"This is the armory of the Deltaur."
 			+ "A high counter, with a robot standing watch behind it, "
@@ -887,14 +893,15 @@ class Places
 				// todo
 			]
 		);
-
 	}
+
+	deltaurArmory_Name(): string { return "Deltaur - Armory"; }
 
 	deltaurLaundry(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Laundry",
+			this.deltaurLaundry_Name(),
 
 			"This is a laundry room on the Deltaur.",
 
@@ -904,11 +911,13 @@ class Places
 		);
 	}
 
+	deltaurLaundry_Name(): string { return "Deltaur - Laundry"; }
+
 	deltaurLowerDeckHallAft(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Hall - Lower Deck - Aft",
+			this.deltaurLowerDeckHallAft_Name(),
 
 			"This is the aft end of a hallway on the lower deck of the Deltaur.",
 
@@ -918,11 +927,13 @@ class Places
 		);
 	}
 
+	deltaurLowerDeckHallAft_Name(): string { return "Deltaur - Hall - Lower Deck - Aft"; }
+
 	deltaurLowerDeckHallAmidships(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Hall - Lower Deck - Amidships",
+			this.deltaurLowerDeckHallAmidships_Name(),
 
 			"This is the amidships section of a hallway on the lower deck of the Deltaur.",
 
@@ -930,14 +941,15 @@ class Places
 				// todo
 			]
 		);
-
 	}
+
+	deltaurLowerDeckHallAmidships_Name(): string { return "Deltaur - Hall - Lower Deck - Amidships"; }
 
 	deltaurLowerDeckHallFore(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Hall - Lower Deck - Forward",
+			this.deltaurLowerDeckHallFore_Name(),
 
 			"This is the forward end of a hallway on the lower deck of the Deltaur.",
 
@@ -947,11 +959,13 @@ class Places
 		);
 	}
 
+	deltaurLowerDeckHallFore_Name(): string { return "Deltaur - Hall - Lower Deck - Forward"; }
+
 	deltaurNearbySpace(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Nearby Space",
+			this.deltaurNearbySpace_Name(),
 
 			"You are in your ship, hovering nearby the Deltaur.",
 
@@ -961,11 +975,13 @@ class Places
 		);
 	}
 
+	deltaurNearbySpace_Name(): string { return "Deltaur - Nearby Space"; }
+
 	deltaurShuttleBay(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Shuttle Bay",
+			this.deltaurShuttleBay_Name(),
 
 			"This is the shuttle bay of the Deltaur.",
 
@@ -975,11 +991,13 @@ class Places
 		);
 	}
 
+	deltaurShuttleBay_Name(): string { return "Deltaur - Shuttle Bay"; }
+
 	deltaurStarGeneratorChamber(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Star Generator Chamber",
+			this.deltaurStarGeneratorChamber_Name(),
 
 			"This is a cavernous room on the Deltaur.  "
 			+ "The Star Generator is mounted on a pedestal, "
@@ -992,11 +1010,13 @@ class Places
 		);
 	}
 
+	deltaurStarGeneratorChamber_Name(): string { return "Deltaur - Star Generator Chamber"; }
+
 	deltaurStarGeneratorChamberCatwalk(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Star Generator Chamber",
+			this.deltaurStarGeneratorChamberCatwalk_Name(),
 
 			"You are standing on a railed catwalk above a "
 			+ " cavernous chamber on the Deltaur.  "
@@ -1011,11 +1031,13 @@ class Places
 		);
 	}
 
+	deltaurStarGeneratorChamberCatwalk_Name(): string { return "Deltaur - Star Generator Chamber - Catwalk"; }
+
 	deltaurUpperDeckHallAft(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Hall - Upper Deck - Aft",
+			this.deltaurUpperDeckHallAft_Name(),
 
 			"This is the aft end of a hallway on the upper deck of the Deltaur.",
 
@@ -1025,11 +1047,13 @@ class Places
 		);
 	}
 
+	deltaurUpperDeckHallAft_Name(): string { return "Deltaur - Hall - Upper Deck - Aft"; }
+
 	deltaurUpperDeckHallAmidships(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Hall - Upper Deck - Amidships",
+			this.deltaurUpperDeckHallAmidships_Name(),
 
 			"This is the amidships section of a hallway "
 			+ "on the upper deck of the Deltaur.",
@@ -1040,11 +1064,13 @@ class Places
 		);
 	}
 
+	deltaurUpperDeckHallAmidships_Name(): string { return "Deltaur - Hall - Upper Deck - Amidships"; }
+
 	deltaurUpperDeckHallFore(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Hall - Upper Deck - Forward",
+			this.deltaurUpperDeckHallFore_Name(),
 
 			"This is the forward end of a hallway on the upper deck of the Deltaur.",
 
@@ -1054,11 +1080,13 @@ class Places
 		);
 	}
 
+	deltaurUpperDeckHallFore_Name(): string { return "Deltaur - Hall - Upper Deck - Forward"; }
+
 	deltaurVentilationShaft1(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Ventilation Shaft - 1",
+			this.deltaurVentilationShaft1_Name(),
 
 			"This is a ventilation shaft on the Deltaur.  "
 			+ "A short side branch leads to a vent cover.",
@@ -1068,12 +1096,14 @@ class Places
 			]
 		);
 	}
+
+	deltaurVentilationShaft1_Name(): string { return "Deltaur - Ventilation Shaft - 1"; }
 
 	deltaurVentilationShaft2(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Ventilation Shaft - 2",
+			this.deltaurVentilationShaft2_Name(),
 
 			"This is a ventilation shaft on the Deltaur.  "
 			+ "A short side branch leads to a vent cover.",
@@ -1084,11 +1114,13 @@ class Places
 		);
 	}
 
+	deltaurVentilationShaft2_Name(): string { return "Deltaur - Ventilation Shaft - 2"; }
+
 	deltaurVentilationShaft3(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Ventilation Shaft - 3",
+			this.deltaurVentilationShaft3_Name(),
 
 			"This is a featureless stretch of ventilation shaft on the Deltaur.",
 
@@ -1097,12 +1129,14 @@ class Places
 			]
 		);
 	}
+
+	deltaurVentilationShaft3_Name(): string { return "Deltaur - Ventilation Shaft - 3"; }
 
 	deltaurVentilationShaft4(): Place
 	{
 		return this.place
 		(
-			"Deltaur - Ventilation Shaft - 4",
+			this.deltaurVentilationShaft4_Name(),
 
 			"This is a featureless stretch of ventilation shaft on the Deltaur.",
 
@@ -1112,11 +1146,13 @@ class Places
 		);
 	}
 
+	deltaurVentilationShaft4_Name(): string { return "Deltaur - Ventilation Shaft - 4"; }
+
 	keronaCavernsBarrier(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Barrier",
+			this.keronaCavernsBarrier_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona.  "
 			+ "The path forward is blocked by several closely spaced "
@@ -1130,11 +1166,13 @@ class Places
 		);
 	}
 
+	keronaCavernsBarrier_Name(): string { return "Kerona - Caverns - Barrier"; }
+
 	keronaCavernsDrips(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Drips",
+			this.keronaCavernsDrips_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona.  "
 			+ "Drips of a clear liquid fall intermittently from the ceiling.  "
@@ -1147,11 +1185,13 @@ class Places
 		);
 	}
 
+	keronaCavernsDrips_Name(): string { return "Kerona - Caverns - Drips"; }
+
 	keronaCavernsElevator(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Elevator",
+			this.keronaCavernsElevator_Name(),
 
 			"You stand at the bottom of the elevator that brought you down "
 			+ "from the cliffs of Kerona to a cool, dark, rocky cavern.",
@@ -1162,11 +1202,13 @@ class Places
 		);
 	}
 
+	keronaCavernsElevator_Name(): string { return "Kerona - Caverns - Elevator"; }
+
 	keronaCavernsGeyser(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Geyser",
+			this.keronaCavernsGeyser_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona.  "
 			+ "The passage ends abruptly in a solid rock wall."
@@ -1180,11 +1222,13 @@ class Places
 		);
 	}
 
+	keronaCavernsGeyser_Name(): string { return "Kerona - Caverns - Geyser"; }
+
 	keronaCavernsGrating(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Grating",
+			this.keronaCavernsGrating_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona, "
 			+ "in a passage running from east to west."
@@ -1198,11 +1242,13 @@ class Places
 		);
 	}
 
+	keronaCavernsGrating_Name(): string { return "Kerona - Caverns - Grating"; }
+
 	keronaCavernsPool(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Pool",
+			this.keronaCavernsPool_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona. "
 			+ "You stand on a wide ledge that runs south, back through a hidden doorway, "
@@ -1216,12 +1262,14 @@ class Places
 			]
 		);
 	}
+	
+	keronaCavernsPool_Name(): string { return "Kerona - Caverns - Pool"; }
 
 	keronaCavernsProjectionRoom(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Projection Room",
+			this.keronaCavernsProjectionRoom_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona. "
 			+ "This space is completely dark at the moment.  Earlier, it was lit only " 
@@ -1233,11 +1281,13 @@ class Places
 		);
 	}
 
+	keronaCavernsProjectionRoom_Name(): string { return "Kerona - Caverns - Projection Room"; }
+
 	keronaCavernsSteamworks(): Place
 	{
 		return this.place
 		(
-			"Kerona - Caverns - Steamworks",
+			this.keronaCavernsSteamworks_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Kerona. "
 			+ "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
@@ -1253,6 +1303,8 @@ class Places
 			]
 		);
 	}
+
+	keronaCavernsSteamworks_Name(): string { return "Kerona - Caverns - Steamworks"; }
 
 	keronaCliffsBottomNorth(): Place
 	{
@@ -1428,7 +1480,7 @@ class Places
 	{
 		return this.place
 		(
-			"Kerona - Cliffs - Top - North",
+			this.keronaCliffsTopNorth_Name(),
 
 			"You stand atop a cliff rising from the desert of the planet Kerona",
 
@@ -1437,6 +1489,8 @@ class Places
 			]
 		);
 	}
+
+	keronaCliffsTopNorth_Name() : string { return "Kerona - Cliffs - Top - North"; }
 
 	keronaCliffsTopNortheast() : Place
 	{
@@ -1459,7 +1513,7 @@ class Places
 	{
 		return this.place
 		(
-			"Kerona - Cliffs - Top - Northwest",
+			this.keronaCliffsTopNorthwest_Name(),
 
 			"You stand atop a cliff rising from the desert of the planet Kerona",
 
@@ -1468,12 +1522,14 @@ class Places
 			]
 		);
 	}
+
+	keronaCliffsTopNorthwest_Name() : string { return "Kerona - Cliffs - Top - Northwest"; }
 
 	keronaCliffsTopSouth() : Place
 	{
 		return this.place
 		(
-			"Kerona - Cliffs - Top - South",
+			this.keronaCliffsTopSouth_Name(),
 
 			"You stand atop a cliff rising from the desert of the planet Kerona",
 
@@ -1482,12 +1538,14 @@ class Places
 			]
 		);
 	}
+
+	keronaCliffsTopSouth_Name() : string { return "Kerona - Cliffs - Top - South"; }
 
 	keronaCliffsTopSoutheast() : Place
 	{
 		return this.place
 		(
-			"Kerona - Cliffs - Top - Southeast",
+			this.keronaCliffsTopSoutheast_Name(),
 
 			"You stand atop a cliff rising from the desert of the planet Kerona",
 
@@ -1496,12 +1554,14 @@ class Places
 			]
 		);
 	}
+
+	keronaCliffsTopSoutheast_Name() : string { return "Kerona - Cliffs - Top - Southeast"; }
 
 	keronaCliffsTopSouthwest() : Place
 	{
 		return this.place
 		(
-			"Kerona - Cliffs - Top - Southwest",
+			this.keronaCliffsTopSouthwest_Name(),
 
 			"You stand atop a cliff rising from the desert of the planet Kerona",
 
@@ -1510,6 +1570,8 @@ class Places
 			]
 		);
 	}
+
+	keronaCliffsTopSouthwest_Name() : string { return "Kerona - Cliffs - Top - Southwest"; }
 
 	keronaDesertCrashSite() : Place
 	{
@@ -1767,6 +1829,7 @@ class Places
 			]
 		);
 	}
+
 	keronaUlenceFlatsDroidsBWeInterior_Name(): string { return "Kerona - Droids-B-We - Interior"; }
 
 	keronaUlenceFlatsDroidsBWeWest(): Place
@@ -1787,6 +1850,7 @@ class Places
 			]
 		);
 	}
+
 	keronaUlenceFlatsDroidsBWeWest_Name(): string { return "Kerona - Droids-B-We - West"; }
 
 	keronaUlenceFlatsNorthOfTinysUsedShips(): Place
