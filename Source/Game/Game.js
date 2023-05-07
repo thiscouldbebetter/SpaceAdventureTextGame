@@ -38,9 +38,9 @@ class Places {
         this.ArcadiaLowerDeckHallAmidships = this.arcadiaLowerDeckHallAmidships();
         this.ArcadiaLowerDeckHallForward = this.arcadiaLowerDeckHallForward();
         this.DeepSpaceEscapePod = this.deepSpaceEscapePod();
+        this.DeltaurAirlockAntechamber = this.deltaurAirlockAntechamber();
         this.DeltaurAirlockChamber = this.deltaurAirlockChamber();
         this.DeltaurAirlockExterior = this.deltaurAirlockExterior();
-        this.DeltaurAirlockInterior = this.deltaurAirlockInterior();
         this.DeltaurArmory = this.deltaurArmory();
         this.DeltaurLaundry = this.deltaurLaundry();
         this.DeltaurLowerDeckHallAft = this.deltaurLowerDeckHallAft();
@@ -111,9 +111,9 @@ class Places {
                 this.ArcadiaUpperDeckHallAmidships,
                 this.ArcadiaUpperDeckHallForward,
                 this.DeepSpaceEscapePod,
+                this.DeltaurAirlockAntechamber,
                 this.DeltaurAirlockChamber,
                 this.DeltaurAirlockExterior,
-                this.DeltaurAirlockInterior,
                 this.DeltaurArmory,
                 this.DeltaurLaundry,
                 this.DeltaurLowerDeckHallAft,
@@ -246,7 +246,7 @@ class Places {
             + "In the aft wall is an elevator door, and next to that "
             + "is a small panel with a slot in it.", [
             this.portal("elevator", this.arcadiaDockingBayAntechamber_Name()),
-            this.portal("fore", this.arcadiaEngineeringDeckAmidships_Name()),
+            this.portal("forward", this.arcadiaEngineeringDeckAmidships_Name()),
             this.emplacement("slot")
         ]);
     }
@@ -262,6 +262,8 @@ class Places {
             + "and ominous droning sound.  A thick window "
             + "looks down over the ship's docking bay, with a control console "
             + "running beneath that window.  The bodies of two crewmen lie on the floor.", [
+            this.portal("aft", this.arcadiaEngineeringDeckAft_Name()),
+            this.portal("forward", this.arcadiaEngineeringDeckForward_Name()),
             this.emplacement("body"),
             this.emplacement("controls"),
             this.emplacement("dome"),
@@ -328,7 +330,7 @@ class Places {
             + "a spiderlike droid clinging to the wall just above it."
             + "A man wearing a scientist's smock lies face-down "
             + " on the floor in front of the console. ", [
-            this.portal("fore", this.arcadiaUpperDeckHallForward_Name()),
+            this.portal("forward", this.arcadiaUpperDeckHallForward_Name()),
             this.portal("aft", this.arcadiaUpperDeckHallAmidships_Name()),
             this.emplacement("console"),
             this.emplacement("table"),
@@ -355,7 +357,7 @@ class Places {
             + "In the middle is a door leading to the janitor's closet, "
             + "which is where you, our hero, came in to this story.", [
             this.portal("closet", this.arcadiaJanitorsCloset_Name()),
-            this.portal("fore", this.arcadiaLowerDeckHallForward_Name()),
+            this.portal("forward", this.arcadiaLowerDeckHallForward_Name()),
             this.portal("aft", this.arcadiaLowerDeckHallAft_Name())
         ]
         // Scripts.Instance().PlaceArcadiaLowerDeckHallAmidshipsUpdate.name
@@ -393,7 +395,7 @@ class Places {
             + "In the middle is a door leading to the janitor's closet, "
             + "which is where you, our hero, came in to this story.", [
             this.portal("closet", this.arcadiaJanitorsCloset_Name()),
-            this.portal("fore", this.arcadiaUpperDeckHallForward_Name()),
+            this.portal("forward", this.arcadiaUpperDeckHallForward_Name()),
             this.portal("aft", this.arcadiaUpperDeckHallAft_Name())
         ]
         //Scripts.Instance().PlaceArcadiaUpperDeckHallAmidshipsUpdate.name
@@ -436,29 +438,33 @@ class Places {
     deepSpaceEscapePod_Name() {
         return "Deep Space - Escape Pod";
     }
-    deltaurAirlockChamber() {
-        return this.place(this.deltaurAirlockChamber_Name(), "This is the interior of one of the Deltaur's airlocks.", [
+    deltaurAirlockAntechamber() {
+        return this.place(this.deltaurAirlockAntechamber_Name(), "This is the antechamber of an airlock on the Deltaur.", [
         // todo
+        ]);
+    }
+    deltaurAirlockAntechamber_Name() { return "Deltaur - Airlock - Antechamber"; }
+    deltaurAirlockChamber() {
+        return this.place(this.deltaurAirlockChamber_Name(), "This is the interior of one of the Deltaur's airlocks."
+            + "Doors at either end lead into and out of the Deltaur", [
+            this.portal("in", this.deltaurAirlockAntechamber_Name()),
+            this.portal("out", this.deltaurAirlockExterior_Name())
         ]);
     }
     deltaurAirlockChamber_Name() { return "Deltaur - Airlock - Chamber"; }
     deltaurAirlockExterior() {
-        return this.place(this.deltaurAirlockExterior_Name(), "This is the exterior of the Deltaur, near an airlock door.", [
-        // todo
+        return this.place(this.deltaurAirlockExterior_Name(), "This is the exterior of the Deltaur, near an airlock door.  "
+            + "The boundless sweep of space spreads out in all directions.", [
+            this.portal("door", this.deltaurAirlockChamber_Name()),
         ]);
     }
     deltaurAirlockExterior_Name() { return "Deltaur - Exterior - Airlock Door"; }
-    deltaurAirlockInterior() {
-        return this.place(this.deltaurAirlockInterior_Name(), "This is the antechamber of an airlock on the Deltaur.", [
-        // todo
-        ]);
-    }
-    deltaurAirlockInterior_Name() { return "Deltaur - Airlock - Antechamber"; }
     deltaurArmory() {
         return this.place(this.deltaurArmory_Name(), "This is the armory of the Deltaur."
-            + "A high counter, with a robot standing watch behind it, "
-            + "blocks the path to the weapon racks.", [
-        // todo
+            + "At the aft end high counter, with a robot standing watch behind it, "
+            + "blocks the path to the weapon racks.  A door to forward leads back "
+            + "out onto the catwalk above the Star Generator chamber.", [
+            this.portal("forward", this.deltaurStarGeneratorChamberCatwalk_Name())
         ]);
     }
     deltaurArmory_Name() { return "Deltaur - Armory"; }
@@ -470,25 +476,26 @@ class Places {
     deltaurLaundry_Name() { return "Deltaur - Laundry"; }
     deltaurLowerDeckHallAft() {
         return this.place(this.deltaurLowerDeckHallAft_Name(), "This is the aft end of a hallway on the lower deck of the Deltaur.", [
-        // todo
+            this.portal("forward", this.deltaurLowerDeckHallAmidships_Name())
         ]);
     }
     deltaurLowerDeckHallAft_Name() { return "Deltaur - Hall - Lower Deck - Aft"; }
     deltaurLowerDeckHallAmidships() {
         return this.place(this.deltaurLowerDeckHallAmidships_Name(), "This is the amidships section of a hallway on the lower deck of the Deltaur.", [
-        // todo
+            this.portal("aft", this.deltaurLowerDeckHallAft_Name()),
+            this.portal("forward", this.deltaurLowerDeckHallFore_Name())
         ]);
     }
     deltaurLowerDeckHallAmidships_Name() { return "Deltaur - Hall - Lower Deck - Amidships"; }
     deltaurLowerDeckHallFore() {
         return this.place(this.deltaurLowerDeckHallFore_Name(), "This is the forward end of a hallway on the lower deck of the Deltaur.", [
-        // todo
+            this.portal("aft", this.deltaurLowerDeckHallAmidships_Name()),
         ]);
     }
     deltaurLowerDeckHallFore_Name() { return "Deltaur - Hall - Lower Deck - Forward"; }
     deltaurNearbySpace() {
         return this.place(this.deltaurNearbySpace_Name(), "You are in your ship, hovering nearby the Deltaur.", [
-        // todo
+            this.portal("out", this.deltaurAirlockExterior_Name()),
         ]);
     }
     deltaurNearbySpace_Name() { return "Deltaur - Nearby Space"; }
@@ -514,88 +521,104 @@ class Places {
             + "is mounted on a pedestal, "
             + "with an armed guard standing nearby.  "
             + "The catwalk runs fore and aft.", [
-        // todo
+            this.portal("aft", this.deltaurArmory_Name()),
+            this.portal("forward", "todo"),
         ]);
     }
     deltaurStarGeneratorChamberCatwalk_Name() { return "Deltaur - Star Generator Chamber - Catwalk"; }
     deltaurUpperDeckHallAft() {
         return this.place(this.deltaurUpperDeckHallAft_Name(), "This is the aft end of a hallway on the upper deck of the Deltaur.", [
-        // todo
+            this.portal("forward", this.deltaurUpperDeckHallAmidships_Name()),
         ]);
     }
     deltaurUpperDeckHallAft_Name() { return "Deltaur - Hall - Upper Deck - Aft"; }
     deltaurUpperDeckHallAmidships() {
         return this.place(this.deltaurUpperDeckHallAmidships_Name(), "This is the amidships section of a hallway "
             + "on the upper deck of the Deltaur.", [
-        // todo
+            this.portal("aft", this.deltaurUpperDeckHallAft_Name()),
+            this.portal("forward", this.deltaurUpperDeckHallFore_Name()),
         ]);
     }
     deltaurUpperDeckHallAmidships_Name() { return "Deltaur - Hall - Upper Deck - Amidships"; }
     deltaurUpperDeckHallFore() {
         return this.place(this.deltaurUpperDeckHallFore_Name(), "This is the forward end of a hallway on the upper deck of the Deltaur.", [
-        // todo
+            this.portal("aft", this.deltaurUpperDeckHallAmidships_Name()),
         ]);
     }
     deltaurUpperDeckHallFore_Name() { return "Deltaur - Hall - Upper Deck - Forward"; }
     deltaurVentilationShaft1() {
         return this.place(this.deltaurVentilationShaft1_Name(), "This is a ventilation shaft on the Deltaur.  "
             + "A short side branch leads to a vent cover.", [
-        // todo
+            this.portal("back", this.deltaurVentilationShaft4_Name()),
+            this.portal("forward", this.deltaurVentilationShaft1_Name()),
+            this.portal("vent", this.deltaurAirlockAntechamber_Name())
         ]);
     }
     deltaurVentilationShaft1_Name() { return "Deltaur - Ventilation Shaft - 1"; }
     deltaurVentilationShaft2() {
         return this.place(this.deltaurVentilationShaft2_Name(), "This is a ventilation shaft on the Deltaur.  "
             + "A short side branch leads to a vent cover.", [
-        // todo
+            this.portal("back", this.deltaurVentilationShaft1_Name()),
+            this.portal("forward", this.deltaurVentilationShaft3_Name()),
+            this.portal("vent", this.deltaurLaundry_Name())
         ]);
     }
     deltaurVentilationShaft2_Name() { return "Deltaur - Ventilation Shaft - 2"; }
     deltaurVentilationShaft3() {
         return this.place(this.deltaurVentilationShaft3_Name(), "This is a featureless stretch of ventilation shaft on the Deltaur.", [
-        // todo
+            this.portal("back", this.deltaurVentilationShaft2_Name()),
+            this.portal("forward", this.deltaurVentilationShaft4_Name())
         ]);
     }
     deltaurVentilationShaft3_Name() { return "Deltaur - Ventilation Shaft - 3"; }
     deltaurVentilationShaft4() {
         return this.place(this.deltaurVentilationShaft4_Name(), "This is a featureless stretch of ventilation shaft on the Deltaur.", [
-        // todo
+            this.portal("back", this.deltaurVentilationShaft3_Name()),
+            this.portal("forward", this.deltaurVentilationShaft1_Name())
         ]);
     }
     deltaurVentilationShaft4_Name() { return "Deltaur - Ventilation Shaft - 4"; }
     keronaCavernsBarrier() {
         return this.place(this.keronaCavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Kerona.  "
-            + "The path forward is blocked by several closely spaced "
+            + "The path to the west is blocked by several closely spaced "
             + "and intensely bright beams of light,"
             + "which are emitted from small round ports the rock walls, "
-            + "and which pass into similar ports on the other side.", [
-        // todo
+            + "and which pass into similar ports on the other side.  "
+            + "A passage leads back to the east.", [
+            this.portal("east", this.keronaCavernsPool_Name()),
+            this.portal("west", this.keronaCavernsGeyser_Name())
         ]);
     }
     keronaCavernsBarrier_Name() { return "Kerona - Caverns - Barrier"; }
     keronaCavernsDrips() {
         return this.place(this.keronaCavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Kerona.  "
-            + "Drips of a clear liquid fall intermittently from the ceiling.  "
+            + "The passage runs to the east, where drips of a clear liquid "
+            + "fall intermittently from the ceiling.  "
             + "Each drip passes into a small, precise hole in the floor "
-            + "that appears as if it were made to fit it.", [
-        // todo
+            + "that appears as if it were made to fit it."
+            + "A passage leads back to the west.", [
+            this.portal("east", this.keronaCavernsProjectionRoom_Name()),
+            this.portal("west", this.keronaCavernsBarrier_Name())
         ]);
     }
     keronaCavernsDrips_Name() { return "Kerona - Caverns - Drips"; }
     keronaCavernsElevator() {
         return this.place(this.keronaCavernsElevator_Name(), "You stand at the bottom of the elevator that brought you down "
-            + "from the cliffs of Kerona to a cool, dark, rocky cavern.", [
-        // todo
+            + "from the cliffs of Kerona to a cool, dark, rocky cavern.  "
+            + "The elevator door lies at the east side of the passage.  "
+            + "From there, the passage runs to the west.", [
+            this.portal("west", this.keronaCavernsGrating_Name())
         ]);
     }
     keronaCavernsElevator_Name() { return "Kerona - Caverns - Elevator"; }
     keronaCavernsGeyser() {
         return this.place(this.keronaCavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Kerona.  "
-            + "The passage ends abruptly in a solid rock wall."
-            + "Nearby , a small geyser shoots wetly and steamily out of a hole "
+            + "The passage to the west ends abruptly in a solid rock wall."
+            + "Nearby, a small geyser shoots wetly and steamily out of a hole "
             + " in the top of a stalagmite."
-            + "A passage leads back the way you came.", [
-        // todo
+            + "Another passage leads back east.", [
+            this.portal("west", this.keronaCavernsPool_Name()),
+            this.portal("east", this.keronaCavernsGrating_Name())
         ]);
     }
     keronaCavernsGeyser_Name() { return "Kerona - Caverns - Geyser"; }
@@ -605,7 +628,8 @@ class Places {
             + "In the floor leading to the west, a thick metal grating "
             + "perforated with holes about 10 centimeters wide "
             + "stretches from wall to wall across the entire passage. ", [
-        // todo
+            this.portal("west", this.keronaCavernsGeyser_Name()),
+            this.portal("east", this.keronaCavernsElevator_Name())
         ]);
     }
     keronaCavernsGrating_Name() { return "Kerona - Caverns - Grating"; }
@@ -615,16 +639,20 @@ class Places {
             + " where a plugged geyser steams fitfully.  To the west, the ledge runs "
             + "through dark natural stone columns and on into the darkness.  "
             + "Far below the ledge is a pool of clear liquid, "
-            + "with drips falling from holes in the ceiling to fill it.", [
-        // todo
+            + "with drips falling from holes in the ceiling to fill it.  "
+            + "A passage leads back to the east.", [
+            this.portal("west", this.keronaCavernsBarrier_Name()),
+            this.portal("east", this.keronaCavernsGeyser_Name())
         ]);
     }
     keronaCavernsPool_Name() { return "Kerona - Caverns - Pool"; }
     keronaCavernsProjectionRoom() {
         return this.place(this.keronaCavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet Kerona. "
             + "This space is completely dark at the moment.  Earlier, it was lit only "
-            + " by a holographic projection of a triangular-headed alien.", [
-        // todo
+            + "by a holographic projection of a triangular-headed alien.  "
+            + "A passage leads back to the east.", [
+            this.portal("east", this.keronaCavernsBarrier_Name()),
+            this.portal("west", this.keronaCavernsSteamworks_Name())
         ]);
     }
     keronaCavernsProjectionRoom_Name() { return "Kerona - Caverns - Projection Room"; }
@@ -635,9 +663,9 @@ class Places {
             + "stands against the north wall.  Above it is a catwalk where members "
             + "of a gray-skinned, large-eyed, triangular-headed alien species "
             + "busily operate various inscrutable control systems."
-            + "To the east is a small, garage-like space, with a door at the end "
+            + "To the west is a small, garage-like space, with a door at the end "
             + "that appears to open onto a large elevator platform.", [
-        // todo
+            this.portal("east", this.keronaCavernsProjectionRoom_Name()),
         ]);
     }
     keronaCavernsSteamworks_Name() { return "Kerona - Caverns - Steamworks"; }
@@ -699,7 +727,9 @@ class Places {
     ;
     keronaCliffsBottomSouth() {
         return this.place(this.keronaCliffsBottomSouth_Name(), "todo", [
-        // todo
+            this.portal("east", this.keronaCliffsBottomSoutheast_Name()),
+            this.portal("north", this.keronaCliffsBottomNorth_Name()),
+            this.portal("west", this.keronaCliffsBottomSouthwest_Name()),
         ]);
     }
     keronaCliffsBottomSouth_Name() { return "Kerona - Cliffs - South"; }
@@ -721,7 +751,8 @@ class Places {
     ;
     keronaCliffsBottomSouthwest() {
         return this.place(this.keronaCliffsBottomSouthwest_Name(), "todo", [
-        // todo
+            this.portal("east", this.keronaCliffsBottomSouth_Name()),
+            this.portal("north", this.keronaCliffsBottomNorthwestEastSide_Name())
         ]);
     }
     keronaCliffsBottomSouthwest_Name() { return "Kerona - Cliffs - Southwest"; }
@@ -730,38 +761,45 @@ class Places {
         return this.place(this.keronaCliffsCaveInterior_Name(), "This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
             + "To the west the cave opens out into the blazing daylight "
             + "of the Kerona desert.", [
-        // todo
+            this.portal("west", this.keronaCliffsBottomSoutheast_Name()),
         ]);
     }
     keronaCliffsCaveInterior_Name() { return "Kerona - Cliffs - Cave - Interior"; }
     keronaCliffsTopNorth() {
-        return this.place(this.keronaCliffsTopNorth_Name(), "You stand atop a cliff rising from the desert of the planet Kerona", [
-        // todo
+        return this.place(this.keronaCliffsTopNorth_Name(), "You stand atop a cliff rising from the desert of the planet Kerona.", [
+            this.portal("east", this.keronaCliffsBottomNortheast_Name()),
+            this.portal("south", this.keronaCliffsBottomSouth_Name()),
+            this.portal("west", this.keronaCliffsBottomNorthwestWestSide_Name())
         ]);
     }
     keronaCliffsTopNorth_Name() { return "Kerona - Cliffs - Top - North"; }
     keronaCliffsTopNortheast() {
         return this.place(this.keronaCliffsTopNortheast_Name(), "You stand atop a cliff rising from the desert of the planet Kerona.  "
             + "A pair of bent stone columns rises, bending toward each other like horns.", [
-        // todo
+            this.portal("south", this.keronaCliffsBottomSoutheast_Name()),
+            this.portal("west", this.keronaCliffsBottomNorth_Name())
         ]);
     }
     keronaCliffsTopNortheast_Name() { return "Kerona - Cliffs - Top - Northeast"; }
     keronaCliffsTopNorthwest() {
-        return this.place(this.keronaCliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet Kerona", [
-        // todo
+        return this.place(this.keronaCliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet Kerona.", [
+            this.portal("east", this.keronaCliffsBottomNorth_Name()),
+            this.portal("south", this.keronaCliffsBottomSouthwest_Name())
         ]);
     }
     keronaCliffsTopNorthwest_Name() { return "Kerona - Cliffs - Top - Northwest"; }
     keronaCliffsTopSouth() {
-        return this.place(this.keronaCliffsTopSouth_Name(), "You stand atop a cliff rising from the desert of the planet Kerona", [
-        // todo
+        return this.place(this.keronaCliffsTopSouth_Name(), "You stand atop a cliff rising from the desert of the planet Kerona.", [
+            this.portal("east", this.keronaCliffsBottomSoutheast_Name()),
+            this.portal("north", this.keronaCliffsBottomNorth_Name()),
+            this.portal("west", this.keronaCliffsBottomSouthwest_Name())
         ]);
     }
     keronaCliffsTopSouth_Name() { return "Kerona - Cliffs - Top - South"; }
     keronaCliffsTopSoutheast() {
-        return this.place(this.keronaCliffsTopSoutheast_Name(), "You stand atop a cliff rising from the desert of the planet Kerona", [
-        // todo
+        return this.place(this.keronaCliffsTopSoutheast_Name(), "You stand atop a cliff rising from the desert of the planet Kerona.", [
+            this.portal("north", this.keronaCliffsBottomNortheast_Name()),
+            this.portal("west", this.keronaCliffsBottomSouth_Name())
         ]);
     }
     keronaCliffsTopSoutheast_Name() { return "Kerona - Cliffs - Top - Southeast"; }
@@ -795,8 +833,7 @@ class Places {
             + "of the desert planet Kerona.  The pod's controls are dark and silent. "
             + "The forward window was shattered in the crash.  "
             + "Through the web of cracks and gaps, the yellow "
-            + "sand of the desert stretches away before you, seemingly forever."
-            + "\n\n"
+            + "sand of the desert stretches away before you, seemingly forever.  "
             + "The door of the pod is open, and, due to structural damage "
             + "incurred during the crash, cannot be closed.  The hot, dry "
             + "desert air floods the pod, causing you to sweat profusely.", [
