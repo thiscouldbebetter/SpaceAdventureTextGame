@@ -62,7 +62,11 @@ function playFromStart()
 	var world = universe.world;
 	var commands =
 	[
-		"go door"
+		"go through door",
+		"go forward",
+		"go forward",
+		"search body",
+		"get keycard"
 	];
 	for (var i = 0; i < commands.length; i++)
 	{
@@ -70,9 +74,9 @@ function playFromStart()
 		world.updateForUniverseAndCommandText(universe, command);
 	}
 
-	var consoleTextActual = console.textCurrent;
-	var consoleTextExpected = "todo";
-	Assert.true(consoleTextActual.indexOf(consoleTextExpected) >= 0);
+	var placeCurrentNameActual = world.placeCurrent().name;
+	var placeCurrentNameExpected = "Arcadia - Upper Deck - Hall - Forward";
+	Assert.areStringsEqual(placeCurrentNameExpected, placeCurrentNameActual);
 }
 
 var suite = new TestSuite

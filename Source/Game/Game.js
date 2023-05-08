@@ -13,8 +13,9 @@ class Game {
         var commandsAsScripts = commands.map((x) => x._scriptExecute);
         scriptsAll.push(...commandsAsScripts);
         scriptsAll.push(...scriptsCustom._All);
+        var placeInitialName = Places.Instance().arcadiaJanitorsCloset_Name();
         var returnValue = new World("Space_Quest", places, player, commands, scriptsAll, null, // turnsSoFar,
-        null);
+        placeInitialName);
         return returnValue;
     }
 }
@@ -154,10 +155,10 @@ class Places {
                 this.KeronaCliffsTopSouthwest,
                 this.KeronaDesertCrashSite,
                 this.KeronaDesertDeep,
+                this.KeronaDesertEscapePodInterior,
                 this.KeronaDesertNorth,
                 this.KeronaDesertSouth,
                 this.KeronaDesertWest,
-                this.KeronaEscapePodInterior,
                 this.KeronaUlenceFlatsBarFront,
                 this.KeronaUlenceFlatsBarInterior,
                 this.KeronaUlenceFlatsBarRear,
@@ -264,10 +265,10 @@ class Places {
             + "running beneath that window.  The bodies of two crewmen lie on the floor.", [
             this.portal("aft", this.arcadiaEngineeringDeckAft_Name()),
             this.portal("forward", this.arcadiaEngineeringDeckForward_Name()),
-            this.emplacement("body"),
             this.emplacement("controls"),
             this.emplacement("dome"),
-            this.emplacement("window")
+            this.emplacement("window"),
+            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
         ]);
     }
     arcadiaEngineeringDeckAmidships_Name() {
@@ -311,7 +312,8 @@ class Places {
         return this.place(this.arcadiaJanitorsCloset_Name(), "This is a janitor's closet on the starship Arcadia.  "
             + "It's a bit cramped and uncomfortable for napping in, "
             + "but, heroically, you make it work.  And you don't "
-            + " just make it work; you make it work a LOT.", [
+            + " just make it work; you make it work a LOT.  "
+            + "A door leads out to the hall.", [
             this.portal("door", this.arcadiaUpperDeckHallAmidships_Name()),
         ]);
     }
@@ -345,7 +347,7 @@ class Places {
             + "The hall continues to forward.  "
             + "There is a door here leading to an elevator.", [
             this.portal("aft", this.arcadiaLowerDeckHallAmidships_Name()),
-            this.emplacement("body")
+            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
         ]);
     }
     arcadiaLowerDeckHallAft_Name() {
@@ -368,11 +370,11 @@ class Places {
     }
     arcadiaLowerDeckHallForward() {
         return this.place(this.arcadiaLowerDeckHallAft_Name(), "This is a hallway in the spaceship Arcadia.  "
-            + "The hall continues to aft.  "
+            + "The hall ends in a door to aft.  "
             + "The body of a dead crewman lies crumpled "
             + "against the bulkhead at the forward end of the hall.", [
-            this.portal("aft", this.arcadiaLowerDeckHallAmidships_Name()),
-            this.emplacement("body")
+            this.portal("aft", this.arcadiaLibrary_Name()),
+            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
         ]);
     }
     arcadiaLowerDeckHallForward_Name() {
@@ -383,7 +385,7 @@ class Places {
             + "The hall continues to forward.  "
             + "There is a door here leading to an elevator.", [
             this.portal("aft", this.arcadiaUpperDeckHallAmidships_Name()),
-            this.emplacement("body")
+            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
         ]);
     }
     arcadiaUpperDeckHallAft_Name() {
@@ -391,11 +393,11 @@ class Places {
     }
     arcadiaUpperDeckHallAmidships() {
         return this.place(this.arcadiaUpperDeckHallAmidships_Name(), "This is a hallway in the spaceship Arcadia.  "
-            + "The hall continues to forward and to aft.  "
+            + "The hall ends in a door to forward, and continues to aft.  "
             + "In the middle is a door leading to the janitor's closet, "
             + "which is where you, our hero, came in to this story.", [
             this.portal("closet", this.arcadiaJanitorsCloset_Name()),
-            this.portal("forward", this.arcadiaUpperDeckHallForward_Name()),
+            this.portal("forward", this.arcadiaLibrary_Name()),
             this.portal("aft", this.arcadiaUpperDeckHallAft_Name())
         ]
         //Scripts.Instance().PlaceArcadiaUpperDeckHallAmidshipsUpdate.name
@@ -405,12 +407,12 @@ class Places {
         return "Arcadia - Upper Deck - Hall - Amidships";
     }
     arcadiaUpperDeckHallForward() {
-        return this.place(this.arcadiaUpperDeckHallAft_Name(), "This is a hallway in the spaceship Arcadia.  "
+        return this.place(this.arcadiaUpperDeckHallForward_Name(), "This is a hallway in the spaceship Arcadia.  "
             + "The hall continues to aft.  "
             + "The body of a dead crewman lies crumpled "
             + "against the bulkhead at the forward end of the hall.", [
             this.portal("aft", this.arcadiaUpperDeckHallAmidships_Name()),
-            this.emplacement("body")
+            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyKeycardSearch.name))
         ]);
     }
     arcadiaUpperDeckHallForward_Name() {
@@ -1000,15 +1002,19 @@ class Scripts {
     constructor() {
         var s = (a, b) => new Script(a, b);
         this.AgentSarienTalkTo = s("AgentSarienTalkTo", this.agentSarienTalkTo);
-        this.EmplacementDeadCrewpersonUse = s("EmplacementDeadCrewpersonUse", this.emplacementDeadCrewpersonUse);
+        this.EmplacementBodyEmptySearch = s("EmplacementBodyEmptySearch", this.emplacementBodyEmptySearch);
+        this.EmplacementBodyKeycardSearch = s("EmplacementBodyKeycardSearch", this.emplacementBodyKeycardSearch);
         this.ItemKeycardUse = s("ItemKeycardUse", this.itemKeycardUse);
         this.PlaceArcadiaJanitorsClosetUpdate = s("PlaceArcadiaJanitorsClosetUpdate", this.placeArcadiaJanitorsClosetUpdate);
+        this.Todo = s("Todo", this.todo);
         this._All =
             [
                 this.AgentSarienTalkTo,
-                this.EmplacementDeadCrewpersonUse,
+                this.EmplacementBodyEmptySearch,
+                this.EmplacementBodyKeycardSearch,
                 this.ItemKeycardUse,
-                this.PlaceArcadiaJanitorsClosetUpdate
+                this.PlaceArcadiaJanitorsClosetUpdate,
+                this.Todo
             ];
     }
     static Instance() {
@@ -1022,7 +1028,17 @@ class Scripts {
         w.isOver = true;
         u.messageEnqueue(message);
     }
-    emplacementDeadCrewpersonUse(u, w, place, emplacementDeadCrewperson, target) {
+    emplacementBodyEmptySearch(u, w, place, command, target) {
+        var message;
+        if (target != null) {
+            message = "You can't use the crewperson's body on anything.";
+        }
+        else {
+            message = "You find nothing in the crewperson's pockets.";
+        }
+        u.messageEnqueue(message);
+    }
+    emplacementBodyKeycardSearch(u, w, place, command, target) {
         var message;
         if (target != null) {
             message = "You can't use the crewperson's body on anything.";
@@ -1031,7 +1047,8 @@ class Scripts {
             message = "You find a keycard in the crewperson's pockets.";
             var itemKeycard = Item.fromNameAndDescription("keycard", "This is an access keycard for the starship Arcadia.");
             place.itemAdd(itemKeycard);
-            emplacementDeadCrewperson._scriptUseName = null;
+            var emplacementBody = place.emplacements.find(x => x.name == "body");
+            emplacementBody.commands.length = 0;
         }
         u.messageEnqueue(message);
     }
@@ -1069,7 +1086,7 @@ class Scripts {
             var messageLines = [
                 "You stumble out of the janitor's closet into the hall, "
                     + "where, unfortunately, not only is the klaxon louder, "
-                    + "but it's also joined by annoying flashing red lights."
+                    + "but it's also joined by annoying flashing red lights.  "
                     + "On the positive side, a few seconds later, "
                     + "the klaxon and and the lights both stop abruptly."
                     + "\n\n"
@@ -1078,6 +1095,9 @@ class Scripts {
             var message = messageLines.join("");
             u.messageEnqueue(message);
         }
+    }
+    todo(u, w, p, i, target) {
+        u.messageEnqueue("todo");
     }
 }
 class StateNames {

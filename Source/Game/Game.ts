@@ -31,6 +31,8 @@ class Game
 
 		scriptsAll.push(...scriptsCustom._All);
 
+		var placeInitialName = Places.Instance().arcadiaJanitorsCloset_Name();
+
 		var returnValue = new World
 		(
 			"Space_Quest",
@@ -39,7 +41,7 @@ class Game
 			commands,
 			scriptsAll,
 			null, // turnsSoFar,
-			null
+			placeInitialName
 		);
 
 		return returnValue;
@@ -150,8 +152,6 @@ class Places
 	KeronaDesertNorth: Place;
 	KeronaDesertSouth: Place;
 	KeronaDesertWest: Place;
-
-	KeronaEscapePodInterior: Place;
 
 	KeronaUlenceFlatsBarFront: Place;
 	KeronaUlenceFlatsBarInterior: Place;
@@ -317,10 +317,10 @@ class Places
 			this.KeronaCliffsTopSouthwest,
 			this.KeronaDesertCrashSite,
 			this.KeronaDesertDeep,
+			this.KeronaDesertEscapePodInterior,
 			this.KeronaDesertNorth,
 			this.KeronaDesertSouth,
 			this.KeronaDesertWest,
-			this.KeronaEscapePodInterior,
 			this.KeronaUlenceFlatsBarFront,
 			this.KeronaUlenceFlatsBarInterior,
 			this.KeronaUlenceFlatsBarRear,
@@ -528,10 +528,17 @@ class Places
 				this.portal("aft", this.arcadiaEngineeringDeckAft_Name()),
 				this.portal("forward", this.arcadiaEngineeringDeckForward_Name()),
 
-				this.emplacement("body"),
 				this.emplacement("controls"),
 				this.emplacement("dome"),
-				this.emplacement("window")
+				this.emplacement("window"),
+				this.emplacement("body").commandAdd
+				(
+					new Command
+					(
+						["search body"],
+						Scripts.Instance().EmplacementBodyEmptySearch.name
+					)
+				)
 			]
 		);
 	}
@@ -608,7 +615,8 @@ class Places
 			"This is a janitor's closet on the starship Arcadia.  "
 			+ "It's a bit cramped and uncomfortable for napping in, "
 			+ "but, heroically, you make it work.  And you don't "
-			+ " just make it work; you make it work a LOT.",
+			+ " just make it work; you make it work a LOT.  "
+			+ "A door leads out to the hall.",
 
 			[
 				this.portal("door", this.arcadiaUpperDeckHallAmidships_Name()),
@@ -670,7 +678,15 @@ class Places
 
 			[
 				this.portal("aft", this.arcadiaLowerDeckHallAmidships_Name()),
-				this.emplacement("body")
+				this.emplacement("body").commandAdd
+				(
+					new Command
+					(
+						["search body"],
+						Scripts.Instance().EmplacementBodyEmptySearch.name
+					)
+				)
+
 			]
 		);
 	}
@@ -713,13 +729,20 @@ class Places
 			this.arcadiaLowerDeckHallAft_Name(),
 
 			"This is a hallway in the spaceship Arcadia.  "
-			+ "The hall continues to aft.  "
+			+ "The hall ends in a door to aft.  "
 			+ "The body of a dead crewman lies crumpled "
 			+ "against the bulkhead at the forward end of the hall.",
 
 			[
-				this.portal("aft", this.arcadiaLowerDeckHallAmidships_Name()),
-				this.emplacement("body")
+				this.portal("aft", this.arcadiaLibrary_Name()),
+				this.emplacement("body").commandAdd
+				(
+					new Command
+					(
+						["search body"],
+						Scripts.Instance().EmplacementBodyEmptySearch.name
+					)
+				)
 			]
 		);
 	}
@@ -741,7 +764,14 @@ class Places
 
 			[
 				this.portal("aft", this.arcadiaUpperDeckHallAmidships_Name()),
-				this.emplacement("body")
+				this.emplacement("body").commandAdd
+				(
+					new Command
+					(
+						["search body"],
+						Scripts.Instance().EmplacementBodyEmptySearch.name
+					)
+				)
 			]
 		);
 	}
@@ -758,13 +788,13 @@ class Places
 			this.arcadiaUpperDeckHallAmidships_Name(),
 
 			"This is a hallway in the spaceship Arcadia.  "
-			+ "The hall continues to forward and to aft.  "
+			+ "The hall ends in a door to forward, and continues to aft.  "
 			+ "In the middle is a door leading to the janitor's closet, "
 			+ "which is where you, our hero, came in to this story.",
 
 			[
 				this.portal("closet", this.arcadiaJanitorsCloset_Name()),
-				this.portal("forward", this.arcadiaUpperDeckHallForward_Name()),
+				this.portal("forward", this.arcadiaLibrary_Name()),
 				this.portal("aft", this.arcadiaUpperDeckHallAft_Name())
 			]
 
@@ -781,7 +811,7 @@ class Places
 	{
 		return this.place
 		(
-			this.arcadiaUpperDeckHallAft_Name(),
+			this.arcadiaUpperDeckHallForward_Name(),
 
 			"This is a hallway in the spaceship Arcadia.  "
 			+ "The hall continues to aft.  "
@@ -790,7 +820,14 @@ class Places
 
 			[
 				this.portal("aft", this.arcadiaUpperDeckHallAmidships_Name()),
-				this.emplacement("body")
+				this.emplacement("body").commandAdd
+				(
+					new Command
+					(
+						["search body"],
+						Scripts.Instance().EmplacementBodyKeycardSearch.name
+					)
+				)
 			]
 		);
 	}
@@ -1947,9 +1984,11 @@ class Places
 class Scripts
 {
 	AgentSarienTalkTo: Script;
-	EmplacementDeadCrewpersonUse: Script;
+	EmplacementBodyEmptySearch: Script;
+	EmplacementBodyKeycardSearch: Script;
 	ItemKeycardUse: Script;
 	PlaceArcadiaJanitorsClosetUpdate: Script;
+	Todo: Script;
 
 	_All: Script[];
 
@@ -1958,10 +1997,15 @@ class Scripts
 		var s = (a: string, b: any) => new Script(a, b);
 
 		this.AgentSarienTalkTo = s("AgentSarienTalkTo", this.agentSarienTalkTo);
-		this.EmplacementDeadCrewpersonUse = s
+		this.EmplacementBodyEmptySearch = s
 		(
-			"EmplacementDeadCrewpersonUse",
-			this.emplacementDeadCrewpersonUse
+			"EmplacementBodyEmptySearch",
+			this.emplacementBodyEmptySearch
+		);
+		this.EmplacementBodyKeycardSearch = s
+		(
+			"EmplacementBodyKeycardSearch",
+			this.emplacementBodyKeycardSearch
 		);
 		this.ItemKeycardUse = s("ItemKeycardUse", this.itemKeycardUse);
 		this.PlaceArcadiaJanitorsClosetUpdate = s
@@ -1969,13 +2013,16 @@ class Scripts
 			"PlaceArcadiaJanitorsClosetUpdate",
 			this.placeArcadiaJanitorsClosetUpdate
 		);
+		this.Todo = s("Todo", this.todo);
 
 		this._All =
 		[
 			this.AgentSarienTalkTo,
-			this.EmplacementDeadCrewpersonUse,
+			this.EmplacementBodyEmptySearch,
+			this.EmplacementBodyKeycardSearch,
 			this.ItemKeycardUse,
-			this.PlaceArcadiaJanitorsClosetUpdate
+			this.PlaceArcadiaJanitorsClosetUpdate,
+			this.Todo
 		];
 	}
 
@@ -1997,10 +2044,28 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	emplacementDeadCrewpersonUse
+	emplacementBodyEmptySearch
 	(
-		u: Universe, w: World, place: Place,
-		emplacementDeadCrewperson: any, target: any
+		u: Universe, w: World, place: Place, command: Command, target: any
+	): void
+	{
+		var message: string;
+
+		if (target != null)
+		{
+			message = "You can't use the crewperson's body on anything.";
+		}
+		else
+		{
+			message = "You find nothing in the crewperson's pockets.";
+		}
+
+		u.messageEnqueue(message);
+	}
+
+	emplacementBodyKeycardSearch
+	(
+		u: Universe, w: World, place: Place, command: Command, target: any
 	): void
 	{
 		var message: string;
@@ -2019,7 +2084,8 @@ class Scripts
 			);
 			place.itemAdd(itemKeycard);
 
-			emplacementDeadCrewperson._scriptUseName = null;
+			var emplacementBody = place.emplacements.find(x => x.name == "body");
+			emplacementBody.commands.length = 0;
 		}
 
 		u.messageEnqueue(message);
@@ -2073,7 +2139,7 @@ class Scripts
 			[
 				"You stumble out of the janitor's closet into the hall, "
 				+ "where, unfortunately, not only is the klaxon louder, "
-				+ "but it's also joined by annoying flashing red lights."
+				+ "but it's also joined by annoying flashing red lights.  "
 				+ "On the positive side, a few seconds later, "
 				+ "the klaxon and and the lights both stop abruptly."
 				+ "\n\n"
@@ -2084,6 +2150,10 @@ class Scripts
 		}
 	}
 
+	todo(u: Universe, w: World, p: Place, i: any, target: any): void
+	{
+		u.messageEnqueue("todo");
+	}
 }
 
 class StateNames
