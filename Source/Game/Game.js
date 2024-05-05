@@ -179,6 +179,9 @@ class Places {
     emplacement(name) {
         return Emplacement.fromNameAndDescription(name, name);
     }
+    emplacement2(name, description) {
+        return Emplacement.fromNameAndDescription(name, description);
+    }
     place2(name, description) {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, null, // scriptName
         [] // objects
@@ -196,7 +199,7 @@ class Places {
     }
     // Places.
     paxAeternaBridge() {
-        return this.place2(this.paxAeternaBridge_Name(), "This is the command bridge of the starship PaxAeterna.  "
+        return this.place2(this.paxAeternaBridge_Name(), "This is the command bridge of the starship Pax Aeterna.  "
             + "A large transparent hemispherical dome arches overhead, "
             + "showing the brilliantly shining surrounding stars."
             + "Banks of mostly incomprehensible controls "
@@ -269,7 +272,7 @@ class Places {
             this.emplacement("controls"),
             this.emplacement("dome"),
             this.emplacement("window"),
-            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
+            this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     paxAeternaEngineeringDeckAmidships_Name() {
@@ -323,7 +326,7 @@ class Places {
             + "just make it work; you make it work a LOT."
             + "\n\n"
             + "A door leads out to the hall.  "
-            + "(You tried sleeping out there once, but someone got mad.)", this.scripts.PlacePaxAeternaJanitorsClosetUpdate.name, [
+            + "(You tried sleeping out there once, but someone got mad.)", this.scripts.placePaxAeternaJanitorsClosetUpdate.name, [
             this.portal("door", this.paxAeternaUpperDeckHallAmidships_Name()),
         ]);
     }
@@ -333,20 +336,42 @@ class Places {
     paxAeternaLibrary() {
         return this.place3(this.paxAeternaLibrary_Name(), "This is the Pax Aeterna's library.  "
             + "Doors in the fore and aft walls lead to hallways.  "
+            + "\n\n"
             + "The high walls are occupied almost completely with narrow shelves, "
             + "and the shelves are occupied almost completely "
-            + "with row after row of data cartridges.  "
+            + "with row after row of plastic cartridges containing magnetic data tape.  "
+            + "(The fleet tried a solid-state, full-digital data storage system for a while, "
+            + " but it was agreed that it just didn't give the same rich tones.)"
+            + "\n\n"
             + "A spacious round table ringed with comfortable seats and cartridge readers "
             + "fills a pit in the center of the room.  "
             + "On one wall is a control console with a keyboard and screen, "
-            + "a spiderlike droid clinging to the wall just above it."
+            + "a spiderlike cartridge-retrieval robot clinging to the wall just above it."
+            + "\n\n"
             + "A man wearing a scientist's smock lies face-down "
-            + " on the floor in front of the console. ", [
+            + "on the floor in front of the console. ", [
             this.portal("forward", this.paxAeternaUpperDeckHallForward_Name()),
             this.portal("aft", this.paxAeternaUpperDeckHallAmidships_Name()),
-            this.emplacement("console"),
-            this.emplacement("table"),
-            this.emplacement("man")
+            this.emplacement2("console", "If the title of a desired data cartridge is typed "
+                + "on the console's keyboard, "
+                + "the retrieval robot will retrieve that cartridge from the stacks "
+                + "and drop it into the cartidge hopper below the console. "
+                + "From there, the cartridge can be slotted into a reader "
+                + "and its contents displayed to screen.  "
+                + "It's a complicated system, to be sure, "
+                + "but that sixteen hours of training you took was probably enough.").commandAdd(new Command(["type", "enter"], this.scripts.placePaxAeternaLibraryType.name)).commandAdd(new Command(["type astral bodies", "enter astral bodies"], this.scripts.placePaxAeternaLibraryTypeAstralBodies.name)),
+            this.emplacement2("table", "The table provides a comfortable place "
+                + "for the more literate members of the crew to research data tapes.  "
+                + "\n\n"
+                + "You, on the other hand, have only used it once,"
+                + "as an improvised playfield for a game of Vir-Naki Caroms "
+                + "with the cartridge-retrieval bot, "
+                + "but they made you stop before you could "
+                + "figure out how to detach the bot from the shelves, "
+                + "much less get a nice volley going."),
+            this.emplacement2("man", "He's not moving in any perceptible way.  "
+                + "You can't tell from here if he's even breathing, "
+                + "which is the most important kind of moving.").commandAdd(new Command(["search body", "search man", "talk to man"], this.scripts.placePaxAeternaLibraryTalkToMan.name))
         ]);
     }
     paxAeternaLibrary_Name() {
@@ -357,7 +382,7 @@ class Places {
             + "The hall continues to forward.  "
             + "There is a door here leading to an elevator.", [
             this.portal("aft", this.paxAeternaLowerDeckHallAmidships_Name()),
-            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
+            this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     paxAeternaLowerDeckHallAft_Name() {
@@ -374,7 +399,7 @@ class Places {
             this.portal("forward", this.paxAeternaLowerDeckHallForward_Name()),
             this.portal("aft", this.paxAeternaLowerDeckHallAft_Name())
         ]
-        // Scripts.Instance().PlacePaxAeternaLowerDeckHallAmidshipsUpdate.name
+        // this.scripts.placePaxAeternaLowerDeckHallAmidshipsUpdate.name
         );
     }
     paxAeternaLowerDeckHallAmidships_Name() {
@@ -386,7 +411,7 @@ class Places {
             + "The body of a dead crewman lies crumpled "
             + "against the bulkhead at the forward end of the hall.", [
             this.portal("aft", this.paxAeternaLibrary_Name()),
-            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
+            this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     paxAeternaLowerDeckHallForward_Name() {
@@ -397,7 +422,7 @@ class Places {
             + "The hall continues to forward.  "
             + "There is a door here leading to an elevator.", [
             this.portal("aft", this.paxAeternaUpperDeckHallAmidships_Name()),
-            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyEmptySearch.name))
+            this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     paxAeternaUpperDeckHallAft_Name() {
@@ -408,7 +433,7 @@ class Places {
             + "The hall ends in a door to forward, and continues to aft.  "
             + "In the middle is a door leading to the office/supply closet/quarters "
             + "of the Maintenance Specialist (Sanitation Grade), "
-            + "which is where you, our hero, came in to this story.", this.scripts.PlacePaxAeternaUpperDeckHallAmidshipsUpdate.name, [
+            + "which is where you, our hero, came in to this story.", this.scripts.placePaxAeternaUpperDeckHallAmidshipsUpdate.name, [
             this.portal("closet", this.paxAeternaJanitorsCloset_Name()),
             this.portal("forward", this.paxAeternaLibrary_Name()),
             this.portal("aft", this.paxAeternaUpperDeckHallAft_Name())
@@ -423,7 +448,7 @@ class Places {
             + "The body of a dead crewman lies crumpled "
             + "against the bulkhead at the forward end of the hall.", [
             this.portal("aft", this.paxAeternaUpperDeckHallAmidships_Name()),
-            this.emplacement("body").commandAdd(new Command(["search body"], Scripts.Instance().EmplacementBodyKeycardSearch.name))
+            this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
         ]);
     }
     paxAeternaUpperDeckHallForward_Name() {
@@ -1018,24 +1043,26 @@ class Places {
 }
 class Scripts {
     constructor() {
-        var s = (a, b) => new Script(a, b);
-        this.AgentSarienTalkTo = s("AgentSarienTalkTo", this.agentSarienTalkTo);
-        this.EmplacementBodyEmptySearch = s("EmplacementBodyEmptySearch", this.emplacementBodyEmptySearch);
-        this.EmplacementBodyKeycardSearch = s("EmplacementBodyKeycardSearch", this.emplacementBodyKeycardSearch);
-        this.ItemKeycardUse = s("ItemKeycardUse", this.itemKeycardUse);
-        this.PlacePaxAeternaJanitorsClosetUpdate = s("PlacePaxAeternaJanitorsClosetUpdate", this.placePaxAeternaJanitorsClosetUpdate);
-        this.PlacePaxAeternaUpperDeckHallAmidshipsUpdate = s("PlacePaxAeternaUpperDeckHallAmidshipsUpdate", this.placePaxAeternaUpperDeckHallAmidshipsUpdate);
-        this.Todo = s("Todo", this.todo);
-        this._All =
-            [
-                this.AgentSarienTalkTo,
-                this.EmplacementBodyEmptySearch,
-                this.EmplacementBodyKeycardSearch,
-                this.ItemKeycardUse,
-                this.PlacePaxAeternaJanitorsClosetUpdate,
-                this.PlacePaxAeternaUpperDeckHallAmidshipsUpdate,
-                this.Todo
-            ];
+        var scriptMethods = [
+            this.agentSarienTalkTo,
+            this.emplacementBodyEmptySearch,
+            this.emplacementBodyKeycardSearch,
+            this.itemKeycardUse,
+            this.placePaxAeternaJanitorsClosetUpdate,
+            this.placePaxAeternaLibraryTalkToMan,
+            this.placePaxAeternaLibraryType,
+            this.placePaxAeternaLibraryTypeAstralBodies,
+            this.placePaxAeternaUpperDeckHallAmidshipsUpdate,
+            this.todo
+        ];
+        var scripts = new Array();
+        for (var i = 0; i < scriptMethods.length; i++) {
+            var scriptMethod = scriptMethods[i];
+            var scriptName = scriptMethod.name;
+            var script = new Script(scriptName, scriptMethod);
+            scripts.push(script);
+        }
+        this._All = scripts;
     }
     static Instance() {
         if (Scripts._instance == null) {
@@ -1094,7 +1121,7 @@ class Scripts {
         if (p.hasBeenVisited() == false) {
             p.visit();
             var messageLines = [
-                "Space Quest Clone",
+                "Space Adventure Game Clone",
                 "\n\n",
                 "You are jolted awake to find yourself ",
                 "in the office/supply closet/quarters ",
@@ -1104,7 +1131,7 @@ class Scripts {
                 "\n\n",
                 "...something or other, ",
                 "you weren't really listening when they said.  ",
-                "Probably they're in the process of saving something or other; ",
+                "Probably they're in the process of saving... something or other; ",
                 "they usually are.  The day, if you had to guess.  ",
                 "You appreciate their motivation, but don't really share it.  ",
                 "You don't even like the day that much, honestly.",
@@ -1115,6 +1142,49 @@ class Scripts {
             ];
             u.messageEnqueue(messageLines.join(""));
         }
+    }
+    placePaxAeternaLibraryTalkToMan(u, w, p) {
+        var stateScientistIsDeadName = "ScientistIsDead";
+        var scientistIsDead = p.stateWithNameIsTrue(stateScientistIsDeadName);
+        var message = "";
+        if (scientistIsDead) {
+            message = "Yeah, he's dead.  Ninety-five percent sure this time.";
+        }
+        else {
+            message =
+                [
+                    "As you bend down to check on the man in the lab coat, ",
+                    "his eyes spring open.  He stares at you wildly, ",
+                    "weakly clutching and unclutching his fingers, ",
+                    "then points shakily at the shelves of data cartridges ",
+                    "and harshly croaks out the words 'astral bodies'.  ",
+                    "\n\n",
+                    "Then he dies.  You think.  You're not a doctor.  ",
+                    "But when the roto-scrubber looked as bad as he does, ",
+                    "you had to get a new roto-scrubber."
+                ].join("");
+            p.stateWithNameSetToTrue(stateScientistIsDeadName);
+        }
+        u.messageEnqueue(message);
+    }
+    placePaxAeternaLibraryType(u, w, p) {
+        var message = "Right, I forgot that you failed Remedial Lib-Sci 0001.  "
+            + "Try adding the title of the tape you want retrieved.";
+        u.messageEnqueue(message);
+    }
+    placePaxAeternaLibraryTypeAstralBodies(u, w, p) {
+        var message = "You type 'astral bodies' (without the quotes, protip) "
+            + "into the control console's keyboard.  "
+            + "The retrieval robot skitters into action, "
+            + "traversing the shelves with a fluid rhythm of limbs "
+            + "that makes you feel both jealous and a little grossed-out.  "
+            + "It plucks a data tape from its place "
+            + "and returns it to the console, "
+            + "where it drops it into the retrieval hopper.  "
+            + "(See?  You just don't get that kind of satisfying clatter "
+            + "with solid-state.";
+        u.messageEnqueue(message);
+        p.itemAdd(Item.fromNameAndDescription("cartridge", "A label printed on this data cartridge reads 'Astral Bodies'."));
     }
     placePaxAeternaUpperDeckHallAmidshipsUpdate(u, w, p) {
         if (p.hasBeenVisited() == false) {
