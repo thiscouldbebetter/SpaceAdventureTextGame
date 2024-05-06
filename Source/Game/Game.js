@@ -359,9 +359,10 @@ class Places {
                 + "From there, the cartridge can be slotted into a reader "
                 + "and its contents displayed to screen.  "
                 + "It's a complicated system, to be sure, "
-                + "but that sixteen hours of training you took was probably enough.").commandAdd(new Command(["type", "enter"], this.scripts.placePaxAeternaLibraryType.name)).commandAdd(new Command(["type astral bodies", "enter astral bodies"], this.scripts.placePaxAeternaLibraryTypeAstralBodies.name)),
-            this.emplacement2("table", "The table provides a comfortable place "
-                + "for the more literate members of the crew to research data tapes.  "
+                + "but that sixteen hours of training you took was probably enough.").commandAdd(new Command(["type", "enter"], this.scripts.placePaxAeternaLibraryType.name)),
+            this.emplacement2("table", "The table bears several cartridge readers, "
+                + "and provides a comfortable place "
+                + "for the more literate members of the crew to research data tapes."
                 + "\n\n"
                 + "You, on the other hand, have only used it once,"
                 + "as an improvised playfield for a game of Vir-Naki Caroms "
@@ -369,6 +370,9 @@ class Places {
                 + "but they made you stop before you could "
                 + "figure out how to detach the bot from the shelves, "
                 + "much less get a nice volley going."),
+            this.emplacement2("reader", "The cartridge reader sitting atop the table "
+                + "has a slot to insert a data cartridge into, "
+                + "and a screen to display the cartridge's contents."),
             this.emplacement2("man", "He's not moving in any perceptible way.  "
                 + "You can't tell from here if he's even breathing, "
                 + "which is the most important kind of moving.").commandAdd(new Command(["search body", "search man", "talk to man"], this.scripts.placePaxAeternaLibraryTalkToMan.name))
@@ -1047,11 +1051,11 @@ class Scripts {
             this.agentSarienTalkTo,
             this.emplacementBodyEmptySearch,
             this.emplacementBodyKeycardSearch,
+            this.itemCartridgeUse,
             this.itemKeycardUse,
             this.placePaxAeternaJanitorsClosetUpdate,
             this.placePaxAeternaLibraryTalkToMan,
             this.placePaxAeternaLibraryType,
-            this.placePaxAeternaLibraryTypeAstralBodies,
             this.placePaxAeternaUpperDeckHallAmidshipsUpdate,
             this.todo
         ];
@@ -1099,6 +1103,23 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
+    itemCartridgeUse(u, w, p, c) {
+        var message;
+        if (p.emplacementByName("reader") == null) {
+            message = "There is no cartridge reader here.";
+        }
+        else {
+            message =
+                "You insert the cartridge into the reader.  "
+                    + "The display lights up with glowing text, "
+                    + "describing the majestic formation of astral bodies, "
+                    + "and their complex and sometimes surprising relationships "
+                    + "with all life in the universe."
+                    + "\n\n"
+                    + "My word, it's boring.  School never was your strong suit.";
+        }
+        u.messageEnqueue(message);
+    }
     itemKeycardUse(u, w, p, i, target) {
         var message;
         if (target == null) {
@@ -1117,7 +1138,7 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
-    placePaxAeternaJanitorsClosetUpdate(u, w, p) {
+    placePaxAeternaJanitorsClosetUpdate(u, w, p, c) {
         if (p.hasBeenVisited() == false) {
             p.visit();
             var messageLines = [
@@ -1143,7 +1164,7 @@ class Scripts {
             u.messageEnqueue(messageLines.join(""));
         }
     }
-    placePaxAeternaLibraryTalkToMan(u, w, p) {
+    placePaxAeternaLibraryTalkToMan(u, w, p, c) {
         var stateScientistIsDeadName = "ScientistIsDead";
         var scientistIsDead = p.stateWithNameIsTrue(stateScientistIsDeadName);
         var message = "";
@@ -1167,26 +1188,44 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
-    placePaxAeternaLibraryType(u, w, p) {
-        var message = "Right, I forgot that you failed Remedial Lib-Sci 0001.  "
-            + "Try adding the title of the tape you want retrieved.";
+    placePaxAeternaLibraryType(u, w, p, c) {
+        var commandText = c.text();
+        var commandTextWords = commandText.split(" ");
+        var cartridgeNameTyped = commandTextWords.slice(1).join(" ").toLowerCase();
+        var message = "";
+        if (cartridgeNameTyped == "") {
+            message =
+                "Right, I forgot that you failed Remedial Lib-Sci 0001.  "
+                    + "Try adding the title of the tape you want retrieved.";
+        }
+        else if (cartridgeNameTyped == "astral bodies") {
+            message =
+                "You type 'astral bodies' (without the quotes: protip) "
+                    + "into the control console's keyboard.  "
+                    + "The retrieval robot skitters into action, "
+                    + "traversing the shelves with a fluid rhythm of limbs "
+                    + "that makes you feel both jealous and a little grossed-out.  "
+                    + "It plucks a data tape from its place "
+                    + "and returns it to the console, "
+                    + "where it drops it into the retrieval hopper.  "
+                    + "(See?  You just don't get that kind of satisfying clatter "
+                    + "with solid-state.)";
+            p.itemAdd(Item.fromNameAndDescription("cartridge", "A label printed on this data cartridge reads 'Astral Bodies'.").commandAdd(new Command([
+                "put cartridge in reader",
+                "put cartridge in slot",
+                "use cartridge on reader"
+            ], Scripts.Instance().itemCartridgeUse.name)));
+        }
+        else {
+            message =
+                "The cartridge-retrieval control console buzzes politely, "
+                    + "to the extent that a buzz can be polite, "
+                    + "and displays an error message: "
+                    + "'No cartridge with the specified title could be found.'";
+        }
         u.messageEnqueue(message);
     }
-    placePaxAeternaLibraryTypeAstralBodies(u, w, p) {
-        var message = "You type 'astral bodies' (without the quotes, protip) "
-            + "into the control console's keyboard.  "
-            + "The retrieval robot skitters into action, "
-            + "traversing the shelves with a fluid rhythm of limbs "
-            + "that makes you feel both jealous and a little grossed-out.  "
-            + "It plucks a data tape from its place "
-            + "and returns it to the console, "
-            + "where it drops it into the retrieval hopper.  "
-            + "(See?  You just don't get that kind of satisfying clatter "
-            + "with solid-state.";
-        u.messageEnqueue(message);
-        p.itemAdd(Item.fromNameAndDescription("cartridge", "A label printed on this data cartridge reads 'Astral Bodies'."));
-    }
-    placePaxAeternaUpperDeckHallAmidshipsUpdate(u, w, p) {
+    placePaxAeternaUpperDeckHallAmidshipsUpdate(u, w, p, c) {
         if (p.hasBeenVisited() == false) {
             p.visit();
             var messageLines = [
