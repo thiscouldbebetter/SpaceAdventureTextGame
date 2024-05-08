@@ -34,14 +34,38 @@ class Tests
 
 		var commandsToRunAsText =
 		[
+			// Start.
+
+			// Pax Aeterna.
+
+			// Upper deck.
+
 			"go door",
 			"go forward",
 			"talk to man",
 			"type astral bodies",
 			"get cartridge",
-			"put cartridge in reader"
-		];
+			"put cartridge in reader",
+			"go aft",
+			"go aft",
+			"go elevator",
 
+			// Lower deck.
+			"go forward",
+			"go forward",
+			"go elevator",
+
+			// Engineering deck.
+			"go aft",
+			"go aft",
+			"go elevator",
+
+			// Docking bay.
+			"go airlock",
+			"go pod"
+
+			// todo
+		];
 
 		for (var i = 0; i < commandsToRunAsText.length; i++)
 		{
@@ -50,7 +74,7 @@ class Tests
 		}
 
 		var place = world.placeCurrent();
-		Assert.areEqual("Pax Aeterna - Library", place.name);
+		Assert.areEqual("Pax Aeterna - Escape Pod", place.name);
 	}
 }
 

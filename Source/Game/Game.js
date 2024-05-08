@@ -7,14 +7,14 @@ class Game {
         ], null // commands
         );
         var scriptsCustom = new Scripts();
-        var places = Places.Instance()._All;
+        var places = new Places();
         var commands = Command.Instances()._All;
         var scriptsAll = new Array();
         var commandsAsScripts = commands.map((x) => x._scriptExecute);
         scriptsAll.push(...commandsAsScripts);
         scriptsAll.push(...scriptsCustom._All);
-        var placeInitialName = Places.Instance().paxAeternaJanitorsCloset_Name();
-        var returnValue = new World("Space_Quest", places, player, commands, scriptsAll, null, // turnsSoFar,
+        var placeInitialName = places.paxAeternaJanitorsCloset_Name();
+        var returnValue = new World("Space_Adventure_Game", places._All, player, commands, scriptsAll, null, // turnsSoFar,
         placeInitialName);
         return returnValue;
     }
@@ -24,30 +24,36 @@ class Items {
 class Places {
     constructor() {
         this.scripts = Scripts.Instance();
-        this.PaxAeternaBridge = this.paxAeternaBridge();
+        // Places.
+        // Places - Pax Aeterna.
+        // Pax Aeterna - Upper Deck.
         this.PaxAeternaJanitorsCloset = this.paxAeternaJanitorsCloset();
-        this.PaxAeternaDockingBayAntechamber = this.paxAeternaDockingBayAntechamber();
-        this.PaxAeternaDockingBayHangar = this.paxAeternaDockingBayHangar();
-        this.PaxAeternaEngineeringDeckAft = this.paxAeternaEngineeringDeckAft();
-        this.PaxAeternaEngineeringDeckAmidships = this.paxAeternaEngineeringDeckAmidships();
-        this.PaxAeternaEngineeringDeckForward = this.paxAeternaEngineeringDeckForward();
-        this.PaxAeternaEscapePod = this.paxAeternaEscapePod();
+        this.PaxAeternaUpperDeckHallAmidships = this.paxAeternaUpperDeckHallAmidships();
         this.PaxAeternaLibrary = this.paxAeternaLibrary();
         this.PaxAeternaUpperDeckHallAft = this.paxAeternaUpperDeckHallAft();
-        this.PaxAeternaUpperDeckHallAmidships = this.paxAeternaUpperDeckHallAmidships();
         this.PaxAeternaUpperDeckHallForward = this.paxAeternaUpperDeckHallForward();
+        this.PaxAeternaBridge = this.paxAeternaBridge();
+        // Pax Aeterna - Lower Deck.
         this.PaxAeternaLowerDeckHallAft = this.paxAeternaLowerDeckHallAft();
         this.PaxAeternaLowerDeckHallAmidships = this.paxAeternaLowerDeckHallAmidships();
         this.PaxAeternaLowerDeckHallForward = this.paxAeternaLowerDeckHallForward();
+        // Pax Aeterna - Engineering Deck.
+        this.PaxAeternaEngineeringDeckAft = this.paxAeternaEngineeringDeckAft();
+        this.PaxAeternaEngineeringDeckAmidships = this.paxAeternaEngineeringDeckAmidships();
+        this.PaxAeternaEngineeringDeckForward = this.paxAeternaEngineeringDeckForward();
+        // Pax Aeterna - Docking Bay.
+        this.PaxAeternaDockingBayAntechamber = this.paxAeternaDockingBayAntechamber();
+        this.PaxAeternaDockingBayHangar = this.paxAeternaDockingBayHangar();
+        this.PaxAeternaEscapePod = this.paxAeternaEscapePod();
+        // Deep Space.
         this.DeepSpaceEscapePod = this.deepSpaceEscapePod();
-        this.Ekkis2CavernsBarrier = this.ekkis2CavernsBarrier();
-        this.Ekkis2CavernsDrips = this.ekkis2CavernsDrips();
-        this.Ekkis2CavernsElevator = this.ekkis2CavernsElevator();
-        this.Ekkis2CavernsGeyser = this.ekkis2CavernsGeyser();
-        this.Ekkis2CavernsGrating = this.ekkis2CavernsGrating();
-        this.Ekkis2CavernsPool = this.ekkis2CavernsPool();
-        this.Ekkis2CavernsProjectionRoom = this.ekkis2CavernsProjectionRoom();
-        this.Ekkis2CavernsSteamworks = this.ekkis2CavernsSteamworks();
+        // Ekkis 2.
+        this.Ekkis2DesertCrashSite = this.ekkis2DesertCrashSite();
+        this.Ekkis2DesertDeep = this.ekkis2DesertDeep();
+        this.Ekkis2DesertEscapePodInterior = this.ekkis2DesertEscapePodInterior();
+        this.Ekkis2DesertNorth = this.ekkis2DesertNorth();
+        this.Ekkis2DesertSouth = this.ekkis2DesertSouth();
+        this.Ekkis2DesertWest = this.ekkis2DesertWest();
         this.Ekkis2CliffsBottomNorth = this.ekkis2CliffsBottomNorth();
         this.Ekkis2CliffsBottomNortheast = this.ekkis2CliffsBottomNortheast();
         this.Ekkis2CliffsBottomNorthwestEastSide = this.ekkis2CliffsBottomNorthwestEastSide();
@@ -62,12 +68,14 @@ class Places {
         this.Ekkis2CliffsTopSouth = this.ekkis2CliffsTopSouth();
         this.Ekkis2CliffsTopSoutheast = this.ekkis2CliffsTopSoutheast();
         this.Ekkis2CliffsTopSouthwest = this.ekkis2CliffsTopSouthwest();
-        this.Ekkis2DesertCrashSite = this.ekkis2DesertCrashSite();
-        this.Ekkis2DesertDeep = this.ekkis2DesertDeep();
-        this.Ekkis2DesertEscapePodInterior = this.ekkis2DesertEscapePodInterior();
-        this.Ekkis2DesertNorth = this.ekkis2DesertNorth();
-        this.Ekkis2DesertSouth = this.ekkis2DesertSouth();
-        this.Ekkis2DesertWest = this.ekkis2DesertWest();
+        this.Ekkis2CavernsBarrier = this.ekkis2CavernsBarrier();
+        this.Ekkis2CavernsDrips = this.ekkis2CavernsDrips();
+        this.Ekkis2CavernsElevator = this.ekkis2CavernsElevator();
+        this.Ekkis2CavernsGeyser = this.ekkis2CavernsGeyser();
+        this.Ekkis2CavernsGrating = this.ekkis2CavernsGrating();
+        this.Ekkis2CavernsPool = this.ekkis2CavernsPool();
+        this.Ekkis2CavernsProjectionRoom = this.ekkis2CavernsProjectionRoom();
+        this.Ekkis2CavernsSteamworks = this.ekkis2CavernsSteamworks();
         this.Ekkis2FartingNoiseBarFront = this.ekkis2FartingNoiseBarFront();
         this.Ekkis2FartingNoiseBarInterior = this.ekkis2FartingNoiseBarInterior();
         this.Ekkis2FartingNoiseBarRear = this.ekkis2FartingNoiseBarRear();
@@ -76,6 +84,7 @@ class Places {
         this.Ekkis2FartingNoiseDroidsBWeWest = this.ekkis2FartingNoiseDroidsBWeWest();
         this.Ekkis2FartingNoiseNorthOfTinysUsedShips = this.ekkis2FartingNoiseNorthOfTinysUsedShips();
         this.Ekkis2FartingNoiseTinysUsedShips = this.ekkis2FartingNoiseTinysUsedShips();
+        // Venipositor.
         this.VenipositorAirlockAntechamber = this.venipositorAirlockAntechamber();
         this.VenipositorAirlockChamber = this.venipositorAirlockChamber();
         this.VenipositorAirlockExterior = this.venipositorAirlockExterior();
@@ -97,30 +106,35 @@ class Places {
         this.VenipositorVentilationShaft4 = this.venipositorVentilationShaft4();
         this._All =
             [
-                this.PaxAeternaBridge,
-                this.PaxAeternaDockingBayAntechamber,
-                this.PaxAeternaDockingBayHangar,
-                this.PaxAeternaEngineeringDeckAft,
-                this.PaxAeternaEngineeringDeckAmidships,
-                this.PaxAeternaEngineeringDeckForward,
-                this.PaxAeternaEscapePod,
+                // Pax Aeterna - Upper Deck.
                 this.PaxAeternaJanitorsCloset,
+                this.PaxAeternaUpperDeckHallAmidships,
                 this.PaxAeternaLibrary,
+                this.PaxAeternaUpperDeckHallForward,
+                this.PaxAeternaUpperDeckHallAft,
+                this.PaxAeternaBridge,
+                // Pax Aeterna - Lower Deck.
                 this.PaxAeternaLowerDeckHallAft,
                 this.PaxAeternaLowerDeckHallAmidships,
                 this.PaxAeternaLowerDeckHallForward,
-                this.PaxAeternaUpperDeckHallAft,
-                this.PaxAeternaUpperDeckHallAmidships,
-                this.PaxAeternaUpperDeckHallForward,
+                // Pax Aeterna - Engineering Deck.
+                this.PaxAeternaEngineeringDeckAft,
+                this.PaxAeternaEngineeringDeckAmidships,
+                this.PaxAeternaEngineeringDeckForward,
+                // Pax Aeterna - Docking Bay.
+                this.PaxAeternaDockingBayAntechamber,
+                this.PaxAeternaDockingBayHangar,
+                this.PaxAeternaEscapePod,
+                // Deep Space.
                 this.DeepSpaceEscapePod,
-                this.Ekkis2CavernsBarrier,
-                this.Ekkis2CavernsDrips,
-                this.Ekkis2CavernsElevator,
-                this.Ekkis2CavernsGeyser,
-                this.Ekkis2CavernsGrating,
-                this.Ekkis2CavernsPool,
-                this.Ekkis2CavernsProjectionRoom,
-                this.Ekkis2CavernsSteamworks,
+                // Ekkis 2 - Desert.
+                this.Ekkis2DesertCrashSite,
+                this.Ekkis2DesertDeep,
+                this.Ekkis2DesertEscapePodInterior,
+                this.Ekkis2DesertNorth,
+                this.Ekkis2DesertSouth,
+                this.Ekkis2DesertWest,
+                // Ekkis 2 - Cliffs.
                 this.Ekkis2CliffsBottomNorth,
                 this.Ekkis2CliffsBottomNortheast,
                 this.Ekkis2CliffsBottomNorthwestEastSide,
@@ -135,12 +149,16 @@ class Places {
                 this.Ekkis2CliffsTopSouth,
                 this.Ekkis2CliffsTopSoutheast,
                 this.Ekkis2CliffsTopSouthwest,
-                this.Ekkis2DesertCrashSite,
-                this.Ekkis2DesertDeep,
-                this.Ekkis2DesertEscapePodInterior,
-                this.Ekkis2DesertNorth,
-                this.Ekkis2DesertSouth,
-                this.Ekkis2DesertWest,
+                // Ekkis 2 - Caverns.
+                this.Ekkis2CavernsProjectionRoom,
+                this.Ekkis2CavernsSteamworks,
+                this.Ekkis2CavernsBarrier,
+                this.Ekkis2CavernsDrips,
+                this.Ekkis2CavernsElevator,
+                this.Ekkis2CavernsGeyser,
+                this.Ekkis2CavernsGrating,
+                this.Ekkis2CavernsPool,
+                // Ekkis 2 - Village of [Farting Noise].
                 this.Ekkis2FartingNoiseBarFront,
                 this.Ekkis2FartingNoiseBarInterior,
                 this.Ekkis2FartingNoiseBarRear,
@@ -149,6 +167,7 @@ class Places {
                 this.Ekkis2FartingNoiseDroidsBWeWest,
                 this.Ekkis2FartingNoiseNorthOfTinysUsedShips,
                 this.Ekkis2FartingNoiseTinysUsedShips,
+                // Venipositor.
                 this.VenipositorAirlockAntechamber,
                 this.VenipositorAirlockChamber,
                 this.VenipositorAirlockExterior,
@@ -169,12 +188,6 @@ class Places {
                 this.VenipositorVentilationShaft3,
                 this.VenipositorVentilationShaft4
             ];
-    }
-    static Instance() {
-        if (Places._instance == null) {
-            Places._instance = new Places();
-        }
-        return Places._instance;
     }
     emplacement(name) {
         return Emplacement.fromNameAndDescription(name, name);
@@ -198,6 +211,7 @@ class Places {
         return new Portal(name, null, placeDestinationName);
     }
     // Places.
+    // Places - Pax Aeterna.
     paxAeternaBridge() {
         return this.place2(this.paxAeternaBridge_Name(), "This is the command bridge of the starship Pax Aeterna.  "
             + "A large transparent hemispherical dome arches overhead, "
@@ -237,9 +251,11 @@ class Places {
             + "A similarly gigantic pair of doors at the far end of the bay "
             + " allows ships to enter and depart when open, "
             + " and keeps everything safely sheltered when closed.", [
-            this.portal("door", this.paxAeternaDockingBayAntechamber_Name()),
+            this.portal("airlock", this.paxAeternaDockingBayAntechamber_Name()),
+            this.portal("pod", this.paxAeternaEscapePod_Name()), // hack
             this.emplacement("controls"),
-            this.emplacement("hatch")
+            this.emplacement("hatch"),
+            this.emplacement("pod"),
         ]);
     }
     paxAeternaDockingBayHangar_Name() {
@@ -382,10 +398,11 @@ class Places {
         return "Pax Aeterna - Library";
     }
     paxAeternaLowerDeckHallAft() {
-        return this.place3(this.paxAeternaLowerDeckHallAft_Name(), "This is a hallway in the starship Pax Aeterna.  "
-            + "The hall continues to forward.  "
-            + "There is a door here leading to an elevator.", [
-            this.portal("aft", this.paxAeternaLowerDeckHallAmidships_Name()),
+        return this.place3(this.paxAeternaLowerDeckHallAft_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+            + "The hall continues to forward, and ends in a bulkhead to aft.  "
+            + "There is a door here opening to an elevator.", [
+            this.portal("forward", this.paxAeternaLowerDeckHallAmidships_Name()),
+            this.portal("elevator", this.paxAeternaUpperDeckHallAft_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -393,28 +410,21 @@ class Places {
         return "Pax Aeterna - Lower Deck - Hall - Aft";
     }
     paxAeternaLowerDeckHallAmidships() {
-        return this.place3(this.paxAeternaLowerDeckHallAmidships_Name(), "This is a hallway in the starship Pax Aeterna.  "
-            + "The hall continues to forward and to aft.  "
-            + "In the middle is a door leading to the "
-            + "office/supply closet/quarters "
-            + "of the Maintenance Specialist (Sanitation Grade)"
-            + "which is where you, our hero, came in to this story.", [
-            this.portal("closet", this.paxAeternaJanitorsCloset_Name()),
+        return this.place3(this.paxAeternaLowerDeckHallAmidships_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+            + "The hall continues to forward and to aft.", [
             this.portal("forward", this.paxAeternaLowerDeckHallForward_Name()),
             this.portal("aft", this.paxAeternaLowerDeckHallAft_Name())
-        ]
-        // this.scripts.placePaxAeternaLowerDeckHallAmidshipsUpdate.name
-        );
+        ]);
     }
     paxAeternaLowerDeckHallAmidships_Name() {
         return "Pax Aeterna - Lower Deck - Hall - Amidships";
     }
     paxAeternaLowerDeckHallForward() {
-        return this.place3(this.paxAeternaLowerDeckHallAft_Name(), "This is a hallway in the starship Pax Aeterna.  "
-            + "The hall ends in a door to aft.  "
-            + "The body of a dead crewman lies crumpled "
-            + "against the bulkhead at the forward end of the hall.", [
-            this.portal("aft", this.paxAeternaLibrary_Name()),
+        return this.place3(this.paxAeternaLowerDeckHallForward_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+            + "The hall continues to aft, and ends in a bulkhead to forward.  "
+            + "There is a door here opening on an elevator.", [
+            this.portal("aft", this.paxAeternaLowerDeckHallAmidships_Name()),
+            this.portal("elevator", this.paxAeternaEngineeringDeckForward_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -422,10 +432,11 @@ class Places {
         return "Pax Aeterna - Lower Deck - Hall - Forward";
     }
     paxAeternaUpperDeckHallAft() {
-        return this.place3(this.paxAeternaUpperDeckHallAft_Name(), "This is a hallway in the starship Pax Aeterna.  "
-            + "The hall continues to forward.  "
-            + "There is a door here leading to an elevator.", [
-            this.portal("aft", this.paxAeternaUpperDeckHallAmidships_Name()),
+        return this.place3(this.paxAeternaUpperDeckHallAft_Name(), "This is a hallway on the upper deck the starship Pax Aeterna.  "
+            + "The hall continues to forward, and ends in a bulkhead to aft.  "
+            + "There is a door here opening on an elevator.", [
+            this.portal("forward", this.paxAeternaUpperDeckHallAmidships_Name()),
+            this.portal("elevator", this.paxAeternaLowerDeckHallAft_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -433,7 +444,7 @@ class Places {
         return "Pax Aeterna - Upper Deck - Hall - Aft";
     }
     paxAeternaUpperDeckHallAmidships() {
-        return this.place4(this.paxAeternaUpperDeckHallAmidships_Name(), "This is a hallway in the starship Pax Aeterna.  "
+        return this.place4(this.paxAeternaUpperDeckHallAmidships_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
             + "The hall ends in a door to forward, and continues to aft.  "
             + "In the middle is a door leading to the office/supply closet/quarters "
             + "of the Maintenance Specialist (Sanitation Grade), "
@@ -447,11 +458,11 @@ class Places {
         return "Pax Aeterna - Upper Deck - Hall - Amidships";
     }
     paxAeternaUpperDeckHallForward() {
-        return this.place3(this.paxAeternaUpperDeckHallForward_Name(), "This is a hallway in the starship Pax Aeterna.  "
-            + "The hall continues to aft.  "
+        return this.place3(this.paxAeternaUpperDeckHallForward_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
+            + "The hall ends in a bulkhead to forward and a door to aft.  "
             + "The body of a dead crewman lies crumpled "
             + "against the bulkhead at the forward end of the hall.", [
-            this.portal("aft", this.paxAeternaUpperDeckHallAmidships_Name()),
+            this.portal("aft", this.paxAeternaLibrary_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
         ]);
     }
@@ -477,100 +488,78 @@ class Places {
             this.emplacement("throttle")
         ]);
     }
+    // Places - Deep space.
     deepSpaceEscapePod_Name() {
         return "Deep Space - Escape Pod";
     }
-    ekkis2CavernsBarrier() {
-        return this.place3(this.ekkis2CavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
-            + "The path to the west is blocked by several closely spaced "
-            + "and intensely bright beams of light,"
-            + "which are emitted from small round ports the rock walls, "
-            + "and which pass into similar ports on the other side.  "
-            + "A passage leads back to the east.", [
-            this.portal("east", this.ekkis2CavernsPool_Name()),
-            this.portal("west", this.ekkis2CavernsGeyser_Name())
+    // Places - Ekkis 2.
+    // Places - Ekkis 2 - Desert.
+    ekkis2DesertCrashSite() {
+        return this.place3(this.ekkis2DesertCrashSite_Name(), "Your escape pod has crashed in the middle of the desert "
+            + "of the planet Ekkis2, rendering it completely inoperable.  "
+            + "Its structural frame is severely bent, and the door unclosable.  "
+            + "The forward window has shattered, "
+            + "scattering shards of highly reflective glass over the sand "
+            + "in front of the pod."
+            + "\n\n"
+            + "The desert stretches away as far as the eye can see to the "
+            + "north, west, and south.  A maze of rocky cliffs rises to the east.", []);
+    }
+    ekkis2DesertCrashSite_Name() { return "Ekkis II - Desert - Crash Site"; }
+    ekkis2DesertDeep() {
+        return this.place3(this.ekkis2DesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+            + "The featureless sand stretches away in every direction.", []
+        // Scripts.placeEkkis2DesertDeepUpdate.name
+        );
+    }
+    ekkis2DesertDeep_Name() { return "Ekkis II - Desert - Deep Desert"; }
+    ekkis2DesertEscapePodInterior() {
+        return this.place3(this.ekkis2DesertEscapePodInterior_Name(), "You sit inside your escape pod where it has crashed on the surface "
+            + "of the desert planet Ekkis2.  The pod's controls are dark and silent. "
+            + "The forward window was shattered in the crash.  "
+            + "Through the web of cracks and gaps, the yellow "
+            + "sand of the desert stretches away before you, seemingly forever.  "
+            + "The door of the pod is open, and, due to structural damage "
+            + "incurred during the crash, cannot be closed.  The hot, dry "
+            + "desert air floods the pod, causing you to sweat profusely.", [
+            this.portal("door", this.ekkis2DesertCrashSite_Name())
         ]);
     }
-    ekkis2CavernsBarrier_Name() { return "Ekkis II - Caverns - Barrier"; }
-    ekkis2CavernsDrips() {
-        return this.place3(this.ekkis2CavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
-            + "The passage runs to the east, where drips of a clear liquid "
-            + "fall intermittently from the ceiling.  "
-            + "Each drip passes into a small, precise hole in the floor "
-            + "that appears as if it were made to fit it."
-            + "A passage leads back to the west.", [
-            this.portal("east", this.ekkis2CavernsProjectionRoom_Name()),
-            this.portal("west", this.ekkis2CavernsBarrier_Name())
+    ekkis2DesertEscapePodInterior_Name() { return "Ekkis II - Desert - Escape Pod Interior"; }
+    ekkis2DesertNorth() {
+        return this.place3(this.ekkis2DesertNorth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+            + "just north of the wreck of your crashed escape pod.  "
+            + "The featureless sand stretches away in every other direction.", [
+            this.portal("south", this.ekkis2DesertCrashSite_Name()),
+            this.portal("north", this.ekkis2DesertDeep_Name()),
+            this.portal("east", this.ekkis2DesertDeep_Name()),
+            this.portal("west", this.ekkis2DesertDeep_Name()),
         ]);
     }
-    ekkis2CavernsDrips_Name() { return "Ekkis II - Caverns - Drips"; }
-    ekkis2CavernsElevator() {
-        return this.place3(this.ekkis2CavernsElevator_Name(), "You stand at the bottom of the elevator that brought you down "
-            + "from the cliffs of Ekkis2 to a cool, dark, rocky cavern.  "
-            + "The elevator door lies at the east side of the passage.  "
-            + "From there, the passage runs to the west.", [
-            this.portal("west", this.ekkis2CavernsGrating_Name())
+    ekkis2DesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
+    ekkis2DesertSouth() {
+        return this.place3(this.ekkis2DesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+            + "just south of the wreck of your crashed escape pod.  "
+            + "The featureless sand stretches away in every other direction.", [
+            this.portal("north", this.ekkis2DesertCrashSite_Name()),
+            this.portal("south", this.ekkis2DesertDeep_Name()),
+            this.portal("east", this.ekkis2DesertDeep_Name()),
+            this.portal("west", this.ekkis2DesertDeep_Name()),
         ]);
     }
-    ekkis2CavernsElevator_Name() { return "Ekkis II - Caverns - Elevator"; }
-    ekkis2CavernsGeyser() {
-        return this.place3(this.ekkis2CavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
-            + "The passage to the west ends abruptly in a solid rock wall."
-            + "Nearby, a small geyser shoots wetly and steamily out of a hole "
-            + " in the top of a stalagmite."
-            + "Another passage leads back east.", [
-            this.portal("west", this.ekkis2CavernsPool_Name()),
-            this.portal("east", this.ekkis2CavernsGrating_Name())
+    ekkis2DesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
+    ekkis2DesertWest() {
+        return this.place3(this.ekkis2DesertWest_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+            + "just west of the wreck of your crashed escape pod.  "
+            + "The featureless sand stretches away in every other direction.", [
+            this.portal("east", this.ekkis2DesertCrashSite_Name()),
+            this.portal("north", this.ekkis2DesertDeep_Name()),
+            this.portal("south", this.ekkis2DesertDeep_Name()),
+            this.portal("west", this.ekkis2DesertDeep_Name()),
         ]);
     }
-    ekkis2CavernsGeyser_Name() { return "Ekkis II - Caverns - Geyser"; }
-    ekkis2CavernsGrating() {
-        return this.place3(this.ekkis2CavernsGrating_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2, "
-            + "in a passage running from east to west."
-            + "In the floor leading to the west, a thick metal grating "
-            + "perforated with holes about 10 centimeters wide "
-            + "stretches from wall to wall across the entire passage. ", [
-            this.portal("west", this.ekkis2CavernsGeyser_Name()),
-            this.portal("east", this.ekkis2CavernsElevator_Name())
-        ]);
-    }
-    ekkis2CavernsGrating_Name() { return "Ekkis II - Caverns - Grating"; }
-    ekkis2CavernsPool() {
-        return this.place3(this.ekkis2CavernsPool_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
-            + "You stand on a wide ledge that runs south, back through a hidden doorway, "
-            + " where a plugged geyser steams fitfully.  To the west, the ledge runs "
-            + "through dark natural stone columns and on into the darkness.  "
-            + "Far below the ledge is a pool of clear liquid, "
-            + "with drips falling from holes in the ceiling to fill it.  "
-            + "A passage leads back to the east.", [
-            this.portal("west", this.ekkis2CavernsBarrier_Name()),
-            this.portal("east", this.ekkis2CavernsGeyser_Name())
-        ]);
-    }
-    ekkis2CavernsPool_Name() { return "Ekkis II - Caverns - Pool"; }
-    ekkis2CavernsProjectionRoom() {
-        return this.place3(this.ekkis2CavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
-            + "This space is completely dark at the moment.  Earlier, it was lit only "
-            + "by a holographic projection of a triangular-headed alien.  "
-            + "A passage leads back to the east.", [
-            this.portal("east", this.ekkis2CavernsBarrier_Name()),
-            this.portal("west", this.ekkis2CavernsSteamworks_Name())
-        ]);
-    }
-    ekkis2CavernsProjectionRoom_Name() { return "Ekkis II - Caverns - Projection Room"; }
-    ekkis2CavernsSteamworks() {
-        return this.place3(this.ekkis2CavernsSteamworks_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
-            + "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
-            + "A computer console with a monitor and standard data cartridge slot "
-            + "stands against the north wall.  Above it is a catwalk where members "
-            + "of a gray-skinned, large-eyed, triangular-headed alien species "
-            + "busily operate various inscrutable control systems."
-            + "To the west is a small, garage-like space, with a door at the end "
-            + "that appears to open onto a large elevator platform.", [
-            this.portal("east", this.ekkis2CavernsProjectionRoom_Name()),
-        ]);
-    }
-    ekkis2CavernsSteamworks_Name() { return "Ekkis II - Caverns - Steamworks"; }
+    ekkis2DesertWest_Name() { return "Ekkis II - Desert - West of Crash Site"; }
+    // Places - Ekkis 2 - Cliffs.
     ekkis2CliffsBottomNorth() {
         return this.place3(this.ekkis2CliffsBottomNorth_Name(), "You stand on the sand of the Ekkis2 desert, just to the south  "
             + "of a steep stone cliff running from west to east. ", [
@@ -711,71 +700,99 @@ class Places {
         ]);
     }
     ekkis2CliffsTopSouthwest_Name() { return "Ekkis II - Cliffs - Top - Southwest"; }
-    ekkis2DesertCrashSite() {
-        return this.place3(this.ekkis2DesertCrashSite_Name(), "Your escape pod has crashed in the middle of the desert "
-            + "of the planet Ekkis2, rendering it completely inoperable.  "
-            + "Its structural frame is severely bent, and the door unclosable.  "
-            + "The forward window has shattered, "
-            + "scattering shards of highly reflective glass over the sand "
-            + "in front of the pod."
-            + "\n\n"
-            + "The desert stretches away as far as the eye can see to the "
-            + "north, west, and south.  A maze of rocky cliffs rises to the east.", []);
-    }
-    ekkis2DesertCrashSite_Name() { return "Ekkis II - Desert - Crash Site"; }
-    ekkis2DesertDeep() {
-        return this.place3(this.ekkis2DesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis2, "
-            + "The featureless sand stretches away in every direction.", []
-        // Scripts.placeEkkis2DesertDeepUpdate.name
-        );
-    }
-    ekkis2DesertDeep_Name() { return "Ekkis II - Desert - Deep Desert"; }
-    ekkis2DesertEscapePodInterior() {
-        return this.place3(this.ekkis2DesertEscapePodInterior_Name(), "You sit inside your escape pod where it has crashed on the surface "
-            + "of the desert planet Ekkis2.  The pod's controls are dark and silent. "
-            + "The forward window was shattered in the crash.  "
-            + "Through the web of cracks and gaps, the yellow "
-            + "sand of the desert stretches away before you, seemingly forever.  "
-            + "The door of the pod is open, and, due to structural damage "
-            + "incurred during the crash, cannot be closed.  The hot, dry "
-            + "desert air floods the pod, causing you to sweat profusely.", [
-            this.portal("door", this.ekkis2DesertCrashSite_Name())
+    // Places - Ekkis 2 - Caverns.
+    ekkis2CavernsBarrier() {
+        return this.place3(this.ekkis2CavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
+            + "The path to the west is blocked by several closely spaced "
+            + "and intensely bright beams of light,"
+            + "which are emitted from small round ports the rock walls, "
+            + "and which pass into similar ports on the other side.  "
+            + "A passage leads back to the east.", [
+            this.portal("east", this.ekkis2CavernsPool_Name()),
+            this.portal("west", this.ekkis2CavernsGeyser_Name())
         ]);
     }
-    ekkis2DesertEscapePodInterior_Name() { return "Ekkis II - Desert - Escape Pod Interior"; }
-    ekkis2DesertNorth() {
-        return this.place3(this.ekkis2DesertNorth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
-            + "just north of the wreck of your crashed escape pod.  "
-            + "The featureless sand stretches away in every other direction.", [
-            this.portal("south", this.ekkis2DesertCrashSite_Name()),
-            this.portal("north", this.ekkis2DesertDeep_Name()),
-            this.portal("east", this.ekkis2DesertDeep_Name()),
-            this.portal("west", this.ekkis2DesertDeep_Name()),
+    ekkis2CavernsBarrier_Name() { return "Ekkis II - Caverns - Barrier"; }
+    ekkis2CavernsDrips() {
+        return this.place3(this.ekkis2CavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
+            + "The passage runs to the east, where drips of a clear liquid "
+            + "fall intermittently from the ceiling.  "
+            + "Each drip passes into a small, precise hole in the floor "
+            + "that appears as if it were made to fit it."
+            + "A passage leads back to the west.", [
+            this.portal("east", this.ekkis2CavernsProjectionRoom_Name()),
+            this.portal("west", this.ekkis2CavernsBarrier_Name())
         ]);
     }
-    ekkis2DesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
-    ekkis2DesertSouth() {
-        return this.place3(this.ekkis2DesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
-            + "just south of the wreck of your crashed escape pod.  "
-            + "The featureless sand stretches away in every other direction.", [
-            this.portal("north", this.ekkis2DesertCrashSite_Name()),
-            this.portal("south", this.ekkis2DesertDeep_Name()),
-            this.portal("east", this.ekkis2DesertDeep_Name()),
-            this.portal("west", this.ekkis2DesertDeep_Name()),
+    ekkis2CavernsDrips_Name() { return "Ekkis II - Caverns - Drips"; }
+    ekkis2CavernsElevator() {
+        return this.place3(this.ekkis2CavernsElevator_Name(), "You stand at the bottom of the elevator that brought you down "
+            + "from the cliffs of Ekkis2 to a cool, dark, rocky cavern.  "
+            + "The elevator door lies at the east side of the passage.  "
+            + "From there, the passage runs to the west.", [
+            this.portal("west", this.ekkis2CavernsGrating_Name())
         ]);
     }
-    ekkis2DesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
-    ekkis2DesertWest() {
-        return this.place3(this.ekkis2DesertWest_Name(), "You stand in the trackless desert of the planet Ekkis2, "
-            + "just west of the wreck of your crashed escape pod.  "
-            + "The featureless sand stretches away in every other direction.", [
-            this.portal("east", this.ekkis2DesertCrashSite_Name()),
-            this.portal("north", this.ekkis2DesertDeep_Name()),
-            this.portal("south", this.ekkis2DesertDeep_Name()),
-            this.portal("west", this.ekkis2DesertDeep_Name()),
+    ekkis2CavernsElevator_Name() { return "Ekkis II - Caverns - Elevator"; }
+    ekkis2CavernsGeyser() {
+        return this.place3(this.ekkis2CavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
+            + "The passage to the west ends abruptly in a solid rock wall."
+            + "Nearby, a small geyser shoots wetly and steamily out of a hole "
+            + " in the top of a stalagmite."
+            + "Another passage leads back east.", [
+            this.portal("west", this.ekkis2CavernsPool_Name()),
+            this.portal("east", this.ekkis2CavernsGrating_Name())
         ]);
     }
-    ekkis2DesertWest_Name() { return "Ekkis II - Desert - West of Crash Site"; }
+    ekkis2CavernsGeyser_Name() { return "Ekkis II - Caverns - Geyser"; }
+    ekkis2CavernsGrating() {
+        return this.place3(this.ekkis2CavernsGrating_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2, "
+            + "in a passage running from east to west."
+            + "In the floor leading to the west, a thick metal grating "
+            + "perforated with holes about 10 centimeters wide "
+            + "stretches from wall to wall across the entire passage. ", [
+            this.portal("west", this.ekkis2CavernsGeyser_Name()),
+            this.portal("east", this.ekkis2CavernsElevator_Name())
+        ]);
+    }
+    ekkis2CavernsGrating_Name() { return "Ekkis II - Caverns - Grating"; }
+    ekkis2CavernsPool() {
+        return this.place3(this.ekkis2CavernsPool_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
+            + "You stand on a wide ledge that runs south, back through a hidden doorway, "
+            + " where a plugged geyser steams fitfully.  To the west, the ledge runs "
+            + "through dark natural stone columns and on into the darkness.  "
+            + "Far below the ledge is a pool of clear liquid, "
+            + "with drips falling from holes in the ceiling to fill it.  "
+            + "A passage leads back to the east.", [
+            this.portal("west", this.ekkis2CavernsBarrier_Name()),
+            this.portal("east", this.ekkis2CavernsGeyser_Name())
+        ]);
+    }
+    ekkis2CavernsPool_Name() { return "Ekkis II - Caverns - Pool"; }
+    ekkis2CavernsProjectionRoom() {
+        return this.place3(this.ekkis2CavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
+            + "This space is completely dark at the moment.  Earlier, it was lit only "
+            + "by a holographic projection of a triangular-headed alien.  "
+            + "A passage leads back to the east.", [
+            this.portal("east", this.ekkis2CavernsBarrier_Name()),
+            this.portal("west", this.ekkis2CavernsSteamworks_Name())
+        ]);
+    }
+    ekkis2CavernsProjectionRoom_Name() { return "Ekkis II - Caverns - Projection Room"; }
+    ekkis2CavernsSteamworks() {
+        return this.place3(this.ekkis2CavernsSteamworks_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
+            + "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
+            + "A computer console with a monitor and standard data cartridge slot "
+            + "stands against the north wall.  Above it is a catwalk where members "
+            + "of a gray-skinned, large-eyed, triangular-headed alien species "
+            + "busily operate various inscrutable control systems."
+            + "To the west is a small, garage-like space, with a door at the end "
+            + "that appears to open onto a large elevator platform.", [
+            this.portal("east", this.ekkis2CavernsProjectionRoom_Name()),
+        ]);
+    }
+    ekkis2CavernsSteamworks_Name() { return "Ekkis II - Caverns - Steamworks"; }
+    // Places - Ekkis 2 - Village of [Farting Noise].
     ekkis2FartingNoiseBarFront() {
         return this.place3(this.ekkis2FartingNoiseBarFront_Name(), "You stand in the tiny settlement named, "
             + " as near as you can make out from the signs in Universal Phonospeak, "
@@ -904,6 +921,7 @@ class Places {
     ekkis2FartingNoiseTinysUsedShips_Name() {
         return "Ekkis II - [Farting Noise] - Tiny's Used Ships";
     }
+    // Places - Venipositor.
     venipositorAirlockAntechamber() {
         return this.place3(this.venipositorAirlockAntechamber_Name(), "This is the antechamber of an airlock on the Venipositor.", [
         // todo
