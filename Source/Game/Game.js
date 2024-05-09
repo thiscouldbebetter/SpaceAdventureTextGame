@@ -198,19 +198,11 @@ class Places {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, null, // scriptName,
         objects);
     }
-    place3_WithDynamicDescription(name, descriptionGet, objects) {
-        return new Place(name, descriptionGet, null, // scriptName,
-        objects, null, null, null, null // ?
-        );
-    }
     place4(name, description, scriptName, objects) {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, scriptName, objects);
     }
     portal(name, placeDestinationName) {
-        return Portal.fromNameDescriptionAndPlaceDestinationName(name, null, placeDestinationName);
-    }
-    portal_WithDynamicDestination(name, placeDestinationNameGet) {
-        return Portal.fromNameAndPlaceDestinationNameGet(name, placeDestinationNameGet);
+        return new Portal(name, null, placeDestinationName);
     }
     // Places.
     // Places - Pax Aeterna.
@@ -309,18 +301,15 @@ class Places {
         return "Pax Aeterna - Engineering Deck - Forward";
     }
     paxAeternaEscapePod() {
-        return this.place3_WithDynamicDescription(this.paxAeternaEscapePod_Name(), this.paxAeternaEscapePod_Description, [
-            this.portal_WithDynamicDestination("door", (u, w) => {
-                var stateEscapePodPlaceName = "EscapePodPlaceName";
-                var place = w.placeCurrent();
-                var escapePodPlaceName = place.stateWithNameGetValue(stateEscapePodPlaceName);
-                var destinationName = escapePodPlaceName == "DeepSpace"
-                    ? this.paxAeternaDockingBayHangar_Name()
-                    : escapePodPlaceName == "Ekkis II"
-                        ? this.ekkis2DesertCrashSite_Name()
-                        : this.paxAeternaDockingBayHangar_Name();
-                return destinationName;
-            }),
+        return this.place3(this.paxAeternaEscapePod_Name(), "This is the interior of one of the Pax Aeterna's escape pods."
+            + "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
+            + "Beneath the window is a console with various controls, "
+            + "including a throttle, a monitor screen, and some buttons. "
+            + "A gull-wing door in the left wall of the pod allows entry and exit.  "
+            + "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
+            + "Above the control console is a large window, through which "
+            + "the pod's surroundings can be seen.", [
+            this.portal("door", "todo"),
             this.emplacement("autonav button").commandAdd(new Command(["press autonav", "press autonav button"], this.scripts.placePaxAeternaEscapePod_PressAutonavButton.name)),
             this.emplacement("buttons"),
             this.emplacement("console"),
@@ -331,26 +320,6 @@ class Places {
             this.emplacement("survival kit"),
             this.emplacement("throttle")
         ]);
-    }
-    paxAeternaEscapePod_Description(u, w) {
-        var description = "This is the interior of one of the Pax Aeterna's escape pods."
-            + "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
-            + "Beneath the window is a console with various controls, "
-            + "including a throttle, a monitor screen, and some buttons. "
-            + "A gull-wing door in the left wall of the pod allows entry and exit.  "
-            + "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
-            + "Above the control console is a large window, through which "
-            + "the pod's surroundings can be seen.";
-        +"\n\n"
-            + "Through the window, you see ";
-        var stateEscapePodPlaceName = "EscapePodPlaceName";
-        var place = w.placeCurrent();
-        var escapePodPlaceName = place.stateWithNameGetValue(stateEscapePodPlaceName);
-        var descriptionSuffix = escapePodPlaceName == "DeepSpace"
-            ? "deep space"
-            : "todo";
-        description += descriptionSuffix;
-        return description;
     }
     paxAeternaEscapePod_Name() {
         return "Pax Aeterna - Escape Pod";
@@ -1304,7 +1273,7 @@ class Scripts {
             ];
             var message = messageLines.join("");
             u.messageEnqueue(message);
-            var placeDescription = p.description(u, w);
+            var placeDescription = p.description;
             u.messageEnqueue(placeDescription);
         }
     }

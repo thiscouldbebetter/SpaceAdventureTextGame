@@ -429,23 +429,6 @@ class Places
 		);
 	}
 
-	place3_WithDynamicDescription
-	(
-		name: string,
-		descriptionGet: (u: Universe, w: World) => string,
-		objects: any[]
-	): Place
-	{
-		return new Place
-		(
-			name,
-			descriptionGet,
-			null, // scriptName,
-			objects,
-			null, null, null, null // ?
-		);
-	}
-
 	place4
 	(
 		name: string,
@@ -465,22 +448,7 @@ class Places
 
 	portal(name: string, placeDestinationName: string): Portal
 	{
-		return Portal.fromNameDescriptionAndPlaceDestinationName
-		(
-			name, null, placeDestinationName
-		);
-	}
-
-	portal_WithDynamicDestination
-	(
-		name: string,
-		placeDestinationNameGet: (u: Universe, w: World) => string
-	): Portal
-	{
-		return Portal.fromNameAndPlaceDestinationNameGet
-		(
-			name, placeDestinationNameGet
-		);
+		return new Portal(name, null, placeDestinationName);
 	}
 
 	// Places.
@@ -659,32 +627,23 @@ class Places
 
 	paxAeternaEscapePod(): Place
 	{
-		return this.place3_WithDynamicDescription
+		return this.place3
 		(
 			this.paxAeternaEscapePod_Name(),
 
-			this.paxAeternaEscapePod_Description,
+			"This is the interior of one of the Pax Aeterna's escape pods."
+			+ "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
+			+ "Beneath the window is a console with various controls, "
+			+ "including a throttle, a monitor screen, and some buttons. "
+			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
+			+ "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
+			+ "Above the control console is a large window, through which "
+			+ "the pod's surroundings can be seen.",
 
 			[
-				this.portal_WithDynamicDestination
+				this.portal
 				(
-					"door",
-					(u: Universe, w: World) =>
-					{
-						var stateEscapePodPlaceName = "EscapePodPlaceName";
-						var place = w.placeCurrent();
-						var escapePodPlaceName =
-							place.stateWithNameGetValue(stateEscapePodPlaceName);
-
-						var destinationName =
-							escapePodPlaceName == "DeepSpace"
-							? this.paxAeternaDockingBayHangar_Name()
-							: escapePodPlaceName == "Ekkis II"
-							? this.ekkis2DesertCrashSite_Name()
-							: this.paxAeternaDockingBayHangar_Name();
-
-						return destinationName;
-					}
+					"door", "todo"
 				),
 
 				this.emplacement("autonav button").commandAdd
@@ -712,34 +671,6 @@ class Places
 				this.emplacement("throttle")
 			]
 		);
-	}
-
-	paxAeternaEscapePod_Description(u: Universe, w: World): string
-	{
-		var description =
-			"This is the interior of one of the Pax Aeterna's escape pods."
-			+ "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
-			+ "Beneath the window is a console with various controls, "
-			+ "including a throttle, a monitor screen, and some buttons. "
-			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
-			+ "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
-			+ "Above the control console is a large window, through which "
-			+ "the pod's surroundings can be seen.";
-			+ "\n\n"
-			+ "Through the window, you see "
-
-		var stateEscapePodPlaceName = "EscapePodPlaceName";
-		var place = w.placeCurrent();
-		var escapePodPlaceName =
-			place.stateWithNameGetValue(stateEscapePodPlaceName);
-		var descriptionSuffix =
-			escapePodPlaceName == "DeepSpace"
-			? "deep space"
-			: "todo";
-
-		description += descriptionSuffix;
-
-		return description;
 	}
 
 	paxAeternaEscapePod_Name(): string
@@ -2523,7 +2454,7 @@ class Scripts
 			var message = messageLines.join("");
 			u.messageEnqueue(message);
 
-			var placeDescription = p.description(u, w);
+			var placeDescription = p.description;
 			u.messageEnqueue(placeDescription);
 		}
 	}
