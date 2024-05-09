@@ -471,6 +471,18 @@ class Places
 		);
 	}
 
+	portal_WithDynamicDestination
+	(
+		name: string,
+		placeDestinationNameGet: (u: Universe, w: World) => string
+	): Portal
+	{
+		return Portal.fromNameAndPlaceDestinationNameGet
+		(
+			name, placeDestinationNameGet
+		);
+	}
+
 	// Places.
 
 	// Places - Pax Aeterna.
@@ -654,9 +666,35 @@ class Places
 			this.paxAeternaEscapePod_Description,
 
 			[
-				this.portal("door", this.paxAeternaDockingBayHangar_Name() ),
+				this.portal_WithDynamicDestination
+				(
+					"door",
+					(u: Universe, w: World) =>
+					{
+						var stateEscapePodPlaceName = "EscapePodPlaceName";
+						var place = w.placeCurrent();
+						var escapePodPlaceName =
+							place.stateWithNameGetValue(stateEscapePodPlaceName);
 
-				this.emplacement("autonav button"),
+						var destinationName =
+							escapePodPlaceName == "DeepSpace"
+							? this.paxAeternaDockingBayHangar_Name()
+							: escapePodPlaceName == "Ekkis II"
+							? this.ekkis2DesertCrashSite_Name()
+							: this.paxAeternaDockingBayHangar_Name();
+
+						return destinationName;
+					}
+				),
+
+				this.emplacement("autonav button").commandAdd
+				(
+					new Command
+					(
+						[ "press autonav", "press autonav button" ],
+						this.scripts.placePaxAeternaEscapePod_PressAutonavButton.name
+					)
+				),
 				this.emplacement("buttons"),
 				this.emplacement("console"),
 				this.emplacement("don't button"),
@@ -2128,6 +2166,7 @@ class Scripts
 			this.emplacementBodyKeycardSearch,
 			this.itemCartridgeUse,
 			this.itemKeycardUse,
+			this.placePaxAeternaEscapePod_PressAutonavButton,
 			this.placePaxAeternaEscapePod_PressLaunchButton,
 			this.placePaxAeternaJanitorsCloset_Update,
 			this.placePaxAeternaLibrary_TalkToMan,
@@ -2263,6 +2302,40 @@ class Scripts
 		}
 
 		u.messageEnqueue(message);
+	}
+
+	placePaxAeternaEscapePod_PressAutonavButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): any
+	{
+		var messageLines =
+		[
+			"You press the autonav button, and the pod reorients itself ",
+			"and engages its main drive, then its hyperdrive.  ",
+			"The window fills with the hypnotic lights of hyperspace.  ",
+			"\n\n",
+			"After several hours, the pod approaches its destination, ",
+			"a desert planet the nav computer calls Ekkis II.  ",
+			"The pod enters orbit of the planet, ",
+			"selects the largest (but still tiny) settlement on the surface, ",
+			"and begins its descent through the atmosphere.",
+			"\n\n",
+			"That's when you hear a loud bang, then a metallic tearing sound.  ",
+			"Oh, that's right, the planetfall system is compromised.",
+			"\n\n",
+			"It's a rough ride down, and you get pretty shaken up.",
+			"The worst part is the sudden stop at the end.",
+			"You survive it, but the pod doesn't.  It'll never fly again.",
+			"Through the shattered window you see the dunes of a desert.",
+			"But no settlement.  The pod has... landed... in the wrong place."
+		];
+
+		u.messageEnqueue(messageLines.join(""));
+
+		var stateEscapePodLocationName = "EscapePodLocation";
+
+		p.stateWithNameSetToValue(stateEscapePodLocationName, "Ekkis II");
 	}
 
 	placePaxAeternaEscapePod_PressLaunchButton(u: Universe, w: World, p: Place, c: Command): any

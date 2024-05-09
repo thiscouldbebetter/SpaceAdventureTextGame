@@ -62,7 +62,15 @@ class Tests
 
 			// Docking bay.
 			"go airlock",
-			"go pod"
+			"go pod",
+
+			// Escape pod.
+			"press launch button",
+			"press autonav button",
+
+			// Ekkis II.
+
+			"go door"
 
 			// todo
 		];
@@ -74,7 +82,7 @@ class Tests
 		}
 
 		var place = world.placeCurrent();
-		Assert.areEqual("Pax Aeterna - Escape Pod", place.name);
+		Assert.areEqual("Ekkis II - Desert - Crash Site", place.name);
 	}
 }
 

@@ -43,7 +43,12 @@ class Tests {
             "go elevator",
             // Docking bay.
             "go airlock",
-            "go pod"
+            "go pod",
+            // Escape pod.
+            "press launch button",
+            "press autonav button",
+            // Ekkis II.
+            "go door"
             // todo
         ];
         for (var i = 0; i < commandsToRunAsText.length; i++) {
@@ -51,7 +56,7 @@ class Tests {
             world.updateForUniverseAndCommandText(universe, commandText);
         }
         var place = world.placeCurrent();
-        Assert.areEqual("Pax Aeterna - Escape Pod", place.name);
+        Assert.areEqual("Ekkis II - Desert - Crash Site", place.name);
     }
 }
 class TestFixture {
