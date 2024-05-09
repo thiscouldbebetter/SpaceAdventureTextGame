@@ -104,17 +104,12 @@ class Places
 
 	PaxAeternaEscapePod: Place;
 
-	// Deep space.
-
-	DeepSpaceEscapePod: Place;
-
 	// Ekkis 2.
 
 	// Ekkis 2 - Desert.
 
 	Ekkis2DesertCrashSite: Place;
 	Ekkis2DesertDeep: Place;
-	Ekkis2DesertEscapePodInterior: Place;
 	Ekkis2DesertNorth: Place;
 	Ekkis2DesertSouth: Place;
 	Ekkis2DesertWest: Place;
@@ -228,15 +223,10 @@ class Places
 
 		this.PaxAeternaEscapePod = this.paxAeternaEscapePod();
 
-		// Deep Space.
-
-		this.DeepSpaceEscapePod = this.deepSpaceEscapePod();
-
 		// Ekkis 2.
 
 		this.Ekkis2DesertCrashSite = this.ekkis2DesertCrashSite();
 		this.Ekkis2DesertDeep = this.ekkis2DesertDeep();
-		this.Ekkis2DesertEscapePodInterior = this.ekkis2DesertEscapePodInterior();
 		this.Ekkis2DesertNorth = this.ekkis2DesertNorth();
 		this.Ekkis2DesertSouth = this.ekkis2DesertSouth();
 		this.Ekkis2DesertWest = this.ekkis2DesertWest();
@@ -326,15 +316,10 @@ class Places
 			this.PaxAeternaDockingBayHangar,
 			this.PaxAeternaEscapePod,
 
-			// Deep Space.
-
-			this.DeepSpaceEscapePod,
-
 			// Ekkis 2 - Desert.
 
 			this.Ekkis2DesertCrashSite,
 			this.Ekkis2DesertDeep,
-			this.Ekkis2DesertEscapePodInterior,
 			this.Ekkis2DesertNorth,
 			this.Ekkis2DesertSouth,
 			this.Ekkis2DesertWest,
@@ -444,6 +429,23 @@ class Places
 		);
 	}
 
+	place3_WithDynamicDescription
+	(
+		name: string,
+		descriptionGet: (u: Universe, w: World) => string,
+		objects: any[]
+	): Place
+	{
+		return new Place
+		(
+			name,
+			descriptionGet,
+			null, // scriptName,
+			objects,
+			null, null, null, null // ?
+		);
+	}
+
 	place4
 	(
 		name: string,
@@ -463,7 +465,10 @@ class Places
 
 	portal(name: string, placeDestinationName: string): Portal
 	{
-		return new Portal(name, null, placeDestinationName);
+		return Portal.fromNameDescriptionAndPlaceDestinationName
+		(
+			name, null, placeDestinationName
+		);
 	}
 
 	// Places.
@@ -642,17 +647,11 @@ class Places
 
 	paxAeternaEscapePod(): Place
 	{
-		return this.place3
+		return this.place3_WithDynamicDescription
 		(
 			this.paxAeternaEscapePod_Name(),
 
-			"This is the interior of one of the Pax Aeterna's escape pods."
-			+ "Through its front window, you can see the doors of hangar bay."
-			+ "Beneath the window is a console with various controls, "
-			+ "including a throttle, a monitor screen, and some buttons. "
-			+ "A padded seat with safety belts fills the center of the pod's cabin.  "
-			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
-			+ "Opposite the door, on the starboard wall, a survival kit is mounted.",
+			this.paxAeternaEscapePod_Description,
 
 			[
 				this.portal("door", this.paxAeternaDockingBayHangar_Name() ),
@@ -661,12 +660,48 @@ class Places
 				this.emplacement("buttons"),
 				this.emplacement("console"),
 				this.emplacement("don't button"),
+				this.emplacement("launch button").commandAdd
+				(
+					new Command
+					(
+						[ "press launch", "press launch button" ],
+						this.scripts.placePaxAeternaEscapePod_PressLaunchButton.name
+					)
+				),
 				this.emplacement("monitor screen"),
 				this.emplacement("safety belt"),
 				this.emplacement("survival kit"),
 				this.emplacement("throttle")
 			]
 		);
+	}
+
+	paxAeternaEscapePod_Description(u: Universe, w: World): string
+	{
+		var description =
+			"This is the interior of one of the Pax Aeterna's escape pods."
+			+ "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
+			+ "Beneath the window is a console with various controls, "
+			+ "including a throttle, a monitor screen, and some buttons. "
+			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
+			+ "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
+			+ "Above the control console is a large window, through which "
+			+ "the pod's surroundings can be seen.";
+			+ "\n\n"
+			+ "Through the window, you see "
+
+		var stateEscapePodPlaceName = "EscapePodPlaceName";
+		var place = w.placeCurrent();
+		var escapePodPlaceName =
+			place.stateWithNameGetValue(stateEscapePodPlaceName);
+		var descriptionSuffix =
+			escapePodPlaceName == "DeepSpace"
+			? "deep space"
+			: "todo";
+
+		description += descriptionSuffix;
+
+		return description;
 	}
 
 	paxAeternaEscapePod_Name(): string
@@ -695,7 +730,7 @@ class Places
 			+ "A door leads out to the hall.  "
 			+ "(You tried sleeping out there once, but someone got mad.)",
 
-			this.scripts.placePaxAeternaJanitorsClosetUpdate.name,
+			this.scripts.placePaxAeternaJanitorsCloset_Update.name,
 
 			[
 				this.portal("door", this.paxAeternaUpperDeckHallAmidships_Name()),
@@ -751,7 +786,7 @@ class Places
 					new Command
 					(
 						[ "type", "enter" ],
-						this.scripts.placePaxAeternaLibraryType.name
+						this.scripts.placePaxAeternaLibrary_Type.name
 					)
 				),
 
@@ -791,7 +826,7 @@ class Places
 					new Command
 					(
 						[ "search body", "search man", "talk to man" ],
-						this.scripts.placePaxAeternaLibraryTalkToMan.name
+						this.scripts.placePaxAeternaLibrary_TalkToMan.name
 					)
 				)
 			]
@@ -927,7 +962,7 @@ class Places
 			+ "of the Maintenance Specialist (Sanitation Grade), "
 			+ "which is where you, our hero, came in to this story.",
 
-			this.scripts.placePaxAeternaUpperDeckHallAmidshipsUpdate.name,
+			this.scripts.placePaxAeternaUpperDeckHallAmidships_Update.name,
 
 			[
 				this.portal("closet", this.paxAeternaJanitorsCloset_Name()),
@@ -972,42 +1007,6 @@ class Places
 		return "Pax Aeterna - Upper Deck - Hall - Forward";
 	}
 
-	deepSpaceEscapePod(): Place
-	{
-		return this.place3
-		(
-			this.deepSpaceEscapePod_Name(),
-
-			"This is the interior of one of the Pax Aeterna's escape pods."
-			+ "Through its front window, you can see deep space.  "
-			+ "Beneath the window is a console with various controls, "
-			+ "including a throttle, a monitor screen, and some buttons. "
-			+ "A padded seat with safety belts fills the center of the pod's cabin.  "
-			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
-			+ "Opposite the door, on the starboard wall, a survival kit is mounted.",
-
-			[
-				this.portal("door", this.paxAeternaDockingBayHangar_Name() ),
-
-				this.emplacement("autonav button"),
-				this.emplacement("buttons"),
-				this.emplacement("console"),
-				this.emplacement("don't button"),
-				this.emplacement("monitor screen"),
-				this.emplacement("safety belt"),
-				this.emplacement("survival kit"),
-				this.emplacement("throttle")
-			]
-		);
-	}
-
-	// Places - Deep space.
-
-	deepSpaceEscapePod_Name(): string
-	{
-		return "Deep Space - Escape Pod";
-	}
-
 	// Places - Ekkis 2.
 
 	// Places - Ekkis 2 - Desert.
@@ -1028,7 +1027,9 @@ class Places
 			+ "The desert stretches away as far as the eye can see to the "
 			+ "north, west, and south.  A maze of rocky cliffs rises to the east.",
 
-			[]
+			[
+				this.portal("pod", this.paxAeternaEscapePod_Name() )
+			]
 		);
 	}
 
@@ -1050,29 +1051,6 @@ class Places
 	}
 
 	ekkis2DesertDeep_Name(): string { return "Ekkis II - Desert - Deep Desert"; }
-
-	ekkis2DesertEscapePodInterior() : Place
-	{
-		return this.place3
-		(
-			this.ekkis2DesertEscapePodInterior_Name(),
-
-			"You sit inside your escape pod where it has crashed on the surface "
-			+ "of the desert planet Ekkis2.  The pod's controls are dark and silent. "
-			+ "The forward window was shattered in the crash.  "
-			+ "Through the web of cracks and gaps, the yellow "
-			+ "sand of the desert stretches away before you, seemingly forever.  "
-			+ "The door of the pod is open, and, due to structural damage "
-			+ "incurred during the crash, cannot be closed.  The hot, dry "
-			+ "desert air floods the pod, causing you to sweat profusely.",
-
-			[
-				this.portal("door", this.ekkis2DesertCrashSite_Name() )
-			]
-		);
-	}
-
-	ekkis2DesertEscapePodInterior_Name(): string { return "Ekkis II - Desert - Escape Pod Interior"; }
 
 	ekkis2DesertNorth() : Place
 	{
@@ -2150,10 +2128,11 @@ class Scripts
 			this.emplacementBodyKeycardSearch,
 			this.itemCartridgeUse,
 			this.itemKeycardUse,
-			this.placePaxAeternaJanitorsClosetUpdate,
-			this.placePaxAeternaLibraryTalkToMan,
-			this.placePaxAeternaLibraryType,
-			this.placePaxAeternaUpperDeckHallAmidshipsUpdate,
+			this.placePaxAeternaEscapePod_PressLaunchButton,
+			this.placePaxAeternaJanitorsCloset_Update,
+			this.placePaxAeternaLibrary_TalkToMan,
+			this.placePaxAeternaLibrary_Type,
+			this.placePaxAeternaUpperDeckHallAmidships_Update,
 			this.todo
 		];
 
@@ -2286,7 +2265,38 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	placePaxAeternaJanitorsClosetUpdate(u: Universe, w: World, p: Place, c: Command): any
+	placePaxAeternaEscapePod_PressLaunchButton(u: Universe, w: World, p: Place, c: Command): any
+	{
+		var messageLines =
+		[
+			"You press the button, and the pod shudders into motion.  ",
+			"It rises off the deck, then, with a burst of thrusters, ",
+			"glides through the cargo bay doors ",
+			"and away into the free space around the Pax Aeterna.",
+			"\n\n",
+			"And not a moment too soon.  No sooner does the pod ",
+			"reach the minimum safe distance than the Pax Aeterna ",
+			"lights up in a cascade of explosions ",
+			"and, in a matter of seconds, rips itself to flinders.",
+			"\n\n",
+			"Okay, remember before, when I mentioned minimum safe distance?  ",
+			"Well, maybe I was wrong about that, ",
+			"because an almost invisibly fast piece of debris from the wreck ",
+			"strikes the pod, its transferred momentum ",
+			"causing the pod to spin wildly for a few seconds, ",
+			"before the automatic attitude controls dampen the rotation.  ",
+			"An angry red status light appears on the pod's control console ",
+			"that reads 'planetfall system compromised'.  Ooh boy."
+		];
+
+		u.messageEnqueue(messageLines.join(""));
+
+		var stateEscapePodLocation = "EscapePodLocation";
+
+		p.stateWithNameSetToValue(stateEscapePodLocation, "DeepSpace");
+	}
+
+	placePaxAeternaJanitorsCloset_Update(u: Universe, w: World, p: Place, c: Command): any
 	{
 		if (p.hasBeenVisited() == false)
 		{
@@ -2321,7 +2331,7 @@ class Scripts
 		}
 	}
 
-	placePaxAeternaLibraryTalkToMan(u: Universe, w: World, p: Place, c: Command): any
+	placePaxAeternaLibrary_TalkToMan(u: Universe, w: World, p: Place, c: Command): any
 	{
 		var stateScientistIsDeadName = "ScientistIsDead";
 
@@ -2354,7 +2364,7 @@ class Scripts
 
 	}
 
-	placePaxAeternaLibraryType(u: Universe, w: World, p: Place, c: Command): any
+	placePaxAeternaLibrary_Type(u: Universe, w: World, p: Place, c: Command): any
 	{
 		var commandText = c.text();
 
@@ -2416,7 +2426,10 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	placePaxAeternaUpperDeckHallAmidshipsUpdate(u: Universe, w: World, p: Place, c: Command): any
+	placePaxAeternaUpperDeckHallAmidships_Update
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): any
 	{
 		if (p.hasBeenVisited() == false)
 		{
@@ -2437,7 +2450,8 @@ class Scripts
 			var message = messageLines.join("");
 			u.messageEnqueue(message);
 
-			u.messageEnqueue(p.description);
+			var placeDescription = p.description(u, w);
+			u.messageEnqueue(placeDescription);
 		}
 	}
 
