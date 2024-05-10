@@ -13,7 +13,7 @@ class Game {
         var commandsAsScripts = commands.map((x) => x._scriptExecute);
         scriptsAll.push(...commandsAsScripts);
         scriptsAll.push(...scriptsCustom._All);
-        var placeInitialName = places.paxAeternaJanitorsCloset_Name();
+        var placeInitialName = Places.paxAeternaJanitorsCloset_Name();
         var returnValue = new World("Space_Adventure_Game", places._All, player, commands, scriptsAll, null, // turnsSoFar,
         placeInitialName);
         return returnValue;
@@ -62,8 +62,8 @@ class Places {
         this.Ekkis2CliffsTopNorth = this.ekkis2CliffsTopNorth();
         this.Ekkis2CliffsTopNortheast = this.ekkis2CliffsTopNortheast();
         this.Ekkis2CliffsTopNorthwest = this.ekkis2CliffsTopNorthwest();
-        this.Ekkis2CliffsTopSouth = this.ekkis2CliffsTopSouth();
-        this.Ekkis2CliffsTopSoutheast = this.ekkis2CliffsTopSoutheast();
+        this.Ekkis2CliffsTopSouthEastSide = this.ekkis2CliffsTopSouthEastSide();
+        this.Ekkis2CliffsTopSouthWestSide = this.ekkis2CliffsTopSouthWestSide();
         this.Ekkis2CliffsTopSouthwest = this.ekkis2CliffsTopSouthwest();
         this.Ekkis2CavernsBarrier = this.ekkis2CavernsBarrier();
         this.Ekkis2CavernsDrips = this.ekkis2CavernsDrips();
@@ -92,8 +92,8 @@ class Places {
         this.VenipositorLowerDeckHallFore = this.venipositorLowerDeckHallFore();
         this.VenipositorNearbySpace = this.venipositorNearbySpace();
         this.VenipositorShuttleBay = this.venipositorShuttleBay();
-        this.VenipositorStarGeneratorChamber = this.venipositorStarGeneratorChamber();
-        this.VenipositorStarGeneratorChamberCatwalk = this.venipositorStarGeneratorChamberCatwalk();
+        this.VenipositorStellarJuvenatorChamber = this.venipositorStellarJuvenatorChamber();
+        this.VenipositorStellarJuvenatorChamberCatwalk = this.venipositorStellarJuvenatorChamberCatwalk();
         this.VenipositorUpperDeckHallAft = this.venipositorUpperDeckHallAft();
         this.VenipositorUpperDeckHallAmidships = this.venipositorUpperDeckHallAmidships();
         this.VenipositorUpperDeckHallFore = this.venipositorUpperDeckHallFore();
@@ -140,8 +140,8 @@ class Places {
                 this.Ekkis2CliffsTopNorth,
                 this.Ekkis2CliffsTopNortheast,
                 this.Ekkis2CliffsTopNorthwest,
-                this.Ekkis2CliffsTopSouth,
-                this.Ekkis2CliffsTopSoutheast,
+                this.Ekkis2CliffsTopSouthEastSide,
+                this.Ekkis2CliffsTopSouthWestSide,
                 this.Ekkis2CliffsTopSouthwest,
                 // Ekkis 2 - Caverns.
                 this.Ekkis2CavernsProjectionRoom,
@@ -172,8 +172,8 @@ class Places {
                 this.VenipositorLowerDeckHallFore,
                 this.VenipositorNearbySpace,
                 this.VenipositorShuttleBay,
-                this.VenipositorStarGeneratorChamber,
-                this.VenipositorStarGeneratorChamberCatwalk,
+                this.VenipositorStellarJuvenatorChamber,
+                this.VenipositorStellarJuvenatorChamberCatwalk,
                 this.VenipositorUpperDeckHallAft,
                 this.VenipositorUpperDeckHallAmidships,
                 this.VenipositorUpperDeckHallFore,
@@ -202,12 +202,15 @@ class Places {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, scriptName, objects);
     }
     portal(name, placeDestinationName) {
-        return new Portal(name, null, placeDestinationName);
+        return Portal.fromNameAndPlaceDestinationName(name, placeDestinationName);
+    }
+    portal_WithScript(name, scriptUseName) {
+        return new Portal(name, null, null, scriptUseName);
     }
     // Places.
     // Places - Pax Aeterna.
     paxAeternaBridge() {
-        return this.place2(this.paxAeternaBridge_Name(), "This is the command bridge of the starship Pax Aeterna.  "
+        return this.place2(Places.paxAeternaBridge_Name(), "This is the command bridge of the starship Pax Aeterna.  "
             + "A large transparent hemispherical dome arches overhead, "
             + "showing the brilliantly shining surrounding stars."
             + "Banks of mostly incomprehensible controls "
@@ -215,29 +218,29 @@ class Places {
             + "either empty or filled with the slumped bodies of dead crew."
             + "There's several bodies scattered on the floor, as well.  "
             + "A prominent pedestal in the center "
-            + "formerly held the Star Generator, but now stands vacant.");
+            + "formerly held the Stellar Juvenator, but now stands vacant.");
     }
-    paxAeternaBridge_Name() {
+    static paxAeternaBridge_Name() {
         return "Pax Aeterna - Bridge";
     }
     paxAeternaDockingBayAntechamber() {
-        return this.place3(this.paxAeternaDockingBayAntechamber_Name(), "This is the antechamber of the Pax Aeterna's docking bay.  "
+        return this.place3(Places.paxAeternaDockingBayAntechamber_Name(), "This is the antechamber of the Pax Aeterna's docking bay.  "
             + "A large airlock door leads to the hangar.  "
             + "A control console occupies one wall, while "
             + "on the opposite wall are two closets, with a pair of "
             + " buttons at chest height between them. "
             + " An elevator leads back to the engineering deck.", [
-            this.portal("airlock", this.paxAeternaDockingBayHangar_Name()),
-            this.portal("elevator", this.paxAeternaEngineeringDeckAft_Name()),
+            this.portal("airlock", Places.paxAeternaDockingBayHangar_Name()),
+            this.portal("elevator", Places.paxAeternaEngineeringDeckAft_Name()),
             this.emplacement("controls"),
             this.emplacement("hatch")
         ]);
     }
-    paxAeternaDockingBayAntechamber_Name() {
+    static paxAeternaDockingBayAntechamber_Name() {
         return "Pax Aeterna - Docking Bay - Antechamber";
     }
     paxAeternaDockingBayHangar() {
-        return this.place3(this.paxAeternaDockingBayHangar_Name(), "This is the Pax Aeterna's docking bay hangar.  "
+        return this.place3(Places.paxAeternaDockingBayHangar_Name(), "This is the Pax Aeterna's docking bay hangar.  "
             + "Though its floor is easily large enough to accomodate "
             + "a 20-passenger luxury yacht, it is currently empty "
             + "except for a relatively small hatch in the floor "
@@ -245,31 +248,31 @@ class Places {
             + "A similarly gigantic pair of doors at the far end of the bay "
             + " allows ships to enter and depart when open, "
             + " and keeps everything safely sheltered when closed.", [
-            this.portal("airlock", this.paxAeternaDockingBayAntechamber_Name()),
-            this.portal("pod", this.paxAeternaEscapePod_Name()), // hack
+            this.portal("airlock", Places.paxAeternaDockingBayAntechamber_Name()),
+            this.portal("pod", Places.paxAeternaEscapePod_Name()),
             this.emplacement("controls"),
             this.emplacement("hatch"),
             this.emplacement("pod"),
         ]);
     }
-    paxAeternaDockingBayHangar_Name() {
+    static paxAeternaDockingBayHangar_Name() {
         return "Pax Aeterna - Docking Bay - Hangar";
     }
     paxAeternaEngineeringDeckAft() {
-        return this.place3(this.paxAeternaEngineeringDeckAft_Name(), "This is the aft end of the Pax Aeterna's engineering deck."
+        return this.place3(Places.paxAeternaEngineeringDeckAft_Name(), "This is the aft end of the Pax Aeterna's engineering deck."
             + "A passage to fore leads back to the rest of the deck.  "
             + "In the aft wall is an elevator door, and next to that "
             + "is a small panel with a slot in it.", [
-            this.portal("elevator", this.paxAeternaDockingBayAntechamber_Name()),
-            this.portal("forward", this.paxAeternaEngineeringDeckAmidships_Name()),
+            this.portal("elevator", Places.paxAeternaDockingBayAntechamber_Name()),
+            this.portal("forward", Places.paxAeternaEngineeringDeckAmidships_Name()),
             this.emplacement("slot")
         ]);
     }
-    paxAeternaEngineeringDeckAft_Name() {
+    static paxAeternaEngineeringDeckAft_Name() {
         return "Pax Aeterna - Engineering Deck - Aft";
     }
     paxAeternaEngineeringDeckAmidships() {
-        return this.place3(this.paxAeternaEngineeringDeckAmidships_Name(), "This is the middle of the Pax Aeterna's engineering deck."
+        return this.place3(Places.paxAeternaEngineeringDeckAmidships_Name(), "This is the middle of the Pax Aeterna's engineering deck."
             + "To fore and aft are the other sections of the deck.  "
             + "Three large transparent domes on the floor cover the tops of "
             + "the ship's reactor tubes.  These domes are currently pulsing "
@@ -277,31 +280,31 @@ class Places {
             + "and ominous droning sound.  A thick window "
             + "looks down over the ship's docking bay, with a control console "
             + "running beneath that window.  The bodies of two crewmen lie on the floor.", [
-            this.portal("aft", this.paxAeternaEngineeringDeckAft_Name()),
-            this.portal("forward", this.paxAeternaEngineeringDeckForward_Name()),
+            this.portal("aft", Places.paxAeternaEngineeringDeckAft_Name()),
+            this.portal("forward", Places.paxAeternaEngineeringDeckForward_Name()),
             this.emplacement("controls"),
             this.emplacement("dome"),
             this.emplacement("window"),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
-    paxAeternaEngineeringDeckAmidships_Name() {
+    static paxAeternaEngineeringDeckAmidships_Name() {
         return "Pax Aeterna - Engineering Deck - Aft";
     }
     paxAeternaEngineeringDeckForward() {
-        return this.place3(this.paxAeternaEngineeringDeckForward_Name(), "This is the fore end of the Pax Aeterna's engineering deck."
+        return this.place3(Places.paxAeternaEngineeringDeckForward_Name(), "This is the fore end of the Pax Aeterna's engineering deck."
             + "The rest of the deck lies to aft.  "
             + "At the fore end, an door opens on an elevator back to the other decks.", [
-            this.portal("elevator", this.paxAeternaLowerDeckHallForward_Name()),
-            this.portal("aft", this.paxAeternaEngineeringDeckAmidships_Name()),
+            this.portal("elevator", Places.paxAeternaLowerDeckHallForward_Name()),
+            this.portal("aft", Places.paxAeternaEngineeringDeckAmidships_Name()),
             this.emplacement("slot")
         ]);
     }
-    paxAeternaEngineeringDeckForward_Name() {
+    static paxAeternaEngineeringDeckForward_Name() {
         return "Pax Aeterna - Engineering Deck - Forward";
     }
     paxAeternaEscapePod() {
-        return this.place3(this.paxAeternaEscapePod_Name(), "This is the interior of one of the Pax Aeterna's escape pods."
+        return this.place3(Places.paxAeternaEscapePod_Name(), "This is the interior of one of the Pax Aeterna's escape pods."
             + "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
             + "Beneath the window is a console with various controls, "
             + "including a throttle, a monitor screen, and some buttons. "
@@ -309,7 +312,7 @@ class Places {
             + "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
             + "Above the control console is a large window, through which "
             + "the pod's surroundings can be seen.", [
-            this.portal("door", "todo"),
+            this.portal_WithScript("door", this.scripts.placePaxAeternaEscapePod_GoDoor.name),
             this.emplacement("autonav button").commandAdd(new Command(["press autonav", "press autonav button"], this.scripts.placePaxAeternaEscapePod_PressAutonavButton.name)),
             this.emplacement("buttons"),
             this.emplacement("console"),
@@ -321,11 +324,11 @@ class Places {
             this.emplacement("throttle")
         ]);
     }
-    paxAeternaEscapePod_Name() {
+    static paxAeternaEscapePod_Name() {
         return "Pax Aeterna - Escape Pod";
     }
     paxAeternaJanitorsCloset() {
-        return this.place4(this.paxAeternaJanitorsCloset_Name(), "This office/supply closet/quarters, "
+        return this.place4(Places.paxAeternaJanitorsCloset_Name(), "This office/supply closet/quarters, "
             + "despite the word 'quarters' after the last slash, "
             + "is a bit cramped and uncomfortable for sleeping in, "
             + "as it doesn't have a bed.  "
@@ -339,14 +342,14 @@ class Places {
             + "\n\n"
             + "A door leads out to the hall.  "
             + "(You tried sleeping out there once, but someone got mad.)", this.scripts.placePaxAeternaJanitorsCloset_Update.name, [
-            this.portal("door", this.paxAeternaUpperDeckHallAmidships_Name()),
+            this.portal("door", Places.paxAeternaUpperDeckHallAmidships_Name()),
         ]);
     }
-    paxAeternaJanitorsCloset_Name() {
+    static paxAeternaJanitorsCloset_Name() {
         return "Pax Aeterna - Maintenance Specialist (Sanitation Grade)'s Office/Supply Closet/Quarters";
     }
     paxAeternaLibrary() {
-        return this.place3(this.paxAeternaLibrary_Name(), "This is the Pax Aeterna's library.  "
+        return this.place3(Places.paxAeternaLibrary_Name(), "This is the Pax Aeterna's library.  "
             + "Doors in the fore and aft walls lead to hallways.  "
             + "\n\n"
             + "The high walls are occupied almost completely with narrow shelves, "
@@ -362,8 +365,8 @@ class Places {
             + "\n\n"
             + "A man wearing a scientist's smock lies face-down "
             + "on the floor in front of the console. ", [
-            this.portal("forward", this.paxAeternaUpperDeckHallForward_Name()),
-            this.portal("aft", this.paxAeternaUpperDeckHallAmidships_Name()),
+            this.portal("forward", Places.paxAeternaUpperDeckHallForward_Name()),
+            this.portal("aft", Places.paxAeternaUpperDeckHallAmidships_Name()),
             this.emplacement2("console", "If the title of a desired data cartridge is typed "
                 + "on the console's keyboard, "
                 + "the retrieval robot will retrieve that cartridge from the stacks "
@@ -390,85 +393,85 @@ class Places {
                 + "which is the most important kind of moving.").commandAdd(new Command(["search body", "search man", "talk to man"], this.scripts.placePaxAeternaLibrary_TalkToMan.name))
         ]);
     }
-    paxAeternaLibrary_Name() {
+    static paxAeternaLibrary_Name() {
         return "Pax Aeterna - Library";
     }
     paxAeternaLowerDeckHallAft() {
-        return this.place3(this.paxAeternaLowerDeckHallAft_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+        return this.place3(Places.paxAeternaLowerDeckHallAft_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
             + "The hall continues to forward, and ends in a bulkhead to aft.  "
             + "There is a door here opening to an elevator.", [
-            this.portal("forward", this.paxAeternaLowerDeckHallAmidships_Name()),
-            this.portal("elevator", this.paxAeternaUpperDeckHallAft_Name()),
+            this.portal("forward", Places.paxAeternaLowerDeckHallAmidships_Name()),
+            this.portal("elevator", Places.paxAeternaUpperDeckHallAft_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
-    paxAeternaLowerDeckHallAft_Name() {
+    static paxAeternaLowerDeckHallAft_Name() {
         return "Pax Aeterna - Lower Deck - Hall - Aft";
     }
     paxAeternaLowerDeckHallAmidships() {
-        return this.place3(this.paxAeternaLowerDeckHallAmidships_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+        return this.place3(Places.paxAeternaLowerDeckHallAmidships_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
             + "The hall continues to forward and to aft.", [
-            this.portal("forward", this.paxAeternaLowerDeckHallForward_Name()),
-            this.portal("aft", this.paxAeternaLowerDeckHallAft_Name())
+            this.portal("forward", Places.paxAeternaLowerDeckHallForward_Name()),
+            this.portal("aft", Places.paxAeternaLowerDeckHallAft_Name())
         ]);
     }
-    paxAeternaLowerDeckHallAmidships_Name() {
+    static paxAeternaLowerDeckHallAmidships_Name() {
         return "Pax Aeterna - Lower Deck - Hall - Amidships";
     }
     paxAeternaLowerDeckHallForward() {
-        return this.place3(this.paxAeternaLowerDeckHallForward_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+        return this.place3(Places.paxAeternaLowerDeckHallForward_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
             + "The hall continues to aft, and ends in a bulkhead to forward.  "
             + "There is a door here opening on an elevator.", [
-            this.portal("aft", this.paxAeternaLowerDeckHallAmidships_Name()),
-            this.portal("elevator", this.paxAeternaEngineeringDeckForward_Name()),
+            this.portal("aft", Places.paxAeternaLowerDeckHallAmidships_Name()),
+            this.portal("elevator", Places.paxAeternaEngineeringDeckForward_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
-    paxAeternaLowerDeckHallForward_Name() {
+    static paxAeternaLowerDeckHallForward_Name() {
         return "Pax Aeterna - Lower Deck - Hall - Forward";
     }
     paxAeternaUpperDeckHallAft() {
-        return this.place3(this.paxAeternaUpperDeckHallAft_Name(), "This is a hallway on the upper deck the starship Pax Aeterna.  "
+        return this.place3(Places.paxAeternaUpperDeckHallAft_Name(), "This is a hallway on the upper deck the starship Pax Aeterna.  "
             + "The hall continues to forward, and ends in a bulkhead to aft.  "
             + "There is a door here opening on an elevator.", [
-            this.portal("forward", this.paxAeternaUpperDeckHallAmidships_Name()),
-            this.portal("elevator", this.paxAeternaLowerDeckHallAft_Name()),
+            this.portal("forward", Places.paxAeternaUpperDeckHallAmidships_Name()),
+            this.portal("elevator", Places.paxAeternaLowerDeckHallAft_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
-    paxAeternaUpperDeckHallAft_Name() {
+    static paxAeternaUpperDeckHallAft_Name() {
         return "Pax Aeterna - Upper Deck - Hall - Aft";
     }
     paxAeternaUpperDeckHallAmidships() {
-        return this.place4(this.paxAeternaUpperDeckHallAmidships_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
+        return this.place4(Places.paxAeternaUpperDeckHallAmidships_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
             + "The hall ends in a door to forward, and continues to aft.  "
             + "In the middle is a door leading to the office/supply closet/quarters "
             + "of the Maintenance Specialist (Sanitation Grade), "
             + "which is where you, our hero, came in to this story.", this.scripts.placePaxAeternaUpperDeckHallAmidships_Update.name, [
-            this.portal("closet", this.paxAeternaJanitorsCloset_Name()),
-            this.portal("forward", this.paxAeternaLibrary_Name()),
-            this.portal("aft", this.paxAeternaUpperDeckHallAft_Name())
+            this.portal("closet", Places.paxAeternaJanitorsCloset_Name()),
+            this.portal("forward", Places.paxAeternaLibrary_Name()),
+            this.portal("aft", Places.paxAeternaUpperDeckHallAft_Name())
         ]);
     }
-    paxAeternaUpperDeckHallAmidships_Name() {
+    static paxAeternaUpperDeckHallAmidships_Name() {
         return "Pax Aeterna - Upper Deck - Hall - Amidships";
     }
     paxAeternaUpperDeckHallForward() {
-        return this.place3(this.paxAeternaUpperDeckHallForward_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
+        return this.place3(Places.paxAeternaUpperDeckHallForward_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
             + "The hall ends in a bulkhead to forward and a door to aft.  "
             + "The body of a dead crewman lies crumpled "
             + "against the bulkhead at the forward end of the hall.", [
-            this.portal("aft", this.paxAeternaLibrary_Name()),
+            this.portal("aft", Places.paxAeternaLibrary_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
         ]);
     }
-    paxAeternaUpperDeckHallForward_Name() {
+    static paxAeternaUpperDeckHallForward_Name() {
         return "Pax Aeterna - Upper Deck - Hall - Forward";
     }
     // Places - Ekkis 2.
     // Places - Ekkis 2 - Desert.
     ekkis2DesertCrashSite() {
-        return this.place3(this.ekkis2DesertCrashSite_Name(), "Your escape pod has crashed in the middle of the desert "
+        return this.place3(Places.ekkis2DesertCrashSite_Name(), "Your escape pod has crashed in the middle of the desert "
             + "of the planet Ekkis2, rendering it completely inoperable.  "
             + "Its structural frame is severely bent, and the door unclosable.  "
             + "The forward window has shattered, "
@@ -477,63 +480,67 @@ class Places {
             + "\n\n"
             + "The desert stretches away as far as the eye can see to the "
             + "north, west, and south.  A maze of rocky cliffs rises to the east.", [
-            this.portal("pod", this.paxAeternaEscapePod_Name())
+            this.portal("pod", Places.paxAeternaEscapePod_Name()),
+            this.portal("east", Places.ekkis2CliffsBottomNorthwestWestSide_Name())
         ]);
     }
-    ekkis2DesertCrashSite_Name() { return "Ekkis II - Desert - Crash Site"; }
+    static ekkis2DesertCrashSite_Name() { return "Ekkis II - Desert - Crash Site"; }
     ekkis2DesertDeep() {
-        return this.place3(this.ekkis2DesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+        return this.place3(Places.ekkis2DesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis2, "
             + "The featureless sand stretches away in every direction.", []
         // Scripts.placeEkkis2DesertDeepUpdate.name
         );
     }
-    ekkis2DesertDeep_Name() { return "Ekkis II - Desert - Deep Desert"; }
+    static ekkis2DesertDeep_Name() { return "Ekkis II - Desert - Deep Desert"; }
     ekkis2DesertNorth() {
-        return this.place3(this.ekkis2DesertNorth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+        return this.place3(Places.ekkis2DesertNorth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
             + "just north of the wreck of your crashed escape pod.  "
             + "The featureless sand stretches away in every other direction.", [
-            this.portal("south", this.ekkis2DesertCrashSite_Name()),
-            this.portal("north", this.ekkis2DesertDeep_Name()),
-            this.portal("east", this.ekkis2DesertDeep_Name()),
-            this.portal("west", this.ekkis2DesertDeep_Name()),
+            this.portal("south", Places.ekkis2DesertCrashSite_Name()),
+            this.portal("north", Places.ekkis2DesertDeep_Name()),
+            this.portal("east", Places.ekkis2DesertDeep_Name()),
+            this.portal("west", Places.ekkis2DesertDeep_Name()),
         ]);
     }
-    ekkis2DesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
+    static ekkis2DesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
     ekkis2DesertSouth() {
-        return this.place3(this.ekkis2DesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+        return this.place3(Places.ekkis2DesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis2, "
             + "just south of the wreck of your crashed escape pod.  "
             + "The featureless sand stretches away in every other direction.", [
-            this.portal("north", this.ekkis2DesertCrashSite_Name()),
-            this.portal("south", this.ekkis2DesertDeep_Name()),
-            this.portal("east", this.ekkis2DesertDeep_Name()),
-            this.portal("west", this.ekkis2DesertDeep_Name()),
+            this.portal("north", Places.ekkis2DesertCrashSite_Name()),
+            this.portal("south", Places.ekkis2DesertDeep_Name()),
+            this.portal("east", Places.ekkis2DesertDeep_Name()),
+            this.portal("west", Places.ekkis2DesertDeep_Name()),
         ]);
     }
-    ekkis2DesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
+    static ekkis2DesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
     ekkis2DesertWest() {
-        return this.place3(this.ekkis2DesertWest_Name(), "You stand in the trackless desert of the planet Ekkis2, "
+        return this.place3(Places.ekkis2DesertWest_Name(), "You stand in the trackless desert of the planet Ekkis2, "
             + "just west of the wreck of your crashed escape pod.  "
             + "The featureless sand stretches away in every other direction.", [
-            this.portal("east", this.ekkis2DesertCrashSite_Name()),
-            this.portal("north", this.ekkis2DesertDeep_Name()),
-            this.portal("south", this.ekkis2DesertDeep_Name()),
-            this.portal("west", this.ekkis2DesertDeep_Name()),
+            this.portal("east", Places.ekkis2DesertCrashSite_Name()),
+            this.portal("north", Places.ekkis2DesertDeep_Name()),
+            this.portal("south", Places.ekkis2DesertDeep_Name()),
+            this.portal("west", Places.ekkis2DesertDeep_Name()),
         ]);
     }
-    ekkis2DesertWest_Name() { return "Ekkis II - Desert - West of Crash Site"; }
+    static ekkis2DesertWest_Name() {
+        return "Ekkis II - Desert - West of Crash Site";
+    }
     // Places - Ekkis 2 - Cliffs.
     ekkis2CliffsBottomNorth() {
-        return this.place3(this.ekkis2CliffsBottomNorth_Name(), "You stand on the sand of the Ekkis2 desert, just to the south  "
+        return this.place3(Places.ekkis2CliffsBottomNorth_Name(), "You stand on the sand of the Ekkis2 desert, just to the south  "
             + "of a steep stone cliff running from west to east. ", [
-            this.portal("south", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("west", this.ekkis2CliffsBottomNorthwestEastSide_Name()),
-            this.portal("east", this.ekkis2CliffsBottomNortheast_Name())
+            this.portal("south", Places.ekkis2CliffsBottomSouth_Name()),
+            this.portal("west", Places.ekkis2CliffsBottomNorthwestEastSide_Name()),
+            this.portal("east", Places.ekkis2CliffsBottomNortheast_Name())
         ]);
     }
-    ekkis2CliffsBottomNorth_Name() { return "Ekkis II - Cliffs - North"; }
-    ;
+    static ekkis2CliffsBottomNorth_Name() {
+        return "Ekkis II - Cliffs - Bottom - North";
+    }
     ekkis2CliffsBottomNortheast() {
-        return this.place3(this.ekkis2CliffsBottomNortheast_Name(), "You stand on the sand of the Ekkis2 desert, just to the south  "
+        return this.place3(Places.ekkis2CliffsBottomNortheast_Name(), "You stand on the sand of the Ekkis2 desert, just to the south  "
             + "of a steep stone cliff running from the west "
             + "and ending just to the east.  "
             + "Above, on the clifftop, two large stone pillars stand about four meters "
@@ -541,31 +548,34 @@ class Places {
             + "with jagged, broken tops.  "
             + "\n\n"
             + "To the east, the sand stretches away as far as you can see.", [
-            this.portal("south", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("west", this.ekkis2CliffsBottomNorthwestEastSide_Name()),
-            this.portal("east", this.ekkis2DesertDeep_Name())
+            this.portal("south", Places.ekkis2CliffsBottomSoutheast_Name()),
+            this.portal("west", Places.ekkis2CliffsBottomNorthwestEastSide_Name()),
+            this.portal("east", Places.ekkis2DesertDeep_Name())
         ]);
     }
-    ekkis2CliffsBottomNortheast_Name() { return "Ekkis II - Cliffs - Northeast"; }
+    static ekkis2CliffsBottomNortheast_Name() {
+        return "Ekkis II - Cliffs - Bottom - Northeast";
+    }
     ;
     ekkis2CliffsBottomNorthwestEastSide() {
-        return this.place3(this.ekkis2CliffsBottomNorthwestEastSide_Name(), "You stand on the sand of the Ekkis2 desert, at the base  "
+        return this.place3(Places.ekkis2CliffsBottomNorthwestEastSide_Name(), "You stand on the sand of the Ekkis2 desert, at the base  "
             + "of a sheer stone cliff that curves away to the south and east.  ", [
-            this.portal("south", this.ekkis2CliffsBottomNorth_Name()),
-            this.portal("east", this.ekkis2CliffsBottomSouthwest_Name())
+            this.portal("east", Places.ekkis2CliffsBottomNorth_Name()),
+            this.portal("south", Places.ekkis2CliffsBottomSouthwest_Name())
         ]);
     }
-    ekkis2CliffsBottomNorthwestEastSide_Name() { return "Ekkis II - Cliffs - Northwest - East Side"; }
-    ;
+    static ekkis2CliffsBottomNorthwestEastSide_Name() {
+        return "Ekkis II - Cliffs - Bottom - Northwest - East Side";
+    }
     ekkis2CliffsBottomNorthwestWestSide() {
-        return this.place3(this.ekkis2CliffsBottomNorthwestWestSide_Name(), "You stand on the sand of the Ekkis2 desert, at the base  "
+        return this.place3(Places.ekkis2CliffsBottomNorthwestWestSide_Name(), "You stand on the sand of the Ekkis2 desert, at the base  "
             + "of a sheer stone cliff that curves away to the south and east,  "
             + "and which blocks passage to the east.  "
             + "The site where your escape pod crashed is to the west."
             + "To the south, more cliffs are visible. "
             + " The desert stretches away to the north, and west.", [
-            this.portal("south", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("west", this.ekkis2DesertCrashSite_Name()),
+            this.portal("south", Places.ekkis2CliffsBottomSouthwest_Name()),
+            this.portal("west", Places.ekkis2DesertCrashSite_Name()),
             this.emplacement("hole"
             // "This is a hole in the side of the cliff face, "
             // + "about 40 centimeters in diameter.  Its interior is "
@@ -574,175 +584,234 @@ class Places {
             )
         ]);
     }
-    ekkis2CliffsBottomNorthwestWestSide_Name() {
-        return "Ekkis II - Cliffs - Northwest - West Side";
+    static ekkis2CliffsBottomNorthwestWestSide_Name() {
+        return "Ekkis II - Cliffs - Bottom - Northwest - West Side";
     }
-    ;
     ekkis2CliffsBottomSouth() {
-        return this.place3(this.ekkis2CliffsBottomSouth_Name(), "todo", [
-            this.portal("east", this.ekkis2CliffsBottomSoutheast_Name()),
-            this.portal("north", this.ekkis2CliffsBottomNorth_Name()),
-            this.portal("west", this.ekkis2CliffsBottomSouthwest_Name()),
+        return this.place3(Places.ekkis2CliffsBottomSouth_Name(), "You stand on the desert of Ekkis II, "
+            + "in a area surrounded by a system of cliffs.  "
+            + "In the shelter afforded by the cliffs, "
+            + "some stunted greenery actually manages to cling to life.  "
+            + "Overhead, a weathered stone arch bridges the tops of the cliffs "
+            + "to the east with those to the west.  "
+            + "Surface paths between cliff bases run to the west, north, and east.", [
+            this.portal("east", Places.ekkis2CliffsBottomSoutheast_Name()),
+            this.portal("north", Places.ekkis2CliffsBottomNorth_Name()),
+            this.portal("west", Places.ekkis2CliffsBottomSouthwest_Name()),
         ]);
     }
-    ekkis2CliffsBottomSouth_Name() { return "Ekkis II - Cliffs - South"; }
-    ;
+    static ekkis2CliffsBottomSouth_Name() {
+        return "Ekkis II - Cliffs - Bottom - South";
+    }
     ekkis2CliffsBottomSoutheast() {
-        return this.place3(this.ekkis2CliffsBottomSoutheast_Name(), "You stand on a clear stretch of sand amid a formation of stone cliffs.  "
+        return this.place3(Places.ekkis2CliffsBottomSoutheast_Name(), "You stand on a clear stretch of sand amid a formation of stone cliffs.  "
             + "The sandy surface of the desert runs to the north and to the west. "
             + "To the east is a tall, confused jumble of rocks, "
             + " in which a large, shadowy cave mouth opens."
             + "On the west side of the clearing, a stone slope rises jaggedly "
             + "upward between jutting upright stones, climbing as it runs northward.", [
-            this.portal("north", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("west", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("east", this.ekkis2CliffsCaveInterior_Name()),
-            this.portal("slope", this.ekkis2CliffsTopNortheast_Name())
+            this.portal("north", Places.ekkis2CliffsBottomSouth_Name()),
+            this.portal("west", Places.ekkis2CliffsBottomSouth_Name()),
+            this.portal("east", Places.ekkis2CliffsCaveInterior_Name()),
+            this.portal("up", Places.ekkis2CliffsTopSouthEastSide_Name())
         ]);
     }
-    ekkis2CliffsBottomSoutheast_Name() { return "Ekkis II - Cliffs - Southeast"; }
-    ;
+    static ekkis2CliffsBottomSoutheast_Name() {
+        return "Ekkis II - Cliffs - Bottom - Southeast";
+    }
     ekkis2CliffsBottomSouthwest() {
-        return this.place3(this.ekkis2CliffsBottomSouthwest_Name(), "todo", [
-            this.portal("east", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("north", this.ekkis2CliffsBottomNorthwestEastSide_Name())
+        return this.place3(Places.ekkis2CliffsBottomSouthwest_Name(), "todo", [
+            this.portal("east", Places.ekkis2CliffsBottomSouth_Name()),
+            this.portal("north", Places.ekkis2CliffsBottomNorthwestEastSide_Name())
         ]);
     }
-    ekkis2CliffsBottomSouthwest_Name() { return "Ekkis II - Cliffs - Southwest"; }
+    static ekkis2CliffsBottomSouthwest_Name() { return "Ekkis II - Cliffs - Bottom - Southwest"; }
     ;
     ekkis2CliffsCaveInterior() {
-        return this.place3(this.ekkis2CliffsCaveInterior_Name(), "This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
+        return this.place3(Places.ekkis2CliffsCaveInterior_Name(), "This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
             + "To the west the cave opens out into the blazing daylight "
             + "of the Ekkis2 desert.", [
-            this.portal("west", this.ekkis2CliffsBottomSoutheast_Name()),
+            this.portal("west", Places.ekkis2CliffsBottomSoutheast_Name()),
         ]);
     }
-    ekkis2CliffsCaveInterior_Name() { return "Ekkis II - Cliffs - Cave - Interior"; }
+    static ekkis2CliffsCaveInterior_Name() {
+        return "Ekkis II - Cliffs - Cave - Interior";
+    }
     ekkis2CliffsTopNorth() {
-        return this.place3(this.ekkis2CliffsTopNorth_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.", [
-            this.portal("east", this.ekkis2CliffsBottomNortheast_Name()),
-            this.portal("south", this.ekkis2CliffsBottomSouth_Name()),
-            this.portal("west", this.ekkis2CliffsBottomNorthwestWestSide_Name())
+        return this.place3(Places.ekkis2CliffsTopNorth_Name(), "You stand atop a rocky cliff rising from the desert "
+            + "of the planet Ekkis2.  "
+            + "The top of the cliff continues to the west and east.", [
+            this.portal("east", Places.ekkis2CliffsTopNortheast_Name()),
+            this.portal("west", Places.ekkis2CliffsTopNorthwest_Name())
         ]);
     }
-    ekkis2CliffsTopNorth_Name() { return "Ekkis II - Cliffs - Top - North"; }
+    static ekkis2CliffsTopNorth_Name() {
+        return "Ekkis II - Cliffs - Top - North";
+    }
     ekkis2CliffsTopNortheast() {
-        return this.place3(this.ekkis2CliffsTopNortheast_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.  "
-            + "A pair of bent stone columns rises, bending toward each other like horns.", [
-            this.portal("south", this.ekkis2CliffsBottomSoutheast_Name()),
-            this.portal("west", this.ekkis2CliffsBottomNorth_Name())
+        return this.place3(Places.ekkis2CliffsTopNortheast_Name(), "You stand on the end of a cliff "
+            + "rising from the desert of the planet Ekkis2.  "
+            + "A pair of leaning stone columns rises from the clifftop here, "
+            + "bending toward each other like horns.  "
+            + "The top of the cliff runs back toward the west.", [
+            this.portal("west", Places.ekkis2CliffsTopNorth_Name()),
+            this.portal("columns", Places.ekkis2CavernsElevator_Name())
         ]);
     }
-    ekkis2CliffsTopNortheast_Name() { return "Ekkis II - Cliffs - Top - Northeast"; }
+    static ekkis2CliffsTopNortheast_Name() { return "Ekkis II - Cliffs - Top - Northeast"; }
     ekkis2CliffsTopNorthwest() {
-        return this.place3(this.ekkis2CliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.", [
-            this.portal("east", this.ekkis2CliffsBottomNorth_Name()),
-            this.portal("south", this.ekkis2CliffsBottomSouthwest_Name())
+        return this.place3(Places.ekkis2CliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.  "
+            + "The path along the clifftop curves from the south to the east.  "
+            + "Some jagged peaks jut upward along the northern edge of the cliff.", [
+            this.portal("east", Places.ekkis2CliffsTopNorth_Name()),
+            this.portal("south", Places.ekkis2CliffsTopSouthwest_Name())
         ]);
     }
-    ekkis2CliffsTopNorthwest_Name() { return "Ekkis II - Cliffs - Top - Northwest"; }
-    ekkis2CliffsTopSouth() {
-        return this.place3(this.ekkis2CliffsTopSouth_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.", [
-            this.portal("east", this.ekkis2CliffsBottomSoutheast_Name()),
-            this.portal("north", this.ekkis2CliffsBottomNorth_Name()),
-            this.portal("west", this.ekkis2CliffsBottomSouthwest_Name())
+    static ekkis2CliffsTopNorthwest_Name() {
+        return "Ekkis II - Cliffs - Top - Northwest";
+    }
+    ekkis2CliffsTopSouthEastSide() {
+        return this.place3(Places.ekkis2CliffsTopSouthEastSide_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.  "
+            + "To the east, a downward slope curves southward "
+            + "back to the desert surface. "
+            + "To the west, the cliff top rises and then falls "
+            + "in an weathered stone arch, "
+            + "which serves as a natural bridge to the clifftop on the other side."
+            + "Below the arch is a slightly greener patch of desert "
+            + "sheltered by the surrounding cliffs.", [
+            this.portal("east", Places.ekkis2CliffsBottomSoutheast_Name()),
+            this.portal("west", Places.ekkis2CliffsTopSouthWestSide_Name())
         ]);
     }
-    ekkis2CliffsTopSouth_Name() { return "Ekkis II - Cliffs - Top - South"; }
-    ekkis2CliffsTopSoutheast() {
-        return this.place3(this.ekkis2CliffsTopSoutheast_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.", [
-            this.portal("north", this.ekkis2CliffsBottomNortheast_Name()),
-            this.portal("west", this.ekkis2CliffsBottomSouth_Name())
+    static ekkis2CliffsTopSouthEastSide_Name() {
+        return "Ekkis II - Cliffs - Top - Arch - East Side";
+    }
+    ekkis2CliffsTopSouthWestSide() {
+        return this.place3(Places.ekkis2CliffsTopSouthWestSide_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.  "
+            + "To the east, the cliff top rises and then falls "
+            + "in an weathered stone arch, "
+            + "which serves as a natural bridge to the clifftop on the other side,"
+            + "and from there down a slope to the desert surface."
+            + "Below the arch is a slightly greener patch of desert "
+            + "sheltered by the surrounding cliffs.", [
+            this.portal("east", Places.ekkis2CliffsTopSouthEastSide_Name()),
+            this.portal("west", Places.ekkis2CliffsTopSouthwest_Name())
         ]);
     }
-    ekkis2CliffsTopSoutheast_Name() { return "Ekkis II - Cliffs - Top - Southeast"; }
+    static ekkis2CliffsTopSouthWestSide_Name() {
+        return "Ekkis II - Cliffs - Top - Arch - West Side";
+    }
     ekkis2CliffsTopSouthwest() {
-        return this.place3(this.ekkis2CliffsTopSouthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2", [
-        // todo
+        return this.place3(Places.ekkis2CliffsTopSouthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis2.  "
+            + "The path along the clifftop curves "
+            + "from the east, where a natural stone bridge "
+            + "arches over the desert surface, "
+            + "and continues to the north.", [
+            this.portal("north", Places.ekkis2CliffsTopNorthwest_Name()),
+            this.portal("east", Places.ekkis2CliffsTopSouthWestSide_Name())
         ]);
     }
-    ekkis2CliffsTopSouthwest_Name() { return "Ekkis II - Cliffs - Top - Southwest"; }
+    static ekkis2CliffsTopSouthwest_Name() {
+        return "Ekkis II - Cliffs - Top - Southwest";
+    }
     // Places - Ekkis 2 - Caverns.
     ekkis2CavernsBarrier() {
-        return this.place3(this.ekkis2CavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
+        return this.place3(Places.ekkis2CavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
             + "The path to the west is blocked by several closely spaced "
             + "and intensely bright beams of light,"
             + "which are emitted from small round ports the rock walls, "
             + "and which pass into similar ports on the other side.  "
+            + "Beyond this barrier, the path rises up and curves to the right "
+            + "in a rough semicircle, leading along a higher path back to the east."
             + "A passage leads back to the east.", [
-            this.portal("east", this.ekkis2CavernsPool_Name()),
-            this.portal("west", this.ekkis2CavernsGeyser_Name())
+            this.portal("east", Places.ekkis2CavernsPool_Name()),
+            this.portal("west", Places.ekkis2CavernsDrips_Name())
         ]);
     }
-    ekkis2CavernsBarrier_Name() { return "Ekkis II - Caverns - Barrier"; }
+    static ekkis2CavernsBarrier_Name() {
+        return "Ekkis II - Caverns - Barrier";
+    }
     ekkis2CavernsDrips() {
-        return this.place3(this.ekkis2CavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
+        return this.place3(Places.ekkis2CavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
             + "The passage runs to the east, where drips of a clear liquid "
             + "fall intermittently from the ceiling.  "
             + "Each drip passes into a small, precise hole in the floor "
             + "that appears as if it were made to fit it."
-            + "A passage leads back to the west.", [
-            this.portal("east", this.ekkis2CavernsProjectionRoom_Name()),
-            this.portal("west", this.ekkis2CavernsBarrier_Name())
+            + "A passage leads back to the west, "
+            + "curving left in a rough semicircle back down to the level below.", [
+            this.portal("east", Places.ekkis2CavernsProjectionRoom_Name()),
+            this.portal("west", Places.ekkis2CavernsBarrier_Name())
         ]);
     }
-    ekkis2CavernsDrips_Name() { return "Ekkis II - Caverns - Drips"; }
+    static ekkis2CavernsDrips_Name() {
+        return "Ekkis II - Caverns - Drips";
+    }
     ekkis2CavernsElevator() {
-        return this.place3(this.ekkis2CavernsElevator_Name(), "You stand at the bottom of the elevator that brought you down "
+        return this.place3(Places.ekkis2CavernsElevator_Name(), "You stand at the bottom of the elevator that brought you down "
             + "from the cliffs of Ekkis2 to a cool, dark, rocky cavern.  "
             + "The elevator door lies at the east side of the passage.  "
             + "From there, the passage runs to the west.", [
-            this.portal("west", this.ekkis2CavernsGrating_Name())
+            this.portal("west", Places.ekkis2CavernsGrating_Name())
         ]);
     }
-    ekkis2CavernsElevator_Name() { return "Ekkis II - Caverns - Elevator"; }
+    static ekkis2CavernsElevator_Name() {
+        return "Ekkis II - Caverns - Elevator";
+    }
     ekkis2CavernsGeyser() {
-        return this.place3(this.ekkis2CavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
+        return this.place3(Places.ekkis2CavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2.  "
             + "The passage to the west ends abruptly in a solid rock wall."
             + "Nearby, a small geyser shoots wetly and steamily out of a hole "
             + " in the top of a stalagmite."
             + "Another passage leads back east.", [
-            this.portal("west", this.ekkis2CavernsPool_Name()),
-            this.portal("east", this.ekkis2CavernsGrating_Name())
+            this.portal("west", Places.ekkis2CavernsPool_Name()),
+            this.portal("east", Places.ekkis2CavernsGrating_Name())
         ]);
     }
-    ekkis2CavernsGeyser_Name() { return "Ekkis II - Caverns - Geyser"; }
+    static ekkis2CavernsGeyser_Name() {
+        return "Ekkis II - Caverns - Geyser";
+    }
     ekkis2CavernsGrating() {
-        return this.place3(this.ekkis2CavernsGrating_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2, "
+        return this.place3(Places.ekkis2CavernsGrating_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2, "
             + "in a passage running from east to west."
             + "In the floor leading to the west, a thick metal grating "
             + "perforated with holes about 10 centimeters wide "
             + "stretches from wall to wall across the entire passage. ", [
-            this.portal("west", this.ekkis2CavernsGeyser_Name()),
-            this.portal("east", this.ekkis2CavernsElevator_Name())
+            this.portal("west", Places.ekkis2CavernsGeyser_Name()),
+            this.portal("east", Places.ekkis2CavernsElevator_Name())
         ]);
     }
-    ekkis2CavernsGrating_Name() { return "Ekkis II - Caverns - Grating"; }
+    static ekkis2CavernsGrating_Name() {
+        return "Ekkis II - Caverns - Grating";
+    }
     ekkis2CavernsPool() {
-        return this.place3(this.ekkis2CavernsPool_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
+        return this.place3(Places.ekkis2CavernsPool_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
             + "You stand on a wide ledge that runs south, back through a hidden doorway, "
             + " where a plugged geyser steams fitfully.  To the west, the ledge runs "
             + "through dark natural stone columns and on into the darkness.  "
             + "Far below the ledge is a pool of clear liquid, "
             + "with drips falling from holes in the ceiling to fill it.  "
             + "A passage leads back to the east.", [
-            this.portal("west", this.ekkis2CavernsBarrier_Name()),
-            this.portal("east", this.ekkis2CavernsGeyser_Name())
+            this.portal("west", Places.ekkis2CavernsBarrier_Name()),
+            this.portal("east", Places.ekkis2CavernsGeyser_Name())
         ]);
     }
-    ekkis2CavernsPool_Name() { return "Ekkis II - Caverns - Pool"; }
+    static ekkis2CavernsPool_Name() {
+        return "Ekkis II - Caverns - Pool";
+    }
     ekkis2CavernsProjectionRoom() {
-        return this.place3(this.ekkis2CavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
+        return this.place3(Places.ekkis2CavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
             + "This space is completely dark at the moment.  Earlier, it was lit only "
             + "by a holographic projection of a triangular-headed alien.  "
             + "A passage leads back to the east.", [
-            this.portal("east", this.ekkis2CavernsBarrier_Name()),
-            this.portal("west", this.ekkis2CavernsSteamworks_Name())
+            this.portal("west", Places.ekkis2CavernsDrips_Name()),
+            this.portal("north", Places.ekkis2CavernsSteamworks_Name())
         ]);
     }
-    ekkis2CavernsProjectionRoom_Name() { return "Ekkis II - Caverns - Projection Room"; }
+    static ekkis2CavernsProjectionRoom_Name() {
+        return "Ekkis II - Caverns - Projection Room";
+    }
     ekkis2CavernsSteamworks() {
-        return this.place3(this.ekkis2CavernsSteamworks_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
+        return this.place3(Places.ekkis2CavernsSteamworks_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis2. "
             + "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
             + "A computer console with a monitor and standard data cartridge slot "
             + "stands against the north wall.  Above it is a catwalk where members "
@@ -750,13 +819,14 @@ class Places {
             + "busily operate various inscrutable control systems."
             + "To the west is a small, garage-like space, with a door at the end "
             + "that appears to open onto a large elevator platform.", [
-            this.portal("east", this.ekkis2CavernsProjectionRoom_Name()),
+            this.portal("east", Places.ekkis2CavernsProjectionRoom_Name()),
+            this.portal("skimmer", Places.ekkis2FartingNoiseBarFront_Name())
         ]);
     }
-    ekkis2CavernsSteamworks_Name() { return "Ekkis II - Caverns - Steamworks"; }
+    static ekkis2CavernsSteamworks_Name() { return "Ekkis II - Caverns - Steamworks"; }
     // Places - Ekkis 2 - Village of [Farting Noise].
     ekkis2FartingNoiseBarFront() {
-        return this.place3(this.ekkis2FartingNoiseBarFront_Name(), "You stand in the tiny settlement named, "
+        return this.place3(Places.ekkis2FartingNoiseBarFront_Name(), "You stand in the tiny settlement named, "
             + " as near as you can make out from the signs in Universal Phonospeak, "
             + "[Farting Noise].  "
             + "In the natives' defense, maybe their farts sound completely different from yours."
@@ -779,28 +849,28 @@ class Places {
             + "\n\n"
             + "To the south, a faint shimmer in the air betrays the forcefield "
             + "that protects this settlement from the native predatory sand-swimmers.", [
-            this.portal("north", this.ekkis2FartingNoiseDroidsBWeWest_Name()),
-            this.portal("west", this.ekkis2FartingNoiseTinysUsedShips_Name()),
-            this.portal("east", this.ekkis2FartingNoiseBarRear_Name()),
-            this.portal("south", this.ekkis2DesertDeep_Name())
+            this.portal("north", Places.ekkis2FartingNoiseDroidsBWeWest_Name()),
+            this.portal("west", Places.ekkis2FartingNoiseTinysUsedShips_Name()),
+            this.portal("east", Places.ekkis2FartingNoiseBarRear_Name()),
+            this.portal("south", Places.ekkis2DesertDeep_Name()),
+            this.portal("bar", Places.ekkis2FartingNoiseBarInterior_Name())
         ]);
     }
-    ekkis2FartingNoiseBarFront_Name() { return "Ekkis II - [Farting Noise] - Bar - Front"; }
+    static ekkis2FartingNoiseBarFront_Name() {
+        return "Ekkis II - [Farting Noise] - Bar - Front";
+    }
     ekkis2FartingNoiseBarInterior() {
-        return this.place3(this.ekkis2FartingNoiseBarInterior_Name(), "You stand inside the [Farting Noise] bar.  "
+        return this.place3(Places.ekkis2FartingNoiseBarInterior_Name(), "You stand inside the [Farting Noise] bar.  "
             + "On a small stage, a band of garishly dressed bipeds loudly plays "
             + "what you can only assume is a song, "
-            + "and that you can only assume to be one of their hits.  "
+            + "and that you can only further assume to be one of their hits.  "
             + "A bar runs along the opposite wall, where a harried bartender "
             + "delivers drinks to patrons seated on stools, "
             + "some of whom are engaged in conversation, or at least reciprocal bluster.  "
             + "A cabinet housing some sort of video gambling machine stands in the back.  "
             + "A squat cleaning robot busily sweeps the floor around the machine, "
             + "and periodically empties a load of its sweepings into a hatch in the back wall.", [
-            this.portal("north", this.ekkis2FartingNoiseDroidsBWeWest_Name()),
-            this.portal("west", this.ekkis2FartingNoiseTinysUsedShips_Name()),
-            this.portal("east", this.ekkis2FartingNoiseBarRear_Name()),
-            this.portal("south", this.ekkis2DesertDeep_Name()),
+            this.portal("outside", Places.ekkis2FartingNoiseBarFront_Name()),
             this.emplacement("band"),
             this.emplacement("bar"),
             this.emplacement("heap"),
@@ -809,66 +879,80 @@ class Places {
             this.emplacement("patrons")
         ]);
     }
-    ekkis2FartingNoiseBarInterior_Name() { return "Ekkis II - [Farting Noise] - Bar - Interior"; }
+    static ekkis2FartingNoiseBarInterior_Name() {
+        return "Ekkis II - [Farting Noise] - Bar - Interior";
+    }
     ekkis2FartingNoiseBarRear() {
-        return this.place3(this.ekkis2FartingNoiseBarRear_Name(), "You stand behind the [Farting Noise] bar.  "
+        return this.place3(Places.ekkis2FartingNoiseBarRear_Name(), "You stand behind the [Farting Noise] bar.  "
             + "It is somewhat secluded here."
             + "Force-fields block access to the surrounding desert to the east and south.  "
             + "You can see another, larger building to the north.  "
             + "At irregular intervals, a hatch in the back wall of the bar opens "
             + "and expels some fine white powder, "
             + "which settles onto a larger heap of powder below.", [
-            this.portal("north", this.ekkis2FartingNoiseDroidsBWeWest_Name()),
-            this.portal("west", this.ekkis2FartingNoiseTinysUsedShips_Name()),
-            this.portal("east", this.ekkis2FartingNoiseBarRear_Name()),
+            this.portal("north", Places.ekkis2FartingNoiseDroidsBWeWest_Name()),
+            this.portal("west", Places.ekkis2FartingNoiseTinysUsedShips_Name()),
+            this.portal("east", Places.ekkis2FartingNoiseBarRear_Name()),
             this.emplacement("heap")
         ]);
     }
-    ekkis2FartingNoiseBarRear_Name() { return "Ekkis II - [Farting Noise] - Bar - Rear"; }
+    static ekkis2FartingNoiseBarRear_Name() {
+        return "Ekkis II - [Farting Noise] - Bar - Rear";
+    }
     ekkis2FartingNoiseDroidsBWeFront() {
-        return this.place3(this.ekkis2FartingNoiseDroidsBWeFront_Name(), "You stand in the desert settlement of [Farting Noise], "
+        return this.place3(Places.ekkis2FartingNoiseDroidsBWeFront_Name(), "You stand in the desert settlement of [Farting Noise], "
             + "to the south of the entrance of a domed building "
             + "bearing the sign 'Droids-B-We'.", [
-        // todo
+            this.portal("west", Places.ekkis2FartingNoiseDroidsBWeWest_Name()),
+            this.portal("door", Places.ekkis2FartingNoiseDroidsBWeInterior_Name()),
         ]);
     }
-    ekkis2FartingNoiseDroidsBWeFront_Name() { return "Ekkis II - Droids-B-We - Front"; }
+    static ekkis2FartingNoiseDroidsBWeFront_Name() {
+        return "Ekkis II - Droids-B-We - Front";
+    }
     ekkis2FartingNoiseDroidsBWeInterior() {
-        return this.place3(this.ekkis2FartingNoiseDroidsBWeInterior_Name(), "You stand inside the [Farting Noise] branch of 'Droids-B-We'. "
+        return this.place3(Places.ekkis2FartingNoiseDroidsBWeInterior_Name(), "You stand inside the [Farting Noise] branch of 'Droids-B-We'. "
             + "Various inactive robots are displayed on pedestals, "
             + "each bearing a more-or-less conspicious price tag.  "
             + "A salesbeing watches you idly, perhaps waiting to see if you require assistance.  "
             + "In the south wall is the door leading back outside.", [
-        // todo
+            this.portal("outside", Places.ekkis2FartingNoiseDroidsBWeFront_Name())
         ]);
     }
-    ekkis2FartingNoiseDroidsBWeInterior_Name() { return "Ekkis II - Droids-B-We - Interior"; }
+    static ekkis2FartingNoiseDroidsBWeInterior_Name() {
+        return "Ekkis II - Droids-B-We - Interior";
+    }
     ekkis2FartingNoiseDroidsBWeWest() {
-        return this.place3(this.ekkis2FartingNoiseDroidsBWeWest_Name(), "You stand in the desert settlement of [Farting Noise], "
+        return this.place3(Places.ekkis2FartingNoiseDroidsBWeWest_Name(), "You stand in the desert settlement of [Farting Noise], "
             + "to the west of a large domed building.  "
             + "A smaller domed building housing a bar lies to the south. "
             + "Further to the west you see a spaceship standing "
             + "at the northern edge of a brightly decorated lot containing several more ships."
             + "A force field blocks access to the open desert to the north. ", [
-        // todo
+            this.portal("south", Places.ekkis2FartingNoiseBarFront_Name()),
+            this.portal("east", Places.ekkis2FartingNoiseDroidsBWeFront_Name()),
+            this.portal("west", Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name())
         ]);
     }
-    ekkis2FartingNoiseDroidsBWeWest_Name() { return "Ekkis II - Droids-B-We - West"; }
+    static ekkis2FartingNoiseDroidsBWeWest_Name() {
+        return "Ekkis II - Droids-B-We - West";
+    }
     ekkis2FartingNoiseNorthOfTinysUsedShips() {
-        return this.place3(this.ekkis2FartingNoiseNorthOfTinysUsedShips_Name(), "You stand in the desert settlement of [Farting Noise].  "
+        return this.place3(Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name(), "You stand in the desert settlement of [Farting Noise].  "
             + "You see a spaceship standing here, and, to the south,"
             + "a brightly decorated lot containing several more ships."
             + " To the east, you see a large domed building. "
             + "A smaller domed building with a sign that says 'Bar' lies to the southeast. "
             + "A force field blocks access to the open desert to the north and west.", [
-        // todo
+            this.portal("east", Places.ekkis2FartingNoiseDroidsBWeWest_Name()),
+            this.portal("south", Places.ekkis2FartingNoiseTinysUsedShips_Name())
         ]);
     }
-    ekkis2FartingNoiseNorthOfTinysUsedShips_Name() {
+    static ekkis2FartingNoiseNorthOfTinysUsedShips_Name() {
         return "Ekkis II - [Farting Noise] - North of Tiny's Used Ships";
     }
     ekkis2FartingNoiseTinysUsedShips() {
-        return this.place3(this.ekkis2FartingNoiseNorthOfTinysUsedShips_Name(), "You stand in the desert settlement of [Farting Noise], "
+        return this.place3(Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name(), "You stand in the desert settlement of [Farting Noise], "
             + "in a sandy lot brighly decorated with colorful pennants "
             + " strung along lines, and containing several ships in various states of wear."
             + "Just to the north you see another ship standing by itself."
@@ -877,153 +961,154 @@ class Places {
             + "A domed building with a sign that says 'Bar' stands to the east. "
             + "A larger domed building stands to the northeast. "
             + "A force field blocks access to the open desert to the south and west. ", [
-        // todo
+            this.portal("east", Places.ekkis2FartingNoiseBarFront_Name()),
+            this.portal("north", Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name())
         ]);
     }
-    ekkis2FartingNoiseTinysUsedShips_Name() {
+    static ekkis2FartingNoiseTinysUsedShips_Name() {
         return "Ekkis II - [Farting Noise] - Tiny's Used Ships";
     }
     // Places - Venipositor.
     venipositorAirlockAntechamber() {
-        return this.place3(this.venipositorAirlockAntechamber_Name(), "This is the antechamber of an airlock on the Venipositor.", [
+        return this.place3(Places.venipositorAirlockAntechamber_Name(), "This is the antechamber of an airlock on the Venipositor.", [
         // todo
         ]);
     }
-    venipositorAirlockAntechamber_Name() { return "Venipositor - Airlock - Antechamber"; }
+    static venipositorAirlockAntechamber_Name() { return "Venipositor - Airlock - Antechamber"; }
     venipositorAirlockChamber() {
-        return this.place3(this.venipositorAirlockChamber_Name(), "This is the interior of one of the Venipositor's airlocks."
+        return this.place3(Places.venipositorAirlockChamber_Name(), "This is the interior of one of the Venipositor's airlocks."
             + "Doors at either end lead into and out of the Venipositor", [
-            this.portal("in", this.venipositorAirlockAntechamber_Name()),
-            this.portal("out", this.venipositorAirlockExterior_Name())
+            this.portal("in", Places.venipositorAirlockAntechamber_Name()),
+            this.portal("out", Places.venipositorAirlockExterior_Name())
         ]);
     }
-    venipositorAirlockChamber_Name() { return "Venipositor - Airlock - Chamber"; }
+    static venipositorAirlockChamber_Name() { return "Venipositor - Airlock - Chamber"; }
     venipositorAirlockExterior() {
-        return this.place3(this.venipositorAirlockExterior_Name(), "This is the exterior of the Venipositor, near an airlock door.  "
+        return this.place3(Places.venipositorAirlockExterior_Name(), "This is the exterior of the Venipositor, near an airlock door.  "
             + "The boundless sweep of space spreads out in all directions.", [
-            this.portal("door", this.venipositorAirlockChamber_Name()),
+            this.portal("door", Places.venipositorAirlockChamber_Name()),
         ]);
     }
-    venipositorAirlockExterior_Name() { return "Venipositor - Exterior - Airlock Door"; }
+    static venipositorAirlockExterior_Name() { return "Venipositor - Exterior - Airlock Door"; }
     venipositorArmory() {
-        return this.place3(this.venipositorArmory_Name(), "This is the armory of the Venipositor."
+        return this.place3(Places.venipositorArmory_Name(), "This is the armory of the Venipositor."
             + "At the aft end high counter, with a robot standing watch behind it, "
             + "blocks the path to the weapon racks.  A door to forward leads back "
-            + "out onto the catwalk above the Star Generator chamber.", [
-            this.portal("forward", this.venipositorStarGeneratorChamberCatwalk_Name())
+            + "out onto the catwalk above the Stellar Juvenator chamber.", [
+            this.portal("forward", Places.venipositorStellarJuvenatorChamberCatwalk_Name())
         ]);
     }
-    venipositorArmory_Name() { return "Venipositor - Armory"; }
+    static venipositorArmory_Name() { return "Venipositor - Armory"; }
     venipositorLaundry() {
-        return this.place3(this.venipositorLaundry_Name(), "This is a laundry room on the Venipositor.", [
+        return this.place3(Places.venipositorLaundry_Name(), "This is a laundry room on the Venipositor.", [
         // todo
         ]);
     }
-    venipositorLaundry_Name() { return "Venipositor - Laundry"; }
+    static venipositorLaundry_Name() { return "Venipositor - Laundry"; }
     venipositorLowerDeckHallAft() {
-        return this.place3(this.venipositorLowerDeckHallAft_Name(), "This is the aft end of a hallway on the lower deck of the Venipositor.", [
-            this.portal("forward", this.venipositorLowerDeckHallAmidships_Name())
+        return this.place3(Places.venipositorLowerDeckHallAft_Name(), "This is the aft end of a hallway on the lower deck of the Venipositor.", [
+            this.portal("forward", Places.venipositorLowerDeckHallAmidships_Name())
         ]);
     }
-    venipositorLowerDeckHallAft_Name() { return "Venipositor - Hall - Lower Deck - Aft"; }
+    static venipositorLowerDeckHallAft_Name() { return "Venipositor - Hall - Lower Deck - Aft"; }
     venipositorLowerDeckHallAmidships() {
-        return this.place3(this.venipositorLowerDeckHallAmidships_Name(), "This is the amidships section of a hallway on the lower deck of the Venipositor.", [
-            this.portal("aft", this.venipositorLowerDeckHallAft_Name()),
-            this.portal("forward", this.venipositorLowerDeckHallFore_Name())
+        return this.place3(Places.venipositorLowerDeckHallAmidships_Name(), "This is the amidships section of a hallway on the lower deck of the Venipositor.", [
+            this.portal("aft", Places.venipositorLowerDeckHallAft_Name()),
+            this.portal("forward", Places.venipositorLowerDeckHallFore_Name())
         ]);
     }
-    venipositorLowerDeckHallAmidships_Name() { return "Venipositor - Hall - Lower Deck - Amidships"; }
+    static venipositorLowerDeckHallAmidships_Name() { return "Venipositor - Hall - Lower Deck - Amidships"; }
     venipositorLowerDeckHallFore() {
-        return this.place3(this.venipositorLowerDeckHallFore_Name(), "This is the forward end of a hallway on the lower deck of the Venipositor.", [
-            this.portal("aft", this.venipositorLowerDeckHallAmidships_Name()),
+        return this.place3(Places.venipositorLowerDeckHallFore_Name(), "This is the forward end of a hallway on the lower deck of the Venipositor.", [
+            this.portal("aft", Places.venipositorLowerDeckHallAmidships_Name()),
         ]);
     }
-    venipositorLowerDeckHallFore_Name() { return "Venipositor - Hall - Lower Deck - Forward"; }
+    static venipositorLowerDeckHallFore_Name() { return "Venipositor - Hall - Lower Deck - Forward"; }
     venipositorNearbySpace() {
-        return this.place3(this.venipositorNearbySpace_Name(), "You are in your ship, hovering nearby the Venipositor.", [
-            this.portal("out", this.venipositorAirlockExterior_Name()),
+        return this.place3(Places.venipositorNearbySpace_Name(), "You are in your ship, hovering nearby the Venipositor.", [
+            this.portal("out", Places.venipositorAirlockExterior_Name()),
         ]);
     }
-    venipositorNearbySpace_Name() { return "Venipositor - Nearby Space"; }
+    static venipositorNearbySpace_Name() { return "Venipositor - Nearby Space"; }
     venipositorShuttleBay() {
-        return this.place3(this.venipositorShuttleBay_Name(), "This is the shuttle bay of the Venipositor.", [
+        return this.place3(Places.venipositorShuttleBay_Name(), "This is the shuttle bay of the Venipositor.", [
         // todo
         ]);
     }
-    venipositorShuttleBay_Name() { return "Venipositor - Shuttle Bay"; }
-    venipositorStarGeneratorChamber() {
-        return this.place3(this.venipositorStarGeneratorChamber_Name(), "This is a cavernous room on the Venipositor.  "
-            + "The Star Generator is mounted on a pedestal, "
+    static venipositorShuttleBay_Name() { return "Venipositor - Shuttle Bay"; }
+    venipositorStellarJuvenatorChamber() {
+        return this.place3(Places.venipositorStellarJuvenatorChamber_Name(), "This is a cavernous room on the Venipositor.  "
+            + "The Stellar Juvenator is mounted on a pedestal, "
             + "with an armed guard standing nearby.  "
             + "A catwalk runs overhead.", [
         // todo
         ]);
     }
-    venipositorStarGeneratorChamber_Name() { return "Venipositor - Star Generator Chamber"; }
-    venipositorStarGeneratorChamberCatwalk() {
-        return this.place3(this.venipositorStarGeneratorChamberCatwalk_Name(), "You are standing on a railed catwalk above a "
+    static venipositorStellarJuvenatorChamber_Name() { return "Venipositor - Stellar Juvenator Chamber"; }
+    venipositorStellarJuvenatorChamberCatwalk() {
+        return this.place3(Places.venipositorStellarJuvenatorChamberCatwalk_Name(), "You are standing on a railed catwalk above a "
             + " cavernous chamber on the Venipositor.  "
-            + "On the floor, far below, the Star Generator"
+            + "On the floor, far below, the Stellar Juvenator"
             + "is mounted on a pedestal, "
             + "with an armed guard standing nearby.  "
             + "The catwalk runs fore and aft.", [
-            this.portal("aft", this.venipositorArmory_Name()),
+            this.portal("aft", Places.venipositorArmory_Name()),
             this.portal("forward", "todo"),
         ]);
     }
-    venipositorStarGeneratorChamberCatwalk_Name() { return "Venipositor - Star Generator Chamber - Catwalk"; }
+    static venipositorStellarJuvenatorChamberCatwalk_Name() { return "Venipositor - Stellar Juvenator Chamber - Catwalk"; }
     venipositorUpperDeckHallAft() {
-        return this.place3(this.venipositorUpperDeckHallAft_Name(), "This is the aft end of a hallway on the upper deck of the Venipositor.", [
-            this.portal("forward", this.venipositorUpperDeckHallAmidships_Name()),
+        return this.place3(Places.venipositorUpperDeckHallAft_Name(), "This is the aft end of a hallway on the upper deck of the Venipositor.", [
+            this.portal("forward", Places.venipositorUpperDeckHallAmidships_Name()),
         ]);
     }
-    venipositorUpperDeckHallAft_Name() { return "Venipositor - Hall - Upper Deck - Aft"; }
+    static venipositorUpperDeckHallAft_Name() { return "Venipositor - Hall - Upper Deck - Aft"; }
     venipositorUpperDeckHallAmidships() {
-        return this.place3(this.venipositorUpperDeckHallAmidships_Name(), "This is the amidships section of a hallway "
+        return this.place3(Places.venipositorUpperDeckHallAmidships_Name(), "This is the amidships section of a hallway "
             + "on the upper deck of the Venipositor.", [
-            this.portal("aft", this.venipositorUpperDeckHallAft_Name()),
-            this.portal("forward", this.venipositorUpperDeckHallFore_Name()),
+            this.portal("aft", Places.venipositorUpperDeckHallAft_Name()),
+            this.portal("forward", Places.venipositorUpperDeckHallFore_Name()),
         ]);
     }
-    venipositorUpperDeckHallAmidships_Name() { return "Venipositor - Hall - Upper Deck - Amidships"; }
+    static venipositorUpperDeckHallAmidships_Name() { return "Venipositor - Hall - Upper Deck - Amidships"; }
     venipositorUpperDeckHallFore() {
-        return this.place3(this.venipositorUpperDeckHallFore_Name(), "This is the forward end of a hallway on the upper deck of the Venipositor.", [
-            this.portal("aft", this.venipositorUpperDeckHallAmidships_Name()),
+        return this.place3(Places.venipositorUpperDeckHallFore_Name(), "This is the forward end of a hallway on the upper deck of the Venipositor.", [
+            this.portal("aft", Places.venipositorUpperDeckHallAmidships_Name()),
         ]);
     }
-    venipositorUpperDeckHallFore_Name() { return "Venipositor - Hall - Upper Deck - Forward"; }
+    static venipositorUpperDeckHallFore_Name() { return "Venipositor - Hall - Upper Deck - Forward"; }
     venipositorVentilationShaft1() {
-        return this.place3(this.venipositorVentilationShaft1_Name(), "This is a ventilation shaft on the Venipositor.  "
+        return this.place3(Places.venipositorVentilationShaft1_Name(), "This is a ventilation shaft on the Venipositor.  "
             + "A short side branch leads to a vent cover.", [
-            this.portal("back", this.venipositorVentilationShaft4_Name()),
-            this.portal("forward", this.venipositorVentilationShaft1_Name()),
-            this.portal("vent", this.venipositorAirlockAntechamber_Name())
+            this.portal("back", Places.venipositorVentilationShaft4_Name()),
+            this.portal("forward", Places.venipositorVentilationShaft1_Name()),
+            this.portal("vent", Places.venipositorAirlockAntechamber_Name())
         ]);
     }
-    venipositorVentilationShaft1_Name() { return "Venipositor - Ventilation Shaft - 1"; }
+    static venipositorVentilationShaft1_Name() { return "Venipositor - Ventilation Shaft - 1"; }
     venipositorVentilationShaft2() {
-        return this.place3(this.venipositorVentilationShaft2_Name(), "This is a ventilation shaft on the Venipositor.  "
+        return this.place3(Places.venipositorVentilationShaft2_Name(), "This is a ventilation shaft on the Venipositor.  "
             + "A short side branch leads to a vent cover.", [
-            this.portal("back", this.venipositorVentilationShaft1_Name()),
-            this.portal("forward", this.venipositorVentilationShaft3_Name()),
-            this.portal("vent", this.venipositorLaundry_Name())
+            this.portal("back", Places.venipositorVentilationShaft1_Name()),
+            this.portal("forward", Places.venipositorVentilationShaft3_Name()),
+            this.portal("vent", Places.venipositorLaundry_Name())
         ]);
     }
-    venipositorVentilationShaft2_Name() { return "Venipositor - Ventilation Shaft - 2"; }
+    static venipositorVentilationShaft2_Name() { return "Venipositor - Ventilation Shaft - 2"; }
     venipositorVentilationShaft3() {
-        return this.place3(this.venipositorVentilationShaft3_Name(), "This is a featureless stretch of ventilation shaft on the Venipositor.", [
-            this.portal("back", this.venipositorVentilationShaft2_Name()),
-            this.portal("forward", this.venipositorVentilationShaft4_Name())
+        return this.place3(Places.venipositorVentilationShaft3_Name(), "This is a featureless stretch of ventilation shaft on the Venipositor.", [
+            this.portal("back", Places.venipositorVentilationShaft2_Name()),
+            this.portal("forward", Places.venipositorVentilationShaft4_Name())
         ]);
     }
-    venipositorVentilationShaft3_Name() { return "Venipositor - Ventilation Shaft - 3"; }
+    static venipositorVentilationShaft3_Name() { return "Venipositor - Ventilation Shaft - 3"; }
     venipositorVentilationShaft4() {
-        return this.place3(this.venipositorVentilationShaft4_Name(), "This is a featureless stretch of ventilation shaft on the Venipositor.", [
-            this.portal("back", this.venipositorVentilationShaft3_Name()),
-            this.portal("forward", this.venipositorVentilationShaft1_Name())
+        return this.place3(Places.venipositorVentilationShaft4_Name(), "This is a featureless stretch of ventilation shaft on the Venipositor.", [
+            this.portal("back", Places.venipositorVentilationShaft3_Name()),
+            this.portal("forward", Places.venipositorVentilationShaft1_Name())
         ]);
     }
-    venipositorVentilationShaft4_Name() { return "Venipositor - Ventilation Shaft - 4"; }
+    static venipositorVentilationShaft4_Name() { return "Venipositor - Ventilation Shaft - 4"; }
 }
 class Scripts {
     constructor() {
@@ -1033,6 +1118,7 @@ class Scripts {
             this.emplacementBodyKeycardSearch,
             this.itemCartridgeUse,
             this.itemKeycardUse,
+            this.placePaxAeternaEscapePod_GoDoor,
             this.placePaxAeternaEscapePod_PressAutonavButton,
             this.placePaxAeternaEscapePod_PressLaunchButton,
             this.placePaxAeternaJanitorsCloset_Update,
@@ -1120,6 +1206,18 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
+    placePaxAeternaEscapePod_GoDoor(u, w, place, portalDoor) {
+        var portalDoorPlaceDestinationName = portalDoor.placeDestinationName;
+        if (portalDoorPlaceDestinationName == null) {
+            var message = "You're in deep space.  There's nothing outside "
+                + " worth opening the door for.";
+            u.messageEnqueue(message);
+        }
+        else {
+            portalDoor.goThrough(u, w);
+        }
+        u.messageEnqueue(message);
+    }
     placePaxAeternaEscapePod_PressAutonavButton(u, w, p, c) {
         var messageLines = [
             "You press the autonav button, and the pod reorients itself ",
@@ -1139,11 +1237,12 @@ class Scripts {
             "The worst part is the sudden stop at the end.",
             "You survive it, but the pod doesn't.  It'll never fly again.",
             "Through the shattered window you see the dunes of a desert.",
-            "But no settlement.  The pod has... landed... in the wrong place."
+            "But no settlement.  It appears the pod has crashed ",
+            "hundreds of kilometers from the intended landing site."
         ];
         u.messageEnqueue(messageLines.join(""));
-        var stateEscapePodLocationName = "EscapePodLocation";
-        p.stateWithNameSetToValue(stateEscapePodLocationName, "Ekkis II");
+        p.portalByName("door").placeDestinationName =
+            Places.ekkis2DesertCrashSite_Name();
     }
     placePaxAeternaEscapePod_PressLaunchButton(u, w, p, c) {
         var messageLines = [
