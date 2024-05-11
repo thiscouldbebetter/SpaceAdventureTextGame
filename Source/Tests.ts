@@ -135,9 +135,9 @@ class Tests
 
 		var placesExpectedAfterCommandSets =
 		[
-			Places.paxAeternaEscapePod_Name(),
-			Places.ekkis2FartingNoiseBarFront_Name(),
-			Places.ekkis2FartingNoiseNorthOfUsedShipLot_Name()
+			Places.friendlyShipEscapePod_Name(),
+			Places.planetSettlementBarFront_Name(),
+			Places.planetSettlementNorthOfUsedShipLot_Name()
 		];
 
 		for (var s = 0; s < commandsSetsToRunAsStringArrays.length; s++)
