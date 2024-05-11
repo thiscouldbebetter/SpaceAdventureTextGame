@@ -149,11 +149,11 @@ class Places
 	Ekkis2FartingNoiseBarFront: Place;
 	Ekkis2FartingNoiseBarInterior: Place;
 	Ekkis2FartingNoiseBarRear: Place;
-	Ekkis2FartingNoiseDroidsBWeFront: Place;
-	Ekkis2FartingNoiseDroidsBWeInterior: Place;
-	Ekkis2FartingNoiseDroidsBWeWest: Place;
-	Ekkis2FartingNoiseNorthOfTinysUsedShips: Place;
-	Ekkis2FartingNoiseTinysUsedShips: Place;
+	Ekkis2FartingNoiseRobotShopFront: Place;
+	Ekkis2FartingNoiseRobotShopInterior: Place;
+	Ekkis2FartingNoiseRobotShopWest: Place;
+	Ekkis2FartingNoiseNorthOfUsedShipLot: Place;
+	Ekkis2FartingNoiseUsedShipLot: Place;
 
 	// Venipositor
 
@@ -260,11 +260,11 @@ class Places
 		this.Ekkis2FartingNoiseBarFront = this.ekkis2FartingNoiseBarFront();
 		this.Ekkis2FartingNoiseBarInterior = this.ekkis2FartingNoiseBarInterior();
 		this.Ekkis2FartingNoiseBarRear = this.ekkis2FartingNoiseBarRear();
-		this.Ekkis2FartingNoiseDroidsBWeFront = this.ekkis2FartingNoiseDroidsBWeFront();
-		this.Ekkis2FartingNoiseDroidsBWeInterior = this.ekkis2FartingNoiseDroidsBWeInterior();
-		this.Ekkis2FartingNoiseDroidsBWeWest = this.ekkis2FartingNoiseDroidsBWeWest();
-		this.Ekkis2FartingNoiseNorthOfTinysUsedShips = this.ekkis2FartingNoiseNorthOfTinysUsedShips();
-		this.Ekkis2FartingNoiseTinysUsedShips = this.ekkis2FartingNoiseTinysUsedShips();
+		this.Ekkis2FartingNoiseRobotShopFront = this.ekkis2FartingNoiseRobotShopFront();
+		this.Ekkis2FartingNoiseRobotShopInterior = this.ekkis2FartingNoiseRobotShopInterior();
+		this.Ekkis2FartingNoiseRobotShopWest = this.ekkis2FartingNoiseRobotShopWest();
+		this.Ekkis2FartingNoiseNorthOfUsedShipLot = this.ekkis2FartingNoiseNorthOfUsedShipLot();
+		this.Ekkis2FartingNoiseUsedShipLot = this.ekkis2FartingNoiseUsedShipLot();
 
 		// Venipositor.
 
@@ -358,11 +358,11 @@ class Places
 			this.Ekkis2FartingNoiseBarFront,
 			this.Ekkis2FartingNoiseBarInterior,
 			this.Ekkis2FartingNoiseBarRear,
-			this.Ekkis2FartingNoiseDroidsBWeFront,
-			this.Ekkis2FartingNoiseDroidsBWeInterior,
-			this.Ekkis2FartingNoiseDroidsBWeWest,
-			this.Ekkis2FartingNoiseNorthOfTinysUsedShips,
-			this.Ekkis2FartingNoiseTinysUsedShips,
+			this.Ekkis2FartingNoiseRobotShopFront,
+			this.Ekkis2FartingNoiseRobotShopInterior,
+			this.Ekkis2FartingNoiseRobotShopWest,
+			this.Ekkis2FartingNoiseNorthOfUsedShipLot,
+			this.Ekkis2FartingNoiseUsedShipLot,
 
 			// Venipositor.
 
@@ -1667,8 +1667,8 @@ class Places
 			+ "that protects this settlement from the native predatory sand-swimmers.",
 
 			[
-				this.portal("north", Places.ekkis2FartingNoiseDroidsBWeWest_Name() ),
-				this.portal("west", Places.ekkis2FartingNoiseTinysUsedShips_Name() ),
+				this.portal("north", Places.ekkis2FartingNoiseRobotShopWest_Name() ),
+				this.portal("west", Places.ekkis2FartingNoiseUsedShipLot_Name() ),
 				this.portal("east", Places.ekkis2FartingNoiseBarRear_Name() ),
 				this.portal("south", Places.ekkis2DesertDeep_Name() ),
 				this.portal("bar", Places.ekkis2FartingNoiseBarInterior_Name() )
@@ -1731,8 +1731,8 @@ class Places
 			+ "which settles onto a larger heap of powder below.",
 
 			[
-				this.portal("north", Places.ekkis2FartingNoiseDroidsBWeWest_Name() ),
-				this.portal("west", Places.ekkis2FartingNoiseTinysUsedShips_Name() ),
+				this.portal("north", Places.ekkis2FartingNoiseRobotShopWest_Name() ),
+				this.portal("west", Places.ekkis2FartingNoiseUsedShipLot_Name() ),
 				this.portal("east", Places.ekkis2FartingNoiseBarRear_Name() ),
 
 				this.emplacement("heap")
@@ -1745,82 +1745,84 @@ class Places
 		return "Ekkis II - [Farting Noise] - Bar - Rear";
 	}
 
-	ekkis2FartingNoiseDroidsBWeFront(): Place
+	ekkis2FartingNoiseRobotShopFront(): Place
 	{
 		return this.place3
 		(
-			Places.ekkis2FartingNoiseDroidsBWeFront_Name(),
+			Places.ekkis2FartingNoiseRobotShopFront_Name(),
 
 			"You stand in the desert settlement of [Farting Noise], "
 			+ "to the south of the entrance of a domed building "
-			+ "bearing the sign 'Droids-B-We'.",
+			+ "bearing the sign 'Buy, Robot'.",
 
 			[
-				this.portal("west", Places.ekkis2FartingNoiseDroidsBWeWest_Name() ),
-				this.portal("door", Places.ekkis2FartingNoiseDroidsBWeInterior_Name() ),
+				this.portal("west", Places.ekkis2FartingNoiseRobotShopWest_Name() ),
+				this.portal("door", Places.ekkis2FartingNoiseRobotShopInterior_Name() ),
 			]
 		);
 	}
 
-	static ekkis2FartingNoiseDroidsBWeFront_Name(): string
+	static ekkis2FartingNoiseRobotShopFront_Name(): string
 	{
-		return "Ekkis II - Droids-B-We - Front";
+		return "Ekkis II - Buy, Robot - Front";
 	}
 
-	ekkis2FartingNoiseDroidsBWeInterior(): Place
+	ekkis2FartingNoiseRobotShopInterior(): Place
 	{
 		return this.place3
 		(
-			Places.ekkis2FartingNoiseDroidsBWeInterior_Name(),
+			Places.ekkis2FartingNoiseRobotShopInterior_Name(),
 
-			"You stand inside the [Farting Noise] branch of 'Droids-B-We'. "
+			"You stand inside the [Farting Noise] branch of 'Buy, Robot'. "
 			+ "Various inactive robots are displayed on pedestals, "
 			+ "each bearing a more-or-less conspicious price tag.  "
 			+ "A salesbeing watches you idly, perhaps waiting to see if you require assistance.  "
 			+ "In the south wall is the door leading back outside.",
 
 			[
-				this.portal("outside", Places.ekkis2FartingNoiseDroidsBWeFront_Name() )
+				this.portal("outside", Places.ekkis2FartingNoiseRobotShopFront_Name() )
 			]
 		);
 	}
 
-	static ekkis2FartingNoiseDroidsBWeInterior_Name(): string
+	static ekkis2FartingNoiseRobotShopInterior_Name(): string
 	{
-		return "Ekkis II - Droids-B-We - Interior";
+		return "Ekkis II - Buy, Robot - Interior";
 	}
 
-	ekkis2FartingNoiseDroidsBWeWest(): Place
+	ekkis2FartingNoiseRobotShopWest(): Place
 	{
 		return this.place3
 		(
-			Places.ekkis2FartingNoiseDroidsBWeWest_Name(),
+			Places.ekkis2FartingNoiseRobotShopWest_Name(),
 
 			"You stand in the desert settlement of [Farting Noise], "
 			+ "to the west of a large domed building.  "
+			+ "To the east, you can see the building's entrance, "
+			+ "over which is a sign reading 'Buy, Robot'.  "
 			+ "A smaller domed building housing a bar lies to the south. "
-			+ "Further to the west you see a spaceship standing "
+			+ "Further to the west, you see a spaceship standing "
 			+ "at the northern edge of a brightly decorated lot containing several more ships."
 			+ "A force field blocks access to the open desert to the north. ",
 
 			[
 				this.portal("south", Places.ekkis2FartingNoiseBarFront_Name() ),
-				this.portal("east", Places.ekkis2FartingNoiseDroidsBWeFront_Name() ),
-				this.portal("west", Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name() )
+				this.portal("east", Places.ekkis2FartingNoiseRobotShopFront_Name() ),
+				this.portal("west", Places.ekkis2FartingNoiseNorthOfUsedShipLot_Name() )
 			]
 		);
 	}
 
-	static ekkis2FartingNoiseDroidsBWeWest_Name(): string
+	static ekkis2FartingNoiseRobotShopWest_Name(): string
 	{
-		return "Ekkis II - Droids-B-We - West";
+		return "Ekkis II - Buy, Robot - West";
 	}
 
-	ekkis2FartingNoiseNorthOfTinysUsedShips(): Place
+	ekkis2FartingNoiseNorthOfUsedShipLot(): Place
 	{
 		return this.place3
 		(
-			Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name(),
+			Places.ekkis2FartingNoiseNorthOfUsedShipLot_Name(),
 
 			"You stand in the desert settlement of [Farting Noise].  "
 			+ "You see a spaceship standing here, and, to the south,"
@@ -1830,43 +1832,43 @@ class Places
 			+ "A force field blocks access to the open desert to the north and west.",
 
 			[
-				this.portal("east", Places.ekkis2FartingNoiseDroidsBWeWest_Name() ),
-				this.portal("south", Places.ekkis2FartingNoiseTinysUsedShips_Name() )
+				this.portal("east", Places.ekkis2FartingNoiseRobotShopWest_Name() ),
+				this.portal("south", Places.ekkis2FartingNoiseUsedShipLot_Name() )
 			]
 		);
 	}
 
-	static ekkis2FartingNoiseNorthOfTinysUsedShips_Name(): string
+	static ekkis2FartingNoiseNorthOfUsedShipLot_Name(): string
 	{
-		return "Ekkis II - [Farting Noise] - North of Tiny's Used Ships";
+		return "Ekkis II - [Farting Noise] - North of Non-Gelatinous George's Used Ships";
 	}
 
-	ekkis2FartingNoiseTinysUsedShips(): Place
+	ekkis2FartingNoiseUsedShipLot(): Place
 	{
 		return this.place3
 		(
-			Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name(),
+			Places.ekkis2FartingNoiseNorthOfUsedShipLot_Name(),
 
 			"You stand in the desert settlement of [Farting Noise], "
 			+ "in a sandy lot brighly decorated with colorful pennants "
 			+ " strung along lines, and containing several ships in various states of wear."
 			+ "Just to the north you see another ship standing by itself."
 			+ "At one edge of the lot is a small cubical building "
-			+ "bearing a sign that says, 'Tiny's Used Ships'."
+			+ "bearing a sign that says, 'Non-Gelatinous George's Used Ships'."
 			+ "A domed building with a sign that says 'Bar' stands to the east. "
 			+ "A larger domed building stands to the northeast. "
 			+ "A force field blocks access to the open desert to the south and west. ",
 
 			[
 				this.portal("east", Places.ekkis2FartingNoiseBarFront_Name() ),
-				this.portal("north", Places.ekkis2FartingNoiseNorthOfTinysUsedShips_Name() )
+				this.portal("north", Places.ekkis2FartingNoiseNorthOfUsedShipLot_Name() )
 			]
 		);
 	}
 
-	static ekkis2FartingNoiseTinysUsedShips_Name(): string
+	static ekkis2FartingNoiseUsedShipLot_Name(): string
 	{
-		return "Ekkis II - [Farting Noise] - Tiny's Used Ships";
+		return "Ekkis II - [Farting Noise] - Non-Gelatinous George's Used Ships";
 	}
 
 	// Places - Venipositor.
@@ -1885,7 +1887,10 @@ class Places
 		);
 	}
 
-	static venipositorAirlockAntechamber_Name(): string { return "Venipositor - Airlock - Antechamber"; }
+	static venipositorAirlockAntechamber_Name(): string
+	{
+		return "Venipositor - Airlock - Antechamber";
+	}
 
 	venipositorAirlockChamber(): Place
 	{
@@ -1920,7 +1925,10 @@ class Places
 		);
 	}
 
-	static venipositorAirlockExterior_Name(): string { return "Venipositor - Exterior - Airlock Door"; }
+	static venipositorAirlockExterior_Name(): string
+	{
+		return "Venipositor - Exterior - Airlock Door";
+	}
 
 	venipositorArmory(): Place
 	{
@@ -1939,7 +1947,10 @@ class Places
 		);
 	}
 
-	static venipositorArmory_Name(): string { return "Venipositor - Armory"; }
+	static venipositorArmory_Name(): string
+	{
+		return "Venipositor - Armory";
+	}
 
 	venipositorLaundry(): Place
 	{
@@ -1955,7 +1966,10 @@ class Places
 		);
 	}
 
-	static venipositorLaundry_Name(): string { return "Venipositor - Laundry"; }
+	static venipositorLaundry_Name(): string
+	{
+		return "Venipositor - Laundry";
+	}
 
 	venipositorLowerDeckHallAft(): Place
 	{
