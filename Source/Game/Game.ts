@@ -780,7 +780,7 @@ class Places
 			Places.planetDesertCrashSite_Name(),
 
 			"Your escape pod has crashed in the middle of the desert "
-			+ "of the planet planet, rendering it completely inoperable.  "
+			+ "of the planet Ekkis II, rendering it completely inoperable.  "
 			+ "Its structural frame is severely bent, and the door unclosable.  "
 			+ "The forward window has shattered, "
 			+ "scattering shards of highly reflective glass over the sand "
@@ -1088,7 +1088,7 @@ class Places
 			Places.planetCliffsTopNorth_Name(),
 
 			"You stand atop a rocky cliff rising from the desert "
-			+ "of the planet planet.  "
+			+ "of the planet Ekkis II.  "
 			+ "The top of the cliff continues to the west and east.",
 
 			[
@@ -1110,7 +1110,7 @@ class Places
 			Places.planetCliffsTopNortheast_Name(),
 
 			"You stand on the end of a cliff "
-			+ "rising from the desert of the planet planet.  "
+			+ "rising from the desert of the planet Ekkis II.  "
 			+ "A pair of leaning stone columns rises from the clifftop here, "
 			+ "bending toward each other like horns.  "
 			+ "The top of the cliff runs back toward the west.",
@@ -1130,7 +1130,7 @@ class Places
 		(
 			Places.planetCliffsTopNorthwest_Name(),
 
-			"You stand atop a cliff rising from the desert of the planet planet.  "
+			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
 			+ "The path along the clifftop curves from the south to the east.  "
 			+ "Some jagged peaks jut upward along the northern edge of the cliff.",
 
@@ -1152,7 +1152,7 @@ class Places
 		(
 			Places.planetCliffsTopSouthEastSide_Name(),
 
-			"You stand atop a cliff rising from the desert of the planet planet.  "
+			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
 			+ "To the east, a downward slope curves southward "
 			+ "back to the desert surface. "
 			+ "To the west, the cliff top rises and then falls "
@@ -1179,7 +1179,7 @@ class Places
 		(
 			Places.planetCliffsTopSouthWestSide_Name(),
 
-			"You stand atop a cliff rising from the desert of the planet planet.  "
+			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
 			+ "To the east, the cliff top rises and then falls "
 			+ "in an weathered stone arch, "
 			+ "which serves as a natural bridge to the clifftop on the other side,"
@@ -1205,7 +1205,7 @@ class Places
 		(
 			Places.planetCliffsTopSouthwest_Name(),
 
-			"You stand atop a cliff rising from the desert of the planet planet.  "
+			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
 			+ "The path along the clifftop curves "
 			+ "from the east, where a natural stone bridge "
 			+ "arches over the desert surface, "
@@ -1231,7 +1231,7 @@ class Places
 		(
 			Places.planetCavernsBarrier_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet.  "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
 			+ "The path to the west is blocked by several closely spaced "
 			+ "and intensely bright beams of light,"
 			+ "which are emitted from small round ports the rock walls, "
@@ -1258,7 +1258,7 @@ class Places
 		(
 			Places.planetCavernsDrips_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet.  "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
 			+ "The passage runs to the east, where drips of a clear liquid "
 			+ "fall intermittently from the ceiling.  "
 			+ "Each drip passes into a small, precise hole in the floor "
@@ -1306,7 +1306,7 @@ class Places
 		(
 			Places.planetCavernsGeyser_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet.  "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
 			+ "The passage to the west ends abruptly in a solid rock wall."
 			+ "Nearby, a small geyser shoots wetly and steamily out of a hole "
 			+ " in the top of a stalagmite."
@@ -1330,7 +1330,7 @@ class Places
 		(
 			Places.planetCavernsGrating_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet, "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II, "
 			+ "in a passage running from east to west."
 			+ "In the floor leading to the west, a thick metal grating "
 			+ "perforated with holes about 10 centimeters wide "
@@ -1354,7 +1354,7 @@ class Places
 		(
 			Places.planetCavernsPool_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet. "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II. "
 			+ "You stand on a wide ledge that runs south, back through a hidden doorway, "
 			+ " where a plugged geyser steams fitfully.  To the west, the ledge runs "
 			+ "through dark natural stone columns and on into the darkness.  "
@@ -1380,7 +1380,7 @@ class Places
 		(
 			Places.planetCavernsProjectionRoom_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet. "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II. "
 			+ "This space is completely dark at the moment.  Earlier, it was lit only " 
 			+ "by a holographic projection of a triangular-headed alien.  "
 			+ "A passage leads back to the east.",
@@ -1403,7 +1403,7 @@ class Places
 		(
 			Places.planetCavernsSteamworks_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet planet. "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II. "
 			+ "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
 			+ "A computer console with a monitor and standard data cartridge slot "
 			+ "stands against the north wall.  Above it is a catwalk where members "
