@@ -259,7 +259,7 @@ class Places
 			+ "Banks of mostly incomprehensible controls "
 			+ "line the circular wall, with the nearby seats "
 			+ "either empty or filled with the slumped bodies of dead crew."
-			+ "There's several bodies scattered on the floor, as well.  "
+			+ "There're several bodies scattered on the floor, as well.  "
 			+ "A prominent pedestal in the center "
 			+ "formerly held the Stellar Juvenator, but now stands vacant."
 		);
@@ -804,7 +804,7 @@ class Places
 		(
 			Places.planetDesertDeep_Name(),
 
-			"You stand in the trackless desert of the planet planet, "
+			"You stand in the trackless desert of the planet Ekkis II, "
 			+ "The featureless sand stretches away in every direction.",
 
 			[]
@@ -821,7 +821,7 @@ class Places
 		(
 			Places.planetDesertNorth_Name(),
 
-			"You stand in the trackless desert of the planet planet, "
+			"You stand in the trackless desert of the planet Ekkis II, "
 			+ "just north of the wreck of your crashed escape pod.  "
 			+ "The featureless sand stretches away in every other direction.",
 
@@ -842,7 +842,7 @@ class Places
 		(
 			Places.planetDesertSouth_Name(),
 
-			"You stand in the trackless desert of the planet planet, "
+			"You stand in the trackless desert of the planet Ekkis II, "
 			+ "just south of the wreck of your crashed escape pod.  "
 			+ "The featureless sand stretches away in every other direction.",
 
@@ -863,7 +863,7 @@ class Places
 		(
 			Places.planetDesertWest_Name(),
 
-			"You stand in the trackless desert of the planet planet, "
+			"You stand in the trackless desert of the planet Ekkis II, "
 			+ "just west of the wreck of your crashed escape pod.  "
 			+ "The featureless sand stretches away in every other direction.",
 
@@ -889,7 +889,7 @@ class Places
 		(
 			Places.planetCliffsBottomNorth_Name(),
 
-			"You stand on the sand of the planet desert, just to the south  "
+			"You stand on the sand of the Ekkis II desert, just to the south  "
 			+ "of a steep stone cliff running from west to east. ",
 
 			[
@@ -911,7 +911,7 @@ class Places
 		(
 			Places.planetCliffsBottomNortheast_Name(),
 
-			"You stand on the sand of the planet desert, just to the south  "
+			"You stand on the sand of the Ekkis II desert, just to the south  "
 			+ "of a steep stone cliff running from the west "
 			+ "and ending just to the east.  "
 			+ "Above, on the clifftop, two large stone pillars stand about four meters "
@@ -939,7 +939,7 @@ class Places
 		(
 			Places.planetCliffsBottomNorthwestEastSide_Name(),
 
-			"You stand on the sand of the planet desert, at the base  "
+			"You stand on the sand of the Ekkis II desert, at the base  "
 			+ "of a sheer stone cliff that curves away to the south and east.  ",
 
 			[
@@ -960,7 +960,7 @@ class Places
 		(
 			Places.planetCliffsBottomNorthwestWestSide_Name(),
 
-			"You stand on the sand of the planet desert, at the base  "
+			"You stand on the sand of the Ekkis II desert, at the base  "
 			+ "of a sheer stone cliff that curves away to the south and east,  "
 			+ "and which blocks passage to the east.  "
 			+ "The site where your escape pod crashed is to the west."
@@ -1067,7 +1067,8 @@ class Places
 
 			"This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
 			+ "To the west the cave opens out into the blazing daylight "
-			+ "of the planet desert.",
+			+ "of the Ekkis II desert.  "
+			+ "There's... there's a smell.",
 
 			[
 				this.portal("west", Places.planetCliffsBottomSoutheast_Name() ),
