@@ -139,7 +139,7 @@ class Places {
             + "Banks of mostly incomprehensible controls "
             + "line the circular wall, with the nearby seats "
             + "either empty or filled with the slumped bodies of dead crew."
-            + "There's several bodies scattered on the floor, as well.  "
+            + "There're several bodies scattered on the floor, as well.  "
             + "A prominent pedestal in the center "
             + "formerly held the Stellar Juvenator, but now stands vacant.");
     }
@@ -395,7 +395,7 @@ class Places {
     // Places - Ekkis 2 - Desert.
     planetDesertCrashSite() {
         return this.place3(Places.planetDesertCrashSite_Name(), "Your escape pod has crashed in the middle of the desert "
-            + "of the planet planet, rendering it completely inoperable.  "
+            + "of the planet Ekkis II, rendering it completely inoperable.  "
             + "Its structural frame is severely bent, and the door unclosable.  "
             + "The forward window has shattered, "
             + "scattering shards of highly reflective glass over the sand "
@@ -409,14 +409,14 @@ class Places {
     }
     static planetDesertCrashSite_Name() { return "Ekkis II - Desert - Crash Site"; }
     planetDesertDeep() {
-        return this.place3(Places.planetDesertDeep_Name(), "You stand in the trackless desert of the planet planet, "
+        return this.place3(Places.planetDesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "The featureless sand stretches away in every direction.", []
         // Scripts.placeplanetDesertDeepUpdate.name
         );
     }
     static planetDesertDeep_Name() { return "Ekkis II - Desert - Deep Desert"; }
     planetDesertNorth() {
-        return this.place3(Places.planetDesertNorth_Name(), "You stand in the trackless desert of the planet planet, "
+        return this.place3(Places.planetDesertNorth_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "just north of the wreck of your crashed escape pod.  "
             + "The featureless sand stretches away in every other direction.", [
             this.portal("south", Places.planetDesertCrashSite_Name()),
@@ -427,7 +427,7 @@ class Places {
     }
     static planetDesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
     planetDesertSouth() {
-        return this.place3(Places.planetDesertSouth_Name(), "You stand in the trackless desert of the planet planet, "
+        return this.place3(Places.planetDesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "just south of the wreck of your crashed escape pod.  "
             + "The featureless sand stretches away in every other direction.", [
             this.portal("north", Places.planetDesertCrashSite_Name()),
@@ -438,7 +438,7 @@ class Places {
     }
     static planetDesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
     planetDesertWest() {
-        return this.place3(Places.planetDesertWest_Name(), "You stand in the trackless desert of the planet planet, "
+        return this.place3(Places.planetDesertWest_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "just west of the wreck of your crashed escape pod.  "
             + "The featureless sand stretches away in every other direction.", [
             this.portal("east", Places.planetDesertCrashSite_Name()),
@@ -452,7 +452,7 @@ class Places {
     }
     // Places - Ekkis 2 - Cliffs.
     planetCliffsBottomNorth() {
-        return this.place3(Places.planetCliffsBottomNorth_Name(), "You stand on the sand of the planet desert, just to the south  "
+        return this.place3(Places.planetCliffsBottomNorth_Name(), "You stand on the sand of the Ekkis II desert, just to the south  "
             + "of a steep stone cliff running from west to east. ", [
             this.portal("south", Places.planetCliffsBottomSouth_Name()),
             this.portal("west", Places.planetCliffsBottomNorthwestEastSide_Name()),
@@ -463,7 +463,7 @@ class Places {
         return "Ekkis II - Cliffs - Bottom - North";
     }
     planetCliffsBottomNortheast() {
-        return this.place3(Places.planetCliffsBottomNortheast_Name(), "You stand on the sand of the planet desert, just to the south  "
+        return this.place3(Places.planetCliffsBottomNortheast_Name(), "You stand on the sand of the Ekkis II desert, just to the south  "
             + "of a steep stone cliff running from the west "
             + "and ending just to the east.  "
             + "Above, on the clifftop, two large stone pillars stand about four meters "
@@ -481,7 +481,7 @@ class Places {
     }
     ;
     planetCliffsBottomNorthwestEastSide() {
-        return this.place3(Places.planetCliffsBottomNorthwestEastSide_Name(), "You stand on the sand of the planet desert, at the base  "
+        return this.place3(Places.planetCliffsBottomNorthwestEastSide_Name(), "You stand on the sand of the Ekkis II desert, at the base  "
             + "of a sheer stone cliff that curves away to the south and east.  ", [
             this.portal("east", Places.planetCliffsBottomNorth_Name()),
             this.portal("south", Places.planetCliffsBottomSouthwest_Name())
@@ -491,7 +491,7 @@ class Places {
         return "Ekkis II - Cliffs - Bottom - Northwest - East Side";
     }
     planetCliffsBottomNorthwestWestSide() {
-        return this.place3(Places.planetCliffsBottomNorthwestWestSide_Name(), "You stand on the sand of the planet desert, at the base  "
+        return this.place3(Places.planetCliffsBottomNorthwestWestSide_Name(), "You stand on the sand of the Ekkis II desert, at the base  "
             + "of a sheer stone cliff that curves away to the south and east,  "
             + "and which blocks passage to the east.  "
             + "The site where your escape pod crashed is to the west."
@@ -553,7 +553,8 @@ class Places {
     planetCliffsCaveInterior() {
         return this.place3(Places.planetCliffsCaveInterior_Name(), "This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
             + "To the west the cave opens out into the blazing daylight "
-            + "of the planet desert.", [
+            + "of the Ekkis II desert.  "
+            + "There's... there's a smell.", [
             this.portal("west", Places.planetCliffsBottomSoutheast_Name()),
         ]);
     }
@@ -562,7 +563,7 @@ class Places {
     }
     planetCliffsTopNorth() {
         return this.place3(Places.planetCliffsTopNorth_Name(), "You stand atop a rocky cliff rising from the desert "
-            + "of the planet planet.  "
+            + "of the planet Ekkis II.  "
             + "The top of the cliff continues to the west and east.", [
             this.portal("east", Places.planetCliffsTopNortheast_Name()),
             this.portal("west", Places.planetCliffsTopNorthwest_Name())
@@ -573,7 +574,7 @@ class Places {
     }
     planetCliffsTopNortheast() {
         return this.place3(Places.planetCliffsTopNortheast_Name(), "You stand on the end of a cliff "
-            + "rising from the desert of the planet planet.  "
+            + "rising from the desert of the planet Ekkis II.  "
             + "A pair of leaning stone columns rises from the clifftop here, "
             + "bending toward each other like horns.  "
             + "The top of the cliff runs back toward the west.", [
@@ -583,7 +584,7 @@ class Places {
     }
     static planetCliffsTopNortheast_Name() { return "Ekkis II - Cliffs - Top - Northeast"; }
     planetCliffsTopNorthwest() {
-        return this.place3(Places.planetCliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet planet.  "
+        return this.place3(Places.planetCliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis II.  "
             + "The path along the clifftop curves from the south to the east.  "
             + "Some jagged peaks jut upward along the northern edge of the cliff.", [
             this.portal("east", Places.planetCliffsTopNorth_Name()),
@@ -594,7 +595,7 @@ class Places {
         return "Ekkis II - Cliffs - Top - Northwest";
     }
     planetCliffsTopSouthEastSide() {
-        return this.place3(Places.planetCliffsTopSouthEastSide_Name(), "You stand atop a cliff rising from the desert of the planet planet.  "
+        return this.place3(Places.planetCliffsTopSouthEastSide_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis II.  "
             + "To the east, a downward slope curves southward "
             + "back to the desert surface. "
             + "To the west, the cliff top rises and then falls "
@@ -610,7 +611,7 @@ class Places {
         return "Ekkis II - Cliffs - Top - Arch - East Side";
     }
     planetCliffsTopSouthWestSide() {
-        return this.place3(Places.planetCliffsTopSouthWestSide_Name(), "You stand atop a cliff rising from the desert of the planet planet.  "
+        return this.place3(Places.planetCliffsTopSouthWestSide_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis II.  "
             + "To the east, the cliff top rises and then falls "
             + "in an weathered stone arch, "
             + "which serves as a natural bridge to the clifftop on the other side,"
@@ -625,7 +626,7 @@ class Places {
         return "Ekkis II - Cliffs - Top - Arch - West Side";
     }
     planetCliffsTopSouthwest() {
-        return this.place3(Places.planetCliffsTopSouthwest_Name(), "You stand atop a cliff rising from the desert of the planet planet.  "
+        return this.place3(Places.planetCliffsTopSouthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis II.  "
             + "The path along the clifftop curves "
             + "from the east, where a natural stone bridge "
             + "arches over the desert surface, "
@@ -639,7 +640,7 @@ class Places {
     }
     // Places - Ekkis 2 - Caverns.
     planetCavernsBarrier() {
-        return this.place3(Places.planetCavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet planet.  "
+        return this.place3(Places.planetCavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
             + "The path to the west is blocked by several closely spaced "
             + "and intensely bright beams of light,"
             + "which are emitted from small round ports the rock walls, "
@@ -655,7 +656,7 @@ class Places {
         return "Ekkis II - Caverns - Barrier";
     }
     planetCavernsDrips() {
-        return this.place3(Places.planetCavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet planet.  "
+        return this.place3(Places.planetCavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
             + "The passage runs to the east, where drips of a clear liquid "
             + "fall intermittently from the ceiling.  "
             + "Each drip passes into a small, precise hole in the floor "
@@ -681,7 +682,7 @@ class Places {
         return "Ekkis II - Caverns - Elevator";
     }
     planetCavernsGeyser() {
-        return this.place3(Places.planetCavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet planet.  "
+        return this.place3(Places.planetCavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
             + "The passage to the west ends abruptly in a solid rock wall."
             + "Nearby, a small geyser shoots wetly and steamily out of a hole "
             + " in the top of a stalagmite."
@@ -694,7 +695,7 @@ class Places {
         return "Ekkis II - Caverns - Geyser";
     }
     planetCavernsGrating() {
-        return this.place3(Places.planetCavernsGrating_Name(), "You are in a cavern deep beneath the desert of the planet planet, "
+        return this.place3(Places.planetCavernsGrating_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II, "
             + "in a passage running from east to west."
             + "In the floor leading to the west, a thick metal grating "
             + "perforated with holes about 10 centimeters wide "
@@ -707,7 +708,7 @@ class Places {
         return "Ekkis II - Caverns - Grating";
     }
     planetCavernsPool() {
-        return this.place3(Places.planetCavernsPool_Name(), "You are in a cavern deep beneath the desert of the planet planet. "
+        return this.place3(Places.planetCavernsPool_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II. "
             + "You stand on a wide ledge that runs south, back through a hidden doorway, "
             + " where a plugged geyser steams fitfully.  To the west, the ledge runs "
             + "through dark natural stone columns and on into the darkness.  "
@@ -722,7 +723,7 @@ class Places {
         return "Ekkis II - Caverns - Pool";
     }
     planetCavernsProjectionRoom() {
-        return this.place3(Places.planetCavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet planet. "
+        return this.place3(Places.planetCavernsProjectionRoom_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II. "
             + "This space is completely dark at the moment.  Earlier, it was lit only "
             + "by a holographic projection of a triangular-headed alien.  "
             + "A passage leads back to the east.", [
@@ -734,7 +735,7 @@ class Places {
         return "Ekkis II - Caverns - Projection Room";
     }
     planetCavernsSteamworks() {
-        return this.place3(Places.planetCavernsSteamworks_Name(), "You are in a cavern deep beneath the desert of the planet planet. "
+        return this.place3(Places.planetCavernsSteamworks_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II. "
             + "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
             + "A computer console with a monitor and standard data cartridge slot "
             + "stands against the north wall.  Above it is a catwalk where members "

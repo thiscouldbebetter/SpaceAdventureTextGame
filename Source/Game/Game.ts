@@ -514,16 +514,21 @@ class Places
 			"This is the Pax Aeterna's library.  "
 			+ "Doors in the fore and aft walls lead to hallways.  "
 			+ "\n\n"
-			+ "The high walls are occupied almost completely with narrow shelves, "
+			+ "The high walls are occupied almost completely with floor-to-ceiling shelves, "
 			+ "and the shelves are occupied almost completely "
-			+ "with row after row of plastic cartridges containing magnetic data tape.  "
+			+ "with rows upon rows of plastic cartridges containing magnetic data tape.  "
 			+ "(The fleet tried a solid-state, full-digital data storage system for a while, "
 			+ " but it was agreed that it just didn't give the same rich tones.)"
 			+ "\n\n"
-			+ "A spacious round table ringed with comfortable seats and cartridge readers "
+			+ "A spacious round table ringed with upholstered seats, "
 			+ "fills a pit in the center of the room.  "
-			+ "On one wall is a control console with a keyboard and screen, "
-			+ "a spiderlike cartridge-retrieval robot clinging to the wall just above it."
+			+ "It is intended to provide a comfortable place to read data cartridges, "
+			+ "though there are no cartridge readers present.  "
+			+ "Every crew member was issued one on boarding, "
+			+ "but you lost yours.  Well, broke it, really."
+			+ "\n\n"
+			+ "On one wall is a retrieval console with a keyboard and screen, "
+			+ "a spiderlike cartridge-retrieval robot clinging to the shelves just above it."
 			+ "\n\n"
 			+ "A man wearing a scientist's smock lies face-down "
 			+ "on the floor in front of the console. ",
@@ -539,8 +544,8 @@ class Places
 					+ "on the console's keyboard, "
 					+ "the retrieval robot will retrieve that cartridge from the stacks "
 					+ "and drop it into the cartidge hopper below the console. "
-					+ "From there, the cartridge can be slotted into a reader "
-					+ "and its contents displayed to screen.  "
+					+ "From there, the cartridge is generally slotted into a reader "
+					+ "and its contents displayed on a screen.  "
 					+ "It's a complicated system, to be sure, "
 					+ "but that sixteen hours of training you took was probably enough."
 				).commandAdd
@@ -556,25 +561,15 @@ class Places
 				(
 					"table",
 
-					"The table bears several cartridge readers, "
-					+ "and provides a comfortable place "
+					"The table provides a comfortable place "
 					+ "for the more literate members of the crew to research data tapes."
 					+ "\n\n"
 					+ "You, on the other hand, have only used it once,"
 					+ "as an improvised playfield for a game of Vir-Naki Caroms "
-					+ "with the cartridge-retrieval bot, "
-					+ "but they made you stop before you could "
+					+ "with the cartridge-retrieval bot. "
+					+ "But they made you stop before you could even "
 					+ "figure out how to detach the bot from the shelves, "
 					+ "much less get a nice volley going."
-				),
-
-				this.emplacement2
-				(
-					"reader",
-
-					"The cartridge reader sitting atop the table "
-					+ "has a slot to insert a data cartridge into, "
-					+ "and a screen to display the cartridge's contents."
 				),
 
 				this.emplacement2
@@ -582,7 +577,8 @@ class Places
 					"man",
 					"He's not moving in any perceptible way.  "
 					+ "You can't tell from here if he's even breathing, "
-					+ "which is the most important kind of moving."
+					+ "which is the most important kind of moving, "
+					+ "when you think about it."
 				).commandAdd
 				(
 					new Command
@@ -607,8 +603,16 @@ class Places
 			Places.friendlyShipLowerDeckHallAft_Name(),
 
 			"This is a hallway on the lower deck of the starship Pax Aeterna.  "
+			+ "(It looks almost exactly like the upper deck, though. "
+			+ "Honestly, if the buttons in the elevator weren't labelled, "
+			+ "there'd be no way to tell them apart.)  "
 			+ "The hall continues to forward, and ends in a bulkhead to aft.  "
-			+ "There is a door here opening to an elevator.",
+			+ "A door here opens onto an elevator.",
+			+ "\n\n"
+			+ "The body of your supervisor lies supine in this corridor, "
+			+ "brows furrowed in a disapproving expression even in death."
+			+ "A hard trick to pull off, but then again, he put in lots of practice"
+			+ "when he was alive.  Every time he talked to you, at a minimum."
 
 			[
 				this.portal("forward", Places.friendlyShipLowerDeckHallAmidships_Name() ),
@@ -638,6 +642,11 @@ class Places
 			Places.friendlyShipLowerDeckHallAmidships_Name(),
 
 			"This is a hallway on the lower deck of the starship Pax Aeterna.  "
+			+ "You can still detect subtle indications of slight damage "
+			+ "from when a floor scrubber went out of control, "
+			+ "collided with the wall, and rubbed against for several meters "
+			+ "before getting back on track.  That very nearly cost it the race, "
+			+ "but luckily the other scrubber was disqualified for unsportspersonlike conduct."
 			+ "The hall continues to forward and to aft.",
 
 			[
@@ -660,7 +669,10 @@ class Places
 
 			"This is a hallway on the lower deck of the starship Pax Aeterna.  "
 			+ "The hall continues to aft, and ends in a bulkhead to forward.  "
-			+ "There is a door here opening on an elevator.",
+			+ "There is a door here opening on an elevator.  "
+			+ "\n\n"
+			+ "Another body of one of your crewmates lies here.  "
+			+ "You start to feel sorry for whoever has to clean all this up.",
 
 			[
 				this.portal("aft", Places.friendlyShipLowerDeckHallAmidships_Name() ),
@@ -688,9 +700,14 @@ class Places
 		(
 			Places.friendlyShipUpperDeckHallAft_Name(),
 
-			"This is a hallway on the upper deck the starship Pax Aeterna.  "
+			"This is a hallway on the upper deck of the starship Pax Aeterna.  "
 			+ "The hall continues to forward, and ends in a bulkhead to aft.  "
-			+ "There is a door here opening on an elevator.",
+			+ "There is a door here opening on an elevator.  "
+			+ "\n\n"
+			+ "The body of one of your fellow crew members lies prone "
+			+ "near the aft bulkhead, the neck bent sharply upwards "
+			+ "and the chin propped against the bulkhead itself.  "
+			+ "This is the most awkward pose yet."
 
 			[
 				this.portal("forward", Places.friendlyShipUpperDeckHallAmidships_Name() ),
@@ -722,7 +739,8 @@ class Places
 			+ "The hall ends in a door to forward, and continues to aft.  "
 			+ "In the middle is a door leading to the office/supply closet/quarters "
 			+ "of the Maintenance Specialist (Sanitation Grade), "
-			+ "which is where you, our hero, came in to this story.",
+			+ "which is where you, our hero, came boldly to this story, "
+			+ "as soon as you figured out how to 'go door'."
 
 			this.scripts.placefriendlyShipUpperDeckHallAmidships_Update.name,
 
@@ -746,9 +764,13 @@ class Places
 			Places.friendlyShipUpperDeckHallForward_Name(),
 
 			"This is a hallway on the upper deck of the starship Pax Aeterna.  "
-			+ "The hall ends in a bulkhead to forward and a door to aft.  "
-			+ "The body of a dead crewman lies crumpled "
-			+ "against the bulkhead at the forward end of the hall.",
+			+ "The hall ends in a bulkhead to forward, "
+			+ "near which the body of a dead crewperson lies crumpled.  "
+			+ "This is a pretty out-of-the way spot.  "
+			+ "They must've been hiding here when they got shot.  "
+			+ "Either that, or they died of natural causes by coincidence, "
+			+ "and nobody's been down this hall to find them until just now.  "
+			+ "Unlikely, but we shouldn't rule anything out."
 
 			[
 				this.portal("aft", Places.friendlyShipLibrary_Name()),
@@ -780,15 +802,27 @@ class Places
 			Places.planetDesertCrashSite_Name(),
 
 			"Your escape pod has crashed in the middle of the desert "
-			+ "of the planet Ekkis II, rendering it completely inoperable.  "
-			+ "Its structural frame is severely bent, and the door unclosable.  "
-			+ "The forward window has shattered, "
-			+ "scattering shards of highly reflective glass over the sand "
-			+ "in front of the pod."
+			+ "of the planet Ekkis II.  "
+			+ "(What a stupid place to crash, you dumb idiot pod!)"
+			+ "The crash has rendered the pod completely inoperable.  "
+			+ "Its structural frame is severely bent, its door is unclosable, "
+			+ "and its forward window has shattered, "
+			+ "scattering shards of highly reflective glass "
+			+ "(it looks like glass, anyway)"
+			+ "over the sand in front of the pod."
+			+ "\n\n"
+			+ "Wait, shards?  How did that get past safety inspection?"
+			+ "\n\n"
+			+ "The sun is blazing.  Or they are.  There may be more than one;"
+			+ "it is, or they are, too hard to look at to tell.  "
+			+ "It's so hot and dry that your sweat is evaporating "
+			+ "almost as fast as it seeps out of your pores." 
 			+ "\n\n"
 			+ "The desert stretches away as far as the eye can see to the "
-			+ "north, west, and south.  A maze of rocky cliffs rises to the east.",
-
+			+ "north, west, and south.  It's majestically depressing."
+			+ "\n\n"
+			+ "A maze of rocky cliffs rises to the east.  "
+			+ "At least, with your luck, you assume it must be mazelike.",
 			[
 				this.portal("pod", Places.friendlyShipEscapePod_Name() ),
 				this.portal("east", Places.planetCliffsBottomNorthwestWestSide_Name() )
@@ -796,7 +830,10 @@ class Places
 		);
 	}
 
-	static planetDesertCrashSite_Name(): string { return "Ekkis II - Desert - Crash Site"; }
+	static planetDesertCrashSite_Name(): string
+	{
+		return "Ekkis II - Desert - Crash Site";
+	}
 
 	planetDesertDeep() : Place
 	{
@@ -805,7 +842,8 @@ class Places
 			Places.planetDesertDeep_Name(),
 
 			"You stand in the trackless desert of the planet Ekkis II, "
-			+ "The featureless sand stretches away in every direction.",
+			+ "The featureless sand stretches away in every direction.  "
+			+ "It's not encouraging, frankly.",
 
 			[]
 
@@ -813,7 +851,10 @@ class Places
 		)
 	}
 
-	static planetDesertDeep_Name(): string { return "Ekkis II - Desert - Deep Desert"; }
+	static planetDesertDeep_Name(): string
+	{
+		return "Ekkis II - Desert - Deep Desert";
+	}
 
 	planetDesertNorth() : Place
 	{
@@ -823,7 +864,11 @@ class Places
 
 			"You stand in the trackless desert of the planet Ekkis II, "
 			+ "just north of the wreck of your crashed escape pod.  "
-			+ "The featureless sand stretches away in every other direction.",
+			+ "Some cliffs rise to the southeast. "
+			+ "The featureless sand stretches away in every other direction.  "
+			+ "If you were a poet, you'd probably be moved "
+			+ "to write a poem about loneliness. "
+			+ "But you're not, so instead you just sweat and wish for a lemonade."
 
 			[
 				this.portal("south", Places.planetDesertCrashSite_Name() ),
@@ -843,8 +888,13 @@ class Places
 			Places.planetDesertSouth_Name(),
 
 			"You stand in the trackless desert of the planet Ekkis II, "
-			+ "just south of the wreck of your crashed escape pod.  "
-			+ "The featureless sand stretches away in every other direction.",
+			+ "just south of the wreck of your crashed escape pod.  ",
+			+ "Some cliffs rise to the northeast.  ",
+			+ "A sea of dunes stretches away in every other direction."
+			+ "Except... there!  In the distance!  You see... "
+			+ "No, on second thought, that's just an eyeball floater.  "
+			+ "It was a pretty rough crash.  You should get checked out "
+			+ "whenever you next find a doctor. "
 
 			[
 				this.portal("north", Places.planetDesertCrashSite_Name() ),
@@ -864,8 +914,12 @@ class Places
 			Places.planetDesertWest_Name(),
 
 			"You stand in the trackless desert of the planet Ekkis II, "
-			+ "just west of the wreck of your crashed escape pod.  "
-			+ "The featureless sand stretches away in every other direction.",
+			+ "just west of the wreck of your crashed escape pod.  ",
+			+ "Beyond the pod, some cliffs rise from the sand. "
+			+ "A sea of dunes stretch away in every other direction."
+			+ "\n\n"
+			+ "What does 'trackless' mean, anyway?  "
+			+ "It's not like most places are just brimming over with tracks.",
 
 			[
 				this.portal("east", Places.planetDesertCrashSite_Name() ),
@@ -890,7 +944,12 @@ class Places
 			Places.planetCliffsBottomNorth_Name(),
 
 			"You stand on the sand of the Ekkis II desert, just to the south  "
-			+ "of a steep stone cliff running from west to east. ",
+			+ "of a steep stone cliff running from west to east.  "
+			+ "Other cliffs can be seen to the west, east, and south.  "
+			+ "\n\n"
+			+ "This cliff seems especially cliffy indeed, "
+			+ "but you're reserving judgement "
+			+ "until you've seen all the entrants.  It's only fair."  
 
 			[
 				this.portal("south", Places.planetCliffsBottomSouth_Name()),
@@ -914,11 +973,15 @@ class Places
 			"You stand on the sand of the Ekkis II desert, just to the south  "
 			+ "of a steep stone cliff running from the west "
 			+ "and ending just to the east.  "
-			+ "Above, on the clifftop, two large stone pillars stand about four meters "
-			+ "apart from each other.  As they rise, they bend toward each other like horns, "
-			+ "with jagged, broken tops.  "
 			+ "\n\n"
-			+ "To the east, the sand stretches away as far as you can see.",
+			+ "Above, on the clifftop, two large stone pillars "
+			+ "stand about four meters apart from each other.  "
+			+ "As they rise, they bend toward each other like horns, "
+			+ "with jagged, broken tops.  Maybe it's the dehydration, "
+			+ "but you feel like these are some pretty cool, top-ten stone horns."
+			+ "\n\n"
+			+ "To the east, the sand stretches away from the foot of the cliff, "
+			+ "as far as the eye can see.  Well, your eyes, at least.",
 
 			[
 				this.portal("south", Places.planetCliffsBottomSoutheast_Name()),
@@ -940,7 +1003,11 @@ class Places
 			Places.planetCliffsBottomNorthwestEastSide_Name(),
 
 			"You stand on the sand of the Ekkis II desert, at the base  "
-			+ "of a sheer stone cliff that curves away to the south and east.  ",
+			+ "of a sheer stone cliff that curves away to the south and east.  "
+			+ "\n\n"
+			+ "The cliff, to an unarguable degree, "
+			+ "blocks progress to the north and west, "
+			+ "so don't you even try it.",
 
 			[
 				this.portal("east", Places.planetCliffsBottomNorth_Name()),
@@ -963,9 +1030,16 @@ class Places
 			"You stand on the sand of the Ekkis II desert, at the base  "
 			+ "of a sheer stone cliff that curves away to the south and east,  "
 			+ "and which blocks passage to the east.  "
+			+ "\n\n"
 			+ "The site where your escape pod crashed is to the west."
+			+ "\n\n"
 			+ "To the south, more cliffs are visible. "
-			+ " The desert stretches away to the north, and west.",
+			+ "\n\n"
+			+ " The desert stretches away to the north, and west."
+			+ "\n\n",
+			+ "The cliff face has a nearly circular hole in it, "
+			+ "a little less than two meters off the ground.  "
+			+ "Nice: you like a cliff face with a little somethin' goin' on.",
 
 			[
 				this.portal("south", Places.planetCliffsBottomSouthwest_Name()),
@@ -998,8 +1072,11 @@ class Places
 			+ "in a area surrounded by a system of cliffs.  "
 			+ "In the shelter afforded by the cliffs, "
 			+ "some stunted greenery actually manages to cling to life.  "
+			+ "\n\n"
 			+ "Overhead, a weathered stone arch bridges the tops of the cliffs "
 			+ "to the east with those to the west.  "
+			+ "It's very picturesque, and you without a camera."
+			+ "\n\n"
 			+ "Surface paths between cliff bases run to the west, north, and east.",
 
 			[
@@ -1023,8 +1100,13 @@ class Places
 
 			"You stand on a clear stretch of sand amid a formation of stone cliffs.  "
 			+ "The sandy surface of the desert runs to the north and to the west. "
+			+ "\n\n"
 			+ "To the east is a tall, confused jumble of rocks, "
-			+ " in which a large, shadowy cave mouth opens."
+			+ " in which a large, shadowy cave mouth opens.  "
+			+ "What with the sun(s) and all, "
+			+ "you feel you could really go for some shadows about now,"
+			+ "even though you normally sleep with a night-light."
+			+ "\n\n"
 			+ "On the west side of the clearing, a stone slope rises jaggedly "
 			+ "upward between jutting upright stones, climbing as it runs northward.",
 
@@ -1048,7 +1130,15 @@ class Places
 		(
 			Places.planetCliffsBottomSouthwest_Name(),
 
-			"todo",
+			"More cliffs here, and sand.  "
+			+ "This planet only has a couple of things going on, "
+			+ "but danged if it disappoints on the cliff and sand front.",
+			+ "\n\n"
+			+ "Specifically, cliffs rise to the north and east, "
+			+ "while to the south and west lies sand.  "
+			+ "It's balanced.  Kind of a yin-yang thing.  "
+			+ "Though you're not sure which is which.  "
+			+ "Or maybe they doubled up on yang."
 
 			[
 				this.portal("east", Places.planetCliffsBottomSouth_Name() ),
@@ -1089,7 +1179,11 @@ class Places
 
 			"You stand atop a rocky cliff rising from the desert "
 			+ "of the planet Ekkis II.  "
-			+ "The top of the cliff continues to the west and east.",
+			+ "The top of the cliff continues to the west and east."
+			+ "The path is especially narrow and precarious here.  "
+			+ "You're glad you can just type 'go east' or whatever "
+			+ "rather than turning down the game speed "
+			+ "and picking your way along one step at a time.",
 
 			[
 				this.portal("east", Places.planetCliffsTopNortheast_Name() ),
@@ -1109,11 +1203,25 @@ class Places
 		(
 			Places.planetCliffsTopNortheast_Name(),
 
-			"You stand on the end of a cliff "
-			+ "rising from the desert of the planet Ekkis II.  "
+			"You stand on the end of a clifftop "
+			+ "above the desert of the planet Ekkis II.  "
 			+ "A pair of leaning stone columns rises from the clifftop here, "
 			+ "bending toward each other like horns.  "
-			+ "The top of the cliff runs back toward the west.",
+			+ "\n\n"
+			+ "(Are they columns if they're not completely vertical, though?"
+			+ "Hmm, maybe they're slashes.  "
+			+ "Or, one is a slash, and the other a backslash."
+			+ "Anyway, they're definitely not rows.)"
+			+ "\n\n"
+			+ "The stone horns look especially cool up close.  "
+			+ "You woozily compose an album cover in your head, "
+			+ "with the stone horns pictured in the background "
+			+ "and with you looking bored and fully hydrated in the foreground."
+			+ "You further fantasize about your imaginary band's groupies, "
+			+ "each of which is offering you a cool fruity drink."
+			+ "\n\n"
+			+ "Back in the real world, the top of the cliff "
+			+ "runs back toward the west, where there is also no water.",
 
 			[
 				this.portal("west", Places.planetCliffsTopNorth_Name() ),
@@ -1132,7 +1240,9 @@ class Places
 
 			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
 			+ "The path along the clifftop curves from the south to the east.  "
-			+ "Some jagged peaks jut upward along the northern edge of the cliff.",
+			+ "\n\n"
+			+ "Some jagged peaks jut upward along the northern edge of the cliff.  "
+			+ "Hey, at least these cliffs are trying something new.",
 
 			[
 				this.portal("east", Places.planetCliffsTopNorth_Name() ),
@@ -1152,14 +1262,19 @@ class Places
 		(
 			Places.planetCliffsTopSouthEastSide_Name(),
 
-			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
+			"You stand atop a cliff rising from the desert of the planet Ekkis II."
+			+ "\n\n"
 			+ "To the east, a downward slope curves southward "
 			+ "back to the desert surface. "
+			+ "\n\n"
 			+ "To the west, the cliff top rises and then falls "
 			+ "in an weathered stone arch, "
 			+ "which serves as a natural bridge to the clifftop on the other side." 
+			+ "\n\n"
 			+ "Below the arch is a slightly greener patch of desert "
-			+ "sheltered by the surrounding cliffs.",
+			+ "sheltered by the surrounding cliffs.  "
+			+ "From here, it almost looks idyllic.  "
+			+ "But no, you just came from there, and it's all dyllic enough.",
 
 			[
 				this.portal("east", Places.planetCliffsBottomSoutheast_Name() ),
@@ -1179,13 +1294,20 @@ class Places
 		(
 			Places.planetCliffsTopSouthWestSide_Name(),
 
-			"You stand atop a cliff rising from the desert of the planet Ekkis II.  "
+			"You stand atop a cliff rising from the desert of the planet Ekkis II."
+			+ "\n\n"
+			+ "To the west, the clifftop path continues, "
+			+ "curving around to the north."
 			+ "To the east, the cliff top rises and then falls "
 			+ "in an weathered stone arch, "
 			+ "which serves as a natural bridge to the clifftop on the other side,"
 			+ "and from there down a slope to the desert surface."
+			+ "\n\n"
 			+ "Below the arch is a slightly greener patch of desert "
-			+ "sheltered by the surrounding cliffs.",
+			+ "sheltered by the surrounding cliffs.  "
+			+ "Despite the greenery, there's not enough water to drink down there, "
+			+ "even if you were willing to bite a cactus, "
+			+ "which past experience tells you you should never do again."
 
 			[
 				this.portal("east", Places.planetCliffsTopSouthEastSide_Name() ),
@@ -1209,7 +1331,12 @@ class Places
 			+ "The path along the clifftop curves "
 			+ "from the east, where a natural stone bridge "
 			+ "arches over the desert surface, "
-			+ "and continues to the north.", 
+			+ "and continues to the north."
+			+ "\n\n"
+			+ "The word 'arroyo' crosses your mind.  "
+			+ "You're not exactly sure what an arroyo is,"
+			+ "and you're reasonably sure this isn't one, "
+			+ "but this whole place feels pretty arroyoey.", 
 
 			[
 				this.portal("north", Places.planetCliffsTopNorthwest_Name() ),
@@ -1232,13 +1359,22 @@ class Places
 			Places.planetCavernsBarrier_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
+			+ "\n\n"
 			+ "The path to the west is blocked by several closely spaced "
 			+ "and intensely bright beams of light,"
 			+ "which are emitted from small round ports the rock walls, "
 			+ "and which pass into similar ports on the other side.  "
+			+ "\n\n"
+			+ "Okay, this is actually good news, though, right?  "
+			+ "There must be something good past that barrier, "
+			+ "or else why the barrier?  "
+			+ "I mean, unless it's, like, an art installation or something.  "
+			+ "Those always just make you feel stupid."
+			+ "\n\n"
 			+ "Beyond this barrier, the path rises up and curves to the right "
 			+ "in a rough semicircle, leading along a higher path back to the east."
-			+ "A passage leads back to the east.",
+			+ "\n\n"
+			+ "Back on this side of the barrier, a lower path leads back to the east.",
 
 			[
 				this.portal("east", Places.planetCavernsPool_Name() ),
@@ -1259,11 +1395,19 @@ class Places
 			Places.planetCavernsDrips_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
-			+ "The passage runs to the east, where drips of a clear liquid "
+			+ "\n\n"
+			+ "A passage runs to the east, where drips of a clear liquid "
 			+ "fall intermittently from the ceiling.  "
 			+ "Each drip passes into a small, precise hole in the floor "
 			+ "that appears as if it were made to fit it."
-			+ "A passage leads back to the west, "
+			+ "\n\n"
+			+ "If this is a water feature, it's got nothing on your grandparents' "
+			+ "topless bronze torso model pouring a bottomless jar into a pool.  "
+			+ "Which reminds you, they just don't make water features "
+			+ "sexy like they used to."
+			+ "\n\n"
+			+ "To the west, another passage leads back "
+			+ "toward the entrance to the caverns, "
 			+ "curving left in a rough semicircle back down to the level below.",
 			
 			[
@@ -1285,11 +1429,18 @@ class Places
 			Places.planetCavernsElevator_Name(),
 
 			"You stand at the bottom of the elevator that brought you down "
-			+ "from the cliffs of planet to a cool, dark, rocky cavern.  "
-			+ "The elevator door lies at the east side of the passage.  "
-			+ "From there, the passage runs to the west.",
+			+ "what seemes like hundreds of meters "
+			+ "from the edge of a remote clifftop on the surface of a desert planet "
+			+ "to a cool, dark, rocky cavern.  "
+			+ "This setup all seems very inconvenient to you, "
+			+ "but hey, at least it wasn't stairs."
+			+ "\n\n"
+			+ "The elevator door lies at the east side of the passage."
+			+ "\n\n"
+			+ "From there, the passage runs to the west, deeper into the cavern.",
 
 			[
+				this.portal("door", Places.planetCliffsTopNortheast_Name() ),
 				this.portal("west", Places.planetCavernsGrating_Name() )
 			]
 		);
@@ -1306,15 +1457,40 @@ class Places
 		(
 			Places.planetCavernsGeyser_Name(),
 
-			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
+			"You are in a cavern deep beneath the desert of the planet Ekkis II."
+			+ "\n\n"
 			+ "The passage to the west ends abruptly in a solid rock wall."
-			+ "Nearby, a small geyser shoots wetly and steamily out of a hole "
-			+ " in the top of a stalagmite."
-			+ "Another passage leads back east.",
+			+ "Nearby, a small geyser shoots out of a hole "
+			+ "in the top of a stalagmite, wetly and steamily, "
+			+ "but not in, like, a gross way."
+			+ "\n\n"
+			+ "Another passage leads back east, toward the cavern entrance.",
 
 			[
 				this.portal("west", Places.planetCavernsPool_Name() ),
-				this.portal("east", Places.planetCavernsGrating_Name() )
+				this.portal("east", Places.planetCavernsGrating_Name() ),
+
+				this.emplacement
+				(
+					"wall",
+
+					"Examining the wall closely, "
+					+ "you see a faint rectangular outline of hairline cracks in the rock. "
+					+ "It happens to a lot of us as we get older.  "
+					+ "Geological age ain't nothin' but a number.  "
+					+ "Well, usually a number and a unit.  Like 'megayear'."
+				),
+
+				this.emplacement
+				(
+					"geyser",
+
+					"You examine the geyser.  "
+					+ "Aw, what a bubbly, happy little guy. "
+					+ "It's a good thing the sun isn't blazing so hot inside this cavern,"
+					+ "Or you'd be tempted to take a drink of the steaming hot liquid.  "
+					+ "And that would melt your esophagus."
+				)
 			]
 		);
 	}
@@ -1337,6 +1513,18 @@ class Places
 			+ "stretches from wall to wall across the entire passage. ",
 
 			[
+				this.emplacement
+				(
+					"grating",
+
+					"You bend over and look closely at the grating."
+					+ "You think you see something moving down there.  "
+					+ "And maybe you hear some sloshing.  "
+					+ "And, yeah, there's a smell.  "
+					+ "For a metal grate in a cave, "
+					+ "it's kind of a sensory smorgasbord."
+				),
+
 				this.portal("west", Places.planetCavernsGeyser_Name() ),
 				this.portal("east", Places.planetCavernsElevator_Name() )
 			]
@@ -1381,8 +1569,11 @@ class Places
 			Places.planetCavernsProjectionRoom_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Ekkis II. "
-			+ "This space is completely dark at the moment.  Earlier, it was lit only " 
+			+ "\n\n"
+			+ "This space is completely dark at the moment.  "
+			+ "Earlier, it was lit only " 
 			+ "by a holographic projection of a triangular-headed alien.  "
+			+ "In retrospect, that giant alien head really livened up the decor."
 			+ "A passage leads back to the east.",
 
 			[
@@ -1404,11 +1595,16 @@ class Places
 			Places.planetCavernsSteamworks_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Ekkis II. "
-			+ "Arrays of giant metal pistons pump noisily away, leaking wisps of steam. "
+			+ "\n\n"
+			+ "Arrays of giant metal pistons pump noisily away, "
+			+ "leaking wisps of steam.  Too bad your awkward cousin isn't here, "
+			+ "he'd be way into this."
+			+ "\n\n"
 			+ "A computer console with a monitor and standard data cartridge slot "
 			+ "stands against the north wall.  Above it is a catwalk where members "
 			+ "of a gray-skinned, large-eyed, triangular-headed alien species "
 			+ "busily operate various inscrutable control systems."
+			+ "\n\n"
 			+ "To the west is a small, garage-like space, with a door at the end "
 			+ "that appears to open onto a large elevator platform.",
 
@@ -1421,7 +1617,6 @@ class Places
 
 	static planetCavernsSteamworks_Name(): string { return "Ekkis II - Caverns - Steamworks"; }
 
-
 	// Places - Ekkis 2 - Village of [Farting Noise].
 
 	planetSettlementBarFront() : Place
@@ -1433,26 +1628,32 @@ class Places
 			"You stand in the tiny settlement named, "
 			+ " as near as you can make out from the signs in Universal Phonospeak, "
 			+ "[Farting Noise].  "
-			+ "In the natives' defense, maybe their farts sound completely different from yours."
+			+ "In the natives' defense, maybe their farts "
+			+ "sound completely different from yours."
 			+ "\n\n"
-			+ "To the east stands a concrete igloo with an arched entrance, "
+			+ "To the east stands a pourstone igloo with an arched entrance, "
 			+ "above which is a lighted sign that reads "
 			+ "'Poot-Poot-P-Phttt' in Universal Phonospeak,"
 			+ "followed by 'BAR' in "
-			+ "several of the more common, less aspirated, languages of this sector of space."
+			+ "several of the more common, less aspirated, languages "
+			+ "of this sector of space."
 			+ "\n\n"
 			+ "Several spaceships, presumably belonging to the bar's patrons,"
 			+ "stand nearby."
 			+ "\n\n"
-			+ "To the west, you can see another, similar building, with a few more "
+			+ "To the west, you can see another, cubical building, with a few more "
 			+ "run-down looking spaceships in front of it, and decorated with "
 			+ "strings of cheap but festive plastic pennants."
 			+ "\n\n"
-			+ "Away to the north is the edge of yet another domelike building, "
+			+ "Away to the north is the edge of another domelike building, "
 			+ "possibly a store of some sort."
 			+ "\n\n"
-			+ "To the south, a faint shimmer in the air betrays the forcefield "
-			+ "that protects this settlement from the native predatory sand-swimmers.",
+			+ "To the south, a faint shimmer in the air betrays the force field "
+			+ "that protects this settlement from the native predatory sand-swimmers.  "
+			+ "You look nervously at the field generator unit, "
+			+ "which looks dusty, battered, and none too new.  "
+			+ "But you're standing here, instead of in a sand-swimmer's belly, "
+			+ "so you guess it must work.",
 
 			[
 				this.portal("north", Places.planetSettlementRobotShopWest_Name() ),
@@ -1476,25 +1677,80 @@ class Places
 			Places.planetSettlementBarInterior_Name(),
 
 			"You stand inside the [Farting Noise] bar.  "
-			+ "On a small stage, a band of garishly dressed bipeds loudly plays "
+			+ "\n\n"
+			+ "On a small stage, a band of garishly dressed bipeds "
+			+ "manipulating complicated instruments loudly emits "
 			+ "what you can only assume is a song, "
 			+ "and that you can only further assume to be one of their hits.  "
-			+ "A bar runs along the opposite wall, where a harried bartender "
+			+ "Like every musical act in every bar ever, "
+			+ "nobody pays them the least attention.  "
+			+ "\n\n"
+			+ "The bar proper runs along the opposite wall, "
+			+ "where an expressionless bartender "
 			+ "delivers drinks to patrons seated on stools, "
-			+ "some of whom are engaged in conversation, or at least reciprocal bluster.  "
-			+ "A cabinet housing some sort of video gambling machine stands in the back.  "
+			+ "some of whom are engaged in conversation, "
+			+ "or at least reciprocal bluster, with each other. "
+			+ "Some of these patrons periodically expel clouds of smoke and/or vapor, "
+			+ "which you suppose, under ordinary circumstances, might rise, "
+			+ "except that the space nearer the apex of the dome "
+			+ "is already full of similar high-opacity particulates "
+			+ "and is not accepting further contributions at this time."
+			+ "\n\n"
+			+ "A cabinet housing some sort of video gambling machine "
+			+ "stands in the back.  "
 			+ "A squat cleaning robot busily sweeps the floor around the machine, "
-			+ "and periodically empties a load of its sweepings into a hatch in the back wall.",
+			+ "then empties a load of its sweepings into a hatch in the back wall.",
+			+ "A short stairway leads back outside."
 
 			[
 				this.portal("outside", Places.planetSettlementBarFront_Name() ),
 
-				this.emplacement("band"),
-				this.emplacement("bar"),
-				this.emplacement("heap"),
-				this.emplacement("machine"),
-				this.emplacement("bartender"),
-				this.emplacement("patrons")
+				this.emplacement
+				(
+					"band",
+
+					"You like some of their early stuff."
+				),
+
+				this.emplacement
+				(
+					"bar",
+					"The light is neither very bright nor pleasant, "
+					+ "nor is the bar polished."
+				),
+
+				this.emplacement
+				(
+					"machine",
+
+					"It appears to be some variant of a slot machine.  "
+					+ "When the player inserts some money "
+					+ "and pulls the handle on the side, "
+					+ "behind each of three little viewing slots, "
+					+ "a reel printed with various symbols around its edge spins, "
+					+ "eventually stopping so that a random symbol is visible through the slot."
+					+ "If the symbols match, you presumably get some sort of prize."
+					+ "\n\n"
+					+ "You were never cool, or dumb, enough to enjoy gambling."
+				),
+
+				this.emplacement
+				(
+					"bartender",
+
+					"This bartender doesn't appear to be the "
+					+ "'listen to your problems' kind of bartender."
+				),
+
+				this.emplacement
+				(
+					"patrons",
+					"I suppose 'patrons' is a rather grand name "
+					+ "for this motley amalgamation of limbs, tongues, "
+					+ "poor attitudes, and bad habits, "
+					+ "but at least if we call them patrons we don't have to focus "
+					+ "on their distinguishing characteristics."
+				)
 			]
 		);
 	}
@@ -1512,9 +1768,13 @@ class Places
 
 			"You stand behind the [Farting Noise] bar.  "
 			+ "It is somewhat secluded here."
-			+ "Force-fields block access to the surrounding desert to the east and south.  "
+			+ "Anti-sand-swimmer force-fields block access to the surrounding desert "
+			+ "to the east and south.  "
 			+ "You can see another, larger building to the north.  "
-			+ "At irregular intervals, a hatch in the back wall of the bar opens "
+			+ "\n\n"
+			+ "As you stand around loitering behind a bar, ",
+			+ "reflecting on how Mom said this is exactly how you'd end up,"
+			+ "a hatch in the back wall of the bar opens "
 			+ "and expels some fine white powder, "
 			+ "which settles onto a larger heap of powder below.",
 
@@ -1523,7 +1783,12 @@ class Places
 				this.portal("west", Places.planetSettlementUsedShipLot_Name() ),
 				this.portal("east", Places.planetSettlementBarRear_Name() ),
 
-				this.emplacement("heap")
+				this.emplacement
+				(
+					"heap",
+
+					"Finely divided white power.  Looks a bit like ashes."
+				)
 			]
 		);
 	}
@@ -1540,8 +1805,14 @@ class Places
 			Places.planetSettlementRobotShopFront_Name(),
 
 			"You stand in the desert settlement of [Farting Noise], "
-			+ "to the south of the entrance of a domed building "
-			+ "bearing the sign 'Buy, Robot'.",
+			+ "to the south of the entrance door of a domed building "
+			+ "bearing the sign 'Buy, Robot'.  "
+			+ "\n\n"
+			+ "You figure that name is probably a half-haunched "
+			+ "joking reference to something.  "
+			+ "You generally don't get joking references, "
+			+ "but you find they get even less funny "
+			+ "if you ask someone to explain them.  So never mind."
 
 			[
 				this.portal("west", Places.planetSettlementRobotShopWest_Name() ),
@@ -1562,13 +1833,95 @@ class Places
 			Places.planetSettlementRobotShopInterior_Name(),
 
 			"You stand inside the [Farting Noise] branch of 'Buy, Robot'. "
-			+ "Various inactive robots are displayed on pedestals, "
+			+ "Various currently-unmoving robots are displayed on pedestals, "
 			+ "each bearing a more-or-less conspicious price tag.  "
-			+ "A salesbeing watches you idly, perhaps waiting to see if you require assistance.  "
-			+ "In the south wall is the door leading back outside.",
+			+ "A salesbeing watches you idly, perhaps waiting "
+			+ "to see if you require assistance "
+			+ "or if you're just going to ask to use the bathroom.  "
+			+ "Maybe they're even making a little bet with themself "
+			+ "over which it will be."
+			+ "\n\n"
+			+ "A door leads back outside, as doors do.",
 
 			[
 				this.portal("outside", Places.planetSettlementRobotShopFront_Name() )
+
+				this.emplacement
+				(
+					"green robot",
+
+					"As you move to examine the robot, "
+					+ "the salesbeing smoothly interposes themself.  "
+					+ "'This is the General Toiler S-34.  "
+					+ "It's not for helping around the house.  "
+					+ "It's not for helping around the garden.  "
+					+ "It's not for helping around the kitchen.  "
+					+ "What is it for, you ask?  "
+					+ "It's for all those things!"
+					+ "\n\n"
+					+ "Here the salesbeing chuckles.  "
+					+ "You suppose these moments must be the ones he lives for, "
+					+ "if you can call that living."
+					+ "\n\n"
+					+ "Its price is 40 credits, or 32 with coupon.'"
+				),
+
+				this.emplacement
+				(
+					"bipedal robot",
+
+					"As you move to examine the robot, "
+					+ "the salesbeing smoothly interposes themself.  "
+					+ "'This is the Astromatix Stardodger QG.  "
+					+ "It's the best pilot/navigator robot money can buy.'  "
+					+ "He slaps the robot's... pauldron?... briskly, and continues, "
+					+ "'You can fit so many starmaps into this bad boy."
+					+ "Its price is 45 credits, or 36 with coupon.'"
+				),
+
+				this.emplacement
+				(
+					"four-legged robot",
+
+					"As you move to examine the robot, "
+					+ "the salesbeing smoothly interposes themself.  "
+					+ "'This is the Agron Cultivo F-12.  "
+					+ "It's a farming robot.  "
+					+ "Now, you might say, can't be much farming going on "
+					+ "here on the deserts of Ekkis II.  And you'd be right.  "
+					+ "But that just means you have an opportunity "
+					+ "to get in on the ground floor.  "
+					+ "Or the ground ground, in this case."
+					+ "Its price is 300 credits, or 240 with coupon.'"
+				),
+
+				this.emplacement
+				(
+					"drill-faced robot",
+
+					"As you move to examine the robot, "
+					+ "the salesbeing smoothly interposes themself.  "
+					+ "'This is the Stope & Adit Deep Dolly.  "
+					+ "It's a mining robot.  "
+					+ "And I always say, what's mine is yours."
+					+ "Only 700 credits, or 560 with coupon.'"
+				),
+
+				this.emplacement
+				(
+					"gun-armed robot",
+
+					"As you move to examine the robot, "
+					+ "the salesbeing smoothly interposes themself.  "
+					+ "'This is the BlackDark KLR-668 with Bioexclusion Package.  "
+					+ "It's a military/security/military security robot.  "
+					+ "We're technically only supposed to sell this to governments.  "
+					+ "But if I may say so, you have a rather sovereign look about you, "
+					+ "so I might be convinced to expedite the paperwork for you,"
+					+ "provided the price is right. "
+					+ "And that right price is 2500 credits, or 2000 with coupon.'"
+				)
+
 			]
 		);
 	}
@@ -1586,12 +1939,18 @@ class Places
 
 			"You stand in the desert settlement of [Farting Noise], "
 			+ "to the west of a large domed building.  "
+			+ "\n\n"
 			+ "To the east, you can see the building's entrance, "
 			+ "over which is a sign reading 'Buy, Robot'.  "
 			+ "A smaller domed building housing a bar lies to the south. "
+			+ "\n\n"
 			+ "Further to the west, you see a spaceship standing "
-			+ "at the northern edge of a brightly decorated lot containing several more ships."
-			+ "A force field blocks access to the open desert to the north. ",
+			+ "at the northern edge of a brightly decorated lot "
+			+ "containing several more ships."
+			+ "\n\n"
+			+ "A force field blocks access to the open desert to the north.  "
+			+ "That's okay by you.  You haven't been out of the open desert "
+			+ "long enough to get nostalgic about it.",
 
 			[
 				this.portal("south", Places.planetSettlementBarFront_Name() ),
@@ -1616,8 +1975,15 @@ class Places
 			+ "You see a spaceship standing here, and, to the south,"
 			+ "a brightly decorated lot containing several more ships."
 			+ " To the east, you see a large domed building. "
+			+ "\n\n"
 			+ "A smaller domed building with a sign that says 'Bar' lies to the southeast. "
-			+ "A force field blocks access to the open desert to the north and west.",
+			+ "\n\n"
+			+ "A force field blocks access to the open desert to the north and west.  "
+			+ "You idly wonder who's paying to run all these force fields.  "
+			+ "Probably there's some kind of committee that takes up a periodic collection.  "
+			+ "You envy whoever got the contract.  It's bound to be a steady job."
+			+ "No matter where you go, "
+			+ "people are always not going to want to be eaten.",
 
 			[
 				this.portal("east", Places.planetSettlementRobotShopWest_Name() ),
@@ -1639,13 +2005,20 @@ class Places
 
 			"You stand in the desert settlement of [Farting Noise], "
 			+ "in a sandy lot brighly decorated with colorful pennants "
-			+ " strung along lines, and containing several ships in various states of wear."
+			+ " strung along lines, and containing several ships "
+			+ "in various states of wear.  "
 			+ "Just to the north you see another ship standing by itself."
+			+ "\n\n"
 			+ "At one edge of the lot is a small cubical building "
 			+ "bearing a sign that says, 'Non-Gelatinous George's Used Ships'."
-			+ "A domed building with a sign that says 'Bar' stands to the east. "
+			+ "\n\n"
+			+ "A domed building with a sign that says 'Bar', among other things, stands to the east. "
+			+ "\n\n"
 			+ "A larger domed building stands to the northeast. "
-			+ "A force field blocks access to the open desert to the south and west. ",
+			+ "\n\n"
+			+ "A force field blocks access to the open desert to the south and west, "
+			+ "keeping out the predatory sand-swimmers, and, "
+			+ "as Non-Gelatinous George would say, keeping in the savings.",
 
 			[
 				this.portal("east", Places.planetSettlementBarFront_Name() ),
