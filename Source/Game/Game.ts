@@ -177,7 +177,7 @@ class Places
 
 	emplacement(name: string): Emplacement
 	{
-		return Emplacement.fromNameAndDescription(name, name);
+		return Emplacement.fromName(name);
 	}
 
 	emplacement2(name: string, description: string): Emplacement
@@ -238,9 +238,12 @@ class Places
 		return Portal.fromNameAndPlaceDestinationName(name, placeDestinationName);
 	}
 
-	portal_WithScript(name: string, scriptUseName: string): Portal
+	portal3
+	(
+		name: string, placeDestinationName: string, scriptUseName: string
+	): Portal
 	{
-		return new Portal(name, null, null, scriptUseName);
+		return new Portal(name, null, placeDestinationName, scriptUseName, null);
 	}
 
 	// Places.
@@ -318,8 +321,14 @@ class Places
 				this.portal("pod", Places.friendlyShipEscapePod_Name() ),
 
 				this.emplacement("controls"),
-				this.emplacement("hatch"),
-				this.emplacement("pod"),
+				this.emplacement2
+				(
+					"hatch",
+
+					"This is a hatch in the floor."
+				),
+
+				this.emplacement("pod").visibleSet(false),
 			]
 		);
 	}
@@ -341,10 +350,27 @@ class Places
 			+ "is a small panel with a slot in it.",
 
 			[
-				this.portal("elevator", Places.friendlyShipDockingBayAntechamber_Name() ),
+				this.portal3
+				(
+					"elevator",
+					Places.friendlyShipDockingBayAntechamber_Name(),
+					this.scripts.placeFriendlyShipEngineeringDeckAft_GoElevator.name
+				),
+
 				this.portal("forward", Places.friendlyShipEngineeringDeckAmidships_Name() ),
 
-				this.emplacement("slot")
+				this.emplacement2
+				(
+					"slot",
+					"The slot is intended to accept a security keycard."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "insert keycard in slot" ],
+						this.scripts.itemKeycardUse.name
+					)
+				)
 			]
 		);
 	}
@@ -373,9 +399,68 @@ class Places
 				this.portal("aft", Places.friendlyShipEngineeringDeckAft_Name()),
 				this.portal("forward", Places.friendlyShipEngineeringDeckForward_Name()),
 
-				this.emplacement("controls"),
-				this.emplacement("dome"),
-				this.emplacement("window"),
+				this.emplacement2
+				(
+					"controls",
+
+					"These are the controls for the docking bay doors, "
+					+ "which are visible through the nearby window.  "
+					+ "There are two buttons, one that says 'open bay doors' "
+					+ "and another that says 'close bay doors'."
+					+ "It doesn't take a rocket scientist to operate these controls, "
+					+ "although there is prominently placed placard that says otherwise."
+				),
+
+				this.emplacement2
+				(
+					"open bay doors button",
+
+					"This button opens the docking bay doors, "
+					+ "if they happen to be closed.  "
+					+ "Otherwise, they do nothing.  Or so you assume."
+				).visibleSet(false).commandAdd
+				(
+					new Command
+					(
+						[ "press open bay doors button" ],
+						this.scripts.todo.name,
+					)
+				),
+
+				this.emplacement2
+				(
+					"close bay doors button",
+
+					"This button closes the docking bay doors, "
+					+ "if they happen to be open.  "
+					+ "Otherwise, they do nothing.  Or so you assume."
+				).visibleSet(false).commandAdd
+				(
+					new Command
+					(
+						[ "press close bay doors button" ],
+						this.scripts.todo.name,
+					)
+				),
+
+				this.emplacement2
+				(
+					"dome",
+
+					"You're not sure why the ends of the reactor tubes "
+					+ "need to be transparent, but these are, and the colors "
+					+ "currently coming through them don't give you a good feeling."
+				),
+
+				this.emplacement2
+				(
+					"window",
+
+					"The window looks out over the ship's cargo bay, "
+					+ "including the large doors at the end of it, "
+					+ "through which ships and cargo pass."
+				),
+
 				this.emplacement("body").commandAdd
 				(
 					new Command
@@ -383,7 +468,17 @@ class Places
 						["search body"],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
+				),
+
+				this.emplacement("other body").commandAdd
+				(
+					new Command
+					(
+						["search other body"],
+						this.scripts.emplacementBodyEmptySearch.name
+					)
 				)
+
 			]
 		);
 	}
@@ -433,10 +528,11 @@ class Places
 			+ "the pod's surroundings can be seen.",
 
 			[
-				this.portal_WithScript
+				this.portal3
 				(
 					"door",
-					this.scripts.placefriendlyShipEscapePod_GoDoor.name
+					null, // destination
+					this.scripts.placeFriendlyShipEscapePod_GoDoor.name
 				),
 
 				this.emplacement("autonav button").commandAdd
@@ -444,7 +540,7 @@ class Places
 					new Command
 					(
 						[ "press autonav", "press autonav button" ],
-						this.scripts.placefriendlyShipEscapePod_PressAutonavButton.name
+						this.scripts.placeFriendlyShipEscapePod_PressAutonavButton.name
 					)
 				),
 				this.emplacement("buttons"),
@@ -455,7 +551,7 @@ class Places
 					new Command
 					(
 						[ "press launch", "press launch button" ],
-						this.scripts.placefriendlyShipEscapePod_PressLaunchButton.name
+						this.scripts.placeFriendlyShipEscapePod_PressLaunchButton.name
 					)
 				),
 				this.emplacement("monitor screen"),
@@ -492,7 +588,7 @@ class Places
 			+ "A door leads out to the hall.  "
 			+ "(You tried sleeping out there once, but someone got mad.)",
 
-			this.scripts.placefriendlyShipJanitorsCloset_Update.name,
+			this.scripts.placeFriendlyShipJanitorsCloset_Update.name,
 
 			[
 				this.portal("door", Places.friendlyShipUpperDeckHallAmidships_Name()),
@@ -553,7 +649,7 @@ class Places
 					new Command
 					(
 						[ "type", "enter" ],
-						this.scripts.placefriendlyShipLibrary_Type.name
+						this.scripts.placeFriendlyShipLibrary_Type.name
 					)
 				),
 
@@ -584,7 +680,7 @@ class Places
 					new Command
 					(
 						[ "search body", "search man", "talk to man" ],
-						this.scripts.placefriendlyShipLibrary_TalkToMan.name
+						this.scripts.placeFriendlyShipLibrary_TalkToMan.name
 					)
 				)
 			]
@@ -607,12 +703,12 @@ class Places
 			+ "Honestly, if the buttons in the elevator weren't labelled, "
 			+ "there'd be no way to tell them apart.)  "
 			+ "The hall continues to forward, and ends in a bulkhead to aft.  "
-			+ "A door here opens onto an elevator.",
+			+ "A door here opens onto an elevator."
 			+ "\n\n"
 			+ "The body of your supervisor lies supine in this corridor, "
 			+ "brows furrowed in a disapproving expression even in death."
 			+ "A hard trick to pull off, but then again, he put in lots of practice"
-			+ "when he was alive.  Every time he talked to you, at a minimum."
+			+ "when he was alive.  Every time he talked to you, at a minimum.",
 
 			[
 				this.portal("forward", Places.friendlyShipLowerDeckHallAmidships_Name() ),
@@ -707,7 +803,7 @@ class Places
 			+ "The body of one of your fellow crew members lies prone "
 			+ "near the aft bulkhead, the neck bent sharply upwards "
 			+ "and the chin propped against the bulkhead itself.  "
-			+ "This is the most awkward pose yet."
+			+ "This is the most awkward pose yet.",
 
 			[
 				this.portal("forward", Places.friendlyShipUpperDeckHallAmidships_Name() ),
@@ -740,14 +836,14 @@ class Places
 			+ "In the middle is a door leading to the office/supply closet/quarters "
 			+ "of the Maintenance Specialist (Sanitation Grade), "
 			+ "which is where you, our hero, came boldly to this story, "
-			+ "as soon as you figured out how to 'go door'."
+			+ "as soon as you figured out how to 'go door'.",
 
-			this.scripts.placefriendlyShipUpperDeckHallAmidships_Update.name,
+			this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name,
 
 			[
-				this.portal("closet", Places.friendlyShipJanitorsCloset_Name()),
-				this.portal("forward", Places.friendlyShipLibrary_Name()),
-				this.portal("aft", Places.friendlyShipUpperDeckHallAft_Name())
+				this.portal("closet", Places.friendlyShipJanitorsCloset_Name() ),
+				this.portal("forward", Places.friendlyShipLibrary_Name() ),
+				this.portal("aft", Places.friendlyShipUpperDeckHallAft_Name() )
 			]
 		);
 	}
@@ -770,7 +866,7 @@ class Places
 			+ "They must've been hiding here when they got shot.  "
 			+ "Either that, or they died of natural causes by coincidence, "
 			+ "and nobody's been down this hall to find them until just now.  "
-			+ "Unlikely, but we shouldn't rule anything out."
+			+ "Unlikely, but we shouldn't rule anything out.",
 
 			[
 				this.portal("aft", Places.friendlyShipLibrary_Name()),
@@ -868,13 +964,13 @@ class Places
 			+ "The featureless sand stretches away in every other direction.  "
 			+ "If you were a poet, you'd probably be moved "
 			+ "to write a poem about loneliness. "
-			+ "But you're not, so instead you just sweat and wish for a lemonade."
+			+ "But you're not, so instead you just sweat and wish for a lemonade.",
 
 			[
 				this.portal("south", Places.planetDesertCrashSite_Name() ),
 				this.portal("north", Places.planetDesertDeep_Name() ),
 				this.portal("east", Places.planetDesertDeep_Name() ),
-				this.portal("west", Places.planetDesertDeep_Name() ),
+				this.portal("west", Places.planetDesertDeep_Name() )
 			]
 		);
 	}
@@ -888,19 +984,19 @@ class Places
 			Places.planetDesertSouth_Name(),
 
 			"You stand in the trackless desert of the planet Ekkis II, "
-			+ "just south of the wreck of your crashed escape pod.  ",
-			+ "Some cliffs rise to the northeast.  ",
+			+ "just south of the wreck of your crashed escape pod.  "
+			+ "Some cliffs rise to the northeast.  "
 			+ "A sea of dunes stretches away in every other direction."
 			+ "Except... there!  In the distance!  You see... "
 			+ "No, on second thought, that's just an eyeball floater.  "
 			+ "It was a pretty rough crash.  You should get checked out "
-			+ "whenever you next find a doctor. "
+			+ "whenever you next find a doctor. ",
 
 			[
 				this.portal("north", Places.planetDesertCrashSite_Name() ),
 				this.portal("south", Places.planetDesertDeep_Name() ),
 				this.portal("east", Places.planetDesertDeep_Name() ),
-				this.portal("west", Places.planetDesertDeep_Name() ),
+				this.portal("west", Places.planetDesertDeep_Name() )
 			]
 		);
 	}
@@ -914,12 +1010,14 @@ class Places
 			Places.planetDesertWest_Name(),
 
 			"You stand in the trackless desert of the planet Ekkis II, "
-			+ "just west of the wreck of your crashed escape pod.  ",
+			+ "just west of the wreck of your crashed escape pod.  "
 			+ "Beyond the pod, some cliffs rise from the sand. "
 			+ "A sea of dunes stretch away in every other direction."
 			+ "\n\n"
 			+ "What does 'trackless' mean, anyway?  "
-			+ "It's not like most places are just brimming over with tracks.",
+			+ "It's not like most places are just brimming over with tracks.  "
+			+ "Maybe a train switchyard, you guess.  "
+			+ "But those are increasingly rare.",
 
 			[
 				this.portal("east", Places.planetDesertCrashSite_Name() ),
@@ -949,7 +1047,7 @@ class Places
 			+ "\n\n"
 			+ "This cliff seems especially cliffy indeed, "
 			+ "but you're reserving judgement "
-			+ "until you've seen all the entrants.  It's only fair."  
+			+ "until you've seen all the entrants.  It's only fair.",
 
 			[
 				this.portal("south", Places.planetCliffsBottomSouth_Name()),
@@ -1023,9 +1121,7 @@ class Places
 
 	planetCliffsBottomNorthwestWestSide(): Place
 	{
-		return this.place3
-		(
-			Places.planetCliffsBottomNorthwestWestSide_Name(),
+		var description = 
 
 			"You stand on the sand of the Ekkis II desert, at the base  "
 			+ "of a sheer stone cliff that curves away to the south and east,  "
@@ -1036,14 +1132,20 @@ class Places
 			+ "To the south, more cliffs are visible. "
 			+ "\n\n"
 			+ " The desert stretches away to the north, and west."
-			+ "\n\n",
+			+ "\n\n"
 			+ "The cliff face has a nearly circular hole in it, "
 			+ "a little less than two meters off the ground.  "
-			+ "Nice: you like a cliff face with a little somethin' goin' on.",
+			+ "Nice: you like a cliff face with a little somethin' goin' on.";
+
+		return this.place3
+		(
+			Places.planetCliffsBottomNorthwestWestSide_Name(),
+
+			description,
 
 			[
-				this.portal("south", Places.planetCliffsBottomSouthwest_Name()),
-				this.portal("west", Places.planetDesertCrashSite_Name()),
+				this.portal("south", Places.planetCliffsBottomSouthwest_Name() ),
+				this.portal("west", Places.planetDesertCrashSite_Name() ),
 				this.emplacement
 				(
 					"hole"
@@ -1132,13 +1234,13 @@ class Places
 
 			"More cliffs here, and sand.  "
 			+ "This planet only has a couple of things going on, "
-			+ "but danged if it disappoints on the cliff and sand front.",
+			+ "but danged if it disappoints on the cliff and sand front."
 			+ "\n\n"
 			+ "Specifically, cliffs rise to the north and east, "
 			+ "while to the south and west lies sand.  "
 			+ "It's balanced.  Kind of a yin-yang thing.  "
 			+ "Though you're not sure which is which.  "
-			+ "Or maybe they doubled up on yang."
+			+ "Or maybe they doubled up on yang.",
 
 			[
 				this.portal("east", Places.planetCliffsBottomSouth_Name() ),
@@ -1307,7 +1409,7 @@ class Places
 			+ "sheltered by the surrounding cliffs.  "
 			+ "Despite the greenery, there's not enough water to drink down there, "
 			+ "even if you were willing to bite a cactus, "
-			+ "which past experience tells you you should never do again."
+			+ "which past experience tells you you should never do again.",
 
 			[
 				this.portal("east", Places.planetCliffsTopSouthEastSide_Name() ),
@@ -1470,7 +1572,7 @@ class Places
 				this.portal("west", Places.planetCavernsPool_Name() ),
 				this.portal("east", Places.planetCavernsGrating_Name() ),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"wall",
 
@@ -1481,7 +1583,7 @@ class Places
 					+ "Well, usually a number and a unit.  Like 'megayear'."
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"geyser",
 
@@ -1513,7 +1615,7 @@ class Places
 			+ "stretches from wall to wall across the entire passage. ",
 
 			[
-				this.emplacement
+				this.emplacement2
 				(
 					"grating",
 
@@ -1672,10 +1774,7 @@ class Places
 
 	planetSettlementBarInterior() : Place
 	{
-		return this.place3
-		(
-			Places.planetSettlementBarInterior_Name(),
-
+		var description =
 			"You stand inside the [Farting Noise] bar.  "
 			+ "\n\n"
 			+ "On a small stage, a band of garishly dressed bipeds "
@@ -1699,27 +1798,49 @@ class Places
 			+ "A cabinet housing some sort of video gambling machine "
 			+ "stands in the back.  "
 			+ "A squat cleaning robot busily sweeps the floor around the machine, "
-			+ "then empties a load of its sweepings into a hatch in the back wall.",
-			+ "A short stairway leads back outside."
+			+ "then empties a load of its sweepings into a porthole in the back wall.  "
+			+ "A short ascending stairway leads back outside.";
+
+		return this.place3
+		(
+			Places.planetSettlementBarInterior_Name(),
+
+			description,
 
 			[
 				this.portal("outside", Places.planetSettlementBarFront_Name() ),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"band",
 
 					"You like some of their early stuff."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "talk band", "talk to band" ],
+
+						this.scripts.todo.name
+
+						/*
+						"You try to talk to the band.  During their live performance.  "
+						+ "You're one of those kind of people, huh?  "
+						+ "The band, as is their privilege, ignores you.  Lucky them."
+						*/
+					)
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"bar",
+
 					"The light is neither very bright nor pleasant, "
-					+ "nor is the bar polished."
+					+ "nor is the bar polished.  "
+					+ "That's a literary reference, kids."
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"machine",
 
@@ -1734,17 +1855,20 @@ class Places
 					+ "You were never cool, or dumb, enough to enjoy gambling."
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"bartender",
 
 					"This bartender doesn't appear to be the "
-					+ "'listen to your problems' kind of bartender."
+					+ "'listen to your problems' kind of bartender.  "
+					+ "You try to catch his eye, but he evades your gaze "
+					+ "with the effortless skill of long practice."
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"patrons",
+
 					"I suppose 'patrons' is a rather grand name "
 					+ "for this motley amalgamation of limbs, tongues, "
 					+ "poor attitudes, and bad habits, "
@@ -1772,7 +1896,7 @@ class Places
 			+ "to the east and south.  "
 			+ "You can see another, larger building to the north.  "
 			+ "\n\n"
-			+ "As you stand around loitering behind a bar, ",
+			+ "As you stand around loitering behind a bar, "
 			+ "reflecting on how Mom said this is exactly how you'd end up,"
 			+ "a hatch in the back wall of the bar opens "
 			+ "and expels some fine white powder, "
@@ -1783,11 +1907,12 @@ class Places
 				this.portal("west", Places.planetSettlementUsedShipLot_Name() ),
 				this.portal("east", Places.planetSettlementBarRear_Name() ),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"heap",
 
-					"Finely divided white power.  Looks a bit like ashes."
+					"This is a heap of finely divided white power.  "
+					+ "Looks a bit like ashes, except who burns things anymore?"
 				)
 			]
 		);
@@ -1812,11 +1937,11 @@ class Places
 			+ "joking reference to something.  "
 			+ "You generally don't get joking references, "
 			+ "but you find they get even less funny "
-			+ "if you ask someone to explain them.  So never mind."
+			+ "if you ask someone to explain them.  So never mind.",
 
 			[
 				this.portal("west", Places.planetSettlementRobotShopWest_Name() ),
-				this.portal("door", Places.planetSettlementRobotShopInterior_Name() ),
+				this.portal("door", Places.planetSettlementRobotShopInterior_Name() )
 			]
 		);
 	}
@@ -1844,9 +1969,12 @@ class Places
 			+ "A door leads back outside, as doors do.",
 
 			[
-				this.portal("outside", Places.planetSettlementRobotShopFront_Name() )
+				this.portal
+				(
+					"outside", Places.planetSettlementRobotShopFront_Name()
+				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"green robot",
 
@@ -1866,7 +1994,7 @@ class Places
 					+ "Its price is 40 credits, or 32 with coupon.'"
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"bipedal robot",
 
@@ -1879,7 +2007,7 @@ class Places
 					+ "Its price is 45 credits, or 36 with coupon.'"
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"four-legged robot",
 
@@ -1895,7 +2023,7 @@ class Places
 					+ "Its price is 300 credits, or 240 with coupon.'"
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"drill-faced robot",
 
@@ -1907,7 +2035,7 @@ class Places
 					+ "Only 700 credits, or 560 with coupon.'"
 				),
 
-				this.emplacement
+				this.emplacement2
 				(
 					"gun-armed robot",
 
@@ -2435,13 +2563,14 @@ class Scripts
 			this.emplacementBodyKeycardSearch,
 			this.itemCartridgeUse,
 			this.itemKeycardUse,
-			this.placefriendlyShipEscapePod_GoDoor,
-			this.placefriendlyShipEscapePod_PressAutonavButton,
-			this.placefriendlyShipEscapePod_PressLaunchButton,
-			this.placefriendlyShipJanitorsCloset_Update,
-			this.placefriendlyShipLibrary_TalkToMan,
-			this.placefriendlyShipLibrary_Type,
-			this.placefriendlyShipUpperDeckHallAmidships_Update,
+			this.placeFriendlyShipEngineeringDeckAft_GoElevator,
+			this.placeFriendlyShipEscapePod_GoDoor,
+			this.placeFriendlyShipEscapePod_PressAutonavButton,
+			this.placeFriendlyShipEscapePod_PressLaunchButton,
+			this.placeFriendlyShipJanitorsCloset_Update,
+			this.placeFriendlyShipLibrary_TalkToMan,
+			this.placeFriendlyShipLibrary_Type,
+			this.placeFriendlyShipUpperDeckHallAmidships_Update,
 			this.todo
 		];
 
@@ -2549,7 +2678,7 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	itemKeycardUse(u: Universe, w: World, p: Place, i: any, target: any)
+	itemKeycardUse(u: Universe, w: World, p: Place, i: any, target: any): void
 	{
 		var message;
 		if (target == null)
@@ -2574,7 +2703,25 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	placefriendlyShipEscapePod_GoDoor
+	// Places.
+
+	placeFriendlyShipEngineeringDeckAft_GoElevator
+	(
+		u: Universe, w: World, place: Place, portal: Portal
+	): void
+	{
+		var isLocked = portal.locked();
+		if (isLocked)
+		{
+			u.messageEnqueue("The elevator is locked.");
+		}
+		else
+		{
+			u.messageEnqueue("The elevator door opens smoothly as you approach.");
+		}
+	}
+
+	placeFriendlyShipEscapePod_GoDoor
 	(
 		u: Universe, w: World, place: Place, portalDoor: Portal
 	): any
@@ -2597,7 +2744,7 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	placefriendlyShipEscapePod_PressAutonavButton
+	placeFriendlyShipEscapePod_PressAutonavButton
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): any
@@ -2631,7 +2778,10 @@ class Scripts
 			Places.planetDesertCrashSite_Name();
 	}
 
-	placefriendlyShipEscapePod_PressLaunchButton(u: Universe, w: World, p: Place, c: Command): any
+	placeFriendlyShipEscapePod_PressLaunchButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): any
 	{
 		var messageLines =
 		[
@@ -2662,7 +2812,7 @@ class Scripts
 		p.stateWithNameSetToValue(stateEscapePodLocation, "DeepSpace");
 	}
 
-	placefriendlyShipJanitorsCloset_Update(u: Universe, w: World, p: Place, c: Command): any
+	placeFriendlyShipJanitorsCloset_Update(u: Universe, w: World, p: Place, c: Command): any
 	{
 		if (p.hasBeenVisited() == false)
 		{
@@ -2697,7 +2847,7 @@ class Scripts
 		}
 	}
 
-	placefriendlyShipLibrary_TalkToMan(u: Universe, w: World, p: Place, c: Command): any
+	placeFriendlyShipLibrary_TalkToMan(u: Universe, w: World, p: Place, c: Command): any
 	{
 		var stateScientistIsDeadName = "ScientistIsDead";
 
@@ -2730,7 +2880,7 @@ class Scripts
 
 	}
 
-	placefriendlyShipLibrary_Type(u: Universe, w: World, p: Place, c: Command): any
+	placeFriendlyShipLibrary_Type(u: Universe, w: World, p: Place, c: Command): any
 	{
 		var commandText = c.text();
 
@@ -2792,7 +2942,7 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	placefriendlyShipUpperDeckHallAmidships_Update
+	placeFriendlyShipUpperDeckHallAmidships_Update
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): any

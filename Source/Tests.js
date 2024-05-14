@@ -30,7 +30,9 @@ class Tests {
                 "talk to man",
                 "type astral bodies",
                 "get cartridge",
-                "put cartridge in reader",
+                "go forward",
+                "search body",
+                "get keycard",
                 "go aft",
                 "go aft",
                 "go elevator",
@@ -40,10 +42,17 @@ class Tests {
                 "go elevator",
                 // Engineering deck.
                 "go aft",
+                "press open bay door button",
                 "go aft",
+                "use keycard on slot",
                 "go elevator",
                 // Docking bay.
+                "press left button",
+                "get gadget",
+                "press right button",
+                "get spacesuit",
                 "go airlock",
+                "push platform button",
                 "go pod",
                 // Escape pod.
                 "press launch button",
