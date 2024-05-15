@@ -5,9 +5,12 @@ class Game
 	{
 		var player = new Agent
 		(
-			"self",
-			"This is you.",
+			[ "self", "me", "myself" ],
+
+			"This is you.  You have to start getting used to this.",
+
 			null, // scriptUpdateForTurnName
+
 			[
 				Item.fromNameAndDescription
 				(
@@ -15,6 +18,7 @@ class Game
 					"This is a rag you use to clean things sometimes."
 				)
 			],
+
 			null // commands
 		);
 
@@ -63,6 +67,34 @@ class Items
 	SkimmerKey: Item;
 	SurvivalKit: Item;
 	XenonArmyKnife: Item;
+
+	_All: Item[];
+
+	constructor()
+	{
+		this.Keycard = this.keycard();
+		this._All = [];
+	}
+
+	static _instance: Items;
+	static Instance(): Items
+	{
+		if (this._instance == null)
+		{
+			this._instance = new Items();
+		}
+		return this._instance;
+	}
+
+	keycard(): Item
+	{
+		return Item.fromNameAndDescription
+		(
+			"keycard",
+			"This is an access keycard for the starship Pax Aeterna.  "
+			+ "You guess it could also be, like, a picnic table for ants."
+		);
+	}
 }
 
 class Places
@@ -180,9 +212,9 @@ class Places
 		return Emplacement.fromName(name);
 	}
 
-	emplacement2(name: string, description: string): Emplacement
+	emplacement2(names: string[], description: string): Emplacement
 	{
-		return Emplacement.fromNameAndDescription(name, description);
+		return Emplacement.fromNamesAndDescription(names, description);
 	}
 
 	place2
@@ -238,12 +270,17 @@ class Places
 		return Portal.fromNameAndPlaceDestinationName(name, placeDestinationName);
 	}
 
+	portal_WithMultipleNames(names: string[], placeDestinationName: string): Portal
+	{
+		return Portal.fromNamesAndPlaceDestinationName(names, placeDestinationName);
+	}
+
 	portal3
 	(
 		name: string, placeDestinationName: string, scriptUseName: string
 	): Portal
 	{
-		return new Portal(name, null, placeDestinationName, scriptUseName, null);
+		return new Portal( [ name ], null, placeDestinationName, scriptUseName, null);
 	}
 
 	// Places.
@@ -308,24 +345,40 @@ class Places
 			Places.friendlyShipDockingBayHangar_Name(),
 
 			"This is the Pax Aeterna's docking bay hangar.  "
-			+ "Though its floor is easily large enough to accomodate "
+			+ "\n\n"
+			+ "Though the docking bay's floor is easily large enough to accomodate "
 			+ "a 20-passenger luxury yacht, it is currently empty "
 			+ "except for a relatively small hatch in the floor "
 			+ "and a control console near the airlock door leading back to the antechamber."
+			+ "\n\n"
 			+ "A similarly gigantic pair of doors at the far end of the bay "
 			+ " allows ships to enter and depart when open, "
 			+ " and keeps everything safely sheltered when closed.",
 
 			[
 				this.portal("airlock", Places.friendlyShipDockingBayAntechamber_Name() ),
-				this.portal("pod", Places.friendlyShipEscapePod_Name() ),
+				this.portal("pod", Places.friendlyShipEscapePod_Name() ).visibleSet(false),
 
-				this.emplacement("controls"),
 				this.emplacement2
 				(
-					"hatch",
+					[ "controls", "panel", "console", "buttons", "control panel", "control console" ],
 
-					"This is a hatch in the floor."
+					"The control panel bears a single button, which says 'platform'."
+				).commandAdd
+				(
+					Command.fromTextAndScriptExecuteName
+					(
+						"press platform button",
+						this.scripts.placeFriendlyShipDockingBayHangar_PressPlatformButton.name
+					)
+				),
+
+				this.emplacement2
+				(
+					["hatch", "trapdoor"],
+
+					"This is a hatch in the floor, perhaps three meters by five meters,"
+					+ "split down the middle into two retractible doors."
 				),
 
 				this.emplacement("pod").visibleSet(false),
@@ -344,10 +397,20 @@ class Places
 		(
 			Places.friendlyShipEngineeringDeckAft_Name(),
 
-			"This is the aft end of the Pax Aeterna's engineering deck."
-			+ "A passage to fore leads back to the rest of the deck.  "
-			+ "In the aft wall is an elevator door, and next to that "
-			+ "is a small panel with a slot in it.",
+			"This is the aft end of the Pax Aeterna's engineering deck.  "
+			+ "\n\n"
+			+ "A passage to fore leads back to the rest of the deck."
+			+ "\n\n"
+			+ "In the aft wall is an door, "
+			+ "behind which is an elevator that goes down to the docking bay.  "
+			+ "I know, I know: I said this was the lowest deck.  "
+			+ "And that was the truth.  Yes, if the docking bay were a deck, "
+			+ "it would be the lowest one.  But it's a bay, not a deck.  "
+			+ "So it can't be the lowest deck.  "
+			+ "It's the lowest bay, though, promise.  "
+			+ "Well, the lowest of the bays you're likely to see."
+			+ "\n\n"
+			+ "Next to the elevator door is a small panel with a slot in it.",
 
 			[
 				this.portal3
@@ -361,7 +424,7 @@ class Places
 
 				this.emplacement2
 				(
-					"slot",
+					[ "slot", "lock", "keycard slot", "keyhole" ],
 					"The slot is intended to accept a security keycard."
 				).commandAdd
 				(
@@ -386,12 +449,16 @@ class Places
 		(
 			Places.friendlyShipEngineeringDeckAmidships_Name(),
 
-			"This is the middle of the Pax Aeterna's engineering deck."
-			+ "To fore and aft are the other sections of the deck.  "
+			"This is the middle of the Pax Aeterna's engineering deck.  "
+			+ "To fore and aft are the other sections of the deck."
+			+ "\n\n"
 			+ "Three large transparent domes on the floor cover the tops of "
 			+ "the ship's reactor tubes.  These domes are currently pulsing "
 			+ "an unsettling reddish-orange, accompanied by a loud "
-			+ "and ominous droning sound.  A thick window "
+			+ "and ominous droning sound.  "
+			+ "Probably one of the most ominous droning sounds you've heard in a while."
+			+ "\n\n"
+			+ "A thick window "
 			+ "looks down over the ship's docking bay, with a control console "
 			+ "running beneath that window.  The bodies of two crewmen lie on the floor.",
 
@@ -401,7 +468,7 @@ class Places
 
 				this.emplacement2
 				(
-					"controls",
+					[ "console", "controls", "buttons", "control console", "control panel" ],
 
 					"These are the controls for the docking bay doors, "
 					+ "which are visible through the nearby window.  "
@@ -413,7 +480,7 @@ class Places
 
 				this.emplacement2
 				(
-					"open bay doors button",
+					[ "open button", "open doors button", "open bay doors button" ],
 
 					"This button opens the docking bay doors, "
 					+ "if they happen to be closed.  "
@@ -429,7 +496,7 @@ class Places
 
 				this.emplacement2
 				(
-					"close bay doors button",
+					[ "close button", "close doors button", "close bay doors button" ],
 
 					"This button closes the docking bay doors, "
 					+ "if they happen to be open.  "
@@ -445,7 +512,7 @@ class Places
 
 				this.emplacement2
 				(
-					"dome",
+					[ "dome", "domes", "reactor", "tube", "tubes" ],
 
 					"You're not sure why the ends of the reactor tubes "
 					+ "need to be transparent, but these are, and the colors "
@@ -454,11 +521,14 @@ class Places
 
 				this.emplacement2
 				(
-					"window",
+					[ "window", "bay", "docking bay" ],
 
-					"The window looks out over the ship's cargo bay, "
+					"The window looks out over the ship's docking bay, "
 					+ "including the large doors at the end of it, "
-					+ "through which ships and cargo pass."
+					+ "through which ships and cargo pass.  "
+					+ "The view is not especially interesting.  "
+					+ "This is a pretty down-to-business window, on the whole, "
+					+ "especially when the bay doors are closed."
 				),
 
 				this.emplacement("body").commandAdd
@@ -485,7 +555,7 @@ class Places
 
 	static friendlyShipEngineeringDeckAmidships_Name(): string
 	{
-		return "Pax Aeterna - Engineering Deck - Aft";
+		return "Pax Aeterna - Engineering Deck - Amidships";
 	}
 
 	friendlyShipEngineeringDeckForward(): Place
@@ -494,8 +564,13 @@ class Places
 		(
 			Places.friendlyShipEngineeringDeckForward_Name(),
 
-			"This is the fore end of the Pax Aeterna's engineering deck."
+			"This is the forward end of the Pax Aeterna's engineering deck.  "
+			+ "I know I said that the deck above was the lower deck, "
+			+ "but this deck is lower than that.  It's the lower lower deck.  "
+			+ "I promise, there are no decks lower than this one."
+			+ "\n\n"
 			+ "The rest of the deck lies to aft.  "
+			+ "\n\n"
 			+ "At the fore end, an door opens on an elevator back to the other decks.",
 
 			[
@@ -585,13 +660,17 @@ class Places
 			+ "heroically, you make it work.  And you don't "
 			+ "just make it work; you make it work a LOT."
 			+ "\n\n"
-			+ "A door leads out to the hall.  "
+			+ "A door leads out to the corridor.  "
 			+ "(You tried sleeping out there once, but someone got mad.)",
 
 			this.scripts.placeFriendlyShipJanitorsCloset_Update.name,
 
 			[
-				this.portal("door", Places.friendlyShipUpperDeckHallAmidships_Name()),
+				this.portal_WithMultipleNames
+				(
+					[ "corridor", "door", "hall", "out", "outside" ],
+					Places.friendlyShipUpperDeckHallAmidships_Name()
+				),
 			]
 		);
 	}
@@ -621,7 +700,9 @@ class Places
 			+ "It is intended to provide a comfortable place to read data cartridges, "
 			+ "though there are no cartridge readers present.  "
 			+ "Every crew member was issued one on boarding, "
-			+ "but you lost yours.  Well, broke it, really."
+			+ "but you lost yours."
+			+ "\n\n"
+			+ "Well, broke it, really.  But then you lost the pieces."
 			+ "\n\n"
 			+ "On one wall is a retrieval console with a keyboard and screen, "
 			+ "a spiderlike cartridge-retrieval robot clinging to the shelves just above it."
@@ -635,7 +716,8 @@ class Places
 
 				this.emplacement2
 				(
-					"console",
+					[ "console" ],
+
 					"If the title of a desired data cartridge is typed "
 					+ "on the console's keyboard, "
 					+ "the retrieval robot will retrieve that cartridge from the stacks "
@@ -655,7 +737,7 @@ class Places
 
 				this.emplacement2
 				(
-					"table",
+					[ "table" ],
 
 					"The table provides a comfortable place "
 					+ "for the more literate members of the crew to research data tapes."
@@ -670,7 +752,7 @@ class Places
 
 				this.emplacement2
 				(
-					"man",
+					[ "man", "person", "body", "corpse", "being" ],
 					"He's not moving in any perceptible way.  "
 					+ "You can't tell from here if he's even breathing, "
 					+ "which is the most important kind of moving, "
@@ -679,7 +761,7 @@ class Places
 				(
 					new Command
 					(
-						[ "search body", "search man", "talk to man" ],
+						[ "search body", "search corpse", "search man", "talk to man" ],
 						this.scripts.placeFriendlyShipLibrary_TalkToMan.name
 					)
 				)
@@ -699,15 +781,19 @@ class Places
 			Places.friendlyShipLowerDeckHallAft_Name(),
 
 			"This is a hallway on the lower deck of the starship Pax Aeterna.  "
-			+ "(It looks almost exactly like the upper deck, though. "
-			+ "Honestly, if the buttons in the elevator weren't labelled, "
-			+ "there'd be no way to tell them apart.)  "
 			+ "The hall continues to forward, and ends in a bulkhead to aft.  "
 			+ "A door here opens onto an elevator."
 			+ "\n\n"
+
+			+ "The lower deck looks almost exactly like the upper deck. "
+			+ "Honestly, there'd be no way to tell them apart, "
+			+ "if the buttons in the elevator weren't labelled."
+			+ "\n\n"
+
+			+ "Well, to be fair, the scattered corpses are slighly different on this deck.  "
 			+ "The body of your supervisor lies supine in this corridor, "
-			+ "brows furrowed in a disapproving expression even in death."
-			+ "A hard trick to pull off, but then again, he put in lots of practice"
+			+ "brows furrowed in a disapproving expression even in death.  "
+			+ "A hard trick to pull off, but then again, he put in lots of practice "
 			+ "when he was alive.  Every time he talked to you, at a minimum.",
 
 			[
@@ -737,12 +823,15 @@ class Places
 		(
 			Places.friendlyShipLowerDeckHallAmidships_Name(),
 
-			"This is a hallway on the lower deck of the starship Pax Aeterna.  "
-			+ "You can still detect subtle indications of slight damage "
+			"This is a corridor on the lower deck of the starship Pax Aeterna.  "
+			+ "\n\n"
+			+ "This hallway mostly looks the same as all the other hallways so far, "
+			+ "but your trained eye can still detect subtle indications of slight damage "
 			+ "from when a floor scrubber went out of control, "
 			+ "collided with the wall, and rubbed against for several meters "
 			+ "before getting back on track.  That very nearly cost it the race, "
 			+ "but luckily the other scrubber was disqualified for unsportspersonlike conduct."
+			+ "\n\n"
 			+ "The hall continues to forward and to aft.",
 
 			[
@@ -765,6 +854,9 @@ class Places
 
 			"This is a hallway on the lower deck of the starship Pax Aeterna.  "
 			+ "The hall continues to aft, and ends in a bulkhead to forward.  "
+			+ "Sometimes you can't help but think that "
+			+ "this ship's architect went a little heavy on the hallways."
+			+ "\n\n"
 			+ "There is a door here opening on an elevator.  "
 			+ "\n\n"
 			+ "Another body of one of your crewmates lies here.  "
@@ -862,6 +954,7 @@ class Places
 			"This is a hallway on the upper deck of the starship Pax Aeterna.  "
 			+ "The hall ends in a bulkhead to forward, "
 			+ "near which the body of a dead crewperson lies crumpled.  "
+			+ "\n\n"
 			+ "This is a pretty out-of-the way spot.  "
 			+ "They must've been hiding here when they got shot.  "
 			+ "Either that, or they died of natural causes by coincidence, "
@@ -1574,7 +1667,7 @@ class Places
 
 				this.emplacement2
 				(
-					"wall",
+					[ "wall" ],
 
 					"Examining the wall closely, "
 					+ "you see a faint rectangular outline of hairline cracks in the rock. "
@@ -1585,7 +1678,7 @@ class Places
 
 				this.emplacement2
 				(
-					"geyser",
+					[ "geyser" ],
 
 					"You examine the geyser.  "
 					+ "Aw, what a bubbly, happy little guy. "
@@ -1617,7 +1710,7 @@ class Places
 			[
 				this.emplacement2
 				(
-					"grating",
+					[ "grate", "grating" ],
 
 					"You bend over and look closely at the grating."
 					+ "You think you see something moving down there.  "
@@ -1812,7 +1905,7 @@ class Places
 
 				this.emplacement2
 				(
-					"band",
+					[ "band", "performers", "musicians", "singer" ],
 
 					"You like some of their early stuff."
 				).commandAdd
@@ -1833,7 +1926,7 @@ class Places
 
 				this.emplacement2
 				(
-					"bar",
+					[ "bar" ],
 
 					"The light is neither very bright nor pleasant, "
 					+ "nor is the bar polished.  "
@@ -1842,7 +1935,7 @@ class Places
 
 				this.emplacement2
 				(
-					"machine",
+					[ "machine", "slot machine", "gambling machine" ],
 
 					"It appears to be some variant of a slot machine.  "
 					+ "When the player inserts some money "
@@ -1857,7 +1950,7 @@ class Places
 
 				this.emplacement2
 				(
-					"bartender",
+					[ "bartender", "barman" ],
 
 					"This bartender doesn't appear to be the "
 					+ "'listen to your problems' kind of bartender.  "
@@ -1867,7 +1960,7 @@ class Places
 
 				this.emplacement2
 				(
-					"patrons",
+					[ "customers", "patrons" ],
 
 					"I suppose 'patrons' is a rather grand name "
 					+ "for this motley amalgamation of limbs, tongues, "
@@ -1909,7 +2002,7 @@ class Places
 
 				this.emplacement2
 				(
-					"heap",
+					[ "heap", "pile" ],
 
 					"This is a heap of finely divided white power.  "
 					+ "Looks a bit like ashes, except who burns things anymore?"
@@ -1976,7 +2069,7 @@ class Places
 
 				this.emplacement2
 				(
-					"green robot",
+					[ "green robot" ],
 
 					"As you move to examine the robot, "
 					+ "the salesbeing smoothly interposes themself.  "
@@ -1996,7 +2089,7 @@ class Places
 
 				this.emplacement2
 				(
-					"bipedal robot",
+					[ "bipedal robot" ],
 
 					"As you move to examine the robot, "
 					+ "the salesbeing smoothly interposes themself.  "
@@ -2009,7 +2102,7 @@ class Places
 
 				this.emplacement2
 				(
-					"four-legged robot",
+					[ "four-legged robot" ],
 
 					"As you move to examine the robot, "
 					+ "the salesbeing smoothly interposes themself.  "
@@ -2025,7 +2118,7 @@ class Places
 
 				this.emplacement2
 				(
-					"drill-faced robot",
+					[ "drill-faced robot" ],
 
 					"As you move to examine the robot, "
 					+ "the salesbeing smoothly interposes themself.  "
@@ -2037,7 +2130,7 @@ class Places
 
 				this.emplacement2
 				(
-					"gun-armed robot",
+					[ "gun-armed robot" ],
 
 					"As you move to examine the robot, "
 					+ "the salesbeing smoothly interposes themself.  "
@@ -2563,6 +2656,9 @@ class Scripts
 			this.emplacementBodyKeycardSearch,
 			this.itemCartridgeUse,
 			this.itemKeycardUse,
+			this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
+			this.placeFriendlyShipDockingBayAntechamber_PressRightButton,
+			this.placeFriendlyShipDockingBayHangar_PressPlatformButton,
 			this.placeFriendlyShipEngineeringDeckAft_GoElevator,
 			this.placeFriendlyShipEscapePod_GoDoor,
 			this.placeFriendlyShipEscapePod_PressAutonavButton,
@@ -2642,13 +2738,11 @@ class Scripts
 		{
 			message = "You find a keycard in the crewperson's pockets.";
 
-			var itemKeycard = Item.fromNameAndDescription
-			(
-				"keycard", "This is an access keycard for the starship friendlyShip."
-			);
+			var itemKeycard = Items.Instance().Keycard;
 			place.itemAdd(itemKeycard);
 
-			var emplacementBody = place.emplacements.find(x => x.name == "body");
+			var emplacementBody =
+				place.emplacements.find(x => x.names.indexOf("body") >= 0);
 			emplacementBody.commands.length = 0;
 		}
 
@@ -2705,6 +2799,30 @@ class Scripts
 
 	// Places.
 
+	placeFriendlyShipDockingBayAntechamber_PressLeftButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		this.todo(u, w, p, c);
+	}
+
+	placeFriendlyShipDockingBayAntechamber_PressRightButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		this.todo(u, w, p, c);
+	}
+
+	placeFriendlyShipDockingBayHangar_PressPlatformButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		this.todo(u, w, p, c);
+	}
+
 	placeFriendlyShipEngineeringDeckAft_GoElevator
 	(
 		u: Universe, w: World, place: Place, portal: Portal
@@ -2718,6 +2836,7 @@ class Scripts
 		else
 		{
 			u.messageEnqueue("The elevator door opens smoothly as you approach.");
+			portal.goThrough(u, w);
 		}
 	}
 
@@ -2818,7 +2937,7 @@ class Scripts
 		{
 			p.visit();
 
-			var messageLines =
+			var message =
 			[
 				"Space Adventure Game Clone",
 				"\n\n",
@@ -2838,12 +2957,21 @@ class Scripts
 				"You don't even like the day that much, honestly.",
 				"\n\n",
 
-				"You had been napping, on duty, ",
+				"No, wait, you remember now.  They're transporting some gadget ",
+				"called a 'stellar juvenator' to... somewhere or other.  ",
+				"Something about how somebody's stellar needs juvenating.  ",
+				"Whatever it does, it's a big ol' whatchamazig.  ",
+				"It takes up quite a lot of floor space you'd otherwise have to mop, ",
+				"so you instinctively have warm feelings about it.  ",
+				"You hope nothing bad's happened to it.",
+				"\n\n",
+
+				"Anyway, you had been napping, on duty, ",
 				"but now you've been awakened by a loud klaxon.  ",
 				"Party foul."
-			];
+			].join("");
 
-			u.messageEnqueue(messageLines.join(""));
+			u.messageEnqueue(message);
 		}
 	}
 
@@ -2971,7 +3099,7 @@ class Scripts
 		}
 	}
 
-	todo(u: Universe, w: World, p: Place, i: any, target: any): void
+	todo(u: Universe, w: World, p: Place, c: Command): void
 	{
 		u.messageEnqueue("todo");
 	}
