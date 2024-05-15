@@ -21,6 +21,7 @@ class Game {
 }
 class Items {
     constructor() {
+        this.GasGrenade = this.gasGrenade();
         this.Keycard = this.keycard();
         this._All = [];
     }
@@ -29,6 +30,12 @@ class Items {
             this._instance = new Items();
         }
         return this._instance;
+    }
+    gasGrenade() {
+        return Item.fromNameAndDescription("gas grenade", "This is a Vadik gas grenade.  "
+            + "The Vadik are notoriously, and apparently cheerfully, violent, "
+            + "so you're not sure why they even have non-lethal weapons like these.  "
+            + "Maybe they're issued to underperforming crew for purposes of public shaming.");
     }
     keycard() {
         return Item.fromNameAndDescription("keycard", "This is an access keycard for the starship Pax Aeterna.  "
@@ -138,14 +145,11 @@ class Places {
     place4(name, description, scriptName, objects) {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, scriptName, objects);
     }
-    portal(name, placeDestinationName) {
-        return Portal.fromNameAndPlaceDestinationName(name, placeDestinationName);
-    }
-    portal_WithMultipleNames(names, placeDestinationName) {
+    portal(names, placeDestinationName) {
         return Portal.fromNamesAndPlaceDestinationName(names, placeDestinationName);
     }
-    portal3(name, placeDestinationName, scriptUseName) {
-        return new Portal([name], null, placeDestinationName, scriptUseName, null);
+    portal3(names, placeDestinationName, scriptUseName) {
+        return new Portal(names, null, placeDestinationName, scriptUseName, null);
     }
     // Places.
     // Places - Pax Aeterna.
@@ -170,8 +174,8 @@ class Places {
             + "on the opposite wall are two closets, with a pair of "
             + " buttons at chest height between them. "
             + " An elevator leads back to the engineering deck.", [
-            this.portal("airlock", Places.friendlyShipDockingBayHangar_Name()),
-            this.portal("elevator", Places.friendlyShipEngineeringDeckAft_Name()),
+            this.portal(["airlock"], Places.friendlyShipDockingBayHangar_Name()),
+            this.portal(["elevator"], Places.friendlyShipEngineeringDeckAft_Name()),
             this.emplacement("controls"),
             this.emplacement("hatch")
         ]);
@@ -190,8 +194,8 @@ class Places {
             + "A similarly gigantic pair of doors at the far end of the bay "
             + " allows ships to enter and depart when open, "
             + " and keeps everything safely sheltered when closed.", [
-            this.portal("airlock", Places.friendlyShipDockingBayAntechamber_Name()),
-            this.portal("pod", Places.friendlyShipEscapePod_Name()).visibleSet(false),
+            this.portal(["airlock"], Places.friendlyShipDockingBayAntechamber_Name()),
+            this.portal(["pod"], Places.friendlyShipEscapePod_Name()).visibleSet(false),
             this.emplacement2(["controls", "panel", "console", "buttons", "control panel", "control console"], "The control panel bears a single button, which says 'platform'.").commandAdd(Command.fromTextAndScriptExecuteName("press platform button", this.scripts.placeFriendlyShipDockingBayHangar_PressPlatformButton.name)),
             this.emplacement2(["hatch", "trapdoor"], "This is a hatch in the floor, perhaps three meters by five meters,"
                 + "split down the middle into two retractible doors."),
@@ -216,8 +220,8 @@ class Places {
             + "Well, the lowest of the bays you're likely to see."
             + "\n\n"
             + "Next to the elevator door is a small panel with a slot in it.", [
-            this.portal3("elevator", Places.friendlyShipDockingBayAntechamber_Name(), this.scripts.placeFriendlyShipEngineeringDeckAft_GoElevator.name),
-            this.portal("forward", Places.friendlyShipEngineeringDeckAmidships_Name()),
+            this.portal3(["elevator", "door"], Places.friendlyShipDockingBayAntechamber_Name(), this.scripts.placeFriendlyShipEngineeringDeckAft_GoElevator.name),
+            this.portal(["forward"], Places.friendlyShipEngineeringDeckAmidships_Name()),
             this.emplacement2(["slot", "lock", "keycard slot", "keyhole"], "The slot is intended to accept a security keycard.").commandAdd(new Command(["insert keycard in slot"], this.scripts.itemKeycardUse.name))
         ]);
     }
@@ -237,8 +241,8 @@ class Places {
             + "A thick window "
             + "looks down over the ship's docking bay, with a control console "
             + "running beneath that window.  The bodies of two crewmen lie on the floor.", [
-            this.portal("aft", Places.friendlyShipEngineeringDeckAft_Name()),
-            this.portal("forward", Places.friendlyShipEngineeringDeckForward_Name()),
+            this.portal(["aft"], Places.friendlyShipEngineeringDeckAft_Name()),
+            this.portal(["forward"], Places.friendlyShipEngineeringDeckForward_Name()),
             this.emplacement2(["console", "controls", "buttons", "control console", "control panel"], "These are the controls for the docking bay doors, "
                 + "which are visible through the nearby window.  "
                 + "There are two buttons, one that says 'open bay doors' "
@@ -276,9 +280,8 @@ class Places {
             + "The rest of the deck lies to aft.  "
             + "\n\n"
             + "At the fore end, an door opens on an elevator back to the other decks.", [
-            this.portal("elevator", Places.friendlyShipLowerDeckHallForward_Name()),
-            this.portal("aft", Places.friendlyShipEngineeringDeckAmidships_Name()),
-            this.emplacement("slot")
+            this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallForward_Name()),
+            this.portal(["aft"], Places.friendlyShipEngineeringDeckAmidships_Name()),
         ]);
     }
     static friendlyShipEngineeringDeckForward_Name() {
@@ -293,7 +296,7 @@ class Places {
             + "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
             + "Above the control console is a large window, through which "
             + "the pod's surroundings can be seen.", [
-            this.portal3("door", null, // destination
+            this.portal3(["door", "outside", "out"], null, // destination
             this.scripts.placeFriendlyShipEscapePod_GoDoor.name),
             this.emplacement("autonav button").commandAdd(new Command(["press autonav", "press autonav button"], this.scripts.placeFriendlyShipEscapePod_PressAutonavButton.name)),
             this.emplacement("buttons"),
@@ -324,7 +327,7 @@ class Places {
             + "\n\n"
             + "A door leads out to the corridor.  "
             + "(You tried sleeping out there once, but someone got mad.)", this.scripts.placeFriendlyShipJanitorsCloset_Update.name, [
-            this.portal_WithMultipleNames(["corridor", "door", "hall", "out", "outside"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["corridor", "door", "hall", "out", "outside"], Places.friendlyShipUpperDeckHallAmidships_Name()),
         ]);
     }
     static friendlyShipJanitorsCloset_Name() {
@@ -354,8 +357,8 @@ class Places {
             + "\n\n"
             + "A man wearing a scientist's smock lies face-down "
             + "on the floor in front of the console. ", [
-            this.portal("forward", Places.friendlyShipUpperDeckHallForward_Name()),
-            this.portal("aft", Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["forward"], Places.friendlyShipUpperDeckHallForward_Name()),
+            this.portal(["aft"], Places.friendlyShipUpperDeckHallAmidships_Name()),
             this.emplacement2(["console"], "If the title of a desired data cartridge is typed "
                 + "on the console's keyboard, "
                 + "the retrieval robot will retrieve that cartridge from the stacks "
@@ -396,8 +399,8 @@ class Places {
             + "brows furrowed in a disapproving expression even in death.  "
             + "A hard trick to pull off, but then again, he put in lots of practice "
             + "when he was alive.  Every time he talked to you, at a minimum.", [
-            this.portal("forward", Places.friendlyShipLowerDeckHallAmidships_Name()),
-            this.portal("elevator", Places.friendlyShipUpperDeckHallAft_Name()),
+            this.portal(["forward"], Places.friendlyShipLowerDeckHallAmidships_Name()),
+            this.portal(["elevator"], Places.friendlyShipUpperDeckHallAft_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -415,8 +418,8 @@ class Places {
             + "but luckily the other scrubber was disqualified for unsportspersonlike conduct."
             + "\n\n"
             + "The hall continues to forward and to aft.", [
-            this.portal("forward", Places.friendlyShipLowerDeckHallForward_Name()),
-            this.portal("aft", Places.friendlyShipLowerDeckHallAft_Name())
+            this.portal(["forward"], Places.friendlyShipLowerDeckHallForward_Name()),
+            this.portal(["aft"], Places.friendlyShipLowerDeckHallAft_Name())
         ]);
     }
     static friendlyShipLowerDeckHallAmidships_Name() {
@@ -432,8 +435,8 @@ class Places {
             + "\n\n"
             + "Another body of one of your crewmates lies here.  "
             + "You start to feel sorry for whoever has to clean all this up.", [
-            this.portal("aft", Places.friendlyShipLowerDeckHallAmidships_Name()),
-            this.portal("elevator", Places.friendlyShipEngineeringDeckForward_Name()),
+            this.portal(["aft"], Places.friendlyShipLowerDeckHallAmidships_Name()),
+            this.portal(["elevator", "door"], Places.friendlyShipEngineeringDeckForward_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -449,8 +452,8 @@ class Places {
             + "near the aft bulkhead, the neck bent sharply upwards "
             + "and the chin propped against the bulkhead itself.  "
             + "This is the most awkward pose yet.", [
-            this.portal("forward", Places.friendlyShipUpperDeckHallAmidships_Name()),
-            this.portal("elevator", Places.friendlyShipLowerDeckHallAft_Name()),
+            this.portal(["forward"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallAft_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -459,30 +462,32 @@ class Places {
     }
     friendlyShipUpperDeckHallAmidships() {
         return this.place4(Places.friendlyShipUpperDeckHallAmidships_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
-            + "The hall ends in a door to forward, and continues to aft.  "
+            + "The hall ends in a door to forward labelled 'Library', and continues to aft.  "
             + "In the middle is a door leading to the office/supply closet/quarters "
             + "of the Maintenance Specialist (Sanitation Grade), "
             + "which is where you, our hero, came boldly to this story, "
             + "as soon as you figured out how to 'go door'.", this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name, [
-            this.portal("closet", Places.friendlyShipJanitorsCloset_Name()),
-            this.portal("forward", Places.friendlyShipLibrary_Name()),
-            this.portal("aft", Places.friendlyShipUpperDeckHallAft_Name())
+            this.portal(["closet", "office"], Places.friendlyShipJanitorsCloset_Name()),
+            this.portal(["forward"], Places.friendlyShipLibrary_Name()),
+            this.portal(["aft"], Places.friendlyShipUpperDeckHallAft_Name())
         ]);
     }
     static friendlyShipUpperDeckHallAmidships_Name() {
         return "Pax Aeterna - Upper Deck - Hall - Amidships";
     }
     friendlyShipUpperDeckHallForward() {
-        return this.place3(Places.friendlyShipUpperDeckHallForward_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
-            + "The hall ends in a bulkhead to forward, "
-            + "near which the body of a dead crewperson lies crumpled.  "
+        return this.place3(Places.friendlyShipUpperDeckHallForward_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna."
+            + "\n\n"
+            + "To aft, the hall ends in a door labelled 'Library', "
+            + " and to forward, in a bulkhead, "
+            + "near which the body of another dead crewperson lies crumpled.  "
             + "\n\n"
             + "This is a pretty out-of-the way spot.  "
             + "They must've been hiding here when they got shot.  "
             + "Either that, or they died of natural causes by coincidence, "
             + "and nobody's been down this hall to find them until just now.  "
             + "Unlikely, but we shouldn't rule anything out.", [
-            this.portal("aft", Places.friendlyShipLibrary_Name()),
+            this.portal(["aft", "library"], Places.friendlyShipLibrary_Name()),
             this.emplacement("body").commandAdd(new Command(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
         ]);
     }
@@ -514,19 +519,18 @@ class Places {
             + "\n\n"
             + "A maze of rocky cliffs rises to the east.  "
             + "At least, with your luck, you assume it must be mazelike.", [
-            this.portal("pod", Places.friendlyShipEscapePod_Name()),
-            this.portal("east", Places.planetCliffsBottomNorthwestWestSide_Name())
+            this.portal(["pod", "escape pod"], Places.friendlyShipEscapePod_Name()),
+            this.portal(["east"], Places.planetCliffsBottomNorthwestWestSide_Name())
         ]);
     }
     static planetDesertCrashSite_Name() {
         return "Ekkis II - Desert - Crash Site";
     }
     planetDesertDeep() {
-        return this.place3(Places.planetDesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis II, "
-            + "The featureless sand stretches away in every direction.  "
-            + "It's not encouraging, frankly.", []
-        // Scripts.placeplanetDesertDeepUpdate.name
-        );
+        return this.place4(Places.planetDesertDeep_Name(), "You stand in the trackless desert of the planet Ekkis II.  "
+            + "\n\n"
+            + "The featureless sand stretches away in all directions.  "
+            + "It's not encouraging, frankly.", this.scripts.placePlanetDesertDeep_Update.name, []);
     }
     static planetDesertDeep_Name() {
         return "Ekkis II - Desert - Deep Desert";
@@ -539,10 +543,10 @@ class Places {
             + "If you were a poet, you'd probably be moved "
             + "to write a poem about loneliness. "
             + "But you're not, so instead you just sweat and wish for a lemonade.", [
-            this.portal("south", Places.planetDesertCrashSite_Name()),
-            this.portal("north", Places.planetDesertDeep_Name()),
-            this.portal("east", Places.planetDesertDeep_Name()),
-            this.portal("west", Places.planetDesertDeep_Name())
+            this.portal(["south"], Places.planetDesertCrashSite_Name()),
+            this.portal(["north"], Places.planetDesertDeep_Name()),
+            this.portal(["east"], Places.planetDesertDeep_Name()),
+            this.portal(["west"], Places.planetDesertDeep_Name())
         ]);
     }
     static planetDesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
@@ -555,10 +559,10 @@ class Places {
             + "No, on second thought, that's just an eyeball floater.  "
             + "It was a pretty rough crash.  You should get checked out "
             + "whenever you next find a doctor. ", [
-            this.portal("north", Places.planetDesertCrashSite_Name()),
-            this.portal("south", Places.planetDesertDeep_Name()),
-            this.portal("east", Places.planetDesertDeep_Name()),
-            this.portal("west", Places.planetDesertDeep_Name())
+            this.portal(["north"], Places.planetDesertCrashSite_Name()),
+            this.portal(["south"], Places.planetDesertDeep_Name()),
+            this.portal(["east"], Places.planetDesertDeep_Name()),
+            this.portal(["west"], Places.planetDesertDeep_Name())
         ]);
     }
     static planetDesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
@@ -572,10 +576,10 @@ class Places {
             + "It's not like most places are just brimming over with tracks.  "
             + "Maybe a train switchyard, you guess.  "
             + "But those are increasingly rare.", [
-            this.portal("east", Places.planetDesertCrashSite_Name()),
-            this.portal("north", Places.planetDesertDeep_Name()),
-            this.portal("south", Places.planetDesertDeep_Name()),
-            this.portal("west", Places.planetDesertDeep_Name()),
+            this.portal(["east"], Places.planetDesertCrashSite_Name()),
+            this.portal(["north"], Places.planetDesertDeep_Name()),
+            this.portal(["south"], Places.planetDesertDeep_Name()),
+            this.portal(["west"], Places.planetDesertDeep_Name()),
         ]);
     }
     static planetDesertWest_Name() {
@@ -590,9 +594,9 @@ class Places {
             + "This cliff seems especially cliffy indeed, "
             + "but you're reserving judgement "
             + "until you've seen all the entrants.  It's only fair.", [
-            this.portal("south", Places.planetCliffsBottomSouth_Name()),
-            this.portal("west", Places.planetCliffsBottomNorthwestEastSide_Name()),
-            this.portal("east", Places.planetCliffsBottomNortheast_Name())
+            this.portal(["south"], Places.planetCliffsBottomSouth_Name()),
+            this.portal(["west"], Places.planetCliffsBottomNorthwestEastSide_Name()),
+            this.portal(["east"], Places.planetCliffsBottomNortheast_Name())
         ]);
     }
     static planetCliffsBottomNorth_Name() {
@@ -611,9 +615,9 @@ class Places {
             + "\n\n"
             + "To the east, the sand stretches away from the foot of the cliff, "
             + "as far as the eye can see.  Well, your eyes, at least.", [
-            this.portal("south", Places.planetCliffsBottomSoutheast_Name()),
-            this.portal("west", Places.planetCliffsBottomNorthwestEastSide_Name()),
-            this.portal("east", Places.planetDesertDeep_Name())
+            this.portal(["south"], Places.planetCliffsBottomSoutheast_Name()),
+            this.portal(["west"], Places.planetCliffsBottomNorthwestEastSide_Name()),
+            this.portal(["east"], Places.planetDesertDeep_Name())
         ]);
     }
     static planetCliffsBottomNortheast_Name() {
@@ -627,8 +631,8 @@ class Places {
             + "The cliff, to an unarguable degree, "
             + "blocks progress to the north and west, "
             + "so don't you even try it.", [
-            this.portal("east", Places.planetCliffsBottomNorth_Name()),
-            this.portal("south", Places.planetCliffsBottomSouthwest_Name())
+            this.portal(["east"], Places.planetCliffsBottomNorth_Name()),
+            this.portal(["south"], Places.planetCliffsBottomSouthwest_Name())
         ]);
     }
     static planetCliffsBottomNorthwestEastSide_Name() {
@@ -649,8 +653,8 @@ class Places {
             + "a little less than two meters off the ground.  "
             + "Nice: you like a cliff face with a little somethin' goin' on.";
         return this.place3(Places.planetCliffsBottomNorthwestWestSide_Name(), description, [
-            this.portal("south", Places.planetCliffsBottomSouthwest_Name()),
-            this.portal("west", Places.planetDesertCrashSite_Name()),
+            this.portal(["south"], Places.planetCliffsBottomSouthwest_Name()),
+            this.portal(["west"], Places.planetDesertCrashSite_Name()),
             this.emplacement("hole"
             // "This is a hole in the side of the cliff face, "
             // + "about 40 centimeters in diameter.  Its interior is "
@@ -673,9 +677,9 @@ class Places {
             + "It's very picturesque, and you without a camera."
             + "\n\n"
             + "Surface paths between cliff bases run to the west, north, and east.", [
-            this.portal("east", Places.planetCliffsBottomSoutheast_Name()),
-            this.portal("north", Places.planetCliffsBottomNorth_Name()),
-            this.portal("west", Places.planetCliffsBottomSouthwest_Name()),
+            this.portal(["east"], Places.planetCliffsBottomSoutheast_Name()),
+            this.portal(["north"], Places.planetCliffsBottomNorth_Name()),
+            this.portal(["west"], Places.planetCliffsBottomSouthwest_Name()),
         ]);
     }
     static planetCliffsBottomSouth_Name() {
@@ -693,10 +697,10 @@ class Places {
             + "\n\n"
             + "On the west side of the clearing, a stone slope rises jaggedly "
             + "upward between jutting upright stones, climbing as it runs northward.", [
-            this.portal("north", Places.planetCliffsBottomSouth_Name()),
-            this.portal("west", Places.planetCliffsBottomSouth_Name()),
-            this.portal("east", Places.planetCliffsCaveInterior_Name()),
-            this.portal("up", Places.planetCliffsTopSouthEastSide_Name())
+            this.portal(["north"], Places.planetCliffsBottomSouth_Name()),
+            this.portal(["west"], Places.planetCliffsBottomSouth_Name()),
+            this.portal(["east"], Places.planetCliffsCaveInterior_Name()),
+            this.portal(["up"], Places.planetCliffsTopSouthEastSide_Name())
         ]);
     }
     static planetCliffsBottomSoutheast_Name() {
@@ -712,18 +716,21 @@ class Places {
             + "It's balanced.  Kind of a yin-yang thing.  "
             + "Though you're not sure which is which.  "
             + "Or maybe they doubled up on yang.", [
-            this.portal("east", Places.planetCliffsBottomSouth_Name()),
-            this.portal("north", Places.planetCliffsBottomNorthwestEastSide_Name())
+            this.portal(["east"], Places.planetCliffsBottomSouth_Name()),
+            this.portal(["north"], Places.planetCliffsBottomNorthwestEastSide_Name())
         ]);
     }
     static planetCliffsBottomSouthwest_Name() { return "Ekkis II - Cliffs - Bottom - Southwest"; }
     ;
     planetCliffsCaveInterior() {
-        return this.place3(Places.planetCliffsCaveInterior_Name(), "This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
+        return this.place4(Places.planetCliffsCaveInterior_Name(), "This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
             + "To the west the cave opens out into the blazing daylight "
             + "of the Ekkis II desert.  "
-            + "There's... there's a smell.", [
-            this.portal("west", Places.planetCliffsBottomSoutheast_Name()),
+            + "\n\n"
+            + "There's... well, to be frank, there's a smell.", this.scripts.placePlanetCliffsCaveInterior_Update.name, [
+            this.portal(["west"], Places.planetCliffsBottomSoutheast_Name()),
+            Agent.fromNameAndDescription("monster", "You don't know what this is, "
+                + "but it's coming right for you.")
         ]);
     }
     static planetCliffsCaveInterior_Name() {
@@ -735,10 +742,10 @@ class Places {
             + "The top of the cliff continues to the west and east."
             + "The path is especially narrow and precarious here.  "
             + "You're glad you can just type 'go east' or whatever "
-            + "rather than turning down the game speed "
+            + "rather than turning the game speed way down "
             + "and picking your way along one step at a time.", [
-            this.portal("east", Places.planetCliffsTopNortheast_Name()),
-            this.portal("west", Places.planetCliffsTopNorthwest_Name())
+            this.portal(["east"], Places.planetCliffsTopNortheast_Name()),
+            this.portal(["west"], Places.planetCliffsTopNorthwest_Name())
         ]);
     }
     static planetCliffsTopNorth_Name() {
@@ -764,19 +771,21 @@ class Places {
             + "\n\n"
             + "Back in the real world, the top of the cliff "
             + "runs back toward the west, where there is also no water.", [
-            this.portal("west", Places.planetCliffsTopNorth_Name()),
-            this.portal("columns", Places.planetCavernsElevator_Name())
+            this.portal(["west"], Places.planetCliffsTopNorth_Name()),
+            this.portal(["horns", "columns"], Places.planetCavernsElevator_Name()).visibleSet(false)
         ]);
     }
-    static planetCliffsTopNortheast_Name() { return "Ekkis II - Cliffs - Top - Northeast"; }
+    static planetCliffsTopNortheast_Name() {
+        return "Ekkis II - Cliffs - Top - Northeast";
+    }
     planetCliffsTopNorthwest() {
         return this.place3(Places.planetCliffsTopNorthwest_Name(), "You stand atop a cliff rising from the desert of the planet Ekkis II.  "
             + "The path along the clifftop curves from the south to the east.  "
             + "\n\n"
             + "Some jagged peaks jut upward along the northern edge of the cliff.  "
             + "Hey, at least these cliffs are trying something new.", [
-            this.portal("east", Places.planetCliffsTopNorth_Name()),
-            this.portal("south", Places.planetCliffsTopSouthwest_Name())
+            this.portal(["east"], Places.planetCliffsTopNorth_Name()),
+            this.portal(["south"], Places.planetCliffsTopSouthwest_Name())
         ]);
     }
     static planetCliffsTopNorthwest_Name() {
@@ -796,8 +805,8 @@ class Places {
             + "sheltered by the surrounding cliffs.  "
             + "From here, it almost looks idyllic.  "
             + "But no, you just came from there, and it's all dyllic enough.", [
-            this.portal("east", Places.planetCliffsBottomSoutheast_Name()),
-            this.portal("west", Places.planetCliffsTopSouthWestSide_Name())
+            this.portal(["east"], Places.planetCliffsBottomSoutheast_Name()),
+            this.portal(["west"], Places.planetCliffsTopSouthWestSide_Name())
         ]);
     }
     static planetCliffsTopSouthEastSide_Name() {
@@ -818,8 +827,8 @@ class Places {
             + "Despite the greenery, there's not enough water to drink down there, "
             + "even if you were willing to bite a cactus, "
             + "which past experience tells you you should never do again.", [
-            this.portal("east", Places.planetCliffsTopSouthEastSide_Name()),
-            this.portal("west", Places.planetCliffsTopSouthwest_Name())
+            this.portal(["east"], Places.planetCliffsTopSouthEastSide_Name()),
+            this.portal(["west"], Places.planetCliffsTopSouthwest_Name())
         ]);
     }
     static planetCliffsTopSouthWestSide_Name() {
@@ -836,8 +845,8 @@ class Places {
             + "You're not exactly sure what an arroyo is,"
             + "and you're reasonably sure this isn't one, "
             + "but this whole place feels pretty arroyoey.", [
-            this.portal("north", Places.planetCliffsTopNorthwest_Name()),
-            this.portal("east", Places.planetCliffsTopSouthWestSide_Name())
+            this.portal(["north"], Places.planetCliffsTopNorthwest_Name()),
+            this.portal(["east"], Places.planetCliffsTopSouthWestSide_Name())
         ]);
     }
     static planetCliffsTopSouthwest_Name() {
@@ -862,8 +871,8 @@ class Places {
             + "in a rough semicircle, leading along a higher path back to the east."
             + "\n\n"
             + "Back on this side of the barrier, a lower path leads back to the east.", [
-            this.portal("east", Places.planetCavernsPool_Name()),
-            this.portal("west", Places.planetCavernsDrips_Name())
+            this.portal(["east"], Places.planetCavernsPool_Name()),
+            this.portal(["west"], Places.planetCavernsDrips_Name())
         ]);
     }
     static planetCavernsBarrier_Name() {
@@ -885,8 +894,8 @@ class Places {
             + "To the west, another passage leads back "
             + "toward the entrance to the caverns, "
             + "curving left in a rough semicircle back down to the level below.", [
-            this.portal("east", Places.planetCavernsProjectionRoom_Name()),
-            this.portal("west", Places.planetCavernsBarrier_Name())
+            this.portal(["east"], Places.planetCavernsProjectionRoom_Name()),
+            this.portal(["west"], Places.planetCavernsBarrier_Name())
         ]);
     }
     static planetCavernsDrips_Name() {
@@ -903,8 +912,8 @@ class Places {
             + "The elevator door lies at the east side of the passage."
             + "\n\n"
             + "From there, the passage runs to the west, deeper into the cavern.", [
-            this.portal("door", Places.planetCliffsTopNortheast_Name()),
-            this.portal("west", Places.planetCavernsGrating_Name())
+            this.portal(["elevator", "door"], Places.planetCliffsTopNortheast_Name()),
+            this.portal(["west"], Places.planetCavernsGrating_Name())
         ]);
     }
     static planetCavernsElevator_Name() {
@@ -919,8 +928,8 @@ class Places {
             + "but not in, like, a gross way."
             + "\n\n"
             + "Another passage leads back east, toward the cavern entrance.", [
-            this.portal("west", Places.planetCavernsPool_Name()),
-            this.portal("east", Places.planetCavernsGrating_Name()),
+            this.portal(["west"], Places.planetCavernsPool_Name()),
+            this.portal(["east"], Places.planetCavernsGrating_Name()),
             this.emplacement2(["wall"], "Examining the wall closely, "
                 + "you see a faint rectangular outline of hairline cracks in the rock. "
                 + "It happens to a lot of us as we get older.  "
@@ -948,8 +957,8 @@ class Places {
                 + "And, yeah, there's a smell.  "
                 + "For a metal grate in a cave, "
                 + "it's kind of a sensory smorgasbord."),
-            this.portal("west", Places.planetCavernsGeyser_Name()),
-            this.portal("east", Places.planetCavernsElevator_Name())
+            this.portal(["west"], Places.planetCavernsGeyser_Name()),
+            this.portal(["east"], Places.planetCavernsElevator_Name())
         ]);
     }
     static planetCavernsGrating_Name() {
@@ -963,8 +972,8 @@ class Places {
             + "Far below the ledge is a pool of clear liquid, "
             + "with drips falling from holes in the ceiling to fill it.  "
             + "A passage leads back to the east.", [
-            this.portal("west", Places.planetCavernsBarrier_Name()),
-            this.portal("east", Places.planetCavernsGeyser_Name())
+            this.portal(["west"], Places.planetCavernsBarrier_Name()),
+            this.portal(["east"], Places.planetCavernsGeyser_Name())
         ]);
     }
     static planetCavernsPool_Name() {
@@ -978,8 +987,8 @@ class Places {
             + "by a holographic projection of a triangular-headed alien.  "
             + "In retrospect, that giant alien head really livened up the decor."
             + "A passage leads back to the east.", [
-            this.portal("west", Places.planetCavernsDrips_Name()),
-            this.portal("north", Places.planetCavernsSteamworks_Name())
+            this.portal(["west"], Places.planetCavernsDrips_Name()),
+            this.portal(["north"], Places.planetCavernsSteamworks_Name())
         ]);
     }
     static planetCavernsProjectionRoom_Name() {
@@ -999,11 +1008,13 @@ class Places {
             + "\n\n"
             + "To the west is a small, garage-like space, with a door at the end "
             + "that appears to open onto a large elevator platform.", [
-            this.portal("east", Places.planetCavernsProjectionRoom_Name()),
-            this.portal("skimmer", Places.planetSettlementBarFront_Name())
+            this.portal(["east"], Places.planetCavernsProjectionRoom_Name()),
+            this.portal(["skimmer"], Places.planetSettlementBarFront_Name()).visibleSet(false)
         ]);
     }
-    static planetCavernsSteamworks_Name() { return "Ekkis II - Caverns - Steamworks"; }
+    static planetCavernsSteamworks_Name() {
+        return "Ekkis II - Caverns - Steamworks";
+    }
     // Places - Ekkis 2 - Village of [Farting Noise].
     planetSettlementBarFront() {
         return this.place3(Places.planetSettlementBarFront_Name(), "You stand in the tiny settlement named, "
@@ -1035,11 +1046,11 @@ class Places {
             + "which looks dusty, battered, and none too new.  "
             + "But you're standing here, instead of in a sand-swimmer's belly, "
             + "so you guess it must work.", [
-            this.portal("north", Places.planetSettlementRobotShopWest_Name()),
-            this.portal("west", Places.planetSettlementUsedShipLot_Name()),
-            this.portal("east", Places.planetSettlementBarRear_Name()),
-            this.portal("south", Places.planetDesertDeep_Name()),
-            this.portal("bar", Places.planetSettlementBarInterior_Name())
+            this.portal(["north"], Places.planetSettlementRobotShopWest_Name()),
+            this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
+            this.portal(["east"], Places.planetSettlementBarRear_Name()),
+            this.portal(["south"], Places.planetDesertDeep_Name()),
+            this.portal(["bar"], Places.planetSettlementBarInterior_Name())
         ]);
     }
     static planetSettlementBarFront_Name() {
@@ -1072,7 +1083,7 @@ class Places {
             + "then empties a load of its sweepings into a porthole in the back wall.  "
             + "A short ascending stairway leads back outside.";
         return this.place3(Places.planetSettlementBarInterior_Name(), description, [
-            this.portal("outside", Places.planetSettlementBarFront_Name()),
+            this.portal(["outside", "door"], Places.planetSettlementBarFront_Name()),
             this.emplacement2(["band", "performers", "musicians", "singer"], "You like some of their early stuff.").commandAdd(new Command(["talk band", "talk to band"], this.scripts.todo.name
             /*
             "You try to talk to the band.  During their live performance.  "
@@ -1118,9 +1129,9 @@ class Places {
             + "a hatch in the back wall of the bar opens "
             + "and expels some fine white powder, "
             + "which settles onto a larger heap of powder below.", [
-            this.portal("north", Places.planetSettlementRobotShopWest_Name()),
-            this.portal("west", Places.planetSettlementUsedShipLot_Name()),
-            this.portal("east", Places.planetSettlementBarRear_Name()),
+            this.portal(["north"], Places.planetSettlementRobotShopWest_Name()),
+            this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
+            this.portal(["east"], Places.planetSettlementBarRear_Name()),
             this.emplacement2(["heap", "pile"], "This is a heap of finely divided white power.  "
                 + "Looks a bit like ashes, except who burns things anymore?")
         ]);
@@ -1138,8 +1149,8 @@ class Places {
             + "You generally don't get joking references, "
             + "but you find they get even less funny "
             + "if you ask someone to explain them.  So never mind.", [
-            this.portal("west", Places.planetSettlementRobotShopWest_Name()),
-            this.portal("door", Places.planetSettlementRobotShopInterior_Name())
+            this.portal(["west"], Places.planetSettlementRobotShopWest_Name()),
+            this.portal(["door", "shop", "store", "inside"], Places.planetSettlementRobotShopInterior_Name())
         ]);
     }
     static planetSettlementRobotShopFront_Name() {
@@ -1156,7 +1167,7 @@ class Places {
             + "over which it will be."
             + "\n\n"
             + "A door leads back outside, as doors do.", [
-            this.portal("outside", Places.planetSettlementRobotShopFront_Name()),
+            this.portal(["outside", "door"], Places.planetSettlementRobotShopFront_Name()),
             this.emplacement2(["green robot"], "As you move to examine the robot, "
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the General Toiler S-34.  "
@@ -1223,9 +1234,9 @@ class Places {
             + "A force field blocks access to the open desert to the north.  "
             + "That's okay by you.  You haven't been out of the open desert "
             + "long enough to get nostalgic about it.", [
-            this.portal("south", Places.planetSettlementBarFront_Name()),
-            this.portal("east", Places.planetSettlementRobotShopFront_Name()),
-            this.portal("west", Places.planetSettlementNorthOfUsedShipLot_Name())
+            this.portal(["south"], Places.planetSettlementBarFront_Name()),
+            this.portal(["east"], Places.planetSettlementRobotShopFront_Name()),
+            this.portal(["west"], Places.planetSettlementNorthOfUsedShipLot_Name())
         ]);
     }
     static planetSettlementRobotShopWest_Name() {
@@ -1245,8 +1256,8 @@ class Places {
             + "You envy whoever got the contract.  It's bound to be a steady job."
             + "No matter where you go, "
             + "people are always not going to want to be eaten.", [
-            this.portal("east", Places.planetSettlementRobotShopWest_Name()),
-            this.portal("south", Places.planetSettlementUsedShipLot_Name())
+            this.portal(["east"], Places.planetSettlementRobotShopWest_Name()),
+            this.portal(["south"], Places.planetSettlementUsedShipLot_Name())
         ]);
     }
     static planetSettlementNorthOfUsedShipLot_Name() {
@@ -1269,8 +1280,8 @@ class Places {
             + "A force field blocks access to the open desert to the south and west, "
             + "keeping out the predatory sand-swimmers, and, "
             + "as Non-Gelatinous George would say, keeping in the savings.", [
-            this.portal("east", Places.planetSettlementBarFront_Name()),
-            this.portal("north", Places.planetSettlementNorthOfUsedShipLot_Name())
+            this.portal(["east"], Places.planetSettlementBarFront_Name()),
+            this.portal(["north"], Places.planetSettlementNorthOfUsedShipLot_Name())
         ]);
     }
     static planetSettlementUsedShipLot_Name() {
@@ -1287,9 +1298,9 @@ class Places {
     }
     enemyShipAirlockChamber() {
         return this.place3(Places.enemyShipAirlockChamber_Name(), "This is the interior of one of the Venipositor's airlocks."
-            + "Doors at either end lead into and out of the Venipositor", [
-            this.portal("in", Places.enemyShipAirlockAntechamber_Name()),
-            this.portal("out", Places.enemyShipAirlockExterior_Name())
+            + "Doors at either end lead inside and outside of the Venipositor", [
+            this.portal(["in", "inside"], Places.enemyShipAirlockAntechamber_Name()),
+            this.portal(["out", "outside"], Places.enemyShipAirlockExterior_Name())
         ]);
     }
     static enemyShipAirlockChamber_Name() {
@@ -1298,7 +1309,7 @@ class Places {
     enemyShipAirlockExterior() {
         return this.place3(Places.enemyShipAirlockExterior_Name(), "This is the exterior of the Venipositor, near an airlock door.  "
             + "The boundless sweep of space spreads out in all directions.", [
-            this.portal("door", Places.enemyShipAirlockChamber_Name()),
+            this.portal(["door", "airlock", "inside", "in"], Places.enemyShipAirlockChamber_Name()),
         ]);
     }
     static enemyShipAirlockExterior_Name() {
@@ -1306,10 +1317,18 @@ class Places {
     }
     enemyShipArmory() {
         return this.place3(Places.enemyShipArmory_Name(), "This is the armory of the Venipositor.  "
-            + "At the aft end high counter, with a robot standing watch behind it, "
-            + "blocks the path to the weapon racks.  A door to forward leads back "
+            + "\n\n"
+            + "At the aft end, a high counter, with a heavily robot standing watch behind it, "
+            + "blocks the path to the weapon racks.  "
+            + "The Vadik seem to all be professional soldier/assassin/murderers, "
+            + "so you have to worry about what kind of weapons they keep under lock and key.  "
+            + "But maybe they just want to keep track of what kind of weapons are popular, "
+            + "so they can order more of them?"
+            + "\n\n"
+            + "A door to forward leads back "
             + "out onto the catwalk above the Stellar Juvenator chamber.", [
-            this.portal("forward", Places.enemyShipStellarJuvenatorChamberCatwalk_Name())
+            this.portal(["forward"], Places.enemyShipStellarJuvenatorChamberCatwalk_Name()),
+            Items.Instance().GasGrenade.name
         ]);
     }
     static enemyShipArmory_Name() {
@@ -1325,7 +1344,7 @@ class Places {
     }
     enemyShipLowerDeckHallAft() {
         return this.place3(Places.enemyShipLowerDeckHallAft_Name(), "This is the aft end of a hallway on the lower deck of the Venipositor.", [
-            this.portal("forward", Places.enemyShipLowerDeckHallAmidships_Name())
+            this.portal(["forward"], Places.enemyShipLowerDeckHallAmidships_Name())
         ]);
     }
     static enemyShipLowerDeckHallAft_Name() {
@@ -1333,8 +1352,8 @@ class Places {
     }
     enemyShipLowerDeckHallAmidships() {
         return this.place3(Places.enemyShipLowerDeckHallAmidships_Name(), "This is the amidships section of a hallway on the lower deck of the Venipositor.", [
-            this.portal("aft", Places.enemyShipLowerDeckHallAft_Name()),
-            this.portal("forward", Places.enemyShipLowerDeckHallFore_Name())
+            this.portal(["aft"], Places.enemyShipLowerDeckHallAft_Name()),
+            this.portal(["forward"], Places.enemyShipLowerDeckHallFore_Name())
         ]);
     }
     static enemyShipLowerDeckHallAmidships_Name() {
@@ -1342,15 +1361,25 @@ class Places {
     }
     enemyShipLowerDeckHallFore() {
         return this.place3(Places.enemyShipLowerDeckHallFore_Name(), "This is the forward end of a hallway on the lower deck of the Venipositor.", [
-            this.portal("aft", Places.enemyShipLowerDeckHallAmidships_Name()),
+            this.portal(["aft"], Places.enemyShipLowerDeckHallAmidships_Name()),
         ]);
     }
     static enemyShipLowerDeckHallFore_Name() {
         return "Venipositor - Hall - Lower Deck - Forward";
     }
     enemyShipNearbySpace() {
-        return this.place3(Places.enemyShipNearbySpace_Name(), "You are in your ship, hovering nearby the Venipositor.", [
-            this.portal("out", Places.enemyShipAirlockExterior_Name()),
+        return this.place3(Places.enemyShipNearbySpace_Name(), "You are in your ship, hovering nearby the Vadik starship Venipositor."
+            + "\n\n"
+            + "It's a terrifying ship.  Its color scheme could best be described as "
+            + "'Dried Blood on Rusty Murder Weapon.'"
+            + "There are sharp edges, jagged metal teeth, and needlelike points everywhere, "
+            + "most of which have a bunch of Vadik writing scrawled near them.  "
+            + "On an ordinary ship, you'd expect such writing to be warnings "
+            + "about how dangerous everything is, "
+            + "but from what little you can read of it, "
+            + "this writing seems instead to be bragging "
+            + "about how dangerous everything is.", [
+            this.portal(["outside", "door", "space"], Places.enemyShipAirlockExterior_Name())
         ]);
     }
     static enemyShipNearbySpace_Name() {
@@ -1366,8 +1395,13 @@ class Places {
     }
     enemyShipStellarJuvenatorChamber() {
         return this.place3(Places.enemyShipStellarJuvenatorChamber_Name(), "This is a cavernous room on the Venipositor.  "
-            + "The Stellar Juvenator is mounted on a pedestal, "
-            + "with an armed guard standing nearby.  "
+            + "\n\n"
+            + "The titanic Stellar Juvenator is mounted on a pedestal, "
+            + "with an armed Vadik guard standing nearby.  "
+            + "\n\n"
+            + "The Stellar Juvenator glows and crackles with luminous energies.  "
+            + "You're not sure how much of that is its normal operating mode. "
+            + "\n\n"
             + "A catwalk runs overhead.", [
         // todo
         ]);
@@ -1378,12 +1412,14 @@ class Places {
     enemyShipStellarJuvenatorChamberCatwalk() {
         return this.place3(Places.enemyShipStellarJuvenatorChamberCatwalk_Name(), "You are standing on a railed catwalk above a "
             + " cavernous chamber on the Venipositor.  "
+            + "\n\n"
             + "On the floor, far below, the Stellar Juvenator"
             + "is mounted on a pedestal, "
-            + "with an armed guard standing nearby.  "
+            + "with an armed Vadik guard standing nearby.  "
+            + "\n\n"
             + "The catwalk runs fore and aft.", [
-            this.portal("aft", Places.enemyShipArmory_Name()),
-            this.portal("forward", "todo"),
+            this.portal(["aft"], Places.enemyShipArmory_Name()),
+            this.portal(["forward"], "todo"),
         ]);
     }
     static enemyShipStellarJuvenatorChamberCatwalk_Name() {
@@ -1391,7 +1427,7 @@ class Places {
     }
     enemyShipUpperDeckHallAft() {
         return this.place3(Places.enemyShipUpperDeckHallAft_Name(), "This is the aft end of a hallway on the upper deck of the Venipositor.", [
-            this.portal("forward", Places.enemyShipUpperDeckHallAmidships_Name()),
+            this.portal(["forward"], Places.enemyShipUpperDeckHallAmidships_Name()),
         ]);
     }
     static enemyShipUpperDeckHallAft_Name() {
@@ -1400,8 +1436,8 @@ class Places {
     enemyShipUpperDeckHallAmidships() {
         return this.place3(Places.enemyShipUpperDeckHallAmidships_Name(), "This is the amidships section of a hallway "
             + "on the upper deck of the Venipositor.", [
-            this.portal("aft", Places.enemyShipUpperDeckHallAft_Name()),
-            this.portal("forward", Places.enemyShipUpperDeckHallFore_Name()),
+            this.portal(["aft"], Places.enemyShipUpperDeckHallAft_Name()),
+            this.portal(["forward"], Places.enemyShipUpperDeckHallFore_Name()),
         ]);
     }
     static enemyShipUpperDeckHallAmidships_Name() {
@@ -1409,7 +1445,7 @@ class Places {
     }
     enemyShipUpperDeckHallFore() {
         return this.place3(Places.enemyShipUpperDeckHallFore_Name(), "This is the forward end of a hallway on the upper deck of the Venipositor.", [
-            this.portal("aft", Places.enemyShipUpperDeckHallAmidships_Name()),
+            this.portal(["aft"], Places.enemyShipUpperDeckHallAmidships_Name()),
         ]);
     }
     static enemyShipUpperDeckHallFore_Name() {
@@ -1418,9 +1454,9 @@ class Places {
     enemyShipVentilationShaft1() {
         return this.place3(Places.enemyShipVentilationShaft1_Name(), "This is a ventilation shaft on the Venipositor.  "
             + "A short side branch leads to a vent cover.", [
-            this.portal("back", Places.enemyShipVentilationShaft4_Name()),
-            this.portal("forward", Places.enemyShipVentilationShaft1_Name()),
-            this.portal("vent", Places.enemyShipAirlockAntechamber_Name())
+            this.portal(["back"], Places.enemyShipVentilationShaft4_Name()),
+            this.portal(["forward"], Places.enemyShipVentilationShaft1_Name()),
+            this.portal(["vent"], Places.enemyShipAirlockAntechamber_Name())
         ]);
     }
     static enemyShipVentilationShaft1_Name() {
@@ -1429,9 +1465,9 @@ class Places {
     enemyShipVentilationShaft2() {
         return this.place3(Places.enemyShipVentilationShaft2_Name(), "This is a ventilation shaft on the Venipositor.  "
             + "A short side branch leads to a vent cover.", [
-            this.portal("back", Places.enemyShipVentilationShaft1_Name()),
-            this.portal("forward", Places.enemyShipVentilationShaft3_Name()),
-            this.portal("vent", Places.enemyShipLaundry_Name())
+            this.portal(["back"], Places.enemyShipVentilationShaft1_Name()),
+            this.portal(["forward"], Places.enemyShipVentilationShaft3_Name()),
+            this.portal(["vent"], Places.enemyShipLaundry_Name())
         ]);
     }
     static enemyShipVentilationShaft2_Name() {
@@ -1439,8 +1475,8 @@ class Places {
     }
     enemyShipVentilationShaft3() {
         return this.place3(Places.enemyShipVentilationShaft3_Name(), "This is a featureless stretch of ventilation shaft on the Venipositor.", [
-            this.portal("back", Places.enemyShipVentilationShaft2_Name()),
-            this.portal("forward", Places.enemyShipVentilationShaft4_Name())
+            this.portal(["back"], Places.enemyShipVentilationShaft2_Name()),
+            this.portal(["forward"], Places.enemyShipVentilationShaft4_Name())
         ]);
     }
     static enemyShipVentilationShaft3_Name() {
@@ -1448,8 +1484,8 @@ class Places {
     }
     enemyShipVentilationShaft4() {
         return this.place3(Places.enemyShipVentilationShaft4_Name(), "This is a featureless stretch of ventilation shaft on the Venipositor.", [
-            this.portal("back", Places.enemyShipVentilationShaft3_Name()),
-            this.portal("forward", Places.enemyShipVentilationShaft1_Name())
+            this.portal(["back"], Places.enemyShipVentilationShaft3_Name()),
+            this.portal(["forward"], Places.enemyShipVentilationShaft1_Name())
         ]);
     }
     static enemyShipVentilationShaft4_Name() {
@@ -1475,6 +1511,8 @@ class Scripts {
             this.placeFriendlyShipLibrary_TalkToMan,
             this.placeFriendlyShipLibrary_Type,
             this.placeFriendlyShipUpperDeckHallAmidships_Update,
+            this.placePlanetCliffsCaveInterior_Update,
+            this.placePlanetDesertDeep_Update,
             this.todo
         ];
         var scripts = new Array();
@@ -1752,6 +1790,39 @@ class Scripts {
             u.messageEnqueue(message);
             var placeDescription = p.description;
             u.messageEnqueue(placeDescription);
+        }
+    }
+    placePlanetCliffsCaveInterior_Update(u, w, p, c) {
+        this.todo(u, w, p, c);
+    }
+    placePlanetDesertDeep_Update(u, w, p, c) {
+        if (p.hasBeenVisited() == false) {
+            p.visit();
+            var placeDescription = p.description;
+            u.messageEnqueue(placeDescription);
+            var message = [
+                "You hear a grinding noise coming from the deeper desert.  ",
+                "It sounds like a hundred-car hovertrain with half its hoverpads missing ",
+                "hauling a cargo of tornadoes arguing about politics."
+            ].join("");
+            u.messageEnqueue(message);
+        }
+        else {
+            var message = [
+                "As you idly faff about in the burning sand-strewn waste, ",
+                "you notice the grinding sound from the deep desert gets louder and closer. ",
+                "You turn from whatever you were doing that seemed so important ",
+                "just in time to see a large wavefront of sand moving toward you.  ",
+                "In an instant, the mobile dune reaches you, and explodes into a ring ",
+                "of needle-sharp crystalling teeth, circling a mouth",
+                "wider than you are tall.  Ironically, however, the charging sand-swimmer ",
+                "swallows you without chewing, so what was the point of all those teeth?",
+                "\n\n",
+                "You are dead.  Next time, maybe don't wander around the desert so much.  ",
+                "Try to have a plan, is what I'm saying."
+            ].join("");
+            u.messageEnqueue(message);
+            w.end();
         }
     }
     todo(u, w, p, c) {
