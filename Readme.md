@@ -1,6 +1,8 @@
-SpaceQuestClone-Private
-=======================
+SpaceAdventureTextGame
+======================
 
-A text-only clone of the adventure game Space Quest, using the This Could Be Better Text Adventure Engine.
+A text-only clone of a famous DOS-era space adventure game,
+made using the This Could Be Better Text Adventure Engine.
 
-For private research use only. 
+<img src="Screenshot.png" />
+
