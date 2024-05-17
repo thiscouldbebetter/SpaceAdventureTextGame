@@ -15,7 +15,9 @@ class Game
 				Item.fromNameAndDescription
 				(
 					"washrag",
-					"This is a rag you use to clean things sometimes."
+					"This is a rag you use to clean things sometimes.  "
+					+ "You may or may not have given it a name.  "
+					+ "And a backstory."
 				)
 			],
 
@@ -24,7 +26,7 @@ class Game
 
 		var scriptsCustom = new Scripts();
 
-		var places = new Places();
+		var regions = new Regions();
 
 		var items = new Items();
 
@@ -42,7 +44,7 @@ class Game
 		var returnValue = new World
 		(
 			"Space_Adventure_Game",
-			places._All,
+			regions._All,
 			items._All,
 			player,
 			commands,
@@ -118,12 +120,11 @@ class Places
 {
 	scripts: Scripts;
 
-	_All: Place[];
-
 	constructor()
 	{
 		this.scripts = Scripts.Instance();
 
+		/*
 		this._All =
 		[
 			// Pax Aeterna - Upper Deck.
@@ -222,6 +223,7 @@ class Places
 			this.enemyShipVentilationShaft3(),
 			this.enemyShipVentilationShaft4()
 		];
+		*/
 	}
 
 	emplacement(name: string): Emplacement
@@ -2816,6 +2818,139 @@ class Places
 	}
 }
 
+class Regions
+{
+	_All: Region[];
+
+	constructor()
+	{
+		var places = new Places();
+		var scripts = Scripts.Instance();
+
+		this._All =
+		[
+			// Friendly Ship.
+			Region.fromNameScriptUpdateForTurnNameAndPlaces
+			(
+				"Pax Aeterna",
+
+				scripts.regionFriendlyShip_UpdateForTurn.name, // scriptUpdateForTurnName
+
+				[
+					// Upper Deck.
+					places.friendlyShipJanitorsCloset(),
+					places.friendlyShipUpperDeckHallAmidships(),
+					places.friendlyShipLibrary(),
+					places.friendlyShipUpperDeckHallForward(),
+					places.friendlyShipUpperDeckHallAft(),
+					places.friendlyShipBridge(),
+
+					// Lower Deck.
+
+					places.friendlyShipLowerDeckHallAft(),
+					places.friendlyShipLowerDeckHallAmidships(),
+					places.friendlyShipLowerDeckHallForward(),
+
+					// Engineering Deck.
+
+					places.friendlyShipEngineeringDeckAft(),
+					places.friendlyShipEngineeringDeckAmidships(),
+					places.friendlyShipEngineeringDeckForward(),
+
+					// Docking Bay.
+
+					places.friendlyShipDockingBayAntechamber(),
+					places.friendlyShipDockingBayHangar(),
+					places.friendlyShipEscapePod()
+				]
+			),
+
+			// Planet.
+
+			Region.fromNameAndPlaces
+			(
+				"Ekkis 2",
+				[
+					// Desert.
+					places.planetDesertCrashSite(),
+					places.planetDesertDeep(),
+					places.planetDesertNorth(),
+					places.planetDesertSouth(),
+					places.planetDesertWest(),
+
+					// Cliffs.
+
+					places.planetCliffsBottomNorth(),
+					places.planetCliffsBottomNortheast(),
+					places.planetCliffsBottomNorthwestEastSide(),
+					places.planetCliffsBottomNorthwestWestSide(),
+					places.planetCliffsBottomSouth(),
+					places.planetCliffsBottomSoutheast(),
+					places.planetCliffsBottomSouthwest(),
+					places.planetCliffsCaveInterior(),
+					places.planetCliffsTopNorth(),
+					places.planetCliffsTopNortheast(),
+					places.planetCliffsTopNorthwest(),
+					places.planetCliffsTopSouthEastSide(),
+					places.planetCliffsTopSouthWestSide(),
+					places.planetCliffsTopSouthwest(),
+
+					// Caverns.
+
+					places.planetCavernsProjectionRoom(),
+					places.planetCavernsSteamworks(),
+
+					places.planetCavernsBarrier(),
+					places.planetCavernsDrips(),
+					places.planetCavernsElevator(),
+					places.planetCavernsGeyser(),
+					places.planetCavernsGrating(),
+					places.planetCavernsPool(),
+
+					// Village of [Farting Noise].
+
+					places.planetSettlementBarFront(),
+					places.planetSettlementBarInterior(),
+					places.planetSettlementBarRear(),
+					places.planetSettlementRobotShopFront(),
+					places.planetSettlementRobotShopInterior(),
+					places.planetSettlementRobotShopWest(),
+					places.planetSettlementNorthOfUsedShipLot(),
+					places.planetSettlementUsedShipLot(),
+				]
+			),
+
+			// Enemy Ship.
+
+			Region.fromNameAndPlaces
+			(
+				"Venipositor",
+				[
+					places.enemyShipAirlockAntechamber(),
+					places.enemyShipAirlockChamber(),
+					places.enemyShipAirlockExterior(),
+					places.enemyShipArmory(),
+					places.enemyShipLaundry(),
+					places.enemyShipLowerDeckHallAft(),
+					places.enemyShipLowerDeckHallAmidships(),
+					places.enemyShipLowerDeckHallFore(),
+					places.enemyShipNearbySpace(),
+					places.enemyShipShuttleBay(),
+					places.enemyShipStellarJuvenatorChamber(),
+					places.enemyShipStellarJuvenatorChamberCatwalk(),
+					places.enemyShipUpperDeckHallAft(),
+					places.enemyShipUpperDeckHallAmidships(),
+					places.enemyShipUpperDeckHallFore(),
+					places.enemyShipVentilationShaft1(),
+					places.enemyShipVentilationShaft2(),
+					places.enemyShipVentilationShaft3(),
+					places.enemyShipVentilationShaft4()
+				]
+			)
+		];
+	}
+}
+
 class Scripts
 {
 	_All: Script[];
@@ -2824,7 +2959,7 @@ class Scripts
 	{
 		var scriptMethods =
 		[
-			this.agentSarienTalkTo,
+			this.agentEnemyTalkTo,
 			this.emplacementBodyEmptySearch,
 			this.emplacementBodyKeycardSearch,
 			this.itemCartridgeUse,
@@ -2844,6 +2979,7 @@ class Scripts
 			this.placePlanetCliffsCaveInterior_Update,
 			this.placePlanetDesertDeep_Update,
 			this.placePlanetSettlementRobotShopInterior_Buy,
+			this.regionFriendlyShip_UpdateForTurn,
 			this.todo
 		];
 
@@ -2873,12 +3009,19 @@ class Scripts
 		return Scripts._instance;
 	}
 
-	agentSarienTalkTo(u: Universe, w: World, p: Place, agent: any): void
+	todo(u: Universe, w: World, p: Place, c: Command): void
 	{
-		var message = "The Sarien's only response is to disintegrate you."
-		w.isOver = true;
+		u.messageEnqueue("todo");
+	}
 
+	agentEnemyTalkTo(u: Universe, w: World, p: Place, agent: any): void
+	{
+		var message =
+			"The Vadik's only response is to disintegrate you."
+			+ "\n\n"
+			+ "You are dead."
 		u.messageEnqueue(message);
+		w.end();
 	}
 
 	emplacementBodyEmptySearch
@@ -3371,9 +3514,122 @@ class Scripts
 		u.messageEnqueue("todo");
 	}
 
-	todo(u: Universe, w: World, p: Place, c: Command): void
+	regionFriendlyShip_UpdateForTurn(u: Universe, w: World, p: Place, c: Command): void
 	{
-		u.messageEnqueue("todo");
+		var turnsSoFar = w.turnsSoFar;
+
+		if (turnsSoFar == 3)
+		{
+			u.messageEnqueue
+			(
+				"In the distance, you can hear shouting, "
+				+ "then the sound of weapons fire, "
+				+ "then screaming, then silence."
+			);
+		}
+		else if (turnsSoFar == 10)
+		{
+			u.messageEnqueue
+			(
+				"You hear and feel a powerful explosion somewhere on board the ship.  "
+				+ "The lights flicker.  That's bad.  These are really expensive lights "
+				+ "that are guaranteed not to do that."
+			);
+		}
+		else if (turnsSoFar == 20)
+		{
+			u.messageEnqueue
+			(
+				"The force of another explosion being transferred "
+				+ "through the ship's frame "
+				+ "nearly knocks you off your feet.  "
+				+ "Some sparks shoot out of a panel, which is especially unsettling, "
+				+ "since you're pretty sure there's not even anything electrical behind that panel."
+			);
+		}
+		else if (turnsSoFar == 30)
+		{
+			u.messageEnqueue
+			(
+				"With another loud boom, the lights go completely out, "
+				+ "and stay out for a few seconds.  "
+				+ "Then they come back on.  But not all of them, "
+				+ "and not all the way, and not all the time."
+			);
+		}
+		else if (turnsSoFar == 40)
+		{
+			u.messageEnqueue
+			(
+				"You stagger as a titanic metallic groaning noise "
+				+ "echoes through the ship's halls.  "
+				+ "It sounds as if the ship is tearing itself apart, "
+				+ "which seems like a thing it might plausibly do in the next few minutes."
+			);
+		}
+		else if (turnsSoFar == 50)
+		{
+			u.messageEnqueue
+			(
+				"A series of sharp explosions makes the deck heave "
+				+ "under you, throwing you into the ceiling"
+				+ "by banking you off a wall, "
+				+ "and then slamming you back into the floor."
+			);
+		}
+		else if (turnsSoFar == 60)
+		{
+			u.messageEnqueue
+			(
+				"The rumbles, groaning, and explosions are getting so bad now "
+				+ "that it's getting hard to hear yourself think, "
+				+ "so you just have to hope that you are.  "
+				+ "Additionally, a pulsing, droning noise adds itself to the cacaphony."
+			);
+		}
+		else if (turnsSoFar == 70)
+		{
+			u.messageEnqueue
+			(
+				"The pulsing, droning noise is steadily rising in pitch.  "
+				+ "The pops, moans, and booms are steadily increasing in tempo.  "
+				+ "This symphony of destruction is clearly building up to something."
+			);
+		}
+		else if (turnsSoFar == 80)
+		{
+			u.messageEnqueue
+			(
+				"The pulsing, droning noise is now a ululating scream "
+				+ "that feels like it's trying simultaneously to claw its way into "
+				+ "and out of your skull."
+				+ "She cannae take much more o' this, Cap'n."
+			);
+		}
+		else if (turnsSoFar == 90)
+		{
+			u.messageEnqueue
+			(
+				"LOUD LOUD SO LOUD HOW CAN ANYTHING BE THIS LOUD"
+			);
+		}
+		else if (turnsSoFar == 100)
+		{
+			u.messageEnqueue
+			(
+				"The ship tears itself into a thousand pieces, "
+				+ "with a sound louder than ears can hear.  "
+				+ "Luckily, the ear-shattering noise only lasts a moment, "
+				+ "because all the ship's air rushes out into the surrounding vaccuum."
+				+ "Luckier still, you don't die of asphixiation, because you're "
+				+ "sheared into seven separate pieces by shrapnel from the explosion first."
+				+ "\n\n"
+				+ "You are dead."
+			);
+
+			w.end();
+		}
+
 	}
 }
 

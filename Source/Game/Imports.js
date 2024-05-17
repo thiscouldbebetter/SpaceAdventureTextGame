@@ -9,6 +9,7 @@ var Item = tea.Item;
 var MessageQueue = tea.MessageQueue;
 var Place = tea.Place;
 var Portal = tea.Portal;
+var Region = tea.Region;
 var SaveState = tea.SaveState;
 var SaveStateManager = tea.SaveStateManager;
 var Script = tea.Script;

@@ -9,6 +9,7 @@ import Item = tea.Item;
 import MessageQueue = tea.MessageQueue;
 import Place = tea.Place;
 import Portal = tea.Portal;
+import Region = tea.Region;
 import SaveState = tea.SaveState;
 import SaveStateManager = tea.SaveStateManager;
 import Script = tea.Script;

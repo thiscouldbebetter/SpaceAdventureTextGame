@@ -10,8 +10,39 @@ class Assert {
             throw new Error("Expected: not null, but was: null.");
         }
     }
+    static isFalse(conditionToCheck) {
+        if (conditionToCheck != false) {
+            throw new Error("Expected: false, but was: not false.");
+        }
+    }
+    static isTrue(conditionToCheck) {
+        if (conditionToCheck != true) {
+            throw new Error("Expected: true, but was: not true.");
+        }
+    }
 }
 class Tests {
+    die() {
+        var tea = ThisCouldBeBetter.TextAdventureEngine;
+        var Universe = tea.Universe;
+        var worldCreate = () => Game.worldBuild();
+        var universe = Universe.fromWorldCreate(worldCreate);
+        universe.initialize();
+        var world = universe.world;
+        Assert.isNotNull(world);
+        var run = (commandText) => world.updateForUniverseAndCommandText(universe, commandText);
+        var turnsWaitedSoFar = 0;
+        var turnsToWait = 90;
+        for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++) {
+            run("wait");
+        }
+        Assert.isFalse(world.isOver);
+        var turnsToWait = 10;
+        for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++) {
+            run("wait");
+        }
+        Assert.isTrue(world.isOver);
+    }
     playFromStart() {
         var tea = ThisCouldBeBetter.TextAdventureEngine;
         var Universe = tea.Universe;
@@ -133,6 +164,7 @@ class TestFixture {
 }
 var tests = new Tests();
 var testFixture = new TestFixture("All Tests", [
+    () => tests.die(),
     () => tests.playFromStart()
 ]);
 testFixture.run();
