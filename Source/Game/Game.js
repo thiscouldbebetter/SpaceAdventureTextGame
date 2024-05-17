@@ -8,13 +8,14 @@ class Game {
         );
         var scriptsCustom = new Scripts();
         var places = new Places();
+        var items = new Items();
         var commands = Command.Instances()._All;
         var scriptsAll = new Array();
         var commandsAsScripts = commands.map((x) => x._scriptExecute);
         scriptsAll.push(...commandsAsScripts);
         scriptsAll.push(...scriptsCustom._All);
         var placeInitialName = Places.friendlyShipJanitorsCloset_Name();
-        var returnValue = new World("Space_Adventure_Game", places._All, player, commands, scriptsAll, null, // turnsSoFar,
+        var returnValue = new World("Space_Adventure_Game", places._All, items._All, player, commands, scriptsAll, null, // turnsSoFar,
         placeInitialName);
         return returnValue;
     }
@@ -133,6 +134,9 @@ class Places {
     emplacement2(names, description) {
         return Emplacement.fromNamesAndDescription(names, description);
     }
+    emplacement3(names, description, scriptUseName) {
+        return Emplacement.fromNamesDescriptionAndScriptUseName(names, description, scriptUseName);
+    }
     place2(name, description) {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, null, // scriptName
         [] // objects
@@ -220,9 +224,13 @@ class Places {
             + "Well, the lowest of the bays you're likely to see."
             + "\n\n"
             + "Next to the elevator door is a small panel with a slot in it.", [
-            this.portal3(["elevator", "door"], Places.friendlyShipDockingBayAntechamber_Name(), this.scripts.placeFriendlyShipEngineeringDeckAft_GoElevator.name),
+            this.portal3(["elevator", "door"], Places.friendlyShipDockingBayAntechamber_Name(), this.scripts.placeFriendlyShipEngineeringDeckAft_GoElevator.name).lockedSet(true),
             this.portal(["forward"], Places.friendlyShipEngineeringDeckAmidships_Name()),
-            this.emplacement2(["slot", "lock", "keycard slot", "keyhole"], "The slot is intended to accept a security keycard.").commandAdd(new Command(["insert keycard in slot"], this.scripts.itemKeycardUse.name))
+            this.emplacement2(["slot", "lock", "keycard slot", "keyhole"], "The slot is intended to accept a security keycard.").commandAdd(new Command([
+                "use keycard on slot",
+                "insert keycard in slot",
+                "put keycard in slot"
+            ], this.scripts.itemKeycardUse.name))
         ]);
     }
     static friendlyShipEngineeringDeckAft_Name() {
@@ -281,7 +289,7 @@ class Places {
             + "\n\n"
             + "At the fore end, an door opens on an elevator back to the other decks.", [
             this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallForward_Name()),
-            this.portal(["aft"], Places.friendlyShipEngineeringDeckAmidships_Name()),
+            this.portal(["aft"], Places.friendlyShipEngineeringDeckAmidships_Name())
         ]);
     }
     static friendlyShipEngineeringDeckForward_Name() {
@@ -359,14 +367,15 @@ class Places {
             + "on the floor in front of the console. ", [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallForward_Name()),
             this.portal(["aft"], Places.friendlyShipUpperDeckHallAmidships_Name()),
-            this.emplacement2(["console"], "If the title of a desired data cartridge is typed "
+            this.emplacement3(["console", "retrieval console", "controls"], "This is a standard data cartridge retrieval console.  "
+                + "If the title of a desired data cartridge is typed "
                 + "on the console's keyboard, "
                 + "the retrieval robot will retrieve that cartridge from the stacks "
                 + "and drop it into the cartidge hopper below the console. "
                 + "From there, the cartridge is generally slotted into a reader "
                 + "and its contents displayed on a screen.  "
                 + "It's a complicated system, to be sure, "
-                + "but that sixteen hours of training you took was probably enough.").commandAdd(new Command(["type", "enter"], this.scripts.placeFriendlyShipLibrary_Type.name)),
+                + "but that sixteen hours of training you took was probably enough.", this.scripts.placeFriendlyShipLibrary_UseConsole.name).commandAdd(new Command(["type", "enter"], this.scripts.placeFriendlyShipLibrary_Type.name)),
             this.emplacement2(["table"], "The table provides a comfortable place "
                 + "for the more literate members of the crew to research data tapes."
                 + "\n\n"
@@ -376,10 +385,18 @@ class Places {
                 + "But they made you stop before you could even "
                 + "figure out how to detach the bot from the shelves, "
                 + "much less get a nice volley going."),
-            this.emplacement2(["man", "person", "body", "corpse", "being"], "He's not moving in any perceptible way.  "
+            this.emplacement2(["scientist", "man", "person", "body", "corpse", "being"], "The scientist is not moving in any perceptible way.  "
                 + "You can't tell from here if he's even breathing, "
                 + "which is the most important kind of moving, "
-                + "when you think about it.").commandAdd(new Command(["search body", "search corpse", "search man", "talk to man"], this.scripts.placeFriendlyShipLibrary_TalkToMan.name))
+                + "when you think about it.").commandAdd(new Command([
+                "search body",
+                "search man",
+                "search corpse",
+                "search person",
+                "search scientist",
+                "talk to person",
+                "talk to scientist"
+            ], this.scripts.placeFriendlyShipLibrary_TalkToMan.name))
         ]);
     }
     static friendlyShipLibrary_Name() {
@@ -549,7 +566,9 @@ class Places {
             this.portal(["west"], Places.planetDesertDeep_Name())
         ]);
     }
-    static planetDesertNorth_Name() { return "Ekkis II - Desert - North of Crash Site"; }
+    static planetDesertNorth_Name() {
+        return "Ekkis II - Desert - North of Crash Site";
+    }
     planetDesertSouth() {
         return this.place3(Places.planetDesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "just south of the wreck of your crashed escape pod.  "
@@ -565,7 +584,9 @@ class Places {
             this.portal(["west"], Places.planetDesertDeep_Name())
         ]);
     }
-    static planetDesertSouth_Name() { return "Ekkis II - Desert - South of Crash Site"; }
+    static planetDesertSouth_Name() {
+        return "Ekkis II - Desert - South of Crash Site";
+    }
     planetDesertWest() {
         return this.place3(Places.planetDesertWest_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "just west of the wreck of your crashed escape pod.  "
@@ -1168,7 +1189,13 @@ class Places {
             + "\n\n"
             + "A door leads back outside, as doors do.", [
             this.portal(["outside", "door"], Places.planetSettlementRobotShopFront_Name()),
-            this.emplacement2(["green robot"], "As you move to examine the robot, "
+            this.emplacement2([
+                "wheeled robot",
+                "domestic robot",
+                "general toiler s-34",
+                "general toiler",
+                "s-34"
+            ], "As you move to examine the robot, "
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the General Toiler S-34.  "
                 + "It's not for helping around the house.  "
@@ -1182,14 +1209,34 @@ class Places {
                 + "if you can call that living."
                 + "\n\n"
                 + "Its price is 40 credits, or 32 with coupon.'"),
-            this.emplacement2(["bipedal robot"], "As you move to examine the robot, "
+            this.emplacement2([
+                "bipedal robot",
+                "pilot/navigator robot",
+                "pilot robot",
+                "navigator robot",
+                "pilot/navigator",
+                "pilot",
+                "navigator",
+                "Astromatix Stardodger QG",
+                "Astromatix",
+                "Stardodger",
+                "QG"
+            ], "As you move to examine the robot, "
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the Astromatix Stardodger QG.  "
                 + "It's the best pilot/navigator robot money can buy.'  "
                 + "He slaps the robot's... pauldron?... briskly, and continues, "
                 + "'You can fit so many starmaps into this bad boy."
-                + "Its price is 45 credits, or 36 with coupon.'"),
-            this.emplacement2(["four-legged robot"], "As you move to examine the robot, "
+                + "Its price is 45 credits, or 36 with coupon.'").commandAdd(Command.fromTextAndScriptExecuteName("buy", this.scripts.placePlanetSettlementRobotShopInterior_Buy.name)),
+            this.emplacement2([
+                "six-legged robot",
+                "farming robot",
+                "farmer",
+                "Agron Cultivo F-12",
+                "Agron",
+                "Cultivo",
+                "F-12"
+            ], "As you move to examine the robot, "
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the Agron Cultivo F-12.  "
                 + "It's a farming robot.  "
@@ -1199,13 +1246,30 @@ class Places {
                 + "to get in on the ground floor.  "
                 + "Or the ground ground, in this case."
                 + "Its price is 300 credits, or 240 with coupon.'"),
-            this.emplacement2(["drill-faced robot"], "As you move to examine the robot, "
+            this.emplacement2([
+                "drill-faced robot",
+                "mining robot",
+                "miner",
+                "Stope & Adit Deep Dolly",
+                "Stope & Adit",
+                "Deep Dolly"
+            ], "As you move to examine the robot, "
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the Stope & Adit Deep Dolly.  "
                 + "It's a mining robot.  "
                 + "And I always say, what's mine is yours."
-                + "Only 700 credits, or 560 with coupon.'"),
-            this.emplacement2(["gun-armed robot"], "As you move to examine the robot, "
+                + "For only 700 credits, or 560 with coupon.'"),
+            this.emplacement2([
+                "gun-armed robot",
+                "military/security/military security robot",
+                "military robot",
+                "security robot",
+                "military security robot",
+                "soldier robot",
+                "BlackDark KLR-688",
+                "BlackDark",
+                "KLR-688"
+            ], "As you move to examine the robot, "
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the BlackDark KLR-668 with Bioexclusion Package.  "
                 + "It's a military/security/military security robot.  "
@@ -1510,9 +1574,11 @@ class Scripts {
             this.placeFriendlyShipJanitorsCloset_Update,
             this.placeFriendlyShipLibrary_TalkToMan,
             this.placeFriendlyShipLibrary_Type,
+            this.placeFriendlyShipLibrary_UseConsole,
             this.placeFriendlyShipUpperDeckHallAmidships_Update,
             this.placePlanetCliffsCaveInterior_Update,
             this.placePlanetDesertDeep_Update,
+            this.placePlanetSettlementRobotShopInterior_Buy,
             this.todo
         ];
         var scripts = new Array();
@@ -1576,21 +1642,27 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
-    itemKeycardUse(u, w, p, i, target) {
+    itemKeycardUse(u, w, p, c) {
+        var commandText = c.text();
+        var commandParts = commandText.split(" ");
+        var targetName = commandParts[3];
         var message;
-        if (target == null) {
+        if (targetName == null) {
             message = "The keycard must be used on something.";
         }
-        else if (target.name != "slot") {
+        else if (targetName != "slot") {
             message = "The keycard will only fit in an appropriately sized slot.";
         }
-        else if (target.stateGroup.valueGetByName(StateNames.isOpen())) {
-            message = "There's no need to use the keycard again, the door is already open.";
-            target.stateGroup.stateWithNameSetToValue(StateNames.isOpen(), true);
-        }
         else {
-            message = "You insert the keycard into the slot.  The adjacent door opens.";
-            target.stateGroup.stateWithNameSetToValue(StateNames.isOpen(), true);
+            var portalElevator = p.portalByName("elevator");
+            var portalElevatorIsLocked = portalElevator.locked();
+            if (portalElevatorIsLocked) {
+                message = "The elevator door slides open.";
+                portalElevator.unlock();
+            }
+            else {
+                message = "The elevator door is already open.";
+            }
         }
         u.messageEnqueue(message);
     }
@@ -1610,8 +1682,9 @@ class Scripts {
             u.messageEnqueue("The elevator is locked.");
         }
         else {
-            u.messageEnqueue("The elevator door opens smoothly as you approach.");
+            u.messageEnqueue("You step inside the open elevator.");
             portal.goThrough(u, w);
+            portal.lock();
         }
     }
     placeFriendlyShipEscapePod_GoDoor(u, w, place, portalDoor) {
@@ -1772,6 +1845,27 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
+    placeFriendlyShipLibrary_UseConsole(u, w, p, c) {
+        var message = [
+            "Try typing something, like 'type whatever'.  "
+                + "\n\n"
+                + "Yes, I know what you're thinking: "
+                + "It's hundreds of years in the future, "
+                + "and I still have to type stuff?  "
+                + "And what, are they still using QWERTY?  "
+                + "\n\n"
+                + "Don't be stupid.  This is a naval-grade data retrieval console, "
+                + "not some third-hand clicky-clack from a high-school keyboarding class.  "
+                + "No, it doesn't use QWERTY.  It uses GHAFTR.  The GHAFTR keyboard layout "
+                + "is proven to allow the expert typist to type 0.43% faster than QWERTY.  "
+                + "\n\n"
+                + "Granted, there are only twelve known GHAFTR experts, "
+                + "and that's counting four dead ones.  "
+                + "For everyone else, typing on a GHAFTR keyboard "
+                + "takes about four times as long.  So you'd better get started."
+        ].join("");
+        u.messageEnqueue(message);
+    }
     placeFriendlyShipUpperDeckHallAmidships_Update(u, w, p, c) {
         if (p.hasBeenVisited() == false) {
             p.visit();
@@ -1824,6 +1918,9 @@ class Scripts {
             u.messageEnqueue(message);
             w.end();
         }
+    }
+    placePlanetSettlementRobotShopInterior_Buy(u, w, p, c) {
+        u.messageEnqueue("todo");
     }
     todo(u, w, p, c) {
         u.messageEnqueue("todo");

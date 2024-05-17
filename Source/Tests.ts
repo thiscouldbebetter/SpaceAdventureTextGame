@@ -32,140 +32,132 @@ class Tests
 		var world = universe.world;
 		Assert.isNotNull(world);
 
-		var commandsSetsToRunAsStringArrays =
-		[
-			// Start.
+		var run = (commandText: string) =>
+			world.updateForUniverseAndCommandText(universe, commandText);
 
-			// Pax Aeterna.
-			[
-				// Upper deck.
+		// Start.
 
-				"go door",
-				"go forward",
-				"talk to man",
-				"type astral bodies",
-				"get cartridge",
-				"go forward",
-				"search body",
-				"get keycard",
-				"go aft",
-				"go aft",
-				"go elevator",
+		// Pax Aeterna.
 
-				// Lower deck.
-				"go forward",
-				"go forward",
-				"go elevator",
+		// Upper deck.
+		run("go door");
+		run("go forward");
+		run("talk to man");
+		run("type astral bodies");
+		run("get cartridge");
+		run("go forward");
+		run("search body");
+		run("get keycard");
+		run("go aft");
+		run("go aft");
+		run("go aft");
+		run("go elevator");
 
-				// Engineering deck.
-				"go aft",
-				"press open bay door button",
-				"go aft",
-				"use keycard on slot",
-				"go elevator",
+		// Lower deck.
+		run("go forward");
+		run("go forward");
+		run("go elevator");
 
-				// Docking bay.
-				"press left button",
-				"get gadget",
-				"press right button",
-				"get spacesuit",
-				"go airlock",
-				"push platform button",
-				"go pod",
+		// Engineering deck.
+		run("go aft");
+		run("press open bay door button");
+		run("go aft");
+		run("go elevator");
+		run("use keycard on slot");
+		run("go elevator");
 
-				// Escape pod.
-				"press launch button",
-				"press autonav button",
-			],
+		// Docking bay.
+		run("press left button");
+		run("get gadget");
+		run("press right button");
+		run("get spacesuit");
+		run("go airlock");
+		run("push platform button");
+		run("go pod");
 
-			// Ekkis II Wilderness.
+		// Escape pod.
+		run("press launch button");
+		run("press autonav button");
 
-			[
-				"go door",
+		// Ekkis II Wilderness.
 
-				// crash site
-				"go east",
-				
-				// cliff bottoms, hole
-				"go south",
-				"go east",
-				// beneath bridge
-				"go east",
-				// bottom ramp, cave
-				"go up",
-				// bridge arch, east side
-				"go west",
-				// bridge arch, west side
-				"go west",
-				// cliff tops, west
-				"go north",
-				// peak
-				"go east",
-				// cliff tops, north
-				"go east",
-				// cliff tops, northeast, columns
-				"go columns",
+		run("go door");
 
-				// caverns
-				// elevator
-				"go west",
-				// grating
-				"go west",
-				// geyser
-				"go west",
-				// pool
-				"go west",
-				// barrier
-				"go west",
-				// drips
-				"go east",
-				// projection room
-				"go north",
-				// steamworks
-				"go skimmer",
-			],
+		Assert.areEqual
+		(
+			Places.planetDesertCrashSite_Name(),
+			world.placeCurrent().name
+		);
 
-			// Village of [Farting Noise].
-			[
-				"go bar",
+		// crash site
+		run("go east");
 
-				"go outside",
-				"go north",
-				"go east",
-				"go door",
-				// robot shop
+		// cliff bottoms, hole
+		run("go south");
+		run("go east");
+		// beneath bridge
+		run("go east");
+		// bottom ramp, cave
+		run("go up");
+		// bridge arch, east side
+		run("go west");
+		// bridge arch, west side
+		run("go west");
+		// cliff tops, west
+		run("go north");
+		// peak
+		run("go east");
+		// cliff tops, north
+		run("go east");
+		// cliff tops, northeast, columns
+		run("go columns");
 
-				"go outside",
-				"go west",
-				"go west",
-				// ship lot north
-			]
-		];
+		// caverns
+		// elevator
+		run("go west");
+		// grating
+		run("go west");
+		// geyser
+		run("go west");
+		// pool
+		run("go west");
+		// barrier
+		run("go west");
+		// drips
+		run("go east");
+		// projection room
+		run("go north");
+		// steamworks
+		run("go skimmer");
 
-		var placesExpectedAfterCommandSets =
-		[
-			Places.friendlyShipEscapePod_Name(),
+		// Village of [Farting Noise].
+
+		Assert.areEqual
+		(
 			Places.planetSettlementBarFront_Name(),
-			Places.planetSettlementNorthOfUsedShipLot_Name()
-		];
+			world.placeCurrent().name
+		);
 
-		for (var s = 0; s < commandsSetsToRunAsStringArrays.length; s++)
-		{
-			var commandsToRunAsText = commandsSetsToRunAsStringArrays[s];
+		run("go bar");
 
-			var place = world.placeCurrent();
+		run("go outside");
+		run("go north");
+		run("go east");
+		run("go door");
+		// robot shop
 
-			for (var i = 0; i < commandsToRunAsText.length; i++)
-			{
-				var commandText = commandsToRunAsText[i];
-				world.updateForUniverseAndCommandText(universe, commandText);
-				place = world.placeCurrent();
-			}
+		run("buy pilot robot");
 
-			var placeExpectedName = placesExpectedAfterCommandSets[s];
+		run("go outside");
+		run("go west");
+		run("go west");
+		// ship lot north
 
-			Assert.areEqual(placeExpectedName, place.name);
-		}
+		Assert.areEqual
+		(
+			Places.planetSettlementNorthOfUsedShipLot_Name(),
+			world.placeCurrent().name
+		);
 	}
 }
 

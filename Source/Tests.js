@@ -20,116 +20,99 @@ class Tests {
         universe.initialize();
         var world = universe.world;
         Assert.isNotNull(world);
-        var commandsSetsToRunAsStringArrays = [
-            // Start.
-            // Pax Aeterna.
-            [
-                // Upper deck.
-                "go door",
-                "go forward",
-                "talk to man",
-                "type astral bodies",
-                "get cartridge",
-                "go forward",
-                "search body",
-                "get keycard",
-                "go aft",
-                "go aft",
-                "go elevator",
-                // Lower deck.
-                "go forward",
-                "go forward",
-                "go elevator",
-                // Engineering deck.
-                "go aft",
-                "press open bay door button",
-                "go aft",
-                "use keycard on slot",
-                "go elevator",
-                // Docking bay.
-                "press left button",
-                "get gadget",
-                "press right button",
-                "get spacesuit",
-                "go airlock",
-                "push platform button",
-                "go pod",
-                // Escape pod.
-                "press launch button",
-                "press autonav button",
-            ],
-            // Ekkis II Wilderness.
-            [
-                "go door",
-                // crash site
-                "go east",
-                // cliff bottoms, hole
-                "go south",
-                "go east",
-                // beneath bridge
-                "go east",
-                // bottom ramp, cave
-                "go up",
-                // bridge arch, east side
-                "go west",
-                // bridge arch, west side
-                "go west",
-                // cliff tops, west
-                "go north",
-                // peak
-                "go east",
-                // cliff tops, north
-                "go east",
-                // cliff tops, northeast, columns
-                "go columns",
-                // caverns
-                // elevator
-                "go west",
-                // grating
-                "go west",
-                // geyser
-                "go west",
-                // pool
-                "go west",
-                // barrier
-                "go west",
-                // drips
-                "go east",
-                // projection room
-                "go north",
-                // steamworks
-                "go skimmer",
-            ],
-            // Village of [Farting Noise].
-            [
-                "go bar",
-                "go outside",
-                "go north",
-                "go east",
-                "go door",
-                // robot shop
-                "go outside",
-                "go west",
-                "go west",
-                // ship lot north
-            ]
-        ];
-        var placesExpectedAfterCommandSets = [
-            Places.friendlyShipEscapePod_Name(),
-            Places.planetSettlementBarFront_Name(),
-            Places.planetSettlementNorthOfUsedShipLot_Name()
-        ];
-        for (var s = 0; s < commandsSetsToRunAsStringArrays.length; s++) {
-            var commandsToRunAsText = commandsSetsToRunAsStringArrays[s];
-            var place = world.placeCurrent();
-            for (var i = 0; i < commandsToRunAsText.length; i++) {
-                var commandText = commandsToRunAsText[i];
-                world.updateForUniverseAndCommandText(universe, commandText);
-                place = world.placeCurrent();
-            }
-            var placeExpectedName = placesExpectedAfterCommandSets[s];
-            Assert.areEqual(placeExpectedName, place.name);
-        }
+        var run = (commandText) => world.updateForUniverseAndCommandText(universe, commandText);
+        // Start.
+        // Pax Aeterna.
+        // Upper deck.
+        run("go door");
+        run("go forward");
+        run("talk to man");
+        run("type astral bodies");
+        run("get cartridge");
+        run("go forward");
+        run("search body");
+        run("get keycard");
+        run("go aft");
+        run("go aft");
+        run("go aft");
+        run("go elevator");
+        // Lower deck.
+        run("go forward");
+        run("go forward");
+        run("go elevator");
+        // Engineering deck.
+        run("go aft");
+        run("press open bay door button");
+        run("go aft");
+        run("go elevator");
+        run("use keycard on slot");
+        run("go elevator");
+        // Docking bay.
+        run("press left button");
+        run("get gadget");
+        run("press right button");
+        run("get spacesuit");
+        run("go airlock");
+        run("push platform button");
+        run("go pod");
+        // Escape pod.
+        run("press launch button");
+        run("press autonav button");
+        // Ekkis II Wilderness.
+        run("go door");
+        Assert.areEqual(Places.planetDesertCrashSite_Name(), world.placeCurrent().name);
+        // crash site
+        run("go east");
+        // cliff bottoms, hole
+        run("go south");
+        run("go east");
+        // beneath bridge
+        run("go east");
+        // bottom ramp, cave
+        run("go up");
+        // bridge arch, east side
+        run("go west");
+        // bridge arch, west side
+        run("go west");
+        // cliff tops, west
+        run("go north");
+        // peak
+        run("go east");
+        // cliff tops, north
+        run("go east");
+        // cliff tops, northeast, columns
+        run("go columns");
+        // caverns
+        // elevator
+        run("go west");
+        // grating
+        run("go west");
+        // geyser
+        run("go west");
+        // pool
+        run("go west");
+        // barrier
+        run("go west");
+        // drips
+        run("go east");
+        // projection room
+        run("go north");
+        // steamworks
+        run("go skimmer");
+        // Village of [Farting Noise].
+        Assert.areEqual(Places.planetSettlementBarFront_Name(), world.placeCurrent().name);
+        run("go bar");
+        run("go outside");
+        run("go north");
+        run("go east");
+        run("go door");
+        // robot shop
+        run("buy pilot robot");
+        run("go outside");
+        run("go west");
+        run("go west");
+        // ship lot north
+        Assert.areEqual(Places.planetSettlementNorthOfUsedShipLot_Name(), world.placeCurrent().name);
     }
 }
 class TestFixture {
