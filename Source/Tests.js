@@ -80,10 +80,16 @@ class Tests {
         run("go elevator");
         // Docking bay.
         run("press left button");
+        run("go left closet");
         run("get gadget");
+        run("go out");
         run("press right button");
+        run("go right closet");
         run("get spacesuit");
+        run("go out");
         run("go airlock");
+        run("go pod");
+        Assert.areEqual(Places.friendlyShipDockingBayHangar_Name(), world.placeCurrent().name);
         run("push platform button");
         run("go pod");
         // Escape pod.
@@ -129,7 +135,9 @@ class Tests {
         // projection room
         run("go north");
         // steamworks
-        run("go skimmer");
+        run("talk to alien");
+        run("get skimmer key");
+        run("insert key in skimmer");
         // Village of [Farting Noise].
         Assert.areEqual(Places.planetSettlementBarFront_Name(), world.placeCurrent().name);
         run("go bar");

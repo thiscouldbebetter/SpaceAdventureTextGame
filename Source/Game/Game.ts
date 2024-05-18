@@ -12,9 +12,10 @@ class Game
 			null, // scriptUpdateForTurnName
 
 			[
-				Item.fromNameAndDescription
+				Item.fromNamesAndDescription
 				(
-					"washrag",
+					[ "washrag", "rag" ],
+
 					"This is a rag you use to clean things sometimes.  "
 					+ "You may or may not have given it a name.  "
 					+ "And a backstory."
@@ -70,6 +71,7 @@ class Items
 	OratPart: Item;
 	PulseRifle: Item;
 	SkimmerKey: Item;
+	SpaceSuit: Item;
 	SurvivalKit: Item;
 	XenonArmyKnife: Item;
 
@@ -77,9 +79,20 @@ class Items
 
 	constructor()
 	{
+		this.Gadget = this.gadget();
 		this.GasGrenade = this.gasGrenade();
 		this.Keycard = this.keycard();
-		this._All = [];
+		this.SkimmerKey = this.skimmerKey();
+		this.SpaceSuit = this.spaceSuit();
+
+		this._All =
+		[
+			this.Gadget,
+			this.GasGrenade,
+			this.Keycard,
+			this.SkimmerKey,
+			this.SpaceSuit
+		];
 	}
 
 	static _instance: Items;
@@ -92,11 +105,22 @@ class Items
 		return this._instance;
 	}
 
+	gadget(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "gadget", "translator" ],
+
+			"This is a strange blinking gadget you found in a closet.  "
+			+ "It sounds weird when you put it like that."
+		);
+	}
+
 	gasGrenade(): Item
 	{
-		return Item.fromNameAndDescription
+		return Item.fromNamesAndDescription
 		(
-			"gas grenade",
+			[ "gas grenade", "grenade" ],
 
 			"This is a Vadik gas grenade.  "
 			+ "The Vadik are notoriously, and apparently cheerfully, violent, "
@@ -107,13 +131,46 @@ class Items
 
 	keycard(): Item
 	{
-		return Item.fromNameAndDescription
+		return Item.fromNamesAndDescription
 		(
-			"keycard",
+			[ "keycard", "key", "card" ],
+
 			"This is an access keycard for the starship Pax Aeterna.  "
 			+ "You guess it could also be, like, a picnic table for ants."
 		);
 	}
+
+	skimmerKey(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "skimmer key" ],
+
+			"This is the starter key for a sand skimmer."
+		).commandAdd
+		(
+			new Command
+			(
+				[ "put key in skimmer", "insert key in skimmer", "use key on skimmer" ],
+				Scripts.Instance().placePlanetCavernsSteamworks_InsertKeyInSkimmer.name
+			)
+		);
+	}
+
+	spaceSuit(): Item
+	{
+		return Item.fromNamesDescriptionAndScriptGetName
+		(
+			[ "space suit", "spacesuit", "suit" ],
+
+			"This is space suit from the starship Pax Aeterna.  "
+			+ "It keeps the space out and the air in.  "
+			+ "Maybe they should call it an air suit.",
+
+			Scripts.Instance().placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit.name
+		);
+	}
+
 }
 
 class Places
@@ -123,112 +180,11 @@ class Places
 	constructor()
 	{
 		this.scripts = Scripts.Instance();
-
-		/*
-		this._All =
-		[
-			// Pax Aeterna - Upper Deck.
-			this.friendlyShipJanitorsCloset(),
-			this.friendlyShipUpperDeckHallAmidships(),
-			this.friendlyShipLibrary(),
-			this.friendlyShipUpperDeckHallForward(),
-			this.friendlyShipUpperDeckHallAft(),
-			this.friendlyShipBridge(),
-
-			// Pax Aeterna - Lower Deck.
-
-			this.friendlyShipLowerDeckHallAft(),
-			this.friendlyShipLowerDeckHallAmidships(),
-			this.friendlyShipLowerDeckHallForward(),
-
-			// Pax Aeterna - Engineering Deck.
-
-			this.friendlyShipEngineeringDeckAft(),
-			this.friendlyShipEngineeringDeckAmidships(),
-			this.friendlyShipEngineeringDeckForward(),
-
-			// Pax Aeterna - Docking Bay.
-
-			this.friendlyShipDockingBayAntechamber(),
-			this.friendlyShipDockingBayHangar(),
-			this.friendlyShipEscapePod(),
-
-			// Ekkis 2 - Desert.
-
-			this.planetDesertCrashSite(),
-			this.planetDesertDeep(),
-			this.planetDesertNorth(),
-			this.planetDesertSouth(),
-			this.planetDesertWest(),
-
-			// Ekkis 2 - Cliffs.
-
-			this.planetCliffsBottomNorth(),
-			this.planetCliffsBottomNortheast(),
-			this.planetCliffsBottomNorthwestEastSide(),
-			this.planetCliffsBottomNorthwestWestSide(),
-			this.planetCliffsBottomSouth(),
-			this.planetCliffsBottomSoutheast(),
-			this.planetCliffsBottomSouthwest(),
-			this.planetCliffsCaveInterior(),
-			this.planetCliffsTopNorth(),
-			this.planetCliffsTopNortheast(),
-			this.planetCliffsTopNorthwest(),
-			this.planetCliffsTopSouthEastSide(),
-			this.planetCliffsTopSouthWestSide(),
-			this.planetCliffsTopSouthwest(),
-
-			// Ekkis 2 - Caverns.
-
-			this.planetCavernsProjectionRoom(),
-			this.planetCavernsSteamworks(),
-
-			this.planetCavernsBarrier(),
-			this.planetCavernsDrips(),
-			this.planetCavernsElevator(),
-			this.planetCavernsGeyser(),
-			this.planetCavernsGrating(),
-			this.planetCavernsPool(),
-
-			// Ekkis 2 - Village of [Farting Noise].
-
-			this.planetSettlementBarFront(),
-			this.planetSettlementBarInterior(),
-			this.planetSettlementBarRear(),
-			this.planetSettlementRobotShopFront(),
-			this.planetSettlementRobotShopInterior(),
-			this.planetSettlementRobotShopWest(),
-			this.planetSettlementNorthOfUsedShipLot(),
-			this.planetSettlementUsedShipLot(),
-
-			// enemyShip.
-
-			this.enemyShipAirlockAntechamber(),
-			this.enemyShipAirlockChamber(),
-			this.enemyShipAirlockExterior(),
-			this.enemyShipArmory(),
-			this.enemyShipLaundry(),
-			this.enemyShipLowerDeckHallAft(),
-			this.enemyShipLowerDeckHallAmidships(),
-			this.enemyShipLowerDeckHallFore(),
-			this.enemyShipNearbySpace(),
-			this.enemyShipShuttleBay(),
-			this.enemyShipStellarJuvenatorChamber(),
-			this.enemyShipStellarJuvenatorChamberCatwalk(),
-			this.enemyShipUpperDeckHallAft(),
-			this.enemyShipUpperDeckHallAmidships(),
-			this.enemyShipUpperDeckHallFore(),
-			this.enemyShipVentilationShaft1(),
-			this.enemyShipVentilationShaft2(),
-			this.enemyShipVentilationShaft3(),
-			this.enemyShipVentilationShaft4()
-		];
-		*/
 	}
 
-	emplacement(name: string): Emplacement
+	emplacement(names: string[]): Emplacement
 	{
-		return Emplacement.fromName(name);
+		return Emplacement.fromNames(names);
 	}
 
 	emplacement2(names: string[], description: string): Emplacement
@@ -302,7 +258,7 @@ class Places
 		names: string[], placeDestinationName: string, scriptUseName: string
 	): Portal
 	{
-		return new Portal( names, null, placeDestinationName, scriptUseName, null);
+		return new Portal( names, null, placeDestinationName, scriptUseName, true, null);
 	}
 
 	// Places.
@@ -346,11 +302,62 @@ class Places
 			+ " An elevator leads back to the engineering deck.",
 
 			[
-				this.portal( [ "airlock" ], Places.friendlyShipDockingBayHangar_Name()),
-				this.portal( [ "elevator" ], Places.friendlyShipEngineeringDeckAft_Name()),
+				this.portal3
+				(
+					[ "airlock" ],
+					Places.friendlyShipDockingBayHangar_Name(),
+					this.scripts.placeFriendlyShipDockingBayAntechamber_GoAirlock.name
+				),
 
-				this.emplacement("controls"),
-				this.emplacement("hatch")
+				this.portal
+				(
+					[ "elevator" ],
+					Places.friendlyShipEngineeringDeckAft_Name()
+				),
+
+				this.portal
+				(
+					[ "left closet" ],
+					Places.friendlyShipDockingBayAntechamberClosetLeft_Name()
+				).lock().descriptionSet
+				(
+					"The door to the left closet is closed."
+				),
+
+				this.portal
+				(
+					[ "right closet" ],
+					Places.friendlyShipDockingBayAntechamberClosetRight_Name()
+				).lock().descriptionSet
+				(
+					"The door to the right closet is closed."
+				),
+
+				this.emplacement( [ "controls", "console", "control console" ] ),
+
+				this.emplacement
+				(
+					[ "left button", "button" ]
+				).commandAdd
+				(
+					new Command
+					(
+						[ "press left button" ],
+						this.scripts.placeFriendlyShipDockingBayAntechamber_PressLeftButton.name
+					)
+				),
+
+				this.emplacement
+				(
+					[ "right button", "button" ]
+				).commandAdd
+				(
+					new Command
+					(
+						[ "press right button" ],
+						this.scripts.placeFriendlyShipDockingBayAntechamber_PressRightButton.name
+					)
+				)
 			]
 		);
 	}
@@ -358,6 +365,60 @@ class Places
 	static friendlyShipDockingBayAntechamber_Name(): string
 	{
 		return "Pax Aeterna - Docking Bay - Antechamber";
+	}
+
+	friendlyShipDockingBayAntechamberClosetLeft(): Place
+	{
+		return this.place3
+		(
+			Places.friendlyShipDockingBayAntechamberClosetLeft_Name(),
+
+			"This is the left-hand closet of the antechamber "
+			+ "of the Pax Aeterna's docking bay.  "
+			+ "The door leads back to the antechamber.",
+
+			[
+				this.portal
+				(
+					[ "door", "out", "outside" ],
+					Places.friendlyShipDockingBayAntechamber_Name()
+				),
+
+				Items.Instance().Gadget
+			]
+		);
+	}
+
+	static friendlyShipDockingBayAntechamberClosetLeft_Name(): string
+	{
+		return "Pax Aeterna - Docking Bay - Antechamber - Left Closet";
+	}
+
+	friendlyShipDockingBayAntechamberClosetRight(): Place
+	{
+		return this.place3
+		(
+			Places.friendlyShipDockingBayAntechamberClosetRight_Name(),
+
+			"This is the right-hand closet of the antechamber "
+			+ "of the Pax Aeterna's docking bay.  "
+			+ "The door leads back to the antechamber.",
+
+			[
+				this.portal
+				(
+					[ "door", "out", "outside" ],
+					Places.friendlyShipDockingBayAntechamber_Name()
+				),
+
+				Items.Instance().SpaceSuit
+			]
+		);
+	}
+
+	static friendlyShipDockingBayAntechamberClosetRight_Name(): string
+	{
+		return "Pax Aeterna - Docking Bay - Antechamber - Right Closet";
 	}
 
 	friendlyShipDockingBayHangar(): Place
@@ -379,18 +440,35 @@ class Places
 
 			[
 				this.portal( [ "airlock" ], Places.friendlyShipDockingBayAntechamber_Name() ),
-				this.portal( [ "pod" ], Places.friendlyShipEscapePod_Name() ).visibleSet(false),
+
+				this.portal
+				(
+					[ "escape pod", "pod", "ship" ], Places.friendlyShipEscapePod_Name()
+				).descriptionSet
+				(
+					"The pod is kind of cramped-looking, "
+					+ "but as it's your only hope of survival right now, "
+					+ "you prefer to think of it as 'cozy'."
+				).visibleSet(false),
 
 				this.emplacement2
 				(
-					[ "controls", "panel", "console", "buttons", "control panel", "control console" ],
+					[
+						"controls", "panel", "console",
+						"buttons", "control panel", "control console"
+					],
 
 					"The control panel bears a single button, which says 'platform'."
 				).commandAdd
 				(
-					Command.fromTextAndScriptExecuteName
+					Command.fromTextsAndScriptExecuteName
 					(
-						"press platform button",
+						[
+							"press platform button",
+							"push platform button",
+							"press button",
+							"push button"
+						],
 						this.scripts.placeFriendlyShipDockingBayHangar_PressPlatformButton.name
 					)
 				),
@@ -399,11 +477,19 @@ class Places
 				(
 					[ "hatch", "trapdoor" ],
 
-					"This is a hatch in the floor, perhaps three meters by five meters,"
+					"This is a trapdoor in the floor, "
+					+ "perhaps three meters by five meters,"
 					+ "split down the middle into two retractible doors."
 				),
 
-				this.emplacement("pod").visibleSet(false),
+				this.emplacement
+				(
+					[ "docking bay doors", "bay doors", "doors" ],
+				).lock().descriptionSet
+				(
+					"The bay doors are closed."
+				)
+
 			]
 		);
 	}
@@ -498,7 +584,13 @@ class Places
 
 				this.emplacement2
 				(
-					[ "console", "controls", "buttons", "control console", "control panel" ],
+					[
+						"console",
+						"controls",
+						"buttons",
+						"control console",
+						"control panel"
+					],
 
 					"These are the controls for the docking bay doors, "
 					+ "which are visible through the nearby window.  "
@@ -510,23 +602,41 @@ class Places
 
 				this.emplacement2
 				(
-					[ "open button", "open doors button", "open bay doors button" ],
+					[
+						"open button",
+						"open bay button",
+						"open doors button",
+						"open bay doors button",
+						"button"
+					],
 
 					"This button opens the docking bay doors, "
 					+ "if they happen to be closed.  "
 					+ "Otherwise, they do nothing.  Or so you assume."
+
 				).visibleSet(false).commandAdd
 				(
 					new Command
 					(
-						[ "press open bay doors button" ],
-						this.scripts.todo.name,
+						[
+							"press open button",
+							"press open bay button",
+							"press open bay doors button",
+							"press open bay door button"
+						],
+
+						this.scripts.placeFriendlyShipEngineeringDeckAmidships_PressOpenButton.name,
 					)
 				),
 
 				this.emplacement2
 				(
-					[ "close button", "close doors button", "close bay doors button" ],
+					[
+						"close button",
+						"close doors button",
+						"close bay doors button",
+						"button"
+					],
 
 					"This button closes the docking bay doors, "
 					+ "if they happen to be open.  "
@@ -535,8 +645,12 @@ class Places
 				(
 					new Command
 					(
-						[ "press close bay doors button" ],
-						this.scripts.todo.name,
+						[
+							"press close button",
+							"press close bay button",
+							"press close bay doors button"
+						],
+						this.scripts.placeFriendlyShipEngineeringDeckAmidships_PressCloseButton.name,
 					)
 				),
 
@@ -561,7 +675,7 @@ class Places
 					+ "especially when the bay doors are closed."
 				),
 
-				this.emplacement("body").commandAdd
+				this.emplacement( [ "body" ] ).commandAdd
 				(
 					new Command
 					(
@@ -570,11 +684,11 @@ class Places
 					)
 				),
 
-				this.emplacement("other body").commandAdd
+				this.emplacement( [ "other body" ] ).commandAdd
 				(
 					new Command
 					(
-						["search other body"],
+						[ "search other body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				)
@@ -630,10 +744,10 @@ class Places
 		(
 			Places.friendlyShipEscapePod_Name(),
 
-			"This is the interior of one of the Pax Aeterna's escape pods."
+			"This is the interior of one of the Pax Aeterna's escape pods.  "
 			+ "A padded seat with safety belts completely occupies the floor of the pod's cabin.  "
 			+ "Beneath the window is a console with various controls, "
-			+ "including a throttle, a monitor screen, and some buttons. "
+			+ "including a throttle, a monitor screen, and some buttons.  "
 			+ "A gull-wing door in the left wall of the pod allows entry and exit.  "
 			+ "Opposite the door, on the starboard wall, is a mounting for a survival kit.  "
 			+ "Above the control console is a large window, through which "
@@ -647,7 +761,19 @@ class Places
 					this.scripts.placeFriendlyShipEscapePod_GoDoor.name
 				),
 
-				this.emplacement("autonav button").commandAdd
+				this.emplacement
+				(
+					[ "window" ]
+				).commandAdd
+				(
+					new Command
+					(
+						[ "look window", "look through window", "look out window" ],
+						this.scripts.placeFriendlyShipEscapePod_LookWindow.name
+					)
+				),
+
+				this.emplacement( [ "autonav button", "autonav", "button" ] ).commandAdd
 				(
 					new Command
 					(
@@ -655,10 +781,10 @@ class Places
 						this.scripts.placeFriendlyShipEscapePod_PressAutonavButton.name
 					)
 				),
-				this.emplacement("buttons"),
-				this.emplacement("console"),
-				this.emplacement("don't button"),
-				this.emplacement("launch button").commandAdd
+				this.emplacement( [ "buttons" ] ),
+				this.emplacement( [ "console" ] ),
+				this.emplacement( [ "don't button", "button" ] ),
+				this.emplacement( [ "launch button", "button" ] ).commandAdd
 				(
 					new Command
 					(
@@ -666,17 +792,17 @@ class Places
 						this.scripts.placeFriendlyShipEscapePod_PressLaunchButton.name
 					)
 				),
-				this.emplacement("monitor screen"),
-				this.emplacement("safety belt"),
-				this.emplacement("survival kit"),
-				this.emplacement("throttle")
+				this.emplacement( [ "monitor screen" ] ),
+				this.emplacement( [ "safety belt" ] ),
+				this.emplacement( [ "survival kit" ] ),
+				this.emplacement( [ "throttle" ] )
 			]
 		);
 	}
 
 	static friendlyShipEscapePod_Name(): string
 	{
-		return "Pax Aeterna - Escape Pod";
+		return "Escape Pod";
 	}
 
 	friendlyShipJanitorsCloset(): Place
@@ -847,7 +973,7 @@ class Places
 			[
 				this.portal( [ "forward" ], Places.friendlyShipLowerDeckHallAmidships_Name() ),
 				this.portal( [ "elevator" ], Places.friendlyShipUpperDeckHallAft_Name() ),
-				this.emplacement("body").commandAdd
+				this.emplacement( [ "body" ] ).commandAdd
 				(
 					new Command
 					(
@@ -913,11 +1039,11 @@ class Places
 			[
 				this.portal( [ "aft" ], Places.friendlyShipLowerDeckHallAmidships_Name() ),
 				this.portal( [ "elevator", "door" ], Places.friendlyShipEngineeringDeckForward_Name() ),
-				this.emplacement("body").commandAdd
+				this.emplacement( [ "body" ] ).commandAdd
 				(
 					new Command
 					(
-						["search body"],
+						[ "search body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				)
@@ -948,11 +1074,11 @@ class Places
 			[
 				this.portal( [ "forward" ], Places.friendlyShipUpperDeckHallAmidships_Name() ),
 				this.portal( [ "elevator", "door" ], Places.friendlyShipLowerDeckHallAft_Name() ),
-				this.emplacement("body").commandAdd
+				this.emplacement( [ "body" ] ).commandAdd
 				(
 					new Command
 					(
-						["search body"],
+						[ "search body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				)
@@ -981,8 +1107,16 @@ class Places
 			this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name,
 
 			[
-				this.portal( [ "closet", "office" ], Places.friendlyShipJanitorsCloset_Name() ),
-				this.portal( [ "forward" ], Places.friendlyShipLibrary_Name() ),
+				this.portal
+				(
+					[ "closet", "office", "door", "closet door", "office door" ],
+					Places.friendlyShipJanitorsCloset_Name()
+				),
+				this.portal
+				(
+					[ "forward", "door", "forward door", "library", "library door" ],
+					Places.friendlyShipLibrary_Name()
+				),
 				this.portal( [ "aft" ], Places.friendlyShipUpperDeckHallAft_Name() )
 			]
 		);
@@ -1012,8 +1146,13 @@ class Places
 			+ "Unlikely, but we shouldn't rule anything out.",
 
 			[
-				this.portal( [ "aft", "library" ], Places.friendlyShipLibrary_Name()),
-				this.emplacement("body").commandAdd
+				this.portal
+				(
+					[ "aft", "library" ],
+					Places.friendlyShipLibrary_Name()
+				),
+
+				this.emplacement( [ "body" ] ).commandAdd
 				(
 					new Command
 					(
@@ -1296,14 +1435,14 @@ class Places
 			[
 				this.portal( [ "south" ], Places.planetCliffsBottomSouthwest_Name() ),
 				this.portal( [ "west" ], Places.planetDesertCrashSite_Name() ),
-				this.emplacement
+				this.emplacement2
 				(
-					"hole"
+					[ "hole" ],
 
-					// "This is a hole in the side of the cliff face, "
-					// + "about 40 centimeters in diameter.  Its interior is "
-					// + "deeply shadowed, making it impossible to see what, "
-					// + "if anything, might be inside it."
+					"This is a hole in the side of the cliff face, "
+					+ "about 40 centimeters in diameter.  Its interior is "
+					+ "deeply shadowed, making it impossible to see what, "
+					+ "if anything, might be inside it."
 				)
 			]
 		);
@@ -1497,7 +1636,7 @@ class Places
 				(
 					[ "horns", "columns" ],
 					Places.planetCavernsElevator_Name()
-				).visibleSet(false)
+				)
 			]
 		);
 	}
@@ -1885,11 +2024,18 @@ class Places
 
 			[
 				this.portal( [ "east" ], Places.planetCavernsProjectionRoom_Name() ),
-				this.portal
+
+				this.emplacement
 				(
-					[ "skimmer" ],
-					Places.planetSettlementBarFront_Name()
-				).visibleSet(false)
+					[ "alien" ]
+				).commandAdd
+				(
+					new Command
+					(
+						[ "talk to alien" ],
+						this.scripts.placePlanetCavernsSteamworks_TalkToAlien.name
+					)
+				)
 			]
 		);
 	}
@@ -2860,6 +3006,8 @@ class Regions
 					// Docking Bay.
 
 					places.friendlyShipDockingBayAntechamber(),
+					places.friendlyShipDockingBayAntechamberClosetLeft(),
+					places.friendlyShipDockingBayAntechamberClosetRight(),
 					places.friendlyShipDockingBayHangar(),
 					places.friendlyShipEscapePod()
 				]
@@ -2964,11 +3112,16 @@ class Scripts
 			this.emplacementBodyKeycardSearch,
 			this.itemCartridgeUse,
 			this.itemKeycardUse,
+			this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
 			this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
 			this.placeFriendlyShipDockingBayAntechamber_PressRightButton,
+			this.placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit,
 			this.placeFriendlyShipDockingBayHangar_PressPlatformButton,
+			this.placeFriendlyShipEngineeringDeckAmidships_PressCloseButton,
+			this.placeFriendlyShipEngineeringDeckAmidships_PressOpenButton,
 			this.placeFriendlyShipEngineeringDeckAft_GoElevator,
 			this.placeFriendlyShipEscapePod_GoDoor,
+			this.placeFriendlyShipEscapePod_LookWindow,
 			this.placeFriendlyShipEscapePod_PressAutonavButton,
 			this.placeFriendlyShipEscapePod_PressLaunchButton,
 			this.placeFriendlyShipJanitorsCloset_Update,
@@ -2976,6 +3129,8 @@ class Scripts
 			this.placeFriendlyShipLibrary_Type,
 			this.placeFriendlyShipLibrary_UseConsole,
 			this.placeFriendlyShipUpperDeckHallAmidships_Update,
+			this.placePlanetCavernsSteamworks_InsertKeyInSkimmer,
+			this.placePlanetCavernsSteamworks_TalkToAlien,
 			this.placePlanetCliffsCaveInterior_Update,
 			this.placePlanetDesertDeep_Update,
 			this.placePlanetSettlementRobotShopInterior_Buy,
@@ -3110,11 +3265,13 @@ class Scripts
 		else
 		{
 			var portalElevator = p.portalByName("elevator");
-			var portalElevatorIsLocked = portalElevator.locked();
-			if (portalElevatorIsLocked)
+			var portalElevatorIsClosed = portalElevator.locked();
+			if (portalElevatorIsClosed)
 			{
-				message = "The elevator door slides open."
-				portalElevator.unlock();
+				message =
+					"You insert the keycard in the slot.  "
+					+ "The elevator door slides open.";
+				portalElevator.unlock().descriptionSet("The elevator door is open.");
 			}
 			else
 			{
@@ -3127,12 +3284,55 @@ class Scripts
 
 	// Places.
 
+	placeFriendlyShipDockingBayAntechamber_GoAirlock
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var playerIsWearingSpaceSuit =
+			(w.player.itemByName("space suit") != null);
+
+		if (playerIsWearingSpaceSuit == false)
+		{
+			u.messageEnqueue
+			(
+				"As the airlock door closes behind you, "
+				+ "and the air is pumped out of the chamber, "
+				+ "you suddenly realize you're not wearing a space suit."
+				+ "\n\n"
+				+ "The next few seconds are not pleasant for you.  "
+				+ "\n\n"
+				+ "You are dead."
+			);
+
+			w.end();
+		}
+		else
+		{
+			var portal = p.portalByName("airlock");
+			portal.goThrough(u, w);
+		}
+	}
+
 	placeFriendlyShipDockingBayAntechamber_PressLeftButton
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		this.todo(u, w, p, c);
+		var portalCloset = p.portalByName("left closet");
+		var doorIsLocked = portalCloset.locked();
+		var message: string;
+		if (doorIsLocked)
+		{
+			message = "The door of the left closet slides open.";
+			portalCloset.unlock().descriptionSet("The door to the left closet is open.");
+		}
+		else
+		{
+			message = "The door of the left closet slides closed.";
+			portalCloset.lock().descriptionSet("The door to the right closet is closed.");
+		}
+		u.messageEnqueue(message);
 	}
 
 	placeFriendlyShipDockingBayAntechamber_PressRightButton
@@ -3140,7 +3340,30 @@ class Scripts
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		this.todo(u, w, p, c);
+		var portalCloset = p.portalByName("right closet");
+		var doorIsLocked = portalCloset.locked();
+		var message: string;
+		if (doorIsLocked)
+		{
+			message = "The door of the right closet slides open.";
+			portalCloset.unlock().descriptionSet("The door to the right closet is open.");
+		}
+		else
+		{
+			message = "The door of the right closet slides closed.";
+			portalCloset.lock().descriptionSet("The door to the right closet is closed.");
+		}
+		u.messageEnqueue(message);
+	}
+
+	placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		u.messageEnqueue("The space suit is too heavy to carry, so you put it on instead.");
+		var itemSpaceSuit = p.itemByName("space suit");
+		w.player.itemGetFromPlace(itemSpaceSuit, p);
 	}
 
 	placeFriendlyShipDockingBayHangar_PressPlatformButton
@@ -3148,7 +3371,78 @@ class Scripts
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		this.todo(u, w, p, c);
+		var portalPod = p.portalByName("escape pod");
+		var podIsVisible = portalPod.visible();
+		var message: string;
+		if (podIsVisible)
+		{
+			message =
+				"When you press the button, the platform carrying the escape pod "
+				+ "sinks back beneath the floor, "
+				+ "and the trapdoor slides closed over it."
+
+			portalPod.hide();
+		}
+		else
+		{
+			message =
+				"When you press the button, the trapdoor in the floor slides open "
+				+ "and a platform under it rises up to floor level.  "
+				+ "On the platform stands a single-person escape pod."
+
+			portalPod.show();
+		}
+
+		u.messageEnqueue(message);
+
+	}
+
+	placeFriendlyShipEngineeringDeckAmidships_PressCloseButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var placeDockingBay =
+			w.placeByName(Places.friendlyShipDockingBayHangar_Name() );
+		var emplacementDockingBayDoors =
+			placeDockingBay.emplacementByName("bay doors");
+
+		var doorsAreLocked = emplacementDockingBayDoors.locked();
+		if (doorsAreLocked)
+		{
+			u.messageEnqueue("The docking bay doors are already closed.");
+		}
+		else
+		{
+			u.messageEnqueue("Through the window, the docking bay doors slide closed.");
+			emplacementDockingBayDoors.lock();
+		}
+	}
+
+	placeFriendlyShipEngineeringDeckAmidships_PressOpenButton
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var placeDockingBay =
+			w.placeByName(Places.friendlyShipDockingBayHangar_Name() );
+		var emplacementDockingBayDoors =
+			placeDockingBay.emplacementByName("bay doors");
+
+		var doorsAreLocked = emplacementDockingBayDoors.locked();
+		if (doorsAreLocked)
+		{
+			u.messageEnqueue
+			(
+				"Through the window, the docking bay doors slide open.  "
+				+ "Through them you see the darkness of space."
+			);
+			emplacementDockingBayDoors.unlock();
+		}
+		else
+		{
+			u.messageEnqueue("The docking bay doors are already open.");
+		}
 	}
 
 	placeFriendlyShipEngineeringDeckAft_GoElevator
@@ -3156,10 +3450,14 @@ class Scripts
 		u: Universe, w: World, place: Place, portal: Portal
 	): void
 	{
-		var isLocked = portal.locked();
-		if (isLocked)
+		var portalIsLocked = portal.locked();
+		if (portalIsLocked)
 		{
-			u.messageEnqueue("The elevator is locked.");
+			u.messageEnqueue
+			(
+				"The elevator door does not open as you approach.  "
+				+ "It must be locked."
+			);
 		}
 		else
 		{
@@ -3192,10 +3490,47 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
+	placeFriendlyShipEscapePod_LookWindow
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message = "You look out the escape pod's window, and see ";
+
+		var portalDoor = p.portalByName("door");
+		var portalDoorPlaceDestinationName =
+			portalDoor.placeDestinationName;
+
+		if (portalDoorPlaceDestinationName == null)
+		{
+			message +=
+				"deep space, adorned with thousands of stars, "
+				+ "plus the distant, still-glowing wreckage of the Pax Aeterna.  "
+				+ "A tragic end for such a proud vessel and her doughty crew, "
+				+ "but, from this distance, you must admit "
+				+ "it has a certain undeniable beauty to it.";
+		}
+		else if (portalDoorPlaceDestinationName == Places.friendlyShipDockingBayHangar_Name() )
+		{
+			message +=
+				"the docking bay of the Pax Aeterna, "
+				+ "whose better days are behind it now.  "
+				+ "You suspect there aren't any days ahead of it, "
+				+ "better, worse, or otherwise.";
+		}
+		else if (portalDoorPlaceDestinationName == Places.planetDesertCrashSite_Name() )
+		{
+			message +=
+				"the burning sands and sky of the planet Ekkis II.";
+		}
+
+		u.messageEnqueue(message);
+	}
+
 	placeFriendlyShipEscapePod_PressAutonavButton
 	(
 		u: Universe, w: World, p: Place, c: Command
-	): any
+	): void
 	{
 		var messageLines =
 		[
@@ -3231,33 +3566,60 @@ class Scripts
 		u: Universe, w: World, p: Place, c: Command
 	): any
 	{
-		var messageLines =
+		var message =
 		[
 			"You press the button, and the pod shudders into motion.  ",
 			"It rises off the deck, then, with a burst of thrusters, ",
-			"glides through the cargo bay doors ",
-			"and away into the free space around the Pax Aeterna.",
-			"\n\n",
-			"And not a moment too soon.  No sooner does the pod ",
-			"reach the minimum safe distance than the Pax Aeterna ",
-			"lights up in a cascade of explosions ",
-			"and, in a matter of seconds, rips itself to flinders.",
-			"\n\n",
-			"Okay, remember before, when I mentioned minimum safe distance?  ",
-			"Well, maybe I was wrong about that, ",
-			"because an almost invisibly fast piece of debris from the wreck ",
-			"strikes the pod, its transferred momentum ",
-			"causing the pod to spin wildly for a few seconds, ",
-			"before the automatic attitude controls dampen the rotation.  ",
-			"An angry red status light appears on the pod's control console ",
-			"that reads 'planetfall system compromised'.  Ooh boy."
-		];
+		].join("")
 
-		u.messageEnqueue(messageLines.join(""));
+		var placeDockingBay =
+			w.placeByName(Places.friendlyShipDockingBayHangar_Name() );
+		var emplacementBayDoors =
+			placeDockingBay.emplacementByName("bay doors");
+		var bayDoorsAreClosed = emplacementBayDoors.locked();
 
-		var stateEscapePodLocation = "EscapePodLocation";
+		if (bayDoorsAreClosed)
+		{
+			message +=
+			[
+				"smashes into the cargo bay doors, "
+				+ "which some idiot left closed, ",
+				+ "and explodes."
+				+ "\n\n"
+				+ "You are dead."
+			].join("");
 
-		p.stateWithNameSetToValue(stateEscapePodLocation, "DeepSpace");
+			w.end();
+		}
+		else
+		{
+			message +=
+			[
+				"glides through the cargo bay doors ",
+				"and away into the free space around the Pax Aeterna.",
+				"\n\n",
+				"And not a moment too soon.  No sooner does the pod ",
+				"reach the minimum safe distance than the Pax Aeterna ",
+				"lights up in a cascade of explosions ",
+				"and, in a matter of seconds, rips itself to flinders.",
+				"\n\n",
+				"Okay, remember before, when I mentioned minimum safe distance?  ",
+				"Well, maybe I was wrong about that, ",
+				"because an almost invisibly fast piece of debris from the wreck ",
+				"strikes the pod, its transferred momentum ",
+				"causing the pod to spin wildly for a few seconds, ",
+				"before the automatic attitude controls dampen the rotation.  ",
+				"An angry red status light appears on the pod's control console ",
+				"that reads 'landing system compromised'.  Ooh boy."
+			].join("");
+
+			var stateEscapePodLocation = "EscapePodLocation";
+
+			p.stateWithNameSetToValue(stateEscapePodLocation, "DeepSpace");
+		}
+
+		u.messageEnqueue(message);
+
 	}
 
 	placeFriendlyShipJanitorsCloset_Update(u: Universe, w: World, p: Place, c: Command): any
@@ -3369,9 +3731,9 @@ class Scripts
 
 			p.itemAdd
 			(
-				Item.fromNameAndDescription
+				Item.fromNamesAndDescription
 				(
-					"cartridge",
+					[ "cartridge", "data cartridge", "cart", "data cart" ],
 					"A label printed on this data cartridge reads 'Astral Bodies'."
 				).commandAdd
 				(
@@ -3454,10 +3816,62 @@ class Scripts
 		}
 	}
 
+	placePlanetCavernsSteamworks_InsertKeyInSkimmer
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message =
+			"You put the key into a similarly-shaped hole in the skimmer control panel, "
+			+ "then stare at the controls in confusion for a few moments "
+			+ "before you figure out what to do next. "
+			+ "Then you turn the key sharply clockwise for a moment, "
+			+ "and the skimmer's engines hum to life.  Whoa, retro."
+			+ "\n\n"
+			+ "The 100-kilometer trip to the nearest settlement is uneventful, "
+			+ "your skimmer gliding swiftly and effortlessly a couple dozen centimeters "
+			+ "above the surface of the sand.  "
+			+ "There are a few rocks along the way, "
+			+ "but you skillfully avoid them.  Most of them.  A lot of them, anyway.  "
+			+ "You must admit you aren't great at the action parts."
+			+ "\n\n"
+			+ "A half-hour or so later, you and your slightly-worse-for-the-wear "
+			+ "secondhand sand sled slide through the shield of a small settlement.  "
+			+ "You park the skimmer outside of a bar.  That's just like you."
+			+ "\n\n"
+			+ "As you pull up, an alien walks out of the bar and eyes your skimmer appreciatively."
+
+		u.messageEnqueue(message);
+
+		w.placeCurrentSetByName(Places.planetSettlementBarFront_Name() )
+	}
+
+	placePlanetCavernsSteamworks_TalkToAlien
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message =
+			"The alien greets you from the catwalk above, "
+			+ "and explains that it is part of an ancient race "
+			+ "that once ruled this planet, but now lives underground.  "
+			+ "You briefly wonder if you have to feel guilty about this, "
+			+ "but the alien has already moved on to thank you for destroying the cave beast, "
+			+ "and, as a reward, throws down to you the starter key to a sand skimmer "
+			+ "that the alien says should allow you to reach the nearest settlement "
+			+ "without being eaten by sand-swimmers.  "
+			+ "The alien then turns and walks off into the depths of the steamworks, "
+			+ "but not before muttering something about the skimmer's throttle being stuck.";
+
+		u.messageEnqueue(message)
+
+		p.itemAdd(Items.Instance().SkimmerKey);
+	}
+
 	placePlanetCliffsCaveInterior_Update
 	(
 		u: Universe, w: World, p: Place, c: Command
-	): any
+	): void
 	{
 		this.todo(u, w, p, c);
 	}
