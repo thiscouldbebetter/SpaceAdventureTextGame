@@ -24,18 +24,23 @@ class Game {
 }
 class Items {
     constructor() {
+        this.DehydratedWater = this.dehydratedWater();
         this.Gadget = this.gadget();
         this.GasGrenade = this.gasGrenade();
         this.Keycard = this.keycard();
         this.SkimmerKey = this.skimmerKey();
         this.SpaceSuit = this.spaceSuit();
+        // Containers.
+        this.SurvivalKit = this.survivalKit([this.DehydratedWater]);
         this._All =
             [
+                this.DehydratedWater,
                 this.Gadget,
                 this.GasGrenade,
                 this.Keycard,
                 this.SkimmerKey,
-                this.SpaceSuit
+                this.SpaceSuit,
+                this.SurvivalKit
             ];
     }
     static Instance() {
@@ -44,9 +49,48 @@ class Items {
         }
         return this._instance;
     }
+    dehydratedWater() {
+        return Item.fromNamesAndDescription(["dehydrated water", "water", "canteen", "bottle"], "This is a bottle full of hydrogen gas "
+            + "under an incredible amount of pressure, enough to liquefy it.  "
+            + "When the valve in the bottle's neck is opened, "
+            + "it allows a small amount of the gas out "
+            + "to combust in the oxygen (hopefully!) of the surrounding (hopefully!) air, "
+            + "which creates a small amount of water vapor "
+            + "that condenses in the mouth of the bottle, "
+            + "thus providing a small quantity of drinkable water."
+            + "\n\n"
+            + "This technology theoretically makes it possible to carry "
+            + "about nine times more water that one could with a normal canteen, "
+            + "but as a practical matter, all the pressurizing and processing equipment "
+            + "adds almost as much weight as it saves.  "
+            + "You suspect this thing only exists because somebody's cousin "
+            + "got a lucrative government contract to develop it."
+            + "\n\n"
+            + "Besides that, the water that comes out is warm.  Yuck.").commandAdd(new Command([
+            "drink dehydrated water",
+            "drink water",
+            "drink bottle",
+            "drink canteen",
+            "drink from bottle",
+            "drink from canteen"
+        ], Scripts.Instance().itemDehydratedWaterUse.name));
+    }
     gadget() {
-        return Item.fromNamesAndDescription(["gadget", "translator"], "This is a strange blinking gadget you found in a closet.  "
-            + "It sounds weird when you put it like that.");
+        return Item.fromNamesAndDescription(["gadget"], "This is a gadget you found in a closet, "
+            + "then just picked up and put in your pocket, "
+            + "even though it's not yours and you don't know what it does.  "
+            + "It sounds weird when you put it like that."
+            + "\n\n"
+            + "The gadget's intended function is cryptic.  "
+            + "There's a button and an indicator light.  "
+            + "And some sort of... grille?.. on one end.  "
+            + "That's it, though.").commandAdd(new Command([
+            "press button on gadget",
+            "turn on gadget",
+            "turn off gadget",
+            "activate gadget",
+            "deactivate gadget"
+        ], Scripts.Instance().itemGadgetPressButton.name));
     }
     gasGrenade() {
         return Item.fromNamesAndDescription(["gas grenade", "grenade"], "This is a Vadik gas grenade.  "
@@ -62,9 +106,12 @@ class Items {
         return Item.fromNamesAndDescription(["skimmer key"], "This is the starter key for a sand skimmer.").commandAdd(new Command(["put key in skimmer", "insert key in skimmer", "use key on skimmer"], Scripts.Instance().placePlanetCavernsSteamworks_InsertKeyInSkimmer.name));
     }
     spaceSuit() {
-        return Item.fromNamesDescriptionAndScriptGetName(["space suit", "spacesuit", "suit"], "This is space suit from the starship Pax Aeterna.  "
+        return Item.fromNames(["space suit", "spacesuit", "suit"]).descriptionSet("This is space suit from the starship Pax Aeterna.  "
             + "It keeps the space out and the air in.  "
-            + "Maybe they should call it an air suit.", Scripts.Instance().placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit.name);
+            + "Maybe they should call it an air suit.").scriptGetNameSet(Scripts.Instance().placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit.name);
+    }
+    survivalKit(contents) {
+        return Item.fromNames(["survival kit", "kit"]).descriptionSet("This is a survival kit from the Pax Aeterna's escape pod.").itemsAdd(contents);
     }
 }
 class Places {
@@ -1566,96 +1613,112 @@ class Regions {
         var scripts = Scripts.Instance();
         this._All =
             [
-                // Friendly Ship.
-                Region.fromNameScriptUpdateForTurnNameAndPlaces("Pax Aeterna", scripts.regionFriendlyShip_UpdateForTurn.name, // scriptUpdateForTurnName
-                [
-                    // Upper Deck.
-                    places.friendlyShipJanitorsCloset(),
-                    places.friendlyShipUpperDeckHallAmidships(),
-                    places.friendlyShipLibrary(),
-                    places.friendlyShipUpperDeckHallForward(),
-                    places.friendlyShipUpperDeckHallAft(),
-                    places.friendlyShipBridge(),
-                    // Lower Deck.
-                    places.friendlyShipLowerDeckHallAft(),
-                    places.friendlyShipLowerDeckHallAmidships(),
-                    places.friendlyShipLowerDeckHallForward(),
-                    // Engineering Deck.
-                    places.friendlyShipEngineeringDeckAft(),
-                    places.friendlyShipEngineeringDeckAmidships(),
-                    places.friendlyShipEngineeringDeckForward(),
-                    // Docking Bay.
-                    places.friendlyShipDockingBayAntechamber(),
-                    places.friendlyShipDockingBayAntechamberClosetLeft(),
-                    places.friendlyShipDockingBayAntechamberClosetRight(),
-                    places.friendlyShipDockingBayHangar(),
-                    places.friendlyShipEscapePod()
-                ]),
-                // Planet.
-                Region.fromNameAndPlaces("Ekkis 2", [
-                    // Desert.
-                    places.planetDesertCrashSite(),
-                    places.planetDesertDeep(),
-                    places.planetDesertNorth(),
-                    places.planetDesertSouth(),
-                    places.planetDesertWest(),
-                    // Cliffs.
-                    places.planetCliffsBottomNorth(),
-                    places.planetCliffsBottomNortheast(),
-                    places.planetCliffsBottomNorthwestEastSide(),
-                    places.planetCliffsBottomNorthwestWestSide(),
-                    places.planetCliffsBottomSouth(),
-                    places.planetCliffsBottomSoutheast(),
-                    places.planetCliffsBottomSouthwest(),
-                    places.planetCliffsCaveInterior(),
-                    places.planetCliffsTopNorth(),
-                    places.planetCliffsTopNortheast(),
-                    places.planetCliffsTopNorthwest(),
-                    places.planetCliffsTopSouthEastSide(),
-                    places.planetCliffsTopSouthWestSide(),
-                    places.planetCliffsTopSouthwest(),
-                    // Caverns.
-                    places.planetCavernsProjectionRoom(),
-                    places.planetCavernsSteamworks(),
-                    places.planetCavernsBarrier(),
-                    places.planetCavernsDrips(),
-                    places.planetCavernsElevator(),
-                    places.planetCavernsGeyser(),
-                    places.planetCavernsGrating(),
-                    places.planetCavernsPool(),
-                    // Village of [Farting Noise].
-                    places.planetSettlementBarFront(),
-                    places.planetSettlementBarInterior(),
-                    places.planetSettlementBarRear(),
-                    places.planetSettlementRobotShopFront(),
-                    places.planetSettlementRobotShopInterior(),
-                    places.planetSettlementRobotShopWest(),
-                    places.planetSettlementNorthOfUsedShipLot(),
-                    places.planetSettlementUsedShipLot(),
-                ]),
-                // Enemy Ship.
-                Region.fromNameAndPlaces("Venipositor", [
-                    places.enemyShipAirlockAntechamber(),
-                    places.enemyShipAirlockChamber(),
-                    places.enemyShipAirlockExterior(),
-                    places.enemyShipArmory(),
-                    places.enemyShipLaundry(),
-                    places.enemyShipLowerDeckHallAft(),
-                    places.enemyShipLowerDeckHallAmidships(),
-                    places.enemyShipLowerDeckHallFore(),
-                    places.enemyShipNearbySpace(),
-                    places.enemyShipShuttleBay(),
-                    places.enemyShipStellarJuvenatorChamber(),
-                    places.enemyShipStellarJuvenatorChamberCatwalk(),
-                    places.enemyShipUpperDeckHallAft(),
-                    places.enemyShipUpperDeckHallAmidships(),
-                    places.enemyShipUpperDeckHallFore(),
-                    places.enemyShipVentilationShaft1(),
-                    places.enemyShipVentilationShaft2(),
-                    places.enemyShipVentilationShaft3(),
-                    places.enemyShipVentilationShaft4()
-                ])
+                this.friendlyShip(places, scripts),
+                this.planetDesert(places, scripts),
+                this.planetCaverns(places, scripts),
+                this.planetSettlement(places, scripts),
+                this.enemyShip(places, scripts)
             ];
+    }
+    // Regions.
+    friendlyShip(places, scripts) {
+        return Region.fromNameScriptUpdateForTurnNameAndPlaces("Pax Aeterna", scripts.regionFriendlyShip_UpdateForTurn.name, // scriptUpdateForTurnName
+        [
+            // Upper Deck.
+            places.friendlyShipJanitorsCloset(),
+            places.friendlyShipUpperDeckHallAmidships(),
+            places.friendlyShipLibrary(),
+            places.friendlyShipUpperDeckHallForward(),
+            places.friendlyShipUpperDeckHallAft(),
+            places.friendlyShipBridge(),
+            // Lower Deck.
+            places.friendlyShipLowerDeckHallAft(),
+            places.friendlyShipLowerDeckHallAmidships(),
+            places.friendlyShipLowerDeckHallForward(),
+            // Engineering Deck.
+            places.friendlyShipEngineeringDeckAft(),
+            places.friendlyShipEngineeringDeckAmidships(),
+            places.friendlyShipEngineeringDeckForward(),
+            // Docking Bay.
+            places.friendlyShipDockingBayAntechamber(),
+            places.friendlyShipDockingBayAntechamberClosetLeft(),
+            places.friendlyShipDockingBayAntechamberClosetRight(),
+            places.friendlyShipDockingBayHangar(),
+            places.friendlyShipEscapePod()
+        ]);
+    }
+    planetDesert(places, scripts) {
+        return Region.fromNameScriptUpdateForTurnNameAndPlaces("Ekkis 2 - Desert", scripts.regionPlanetDesert_UpdateForTurn.name, // scriptUpdateForTurnName
+        [
+            // Desert.
+            places.planetDesertCrashSite(),
+            places.planetDesertDeep(),
+            places.planetDesertNorth(),
+            places.planetDesertSouth(),
+            places.planetDesertWest(),
+            // Cliffs.
+            places.planetCliffsBottomNorth(),
+            places.planetCliffsBottomNortheast(),
+            places.planetCliffsBottomNorthwestEastSide(),
+            places.planetCliffsBottomNorthwestWestSide(),
+            places.planetCliffsBottomSouth(),
+            places.planetCliffsBottomSoutheast(),
+            places.planetCliffsBottomSouthwest(),
+            places.planetCliffsCaveInterior(),
+            places.planetCliffsTopNorth(),
+            places.planetCliffsTopNortheast(),
+            places.planetCliffsTopNorthwest(),
+            places.planetCliffsTopSouthEastSide(),
+            places.planetCliffsTopSouthWestSide(),
+            places.planetCliffsTopSouthwest(),
+        ]);
+    }
+    planetCaverns(places, scripts) {
+        return Region.fromNameAndPlaces("Ekkis 2 - Caverns", [
+            places.planetCavernsProjectionRoom(),
+            places.planetCavernsSteamworks(),
+            places.planetCavernsBarrier(),
+            places.planetCavernsDrips(),
+            places.planetCavernsElevator(),
+            places.planetCavernsGeyser(),
+            places.planetCavernsGrating(),
+            places.planetCavernsPool(),
+        ]);
+    }
+    planetSettlement(places, scripts) {
+        return Region.fromNameAndPlaces("Ekkis 2 - Settlement", [
+            places.planetSettlementBarFront(),
+            places.planetSettlementBarInterior(),
+            places.planetSettlementBarRear(),
+            places.planetSettlementRobotShopFront(),
+            places.planetSettlementRobotShopInterior(),
+            places.planetSettlementRobotShopWest(),
+            places.planetSettlementNorthOfUsedShipLot(),
+            places.planetSettlementUsedShipLot(),
+        ]);
+    }
+    enemyShip(places, scripts) {
+        return Region.fromNameAndPlaces("Venipositor", [
+            places.enemyShipAirlockAntechamber(),
+            places.enemyShipAirlockChamber(),
+            places.enemyShipAirlockExterior(),
+            places.enemyShipArmory(),
+            places.enemyShipLaundry(),
+            places.enemyShipLowerDeckHallAft(),
+            places.enemyShipLowerDeckHallAmidships(),
+            places.enemyShipLowerDeckHallFore(),
+            places.enemyShipNearbySpace(),
+            places.enemyShipShuttleBay(),
+            places.enemyShipStellarJuvenatorChamber(),
+            places.enemyShipStellarJuvenatorChamberCatwalk(),
+            places.enemyShipUpperDeckHallAft(),
+            places.enemyShipUpperDeckHallAmidships(),
+            places.enemyShipUpperDeckHallFore(),
+            places.enemyShipVentilationShaft1(),
+            places.enemyShipVentilationShaft2(),
+            places.enemyShipVentilationShaft3(),
+            places.enemyShipVentilationShaft4()
+        ]);
     }
 }
 class Scripts {
@@ -1665,6 +1728,8 @@ class Scripts {
             this.emplacementBodyEmptySearch,
             this.emplacementBodyKeycardSearch,
             this.itemCartridgeUse,
+            this.itemDehydratedWaterUse,
+            this.itemGadgetPressButton,
             this.itemKeycardUse,
             this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
             this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
@@ -1689,6 +1754,7 @@ class Scripts {
             this.placePlanetDesertDeep_Update,
             this.placePlanetSettlementRobotShopInterior_Buy,
             this.regionFriendlyShip_UpdateForTurn,
+            this.regionPlanetDesert_UpdateForTurn,
             this.todo
         ];
         var scripts = new Array();
@@ -1754,6 +1820,34 @@ class Scripts {
                     + "with all life in the universe."
                     + "\n\n"
                     + "My word, it's boring.  School never was your strong suit.";
+        }
+        u.messageEnqueue(message);
+    }
+    itemDehydratedWaterUse(u, w, p, c) {
+        var itemCanteen = p.itemByName("canteen");
+        var message = "You drink from the water bottle.  "
+            + "There, hat'll keep the grim Specter of Thirst "
+            + "a few meters further away for a few minutes.";
+        var stateName = "TurnsSinceLastUsed";
+        itemCanteen.stateGroup.stateWithNameSetToValue(stateName, 0);
+        u.messageEnqueue(message);
+    }
+    itemGadgetPressButton(u, w, p, c) {
+        var itemGadget = p.itemByName("gadget");
+        var message = "You press the only button on the gadget.  "
+            + "The indicator light ";
+        var itemGadgetIsActivated = itemGadget.activated();
+        if (itemGadgetIsActivated) {
+            message +=
+                "goes dark.  "
+                    + "Whatever this thing does, it's not doing it now.";
+            itemGadget.deactivate();
+        }
+        else {
+            message +=
+                "illuminates.  "
+                    + "Whatever this thing does, it's doing it now.";
+            itemGadget.activate();
         }
         u.messageEnqueue(message);
     }
@@ -1994,7 +2088,7 @@ class Scripts {
                     "that reads 'landing system compromised'.  Ooh boy."
                 ].join("");
             var stateEscapePodLocation = "EscapePodLocation";
-            p.stateWithNameSetToValue(stateEscapePodLocation, "DeepSpace");
+            p.stateGroup.stateWithNameSetToValue(stateEscapePodLocation, "DeepSpace");
         }
         u.messageEnqueue(message);
     }
@@ -2034,7 +2128,7 @@ class Scripts {
     }
     placeFriendlyShipLibrary_TalkToMan(u, w, p, c) {
         var stateScientistIsDeadName = "ScientistIsDead";
-        var scientistIsDead = p.stateWithNameIsTrue(stateScientistIsDeadName);
+        var scientistIsDead = p.stateGroup.stateWithNameIsTrue(stateScientistIsDeadName);
         var message = "";
         if (scientistIsDead) {
             message = "Yeah, he's dead.  Ninety-five percent sure this time.";
@@ -2052,7 +2146,7 @@ class Scripts {
                     "But when the roto-scrubber looked as bad as he does, ",
                     "you had to get a new roto-scrubber."
                 ].join("");
-            p.stateWithNameSetToTrue(stateScientistIsDeadName);
+            p.stateGroup.stateWithNameSetToTrue(stateScientistIsDeadName);
         }
         u.messageEnqueue(message);
     }
@@ -2274,6 +2368,42 @@ class Scripts {
                 + "You are dead.");
             w.end();
         }
+    }
+    regionPlanetDesert_UpdateForTurn(u, w, p, c) {
+        var itemCanteen = p.itemByName("canteen");
+        var stateName = "TurnsSinceLastUsed";
+        var turnsSinceLastDrink = itemCanteen.stateGroup.stateWithNameGetValue(stateName);
+        if (turnsSinceLastDrink == 10) {
+            u.messageEnqueue("You're getting thirsty.  This desert really takes it out of you.");
+        }
+        else if (turnsSinceLastDrink == 20) {
+            u.messageEnqueue("You're getting very thirsty now.  "
+                + "This desert is a monster.  "
+                + "Some kind of... water-sucking... low-moisture... monster."
+                + "Look, it's too hot to think of what kind of monster it is right now.");
+        }
+        else if (turnsSinceLastDrink == 30) {
+            u.messageEnqueue("Hey!  I don't know if you were listening before, "
+                + "but YOU ARE VERY VERY THIRSTY NOW."
+                + "If you don't drink something very soon, "
+                + "you will die of dehydration.");
+        }
+        else if (turnsSinceLastDrink == 40) {
+            u.messageEnqueue("Welp, you're dying now.  Yes, right now.  Of dehydration,  "
+                + "which is a pretty bad way to go, "
+                + "or at least it seems that way to you."
+                + "\n\n"
+                + "I guess most ways to die are bad, though.  "
+                + "It's all subjective.  "
+                + "Some people say that drowning is the worst way to die, "
+                + "but that actually sounds nice to you right now.  Go figure.  "
+                + "Anyway: "
+                + "\n\n"
+                + "You are dead.");
+            w.end();
+        }
+        turnsSinceLastDrink++;
+        itemCanteen.stateGroup.stateWithNameSetToValue(stateName, turnsSinceLastDrink);
     }
 }
 class StateNames {
