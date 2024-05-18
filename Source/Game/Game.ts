@@ -3,14 +3,14 @@ class Game
 {
 	static worldBuild(): World
 	{
-		var player = new Agent
+		var player = Agent.fromNames
 		(
-			[ "self", "me", "myself" ],
-
+			[ "self", "me", "myself" ]
+		).descriptionSet
+		(
 			"This is you.  You have to start getting used to this.",
-
-			null, // scriptUpdateForTurnName
-
+		).itemsAdd
+		(
 			[
 				Item.fromNamesAndDescription
 				(
@@ -20,9 +20,7 @@ class Game
 					+ "You may or may not have given it a name.  "
 					+ "And a backstory."
 				)
-			],
-
-			null // commands
+			]
 		);
 
 		var scriptsCustom = new Scripts();
@@ -825,6 +823,9 @@ class Places
 
 	friendlyShipEscapePod(): Place
 	{
+		var emplacementSafetyHarnessNames =
+			[ "safety harness", "safety belt", "harness", "belt" ];
+
 		return this.place3
 		(
 			Places.friendlyShipEscapePod_Name(),
@@ -878,7 +879,21 @@ class Places
 					)
 				),
 				this.emplacement( [ "monitor screen" ] ),
-				this.emplacement( [ "safety belt" ] ),
+				this.emplacement
+				(
+					emplacementSafetyHarnessNames
+				).commandAdd
+				(
+					new Command
+					(
+						MessageHelper.combineStringArrays
+						(
+							[ "use", "fasten", "put on" ],
+							emplacementSafetyHarnessNames
+						),
+						this.scripts.placeFriendlyShipEscapePod_PutOnSafetyHarness.name
+					)
+				),
 				this.emplacement( [ "survival kit" ] ),
 				this.emplacement( [ "throttle" ] )
 			]
@@ -3243,6 +3258,7 @@ class Scripts
 			this.placeFriendlyShipEscapePod_LookWindow,
 			this.placeFriendlyShipEscapePod_PressAutonavButton,
 			this.placeFriendlyShipEscapePod_PressLaunchButton,
+			this.placeFriendlyShipEscapePod_PutOnSafetyHarness,
 			this.placeFriendlyShipJanitorsCloset_Update,
 			this.placeFriendlyShipLibrary_TalkToMan,
 			this.placeFriendlyShipLibrary_Type,
@@ -3459,7 +3475,7 @@ class Scripts
 	): void
 	{
 		var playerIsWearingSpaceSuit =
-			(w.player.itemByName("space suit") != null);
+			(w.agentPlayer.itemByName("space suit") != null);
 
 		if (playerIsWearingSpaceSuit == false)
 		{
@@ -3532,7 +3548,7 @@ class Scripts
 	{
 		u.messageEnqueue("The space suit is too heavy to carry, so you put it on instead.");
 		var itemSpaceSuit = p.itemByName("space suit");
-		w.player.itemGetFromPlace(itemSpaceSuit, p);
+		w.agentPlayer.itemGetFromPlace(itemSpaceSuit, p);
 	}
 
 	placeFriendlyShipDockingBayHangar_PressPlatformButton
@@ -3701,7 +3717,7 @@ class Scripts
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		var messageLines =
+		var message =
 		[
 			"You press the autonav button, and the pod reorients itself ",
 			"and engages its main drive, then its hyperdrive.  ",
@@ -3714,20 +3730,55 @@ class Scripts
 			"and begins its descent through the atmosphere.",
 			"\n\n",
 			"That's when you hear a loud bang, then a metallic tearing sound.  ",
-			"Oh, that's right, the planetfall system is compromised.",
+			"Oh, that's right, the landing system is compromised.",
 			"\n\n",
 			"It's a rough ride down, and you get pretty shaken up.",
 			"The worst part is the sudden stop at the end.",
-			"You survive it, but the pod doesn't.  It'll never fly again.",
-			"Through the shattered window you see the dunes of a desert.",
-			"But no settlement.  It appears the pod has crashed ",
-			"hundreds of kilometers from the intended landing site."
-		];
+			"\n\n"
+		].join("");
 
-		u.messageEnqueue(messageLines.join(""));
+		var emplacementSafetyHarness = p.emplacementByName("safety harness");
+		var safetyBeltWasWorn = emplacementSafetyHarness.activated();
 
-		p.portalByName("door").placeDestinationName =
-			Places.planetDesertCrashSite_Name();
+		if (safetyBeltWasWorn == false)
+		{
+			message +=
+			[
+				"You forgot to put on your safety belt.",
+				"\n\n",,
+				"You are flung forward by the force of the crash, ",
+				"and your torso is impaled on the steering assembly.",
+				"\n\n",
+				"In your few remaining moments of life, ",
+				"you have a vision of Captain Safe T. Harness, ",
+				"the cartoon pirate animal mascot from the public service posters, ",
+				"who shakes his head sadly and says his famous catch phrase, ",
+				"'If to fasten yer belt ye be failin', ",
+				"'ye be headin' straight for an impalin'!'",
+				"\n\n",
+				"You are dead."
+			];
+
+			w.end();
+		}
+		else
+		{
+			message +=
+			[
+				"You survive the landing intact, ",
+				"only because you're wearing your safety belt, ",
+				"but the pod doesn't.  It'll never fly again.",
+				"Through the shattered window you see the dunes of a desert.",
+				"But no settlement.  It appears the pod has crashed ",
+				"hundreds of kilometers from the intended landing site."
+			].join("");
+
+			p.portalByName("door").placeDestinationName =
+				Places.planetDesertCrashSite_Name();
+		}
+
+		u.messageEnqueue(message);
+
 	}
 
 	placeFriendlyShipEscapePod_PressLaunchButton
@@ -3788,7 +3839,31 @@ class Scripts
 		}
 
 		u.messageEnqueue(message);
+	}
 
+	placeFriendlyShipEscapePod_PutOnSafetyHarness
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): any
+	{
+		var message =
+		[
+			"You fasten the safety harness around yourself, ",
+			"mentally reciting the famous catch phrase ",
+			"of the safety mascot Captain Safe T. Harness: ",
+			"\n\n",
+			"If these safety tips ye be markin'",
+			"it's safe and sound ye'll be disembarkin'.",
+			"\n\n",
+			"That cartoon otter has saved your ",
+			"simulated smoked salted abdominal-muscle slices ",
+			"more times than you can count."
+		].join("");
+
+		var emplacementSafetyHarness = p.emplacementByName("safety harness");
+		emplacementSafetyHarness.activate();
+
+		u.messageEnqueue(message);
 	}
 
 	placeFriendlyShipJanitorsCloset_Update(u: Universe, w: World, p: Place, c: Command): any
@@ -4216,12 +4291,11 @@ class Scripts
 
 	regionPlanetDesert_UpdateForTurn(u: Universe, w: World, p: Place, c: Command): void
 	{
-		var itemCanteen = p.itemByName("canteen");
+		var stateName = "TurnsSinceLastDrink";
 
-		var stateName = "TurnsSinceLastUsed";
-
+		var agentPlayer = w.agentPlayer;
 		var turnsSinceLastDrink =
-			itemCanteen.stateGroup.stateWithNameGetValue(stateName);
+			agentPlayer.stateGroup.stateWithNameGetValue(stateName);
 
 		if (turnsSinceLastDrink == 10)
 		{
@@ -4270,7 +4344,10 @@ class Scripts
 		}
 
 		turnsSinceLastDrink++;
-		itemCanteen.stateGroup.stateWithNameSetToValue(stateName, turnsSinceLastDrink);
+		agentPlayer.stateGroup.stateWithNameSetToValue
+		(
+			stateName, turnsSinceLastDrink
+		);
 
 	}
 

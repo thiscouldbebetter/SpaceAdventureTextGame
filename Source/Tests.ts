@@ -36,7 +36,17 @@ class Assert
 
 class Tests
 {
-	die(): void
+	universe: Universe;
+	world: World;
+
+	// Helpers.
+
+	run(commandText: string): void
+	{
+		this.world.updateForUniverseAndCommandText(this.universe, commandText);
+	}
+
+	universeAndWorldCreateAndSet(): void
 	{
 		var tea = ThisCouldBeBetter.TextAdventureEngine;
 		var Universe = tea.Universe;
@@ -48,8 +58,29 @@ class Tests
 		var world = universe.world;
 		Assert.isNotNull(world);
 
-		var run = (commandText: string) =>
-			world.updateForUniverseAndCommandText(universe, commandText);
+		this.universe = universe;
+		this.world = world;
+	}
+
+	// Tests.
+
+	die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 16"); // escape pod interior
+		run("press launch button");
+
+		Assert.isTrue(world.isOver);
+	}
+
+	die_FriendlyShip_Explodes(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
 
 		var turnsWaitedSoFar = 0;
 		var turnsToWait = 90;
@@ -66,23 +97,69 @@ class Tests
 			run("wait");
 		}
 		Assert.isTrue(world.isOver);
-
 	}
 
-	playFromStart(): void
+	die_FriendlyShip_GoIntoAirlockWithNoSuit(): void
 	{
-		var tea = ThisCouldBeBetter.TextAdventureEngine;
-		var Universe = tea.Universe;
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
 
-		var worldCreate = () => Game.worldBuild();
-		var universe = Universe.fromWorldCreate(worldCreate);
-		universe.initialize();
+		run("cheat goto 12"); // docking bay antechamber
+		run("go airlock");
 
-		var world = universe.world;
-		Assert.isNotNull(world);
+		Assert.isTrue(world.isOver);
+	}
 
-		var run = (commandText: string) =>
-			world.updateForUniverseAndCommandText(universe, commandText);
+	die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 10"); // engineering deck amidships
+		run("press open bay doors button");
+
+		run("cheat goto 16"); // escape pod interior
+		run("press launch button");
+
+		Assert.isFalse(world.isOver);
+
+		run("press autonav button");
+
+		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetDesert_OfThirst(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 17"); // crash site
+
+		var turnsWaitedSoFar = 0;
+		var turnsToWait = 30;
+		for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++)
+		{
+			run("wait");
+		}
+
+		Assert.isFalse(world.isOver);
+
+		var turnsToWait = 20;
+		for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++)
+		{
+			run("wait");
+		}
+		Assert.isTrue(world.isOver);
+	}
+
+	playFromStartToEnd(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
 
 		// Start.
 
@@ -137,6 +214,7 @@ class Tests
 		run("go pod");
 
 		// Escape pod.
+		run("put on safety harness");
 		run("press launch button");
 		run("press autonav button");
 
@@ -260,8 +338,12 @@ var testFixture = new TestFixture
 (
 	"All Tests",
 	[
-		() => tests.die(),
-		() => tests.playFromStart()
+		() => tests.die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors(),
+		() => tests.die_FriendlyShip_Explodes(),
+		() => tests.die_FriendlyShip_GoIntoAirlockWithNoSuit(),
+		() => tests.die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(),
+		() => tests.die_PlanetDesert_OfThirst(),
+		() => tests.playFromStartToEnd()
 	]
 );
 

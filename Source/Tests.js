@@ -22,7 +22,11 @@ class Assert {
     }
 }
 class Tests {
-    die() {
+    // Helpers.
+    run(commandText) {
+        this.world.updateForUniverseAndCommandText(this.universe, commandText);
+    }
+    universeAndWorldCreateAndSet() {
         var tea = ThisCouldBeBetter.TextAdventureEngine;
         var Universe = tea.Universe;
         var worldCreate = () => Game.worldBuild();
@@ -30,7 +34,22 @@ class Tests {
         universe.initialize();
         var world = universe.world;
         Assert.isNotNull(world);
-        var run = (commandText) => world.updateForUniverseAndCommandText(universe, commandText);
+        this.universe = universe;
+        this.world = world;
+    }
+    // Tests.
+    die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
+        run("cheat goto 16"); // escape pod interior
+        run("press launch button");
+        Assert.isTrue(world.isOver);
+    }
+    die_FriendlyShip_Explodes() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
         var turnsWaitedSoFar = 0;
         var turnsToWait = 90;
         for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++) {
@@ -43,15 +62,47 @@ class Tests {
         }
         Assert.isTrue(world.isOver);
     }
-    playFromStart() {
-        var tea = ThisCouldBeBetter.TextAdventureEngine;
-        var Universe = tea.Universe;
-        var worldCreate = () => Game.worldBuild();
-        var universe = Universe.fromWorldCreate(worldCreate);
-        universe.initialize();
-        var world = universe.world;
-        Assert.isNotNull(world);
-        var run = (commandText) => world.updateForUniverseAndCommandText(universe, commandText);
+    die_FriendlyShip_GoIntoAirlockWithNoSuit() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
+        run("cheat goto 12"); // docking bay antechamber
+        run("go airlock");
+        Assert.isTrue(world.isOver);
+    }
+    die_PlanetDesert_EscapePodCrashesWithNoSeatBelt() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
+        run("cheat goto 10"); // engineering deck amidships
+        run("press open bay doors button");
+        run("cheat goto 16"); // escape pod interior
+        run("press launch button");
+        Assert.isFalse(world.isOver);
+        run("press autonav button");
+        Assert.isTrue(world.isOver);
+    }
+    die_PlanetDesert_OfThirst() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
+        run("cheat goto 17"); // crash site
+        var turnsWaitedSoFar = 0;
+        var turnsToWait = 30;
+        for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++) {
+            run("wait");
+        }
+        Assert.isFalse(world.isOver);
+        var turnsToWait = 20;
+        for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++) {
+            run("wait");
+        }
+        Assert.isTrue(world.isOver);
+    }
+    playFromStartToEnd() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
         // Start.
         // Pax Aeterna.
         // Upper deck.
@@ -93,6 +144,7 @@ class Tests {
         run("push platform button");
         run("go pod");
         // Escape pod.
+        run("put on safety harness");
         run("press launch button");
         run("press autonav button");
         // Ekkis II Wilderness.
@@ -172,7 +224,11 @@ class TestFixture {
 }
 var tests = new Tests();
 var testFixture = new TestFixture("All Tests", [
-    () => tests.die(),
-    () => tests.playFromStart()
+    () => tests.die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors(),
+    () => tests.die_FriendlyShip_Explodes(),
+    () => tests.die_FriendlyShip_GoIntoAirlockWithNoSuit(),
+    () => tests.die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(),
+    () => tests.die_PlanetDesert_OfThirst(),
+    () => tests.playFromStartToEnd()
 ]);
 testFixture.run();

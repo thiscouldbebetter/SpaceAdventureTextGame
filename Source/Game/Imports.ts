@@ -6,6 +6,7 @@ import ConsoleTextarea = tea.ConsoleTextarea;
 import Emplacement = tea.Emplacement;
 import InputTracker = tea.InputTracker;
 import Item = tea.Item;
+import MessageHelper = tea.MessageHelper;
 import MessageQueue = tea.MessageQueue;
 import Place = tea.Place;
 import Portal = tea.Portal;

@@ -6,6 +6,7 @@ var ConsoleTextarea = tea.ConsoleTextarea;
 var Emplacement = tea.Emplacement;
 var InputTracker = tea.InputTracker;
 var Item = tea.Item;
+var MessageHelper = tea.MessageHelper;
 var MessageQueue = tea.MessageQueue;
 var Place = tea.Place;
 var Portal = tea.Portal;
