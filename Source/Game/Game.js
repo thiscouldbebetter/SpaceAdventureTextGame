@@ -22,11 +22,13 @@ class Game {
 }
 class Items {
     constructor() {
+        this.CanOfSham = this.canOfSham();
         this.DehydratedWater = this.dehydratedWater();
         this.Gadget = this.gadget();
         this.GasGrenade = this.gasGrenade();
         this.Keycard = this.keycard();
         this.Multitool = this.multitool();
+        this.Quatloos = this.quatloos();
         this.ReflectiveGlass = this.reflectiveGlass();
         this.SkimmerKey = this.skimmerKey();
         this.SpaceSuit = this.spaceSuit();
@@ -34,11 +36,13 @@ class Items {
         this.SurvivalKit = this.survivalKit([this.DehydratedWater, this.Multitool]);
         this._All =
             [
+                this.CanOfSham,
                 this.DehydratedWater,
                 this.Gadget,
                 this.GasGrenade,
                 this.Keycard,
                 this.Multitool,
+                this.Quatloos,
                 this.ReflectiveGlass,
                 this.SkimmerKey,
                 this.SpaceSuit,
@@ -50,6 +54,17 @@ class Items {
             this._instance = new Items();
         }
         return this._instance;
+    }
+    canOfSham() {
+        return Item.fromNamesAndDescription(["can of Sham", "can of sham", "can", "sham"], "This is a can of Sham (tm) taken from the survival kit of the Pax Aeterna's escape pod.  "
+            + "\n\n"
+            + "If you're not familiar with the product, "
+            + "Sham (tm) is a... popular... brand of "
+            + "canned artificial cultured animal muscle protein.  "
+            + "\n\n"
+            + "Nobody eats real meat anymore, "
+            + "because people feel guilty about the cruelty to animals.  "
+            + "Sham (tm) puts the cruelty where it belongs--on the consumer.");
     }
     dehydratedWater() {
         return Item.fromNamesAndDescription(["dehydrated water", "water", "canteen", "bottle"], "This is a bottle full of hydrogen gas "
@@ -119,6 +134,20 @@ class Items {
             + "You hope you don't need it.  "
             + "The only tool you've ever used on one of these is the toothpick, "
             + "which you lost.  Your roommate never let you use it again after that.");
+    }
+    quatloos() {
+        return Item.fromNamesAndDescription(["quatloos", "credits", "coins", "money"], "Quatloos are the most widely-shared form of currency "
+            + "in the galaxy.  They were originally used exclusively "
+            + "to gamble on blood sports with non-consenting combatants, "
+            + "and were thus outlawed in most jurisdictions.  "
+            + "But eventually, all forms of cash were outlawed by the authorities, "
+            + "since nobody used cash for anything that wasn't illegal."
+            + "Eventually, those same authorities realized that pretty much anybody "
+            + "using any medium of exchange was up to no good, "
+            + "so a lot of them outlawed money in general."
+            + "\n\n"
+            + "It's been mostly good, but there are some downsides.  "
+            + "That's where quatloos come in.");
     }
     skimmerKey() {
         return Item.fromNamesAndDescription(["skimmer key"], "This is the starter key for a sand skimmer.").commandAdd(new Command(["put key in skimmer", "insert key in skimmer", "use key on skimmer"], Scripts.Instance().placePlanetCavernsSteamworks_InsertKeyInSkimmer.name));
