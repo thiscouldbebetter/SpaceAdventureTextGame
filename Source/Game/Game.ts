@@ -66,12 +66,13 @@ class Items
 	GasGrenade: Item;
 	Keycard: Item;
 	Jetpack: Item;
+	Multitool: Item;
 	OratPart: Item;
 	PulseRifle: Item;
+	ReflectiveGlass: Item;
 	SkimmerKey: Item;
 	SpaceSuit: Item;
 	SurvivalKit: Item;
-	XenonArmyKnife: Item;
 
 	_All: Item[];
 
@@ -81,11 +82,16 @@ class Items
 		this.Gadget = this.gadget();
 		this.GasGrenade = this.gasGrenade();
 		this.Keycard = this.keycard();
+		this.Multitool = this.multitool();
+		this.ReflectiveGlass = this.reflectiveGlass();
 		this.SkimmerKey = this.skimmerKey();
 		this.SpaceSuit = this.spaceSuit();
 
 		// Containers.
-		this.SurvivalKit = this.survivalKit( [ this.DehydratedWater ] );
+		this.SurvivalKit = this.survivalKit
+		(
+			[ this.DehydratedWater, this.Multitool ]
+		);
 
 		this._All =
 		[
@@ -93,6 +99,8 @@ class Items
 			this.Gadget,
 			this.GasGrenade,
 			this.Keycard,
+			this.Multitool,
+			this.ReflectiveGlass,
 			this.SkimmerKey,
 			this.SpaceSuit,
 			this.SurvivalKit
@@ -206,6 +214,36 @@ class Items
 		);
 	}
 
+	reflectiveGlass(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "glass", "reflective glass", "windshield" ],
+
+			"This is a shard of reflective glass from the shattered windshield "
+			+ "of the Pax Aeterna's escape pod.  "
+			+ "It's the size of your palm, roughly.  Well, more like sharply.  "
+			+ "You're not sure how you're carrying this without cutting yourself."
+		);
+	}
+
+	multitool(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "multitool" ],
+
+			"This is a multitool taken from the survival kit of the Pax Aeterna's "
+			+ "escape pod.  Various small tools are fixed on one end by a rivet "
+			+ "and folded into the handle.  "
+			+ "A selected tool can be extended and locked in place for use."
+			+ "\n\n"
+			+ "You hope you don't need it.  "
+			+ "The only tool you've ever used on one of these is the toothpick, "
+			+ "which you lost.  Your roommate never let you use it again after that."
+		);
+	}
+
 	skimmerKey(): Item
 	{
 		return Item.fromNamesAndDescription
@@ -250,11 +288,14 @@ class Items
 		).itemsAdd
 		(
 			contents
+		).commandAddFromTextsAndScriptName
+		(
+			[ "open survival kit" ],
+			Scripts.Instance().itemSurvivalKitOpen.name
 		);
 	}
 
-
-}
+} // end class Items
 
 class Places
 {
@@ -341,7 +382,12 @@ class Places
 		names: string[], placeDestinationName: string, scriptUseName: string
 	): Portal
 	{
-		return new Portal( names, null, placeDestinationName, scriptUseName, true, null);
+		var returnPortal = Portal
+			.fromNames(names)
+			.placeDestinationNameSet(placeDestinationName)
+			.scriptUseNameSet(scriptUseName);
+
+		return returnPortal;
 	}
 
 	// Places.
@@ -526,13 +572,13 @@ class Places
 
 				this.portal
 				(
-					[ "escape pod", "pod", "ship" ], Places.friendlyShipEscapePod_Name()
+					[ "escape pod", "pod" ], Places.friendlyShipEscapePod_Name()
 				).descriptionSet
 				(
 					"The pod is kind of cramped-looking, "
 					+ "but as it's your only hope of survival right now, "
 					+ "you prefer to think of it as 'cozy'."
-				).visibleSet(false),
+				).hide().block(),
 
 				this.emplacement2
 				(
@@ -1286,7 +1332,7 @@ class Places
 			+ "Its structural frame is severely bent, its door is unclosable, "
 			+ "and its forward window has shattered, "
 			+ "scattering shards of highly reflective glass "
-			+ "(it looks like glass, anyway)"
+			+ "(it looks like glass, anyway) "
 			+ "over the sand in front of the pod."
 			+ "\n\n"
 			+ "Wait, shards?  How did that get past safety inspection?"
@@ -1303,7 +1349,8 @@ class Places
 			+ "At least, with your luck, you assume it must be mazelike.",
 			[
 				this.portal( [ "pod", "escape pod" ], Places.friendlyShipEscapePod_Name() ),
-				this.portal( [ "east" ], Places.planetCliffsBottomNorthwestWestSide_Name() )
+				this.portal( [ "east" ], Places.planetCliffsBottomNorthwestWestSide_Name() ),
+				Items.Instance().reflectiveGlass
 			]
 		);
 	}
@@ -1543,6 +1590,13 @@ class Places
 					+ "about 40 centimeters in diameter.  Its interior is "
 					+ "deeply shadowed, making it impossible to see what, "
 					+ "if anything, might be inside it."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "look hole", "look in hole", "reach in hole", "put hand in hole" ],
+						this.scripts.placePlanetCliffsBottomNorthwestWestSide_LookInHole.name
+					)
 				)
 			]
 		);
@@ -1638,7 +1692,10 @@ class Places
 		);
 	}
 
-	static planetCliffsBottomSouthwest_Name(): string { return "Ekkis II - Cliffs - Bottom - Southwest" };
+	static planetCliffsBottomSouthwest_Name(): string
+	{
+		return "Ekkis II - Cliffs - Bottom - Southwest"
+	};
 
 	planetCliffsCaveInterior() : Place
 	{
@@ -1646,28 +1703,32 @@ class Places
 		(
 			Places.planetCliffsCaveInterior_Name(),
 
-			"This is a cool, dark cave.  Mossy vegetation clings to the rocks.  "
-			+ "To the west the cave opens out into the blazing daylight "
-			+ "of the Ekkis II desert.  "
+			"You stand in the mouth of a cave.  "
+			+ "The intense light of the outside desert "
+			+ "reaches only a short way into the darkness.  "
+			+ "Some mossy vegetation clings to the rock near the entrance.  "
+			+ "To the west the cave opens back out to "
+			+ "the Ekkis II desert.  "
 			+ "\n\n"
 			+ "There's... well, to be frank, there's a smell.",
 
 			this.scripts.placePlanetCliffsCaveInterior_Update.name,
 
 			[
-				this.portal
+				this.portal3
 				(
 					[ "west" ],
-					Places.planetCliffsBottomSoutheast_Name()
+					Places.planetCliffsBottomSoutheast_Name(),
+					this.scripts.placePlanetCliffsCaveInterior_GoWest.name
 				),
 
-				Agent.fromNameAndDescription
+				this.portal3
 				(
-					"monster",
-
-					"You don't know what this is, "
-					+ "but it's coming right for you."
+					[ "east" ],
+					Places.planetCliffsBottomSoutheast_Name(),
+					this.scripts.placePlanetCliffsCaveInterior_GoEast.name
 				)
+
 			]
 
 		);
@@ -1792,7 +1853,14 @@ class Places
 
 			[
 				this.portal( [ "east" ], Places.planetCliffsBottomSoutheast_Name() ),
-				this.portal( [ "west" ], Places.planetCliffsTopSouthWestSide_Name() )
+				this.portal
+				(
+					[ "west", "arch", "bridge" ],
+					Places.planetCliffsTopSouthWestSide_Name()
+				).scriptUseNameSet
+				(
+					this.scripts.placePlanetCliffsTopSouth_CrossBridge.name
+				)
 			]
 		);
 	}
@@ -1811,21 +1879,33 @@ class Places
 			"You stand atop a cliff rising from the desert of the planet Ekkis II."
 			+ "\n\n"
 			+ "To the west, the clifftop path continues, "
-			+ "curving around to the north."
+			+ "curving around to the north.  "
 			+ "To the east, the cliff top rises and then falls "
 			+ "in an weathered stone arch, "
-			+ "which serves as a natural bridge to the clifftop on the other side,"
+			+ "which serves as a natural bridge to the clifftop on the other side, "
 			+ "and from there down a slope to the desert surface."
 			+ "\n\n"
 			+ "Below the arch is a slightly greener patch of desert "
 			+ "sheltered by the surrounding cliffs.  "
 			+ "Despite the greenery, there's not enough water to drink down there, "
 			+ "even if you were willing to bite a cactus, "
-			+ "which past experience tells you you should never do again.",
+			+ "which past experience tells you you should never do again.  ",
 
 			[
-				this.portal( [ "east" ], Places.planetCliffsTopSouthEastSide_Name() ),
-				this.portal( [ "west" ], Places.planetCliffsTopSouthwest_Name() )
+				this.portal
+				(
+					[ "east", "arch", "bridge" ],
+					Places.planetCliffsTopSouthEastSide_Name()
+				).scriptUseNameSet
+				(
+					this.scripts.placePlanetCliffsTopSouth_CrossBridge.name
+				),
+
+				this.portal
+				(
+					[ "west" ],
+					Places.planetCliffsTopSouthwest_Name()
+				)
 			]
 		);
 	}
@@ -1854,7 +1934,11 @@ class Places
 
 			[
 				this.portal( [ "north" ], Places.planetCliffsTopNorthwest_Name() ),
-				this.portal( [ "east" ], Places.planetCliffsTopSouthWestSide_Name() )
+				this.portal
+				(
+					[ "east" ],
+					Places.planetCliffsTopSouthWestSide_Name()
+				)
 			]
 		);
 	}
@@ -3245,6 +3329,7 @@ class Scripts
 			this.itemDehydratedWaterUse,
 			this.itemGadgetPressButton,
 			this.itemKeycardUse,
+			this.itemSurvivalKitOpen,
 
 			this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
 			this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
@@ -3267,8 +3352,14 @@ class Scripts
 
 			this.placePlanetCavernsSteamworks_InsertKeyInSkimmer,
 			this.placePlanetCavernsSteamworks_TalkToAlien,
+			this.placePlanetCliffsTopSouth_CrossBridge,
+			this.placePlanetCliffsCaveInterior_GoEast,
+			this.placePlanetCliffsCaveInterior_GoWest,
 			this.placePlanetCliffsCaveInterior_Update,
+			this.placePlanetCliffsBottomNorthwestWestSide_LookInHole,
+
 			this.placePlanetDesertDeep_Update,
+
 			this.placePlanetSettlementRobotShopInterior_Buy,
 
 			this.regionFriendlyShip_UpdateForTurn,
@@ -3388,23 +3479,21 @@ class Scripts
 
 	itemDehydratedWaterUse(u: Universe, w: World, p: Place, c: Command): void
 	{
-		var itemCanteen = p.itemByName("canteen");
-
 		var message =
 			"You drink from the water bottle.  "
-			+ "There, hat'll keep the grim Specter of Thirst "
+			+ "There, that'll keep the Grim Specter of Thirst "
 			+ "a few meters further away for a few minutes.";
 
-		var stateName = "TurnsSinceLastUsed";
+		var stateName = "TurnsSinceLastDrink";
 
-		itemCanteen.stateGroup.stateWithNameSetToValue(stateName, 0);
+		w.agentPlayer.stateGroup.stateWithNameSetToValue(stateName, 0);
 
 		u.messageEnqueue(message);
 	}
 
 	itemGadgetPressButton(u: Universe, w: World, p: Place, c: Command): void
 	{
-		var itemGadget = p.itemByName("gadget");
+		var itemGadget = w.agentPlayer.itemByName("gadget");
 
 		var message =
 			"You press the only button on the gadget.  "
@@ -3462,6 +3551,27 @@ class Scripts
 			{
 				message = "The elevator door is already open."
 			}
+		}
+
+		u.messageEnqueue(message);
+	}
+
+	itemSurvivalKitOpen(u: Universe, w: World, p: Place, c: Command): void
+	{
+		var message = "You open the survival kit.  .";
+
+		var itemSurvivalKit = w.agentPlayer.itemByName("survival kit");
+		var itemsContained = itemSurvivalKit.items;
+		if (itemsContained.length == 0)
+		{
+			message += "It's empty."
+		}
+		else
+		{
+			var itemsContainedAsText = itemsContained.map(x => x.name() ).join("\n\t");
+			message += "Inside, you find: " + itemsContainedAsText + "."
+			p.itemsAdd(itemsContained);
+			itemSurvivalKit.itemsClear();
 		}
 
 		u.messageEnqueue(message);
@@ -3566,7 +3676,7 @@ class Scripts
 				+ "sinks back beneath the floor, "
 				+ "and the trapdoor slides closed over it."
 
-			portalPod.hide();
+			portalPod.hide().block();
 		}
 		else
 		{
@@ -3575,7 +3685,7 @@ class Scripts
 				+ "and a platform under it rises up to floor level.  "
 				+ "On the platform stands a single-person escape pod."
 
-			portalPod.show();
+			portalPod.show().unblock();
 		}
 
 		u.messageEnqueue(message);
@@ -3599,7 +3709,7 @@ class Scripts
 		}
 		else
 		{
-			u.messageEnqueue("Through the window, the docking bay doors slide closed.");
+			u.messageEnqueue("Through the window, you see the docking bay doors slide closed.");
 			emplacementDockingBayDoors.lock();
 		}
 	}
@@ -3619,8 +3729,8 @@ class Scripts
 		{
 			u.messageEnqueue
 			(
-				"Through the window, the docking bay doors slide open.  "
-				+ "Through them you see the darkness of space."
+				"Through the window, you see the docking bay doors slide open.  "
+				+ "Beyond them you see the darkness of space."
 			);
 			emplacementDockingBayDoors.unlock();
 		}
@@ -4111,12 +4221,222 @@ class Scripts
 		p.itemAdd(Items.Instance().SkimmerKey);
 	}
 
+	placePlanetCliffsBottomNorthwestWestSide_LookInHole
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message =
+			"You cross over to the cliff base and put your head near the hole "
+			+ "to see what you can see inside.  "
+			+ "As your eyes adjust to the relative darkness, "
+			+ "you think you see something.  "
+			+ "You catch the gleam of something whitish, shiny, triangular, and smallish, "
+			+ "maybe a couple centimeters long.  "
+			+ "Whatever it is, you now start to notice that there's more than one.  "
+			+ "Actually, there's a whole bunch of them."
+			+ "And they're coming closer."
+			+ "\n\n"
+			+ "Yeah, they were teeth."
+			+ "\n\n"
+			+ "You are dead."
+
+		u.messageEnqueue(message);
+		
+		w.end();
+	}
+
+	placePlanetCliffsCaveInterior_GoEast
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		u.messageEnqueue
+		(
+			"You stumble a few hesitant steps forward into the darkness of the cave."
+			+ "Even though you've only moved a few meters deeper into the cave, "
+			+ "the smell has intensified to an almost unbearable degree.  "
+			+ "Behind you, the light from the cave mouth seems very inviting."
+			+ "While you were very down on it before, you find that "
+			+ "even a few moments in this cave has really given you a new appreciation "
+			+ "for the burning sun of the desert outside."
+			+ "\n\n"
+			+ "In a few moments, a cave monster either knocks you unconscious "
+			+ "or possibly decapitates you.  Its hard to tell in the dark."
+			+ "\n\n"
+			+ "You are dead."
+		);
+	}
+
+	placePlanetCliffsCaveInterior_GoWest
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var stateName = "TurnsSinceLastEnteringCave";
+
+		w.agentPlayer.stateGroup.stateWithNameSetToValue
+		(
+			stateName, 0
+		);
+	}
+
 	placePlanetCliffsCaveInterior_Update
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		this.todo(u, w, p, c);
+		if (p.hasBeenVisited() == false)
+		{
+			u.messageEnqueue(p.description);
+			p.visit();
+		}
+
+		var stateName = "TurnsSinceLastEnteringCave";
+		var turnsSinceLastEnteringCave =
+			w.agentPlayer.stateGroup.stateWithNameGetValue(stateName);
+		if (turnsSinceLastEnteringCave == null)
+		{
+			turnsSinceLastEnteringCave = 0;
+		}
+
+		var message: string;
+		if (turnsSinceLastEnteringCave == 0)
+		{
+			message =
+				"From far back in the cave, you hear a slapping noise,"
+				+ "as of spatulate feet running across rocks.";
+		}
+		else if (turnsSinceLastEnteringCave == 1)
+		{
+			message =
+				"That slapping-footsteps noise you heard coming from the back of the cave "
+				+ "is now coming from the middle of the cave, "
+				+ "and seems to be heading for the front of the cave, "
+				+ "which makes you uncomfortable, because that's where you are.  "
+				+ "In the shadows, you can just make out something big coming toward you."
+		}
+		else if (turnsSinceLastEnteringCave == 2)
+		{
+			message =
+				"A nightmarish beast charges into the dim light at the mouth of the cave.  "
+				+ "It looks like a bear married a frog married a spider, "
+				+ "and then their offspring ate all three of its parents "
+				+ "and then got a wicked sunburn on its full-body excema."
+				+ "\n\n"
+				+ "You think it would have killed you already, "
+				+ "but luckily even the low light here seems to blind it, stun it, maybe hurt it.  "
+				+ "It staggers a bit, throwing one claw over its eyes.  "
+				+ "It still has several other claws left over to deal with you, though.  "
+				+ "And it's still moving toward you."
+		}
+		else if (turnsSinceLastEnteringCave == 3)
+		{
+			message =
+				"Well, you waited too long.  "
+				+ "If you were hoping the bellowing, charging claw monster "
+				+ "would turn out to be friendly, I'm afraid I must inform you "
+				+ "that this is not that kind of game."
+				+ "\n\n"
+				+ "You are dead.";
+
+			w.end();
+		}
+
+		u.messageEnqueue(message);
+
+		turnsSinceLastEnteringCave++;
+
+		w.agentPlayer.stateGroup.stateWithNameSetToValue
+		(
+			stateName, turnsSinceLastEnteringCave
+		);
+	}
+
+	placePlanetCliffsTopSouth_CrossBridge
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var stateName = "TimesBridgeCrossed";
+		var region = p.region(w);
+		var regionStateGroup = region.stateGroup;
+		var timesBridgeCrossed =
+			regionStateGroup.stateWithNameGetValue(stateName);
+		if (timesBridgeCrossed == null)
+		{
+			timesBridgeCrossed = 0;
+		}
+
+		var message: string;
+
+		if (timesBridgeCrossed == 0)
+		{
+			message =
+				"As you walk across the stone arch, it groans under your weight.  "
+				+ "New cracks appear in the stone.  "
+				+ "The existing cracks get longer, wider, and deeper, "
+				+ "and not in a sexy way."
+		}
+		else if (timesBridgeCrossed == 1)
+		{
+			message =
+				"As you walk across the stone arch again, "
+				+ "all the cracks in the rock get bigger.  "
+				+ "Which is just what you expected to happen.  "
+				+ "It's always gratifying when experiment agrees with theory."
+		}
+		else if (timesBridgeCrossed == 2)
+		{
+			message =
+				"As you walk across the stone arch again, "
+				+ "all the cracks in the rock get bigger.  "
+				+ "Which is just what you expected to happen.  "
+				+ "It's always gratifying when experiment agrees with theory."
+		}
+		else if (timesBridgeCrossed == 3)
+		{
+			message =
+				"You walk across the stone arch yet again. "
+				+ "This time, some of the cracks get so big "
+				+ "that pieces of stone actually start falling off of the arch "
+				+ "and make little puffs as they impact the sand below.  "
+				+ "\n\n"
+				+ "This is starting to remind you of that time the ranger "
+				+ "yelled at you at Delicately Arrayed Crystals Galactic Park."
+		}
+		else if (timesBridgeCrossed == 4)
+		{
+			message =
+				"Against your every better instinct, you start to walk "
+				+ "across the stone arch yet again. "
+				+ "As you approach the apex, a shower of little stones "
+				+ "falls to the desert below.  Then, with a groaning, rattling roar, "
+				+ "The entire thing collapses, and it and you plummet to the desert below.  "
+				+ "\n\n"
+				+ "You try jumping up in the air just before the boulder you're standing on "
+				+ "hits the sand, like your uncle used to say "
+				+ "you can do with a falling elevator car, "
+				+ "but either your uncle or your timing is wrong, "
+				+ "because it doesn't work.  "
+				+ "\n\n"
+				+ "It's academic anyway, since a bunch more boulders fall on top of you."
+				+ "\n\n"
+				+ "You are dead.";
+
+			w.end();
+		}
+
+		u.messageEnqueue(message);
+
+		timesBridgeCrossed++;
+		regionStateGroup.stateWithNameSetToValue(stateName, timesBridgeCrossed);
+
+		if (w.isOver == false)
+		{
+			var portal = p.portalByName("bridge");
+			portal.goThrough(u, w);
+		}
 	}
 
 	placePlanetDesertDeep_Update
@@ -4319,7 +4639,7 @@ class Scripts
 			u.messageEnqueue
 			(
 				"Hey!  I don't know if you were listening before, "
-				+ "but YOU ARE VERY VERY THIRSTY NOW."
+				+ "but YOU ARE VERY VERY THIRSTY NOW.  "
 				+ "If you don't drink something very soon, "
 				+ "you will die of dehydration."
 			);

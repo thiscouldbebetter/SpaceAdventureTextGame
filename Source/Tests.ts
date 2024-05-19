@@ -111,6 +111,71 @@ class Tests
 		Assert.isTrue(world.isOver);
 	}
 
+	die_PlanetCliffs_BridgeCollapses(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 33"); // east side of bridge
+
+		Assert.isFalse(world.isOver);
+
+		run("go west");
+		Assert.isFalse(world.isOver);
+
+		run("go east");
+		Assert.isFalse(world.isOver);
+
+		run("go west");
+		Assert.isFalse(world.isOver);
+
+		run("go east");
+		Assert.isFalse(world.isOver);
+
+		run("go west");
+		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetCliffs_LookInHole(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 17"); // crash site
+		run("go east");
+
+		Assert.isFalse(world.isOver);
+
+		run("look in hole");
+
+		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetCliffs_EatenByCaveMonster(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 29"); // cliff cave interior
+
+		Assert.isFalse(world.isOver);
+
+		var turnsForMonsterToKillPlayer = 3;
+
+		for (var i = 0; i < turnsForMonsterToKillPlayer - 1; i++)
+		{
+			run("wait");
+			Assert.isFalse(world.isOver);
+		}
+
+		run("wait");
+
+		Assert.isTrue(world.isOver);
+	}
+
 	die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(): void
 	{
 		this.universeAndWorldCreateAndSet();
@@ -218,9 +283,15 @@ class Tests
 		run("press launch button");
 		run("press autonav button");
 
-		// Ekkis II Wilderness.
-
+		// Pod crashes on planet.
+		run("get survival kit");
+		run("open survival kit");
+		run("get dehydrated water");
+		run("take off safety harness");
 		run("go door");
+
+		// Ekkis II Wilderness.
+		// crash site
 
 		Assert.areEqual
 		(
@@ -228,7 +299,6 @@ class Tests
 			world.placeCurrent().name
 		);
 
-		// crash site
 		run("go east");
 
 		// cliff bottoms, hole
@@ -238,6 +308,10 @@ class Tests
 		run("go east");
 		// bottom ramp, cave
 		run("go up");
+		run("go cave");
+		run("throw dehydrated water at monster");
+		run("get chunk");
+		run("go outside");
 		// bridge arch, east side
 		run("go west");
 		// bridge arch, west side
@@ -300,6 +374,35 @@ class Tests
 			world.placeCurrent().name
 		);
 	}
+
+	survive_PlanetDesert_DrinkToPreventDyingOfThirst(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 17"); // crash site
+		run("cheat get dehydrated water");
+
+		var turnsToWait = 30;
+		for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++)
+		{
+			run("wait");
+		}
+
+		Assert.isFalse(world.isOver);
+
+		run("drink dehydrated water");
+
+		var turnsToWait = 20;
+		for (var turnsWaitedSoFar = 0; turnsWaitedSoFar < turnsToWait; turnsWaitedSoFar++)
+		{
+			run("wait");
+		}
+
+		Assert.isFalse(world.isOver);
+	}
+
 }
 
 class TestFixture
@@ -341,9 +444,13 @@ var testFixture = new TestFixture
 		() => tests.die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors(),
 		() => tests.die_FriendlyShip_Explodes(),
 		() => tests.die_FriendlyShip_GoIntoAirlockWithNoSuit(),
+		() => tests.die_PlanetCliffs_BridgeCollapses(),
+		() => tests.die_PlanetCliffs_LookInHole(),
+		() => tests.die_PlanetCliffs_EatenByCaveMonster(),
 		() => tests.die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(),
 		() => tests.die_PlanetDesert_OfThirst(),
-		() => tests.playFromStartToEnd()
+		() => tests.playFromStartToEnd(),
+		() => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst()
 	]
 );
 
