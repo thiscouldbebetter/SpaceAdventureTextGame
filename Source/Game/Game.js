@@ -972,34 +972,110 @@ class Places {
             + "\n\n"
             + "Back on this side of the barrier, a lower path leads back to the east.", [
             this.portal(["east"], Places.planetCavernsPool_Name()),
-            this.portal(["west"], Places.planetCavernsDrips_Name())
+            this.portal(["west"], Places.planetCavernsDripsBefore_Name())
         ]);
     }
     static planetCavernsBarrier_Name() {
         return "Ekkis II - Caverns - Barrier";
     }
-    planetCavernsDrips() {
-        return this.place3(Places.planetCavernsDrips_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
+    planetCavernsDrips1() {
+        return this.place4(Places.planetCavernsDrips1_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II, "
+            + "in a passage where drips of clear liquid fall intermittently "
+            + "from the ceiling and through small, precise holes in the floor "
+            + "that appear as if they were made to fit them."
             + "\n\n"
-            + "A passage runs to the east, where drips of a clear liquid "
+            + "The passage continues to the east, under two more sets of drips, "
+            + "each set dripping in its own distinct rhythm."
+            + "\n\n"
+            + "To the west, the passage leads back "
+            + "toward the entrance to the caverns.", this.scripts.placePlanetCavernsDrips_Update.name, [
+            this.portal(["west"], Places.planetCavernsDripsBefore_Name()),
+            this.portal(["east"], Places.planetCavernsDrips2_Name())
+        ]);
+    }
+    static planetCavernsDrips1_Name() {
+        return "Ekkis II - Caverns - Drips - West";
+    }
+    planetCavernsDrips2() {
+        return this.place4(Places.planetCavernsDrips2_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II, "
+            + "in a passage where drips of clear liquid fall intermittently "
+            + "from the ceiling and through small, precise holes in the floor "
+            + "that appear as if they were made to fit them."
+            + "\n\n"
+            + "To the west and to the east, the passage continues under more, "
+            + "similar drips, each set of drips dripping in its own distinct rhythm.", this.scripts.placePlanetCavernsDrips_Update.name, [
+            this.portal(["west"], Places.planetCavernsDrips1_Name()),
+            this.portal(["east"], Places.planetCavernsDrips3_Name())
+        ]);
+    }
+    static planetCavernsDrips2_Name() {
+        return "Ekkis II - Caverns - Drips - Middle";
+    }
+    planetCavernsDrips3() {
+        return this.place3(Places.planetCavernsDrips3_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II, "
+            + "in a passage where drips of clear liquid fall intermittently "
+            + "from the ceiling and through small, precise holes in the floor "
+            + "that appear as if they were made to fit them."
+            + "\n\n"
+            + "The passage continues, thankfully drier, to the east."
+            + "\n\n"
+            + "To the west, the passage leads back toward the entrance to the caverns, "
+            + "passing under another two sets of drips, "
+            + "each dripping in its own distinct rhythm.", [
+            this.portal(["west"], Places.planetCavernsDrips2_Name()),
+            this.portal(["east"], Places.planetCavernsDripsAfter_Name())
+        ]);
+    }
+    static planetCavernsDrips3_Name() {
+        return "Ekkis II - Caverns - Drips - East";
+    }
+    planetCavernsDripsBefore() {
+        return this.place4(Places.planetCavernsDripsBefore_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
+            + "\n\n"
+            + "A passage runs to the east, under drips of a clear liquid "
             + "fall intermittently from the ceiling.  "
             + "Each drip passes into a small, precise hole in the floor "
             + "that appears as if it were made to fit it."
             + "\n\n"
-            + "If this is a water feature, it's got nothing on your grandparents' "
+            + "If this is supposed to be a water feature, "
+            + "it's got nothing on your grandparents' "
             + "topless bronze torso model pouring a bottomless jar into a pool.  "
-            + "Which reminds you, they just don't make water features "
+            + "They just don't make water features "
             + "sexy like they used to."
             + "\n\n"
             + "To the west, another passage leads back "
             + "toward the entrance to the caverns, "
-            + "curving left in a rough semicircle back down to the level below.", [
-            this.portal(["east"], Places.planetCavernsProjectionRoom_Name()),
-            this.portal(["west"], Places.planetCavernsBarrier_Name())
+            + "curving left in a rough semicircle back down to the level below.", this.scripts.placePlanetCavernsDrips_Update.name, [
+            this.portal(["west"], Places.planetCavernsBarrier_Name()),
+            this.portal(["east"], Places.planetCavernsDrips1_Name())
         ]);
     }
-    static planetCavernsDrips_Name() {
-        return "Ekkis II - Caverns - Drips";
+    static planetCavernsDripsBefore_Name() {
+        return "Ekkis II - Caverns - West of Drips";
+    }
+    planetCavernsDripsAfter() {
+        return this.place4(Places.planetCavernsDripsAfter_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
+            + "\n\n"
+            + "A passage runs to the west, under drips of a clear liquid "
+            + "that fall intermittently from the ceiling.  "
+            + "Each drip passes into a small, precise hole in the floor "
+            + "that appears as if it were made to fit it."
+            + "\n\n"
+            + "You're amazed that you managed to get on this side of the drips "
+            + "without getting dripped on even once. "
+            + "You must have a great sense of timing.  "
+            + "Though, if your timing is so great, how is it possible "
+            + "that you keep bombing so hard at open-mic stand-up comedy night?"
+            + "\n\n"
+            + "To the west, another passage leads back "
+            + "toward the entrance to the caverns, "
+            + "curving left in a rough semicircle back down to the level below.", this.scripts.placePlanetCavernsDrips_Update.name, [
+            this.portal(["west"], Places.planetCavernsDrips3_Name()),
+            this.portal(["east"], Places.planetCavernsProjectionRoom_Name())
+        ]);
+    }
+    static planetCavernsDripsAfter_Name() {
+        return "Ekkis II - Caverns - East of Drips";
     }
     planetCavernsElevator() {
         return this.place3(Places.planetCavernsElevator_Name(), "You stand at the bottom of the elevator that brought you down "
@@ -1087,7 +1163,7 @@ class Places {
             + "by a holographic projection of a triangular-headed alien.  "
             + "In retrospect, that giant alien head really livened up the decor."
             + "A passage leads back to the east.", [
-            this.portal(["west"], Places.planetCavernsDrips_Name()),
+            this.portal(["west"], Places.planetCavernsDrips3_Name()),
             this.portal(["north"], Places.planetCavernsSteamworks_Name())
         ]);
     }
@@ -1108,7 +1184,12 @@ class Places {
             + "\n\n"
             + "To the west is a small, garage-like space, with a door at the end "
             + "that appears to open onto a large elevator platform.", [
-            this.portal(["east"], Places.planetCavernsProjectionRoom_Name()),
+            this.portal(["south"], Places.planetCavernsProjectionRoom_Name()),
+            this.emplacement2(["cartridge reader", "reader"], "A computer console with a monitor and standard data cartridge slot "
+                + "stands against the north wall.  Here, in the ancient steamworks of "
+                + "a lost civilization under the surface of a barely inhabited planet.  "
+                + "You knew the cartridge technology wasn't exactly state-of-the-art, "
+                + "but this is ridiculous."),
             this.emplacement(["alien"]).commandAdd(new Command(["talk to alien"], this.scripts.placePlanetCavernsSteamworks_TalkToAlien.name))
         ]);
     }
@@ -1703,14 +1784,18 @@ class Regions {
     }
     planetCaverns(places, scripts) {
         return Region.fromNameAndPlaces("Ekkis 2 - Caverns", [
+            places.planetCavernsElevator(),
+            places.planetCavernsGrating(),
+            places.planetCavernsGeyser(),
+            places.planetCavernsPool(),
+            places.planetCavernsBarrier(),
+            places.planetCavernsDripsBefore(),
+            places.planetCavernsDrips1(),
+            places.planetCavernsDrips2(),
+            places.planetCavernsDrips3(),
+            places.planetCavernsDripsAfter(),
             places.planetCavernsProjectionRoom(),
             places.planetCavernsSteamworks(),
-            places.planetCavernsBarrier(),
-            places.planetCavernsDrips(),
-            places.planetCavernsElevator(),
-            places.planetCavernsGeyser(),
-            places.planetCavernsGrating(),
-            places.planetCavernsPool(),
         ]);
     }
     planetSettlement(places, scripts) {
@@ -1778,6 +1863,7 @@ class Scripts {
             this.placeFriendlyShipLibrary_Type,
             this.placeFriendlyShipLibrary_UseConsole,
             this.placeFriendlyShipUpperDeckHallAmidships_Update,
+            this.placePlanetCavernsDrips_Update,
             this.placePlanetCavernsSteamworks_InsertKeyInSkimmer,
             this.placePlanetCavernsSteamworks_TalkToAlien,
             this.placePlanetCliffsTopSouth_CrossBridge,
@@ -2321,6 +2407,50 @@ class Scripts {
             var placeDescription = p.description;
             u.messageEnqueue(placeDescription);
         }
+    }
+    placePlanetCavernsDrips_Update(u, w, p, c) {
+        var turnsSoFar = w.turnsSoFar;
+        var drippingOrNot = [
+            (turnsSoFar % 2 != 0),
+            (turnsSoFar % 3 != 0),
+            (turnsSoFar % 5 != 0)
+        ];
+        var placeIsCurrentlyDripping = false;
+        if (p.name == Places.planetCavernsDrips1_Name()) {
+            placeIsCurrentlyDripping = drippingOrNot[0];
+        }
+        else if (p.name == Places.planetCavernsDrips2_Name()) {
+            placeIsCurrentlyDripping = drippingOrNot[1];
+        }
+        else if (p.name == Places.planetCavernsDrips3_Name()) {
+            placeIsCurrentlyDripping = drippingOrNot[2];
+        }
+        if (placeIsCurrentlyDripping) {
+            message =
+                "As you walk under one of the intermittent sets of drips, "
+                    + "several of them fall onto your head. "
+                    + "\n\n"
+                    + "It turns out the drops are made of horrifically strong acid. "
+                    + "The first few burrow through your skin, then your skull, "
+                    + "then your brain.  You lose control of your limbs and fall, "
+                    + "which just makes your body a larger target for more drips, "
+                    + "which drill more tiny holes in you, "
+                    + "which kills you. "
+                    + "\n\n"
+                    + "You are dead.";
+            w.end();
+        }
+        else {
+            var message = [
+                "The first, westernmost set of drips is currently "
+                    + (drippingOrNot[0] ? "not " : "") + "dripping.  ",
+                "The second, middle set of drips is currently "
+                    + (drippingOrNot[0] ? "not " : "") + "dripping.  ",
+                "The third, easternmost set of drips is currently "
+                    + (drippingOrNot[0] ? "not " : "") + "dripping."
+            ].join("\n\n");
+        }
+        u.messageEnqueue(message);
     }
     placePlanetCavernsSteamworks_InsertKeyInSkimmer(u, w, p, c) {
         var message = "You put the key into a similarly-shaped hole in the skimmer control panel, "

@@ -111,6 +111,26 @@ class Tests
 		Assert.isTrue(world.isOver);
 	}
 
+	die_PlanetCliffs_MeltedByAcidDrips(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 41"); // west side of drips
+
+		Assert.isFalse(world.isOver);
+
+		run("go east");
+
+		// The westernmost set of drips
+		// drips every other turn,
+		// so wait at most one turn to die.
+		run("wait");
+
+		Assert.isTrue(world.isOver);
+	}
+
 	die_PlanetCliffs_BridgeCollapses(): void
 	{
 		this.universeAndWorldCreateAndSet();
@@ -336,7 +356,61 @@ class Tests
 		run("go west");
 		// barrier
 		run("go west");
+
 		// drips
+		// west of drips
+
+		Assert.areEqual
+		(
+			Places.planetCavernsDripsBefore_Name(),
+			world.placeCurrent().name
+		);
+
+		// Wait for the right moment to pass the drips.
+		// The drip sets stop, from west to east respectively,
+		// every 2 turns, every 3 turns, and every 5 turns.
+		// So they all stop dripping every 30 turns.
+		// But the player must pass under on the
+		// eighth, ninth, and tenth turns after that,
+		// because 8 is divisible by 2, 9 by 3, and 10 by 5.	
+
+		while (world.turnsSoFar % 30 != 7)
+		{
+			run("wait");
+		}
+
+		run("go east");
+		// drips 1
+		Assert.areEqual
+		(
+			Places.planetCavernsDrips1_Name(),
+			world.placeCurrent().name
+		);
+
+		run("go east");
+		// drips 2
+		Assert.areEqual
+		(
+			Places.planetCavernsDrips2_Name(),
+			world.placeCurrent().name
+		);
+
+		run("go east");
+		// drips 3
+		Assert.areEqual
+		(
+			Places.planetCavernsDrips3_Name(),
+			world.placeCurrent().name
+		);
+
+		run("go east");
+		// east of drips
+		Assert.areEqual
+		(
+			Places.planetCavernsDripsAfter_Name(),
+			world.placeCurrent().name
+		);
+
 		run("go east");
 		// projection room
 		run("go north");
@@ -444,6 +518,7 @@ var testFixture = new TestFixture
 		() => tests.die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors(),
 		() => tests.die_FriendlyShip_Explodes(),
 		() => tests.die_FriendlyShip_GoIntoAirlockWithNoSuit(),
+		() => tests.die_PlanetCliffs_MeltedByAcidDrips(),
 		() => tests.die_PlanetCliffs_BridgeCollapses(),
 		() => tests.die_PlanetCliffs_LookInHole(),
 		() => tests.die_PlanetCliffs_EatenByCaveMonster(),
