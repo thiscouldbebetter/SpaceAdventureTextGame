@@ -111,13 +111,43 @@ class Tests
 		Assert.isTrue(world.isOver);
 	}
 
-	die_PlanetCliffs_MeltedByAcidDrips(): void
+	die_PlanetCaverns_DrinkingFromStrangePool(): void
 	{
 		this.universeAndWorldCreateAndSet();
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 41"); // west side of drips
+		run("cheat goto 40"); // pool
+
+		Assert.isFalse(world.isOver);
+
+		run("drink pool");
+
+		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetCaverns_EatenByMonsterUnderGrating(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 37"); // east side of grating
+
+		Assert.isFalse(world.isOver);
+
+		run("go west");
+
+		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetCaverns_MeltedByAcidDrips(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 42"); // west side of drips
 
 		Assert.isFalse(world.isOver);
 
@@ -128,6 +158,17 @@ class Tests
 		// so wait at most one turn to die.
 		run("wait");
 
+		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetCaverns_WalkingThroughLaserBarrier(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto 41"); // barrier
+		run("go barrier");
 		Assert.isTrue(world.isOver);
 	}
 
@@ -307,6 +348,7 @@ class Tests
 		run("get survival kit");
 		run("open survival kit");
 		run("get dehydrated water");
+		run("get can of sham");
 		run("take off safety harness");
 		run("go door");
 
@@ -318,6 +360,8 @@ class Tests
 			Places.planetDesertCrashSite_Name(),
 			world.placeCurrent().name
 		);
+
+		run("get glass");
 
 		run("go east");
 
@@ -347,14 +391,19 @@ class Tests
 
 		// caverns
 		// elevator
+		run("get rock");
 		run("go west");
-		// grating
+		// grating, east side
+		run("put can of sham on grating");
+		run("go west");
+		// grating, west side
 		run("go west");
 		// geyser
 		run("go west");
 		// pool
 		run("go west");
 		// barrier
+		run("put glass in barrier");
 		run("go west");
 
 		// drips
@@ -518,13 +567,17 @@ var testFixture = new TestFixture
 		() => tests.die_FriendlyShip_EscapePodLaunchesIntoClosedBayDoors(),
 		() => tests.die_FriendlyShip_Explodes(),
 		() => tests.die_FriendlyShip_GoIntoAirlockWithNoSuit(),
-		() => tests.die_PlanetCliffs_MeltedByAcidDrips(),
+		() => tests.die_PlanetCaverns_EatenByMonsterUnderGrating(),
+		() => tests.die_PlanetCaverns_MeltedByAcidDrips(),
+		() => tests.die_PlanetCaverns_WalkingThroughLaserBarrier(),
 		() => tests.die_PlanetCliffs_BridgeCollapses(),
 		() => tests.die_PlanetCliffs_LookInHole(),
 		() => tests.die_PlanetCliffs_EatenByCaveMonster(),
 		() => tests.die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(),
 		() => tests.die_PlanetDesert_OfThirst(),
+
 		() => tests.playFromStartToEnd(),
+
 		() => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst()
 	]
 );

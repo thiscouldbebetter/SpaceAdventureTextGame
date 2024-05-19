@@ -93,7 +93,7 @@ class Items
 		// Containers.
 		this.SurvivalKit = this.survivalKit
 		(
-			[ this.DehydratedWater, this.Multitool ]
+			[ this.DehydratedWater, this.Multitool, this.CanOfSham ]
 		);
 
 		this._All =
@@ -128,7 +128,8 @@ class Items
 		(
 			[ "can of Sham", "can of sham", "can", "sham" ],
 
-			"This is a can of Sham (tm) taken from the survival kit of the Pax Aeterna's escape pod.  "
+			"These are cans of Sham (tm) taken from the survival kit "
+			+ "of the Pax Aeterna's escape pod.  "
 			+ "\n\n"
 			+ "If you're not familiar with the product, "
 			+ "Sham (tm) is a... popular... brand of "
@@ -136,8 +137,8 @@ class Items
 			+ "\n\n"
 			+ "Nobody eats real meat anymore, "
 			+ "because people feel guilty about the cruelty to animals.  "
-			+ "Sham (tm) puts the cruelty where it belongs--on the consumer."
-		);
+			+ "Sham (tm) puts the cruelty where it belongs--in the consumer's mouth."
+		).quantitySet(3);
 	}
 
 	dehydratedWater(): Item
@@ -969,6 +970,7 @@ class Places
 					)
 				),
 				this.emplacement( [ "monitor screen" ] ),
+
 				this.emplacement
 				(
 					emplacementSafetyHarnessNames
@@ -976,15 +978,17 @@ class Places
 				(
 					new Command
 					(
-						MessageHelper.combineStringArrays
-						(
+						MessageHelper.combinePhraseArrays
+						([
 							[ "use", "fasten", "put on" ],
 							emplacementSafetyHarnessNames
-						),
+						]),
 						this.scripts.placeFriendlyShipEscapePod_PutOnSafetyHarness.name
 					)
 				),
-				this.emplacement( [ "survival kit" ] ),
+
+				Items.Instance().SurvivalKit,
+
 				this.emplacement( [ "throttle" ] )
 			]
 		);
@@ -1394,7 +1398,7 @@ class Places
 			[
 				this.portal( [ "pod", "escape pod" ], Places.friendlyShipEscapePod_Name() ),
 				this.portal( [ "east" ], Places.planetCliffsBottomNorthwestWestSide_Name() ),
-				Items.Instance().reflectiveGlass
+				Items.Instance().ReflectiveGlass
 			]
 		);
 	}
@@ -1611,7 +1615,7 @@ class Places
 			+ "\n\n"
 			+ "To the south, more cliffs are visible. "
 			+ "\n\n"
-			+ " The desert stretches away to the north, and west."
+			+ "The desert stretches away to the north and west."
 			+ "\n\n"
 			+ "The cliff face has a nearly circular hole in it, "
 			+ "a little less than two meters off the ground.  "
@@ -2020,7 +2024,50 @@ class Places
 
 			[
 				this.portal( [ "east" ], Places.planetCavernsPool_Name() ),
-				this.portal( [ "west" ], Places.planetCavernsDripsBefore_Name() )
+				this.portal3
+				(
+					[ "west", "barrier", "laser barrier" ],
+					Places.planetCavernsDripsBefore_Name(),
+					this.scripts.placePlanetCavernsBarrier_GoBarrier.name
+				),
+
+				this.emplacement
+				(
+					[
+						"laser barrier",
+						"barrier",
+						"lasers",
+						"beams",
+						"beams of light",
+						"light"
+					]
+				).activate().commandAdd
+				(
+					new Command
+					(
+						MessageHelper.combinePhraseArrays
+						([
+							[ "put", "place", "hold", "use" ],
+							[
+								"reflective glass",
+								"glass",
+								"shards",
+								"shards of glass"
+							],
+							[ null, "in", "on" ],
+							[
+								"laser barrier",
+								"barrier",
+								"lasers",
+								"beams",
+								"beams of light",
+								"light"
+							]
+						]),
+
+						this.scripts.placePlanetCavernsBarrier_PutGlassInBarrier.name
+					)
+				)
 			]
 		);
 	}
@@ -2211,7 +2258,7 @@ class Places
 
 			[
 				this.portal( [ "elevator", "door" ], Places.planetCliffsTopNortheast_Name() ),
-				this.portal( [ "west" ], Places.planetCavernsGrating_Name() )
+				this.portal( [ "west" ], Places.planetCavernsGratingEastSide_Name() )
 			]
 		);
 	}
@@ -2232,13 +2279,15 @@ class Places
 			+ "The passage to the west ends abruptly in a solid rock wall."
 			+ "Nearby, a small geyser shoots out of a hole "
 			+ "in the top of a stalagmite, wetly and steamily, "
-			+ "but not in, like, a gross way."
+			+ "but not in, like, a gross way.  "
+			+ "Though, again, and I know I'm throwing this phrase around a lot recently, "
+			+ "but, again, undeniably, there does happen to be a smell."
 			+ "\n\n"
 			+ "Another passage leads back east, toward the cavern entrance.",
 
 			[
 				this.portal( [ "west" ], Places.planetCavernsPool_Name() ),
-				this.portal( [ "east" ], Places.planetCavernsGrating_Name() ),
+				this.portal( [ "east" ], Places.planetCavernsGratingWestSide_Name() ),
 
 				this.emplacement2
 				(
@@ -2259,7 +2308,7 @@ class Places
 					+ "Aw, what a bubbly, happy little guy. "
 					+ "It's a good thing the sun isn't blazing so hot inside this cavern,"
 					+ "Or you'd be tempted to take a drink of the steaming hot liquid.  "
-					+ "And that would melt your esophagus."
+					+ "And that, even assuming it's just water, would melt your esophagus.  "
 				)
 			]
 		);
@@ -2270,14 +2319,15 @@ class Places
 		return "Ekkis II - Caverns - Geyser";
 	}
 
-	planetCavernsGrating(): Place
+	planetCavernsGratingEastSide(): Place
 	{
 		return this.place3
 		(
-			Places.planetCavernsGrating_Name(),
+			Places.planetCavernsGratingEastSide_Name(),
 
 			"You are in a cavern deep beneath the desert of the planet Ekkis II, "
 			+ "in a passage running from east to west."
+			+ "\n\n"
 			+ "In the floor leading to the west, a thick metal grating "
 			+ "perforated with holes about 10 centimeters wide "
 			+ "stretches from wall to wall across the entire passage. ",
@@ -2285,7 +2335,7 @@ class Places
 			[
 				this.emplacement2
 				(
-					[ "grate", "grating" ],
+					[ "grate", "grating", "grille" ],
 
 					"You bend over and look closely at the grating."
 					+ "You think you see something moving down there.  "
@@ -2293,17 +2343,86 @@ class Places
 					+ "And, yeah, there's a smell.  "
 					+ "For a metal grate in a cave, "
 					+ "it's kind of a sensory smorgasbord."
+				).commandAddFromTextsAndScriptName
+				(
+					MessageHelper.combinePhraseArrays
+					([
+						[ "put", "drop", "set", "throw" ],
+						[ "can", "sham", "can of sham" ],
+						[ null, "on", "at" ],
+						[ "grating", "grate", "grille" ]
+					]),
+					this.scripts.placePlanetCavernsGrating_PutCanOfShamOnGrating.name
 				),
 
-				this.portal( [ "west" ], Places.planetCavernsGeyser_Name() ),
+				this.portal3
+				(
+					[ "west", "grating", "grate", "grille" ],
+					Places.planetCavernsGratingWestSide_Name(),
+					this.scripts.placePlanetCavernsGrating_CrossGrating.name
+				),
+
 				this.portal( [ "east" ], Places.planetCavernsElevator_Name() )
 			]
 		);
 	}
 
-	static planetCavernsGrating_Name(): string
+	static planetCavernsGratingEastSide_Name(): string
 	{
-		return "Ekkis II - Caverns - Grating";
+		return "Ekkis II - Caverns - Grating - East Side";
+	}
+
+	planetCavernsGratingWestSide(): Place
+	{
+		return this.place3
+		(
+			Places.planetCavernsGratingWestSide_Name(),
+
+			"You are in a cavern deep beneath the desert of the planet Ekkis II, "
+			+ "in a passage running from east to west."
+			+ "\n\n"
+			+ "In the floor leading back to the east, a thick metal grating "
+			+ "perforated with holes about 10 centimeters wide "
+			+ "stretches from wall to wall across the entire passage.  "
+			+ "\n\n"
+			+ "Now that you're on this side of it, "
+			+ "it seems only fair to remind you, in case you've forgotten, "
+			+ "that there's a monster down there able to, and willing to, "
+			+ "eat an unopened can of Sham (tm) in a matter of seconds.",
+
+			[
+				this.emplacement3
+				(
+					[ "grate", "grating", "grille" ],
+
+					this.scripts.placePlanetCavernsGrating_CrossGrating.name,
+
+					"You bend over and look closely at the grating."
+					+ "You can see some slight movement, "
+					+ "hear some bathtub noises,  "
+					+ "and there is, as there frequently is in your life lately, a smell.  "
+					+ "\n\n"
+					+ "Whatever's down there is likely still down there, "
+					+ "unless this is its coworker and they're taking it in shifts."
+				).commandAddFromTextsAndScriptName
+				(
+					[ "put can of sham on grating" ],
+					this.scripts.placePlanetCavernsGrating_PutCanOfShamOnGrating.name
+				),
+
+				this.portal( [ "west" ], Places.planetCavernsGeyser_Name() ),
+				this.portal
+				(
+					[ "east", "grating", "grate", "grille" ],
+					Places.planetCavernsGratingEastSide_Name()
+				)
+			]
+		);
+	}
+
+	static planetCavernsGratingWestSide_Name(): string
+	{
+		return "Ekkis II - Caverns - Grating - West Side";
 	}
 
 	planetCavernsPool(): Place
@@ -2322,7 +2441,33 @@ class Places
 
 			[
 				this.portal( [ "west" ], Places.planetCavernsBarrier_Name() ),
-				this.portal( [ "east" ], Places.planetCavernsGeyser_Name() )
+				this.portal( [ "east" ], Places.planetCavernsGeyser_Name() ),
+
+				this.emplacement2
+				(
+					[ "pool", "pool of water" ],
+
+					[
+						"This is a transparent pool in a basin of gleaming crystal, ",
+						"fed from above by drops that rain from the ceiling, ",
+						"making concentric circles on the otherwise still surface.  ",
+						"\n\n",
+						"It's so Zen that it gets you excited.",
+						"Which makes it not Zen.  ",
+						"Which, in turn, makes it even more Zen.  ",
+						"Zen is tricky like that."
+					].join("")
+
+				).commandAddFromTextsAndScriptName
+				(
+					MessageHelper.combinePhraseArrays
+					([
+						[ "drink" ],
+						[ null, "from" ],
+						[ "pool", "water", "liquid" ]
+					]),
+					this.scripts.placePlanetCavernsPool_DrinkFromPool.name
+				)
 			]
 		);
 	}
@@ -3435,7 +3580,8 @@ class Regions
 			"Ekkis 2 - Caverns",
 			[
 				places.planetCavernsElevator(),
-				places.planetCavernsGrating(),
+				places.planetCavernsGratingEastSide(),
+				places.planetCavernsGratingWestSide(),
 				places.planetCavernsGeyser(),
 				places.planetCavernsPool(),
 
@@ -3539,7 +3685,12 @@ class Scripts
 			this.placeFriendlyShipLibrary_UseConsole,
 			this.placeFriendlyShipUpperDeckHallAmidships_Update,
 
+			this.placePlanetCavernsBarrier_GoBarrier,
+			this.placePlanetCavernsBarrier_PutGlassInBarrier,
 			this.placePlanetCavernsDrips_Update,
+			this.placePlanetCavernsGrating_CrossGrating,
+			this.placePlanetCavernsGrating_PutCanOfShamOnGrating,
+			this.placePlanetCavernsPool_DrinkFromPool,
 			this.placePlanetCavernsSteamworks_InsertKeyInSkimmer,
 			this.placePlanetCavernsSteamworks_TalkToAlien,
 			this.placePlanetCliffsTopSouth_CrossBridge,
@@ -3758,8 +3909,22 @@ class Scripts
 		}
 		else
 		{
-			var itemsContainedAsText = itemsContained.map(x => x.name() ).join("\n\t");
-			message += "Inside, you find: " + itemsContainedAsText + "."
+			var itemsContainedAsText =
+				itemsContained.map(x => x.nameAndQuantity() ).join("\n\t- ");
+			message +=
+				"Inside, you find the following " + itemsContainedAsText
+				+ "\n\n"
+				+ "It seems a little heavy on the Sham (tm) at first,  "
+				+ "but then you remember that announcement that the Commonwealth",
+				+ "had entered a corporate partnership with Delitron-9000, "
+				+ "the manufacturer of Sham (tm).  "
+				+ "It's too bad they didn't also form a partnership "
+				+ "with the Kracktastic Krill-Cracker people.  "
+				+ "\n\n"
+				+ "Anyway, just looking at all that Sham (tm) "
+				+ "effectively suppresses your desire to eat for the near future, "
+				+ "which you suppose is useful in a survival situation."
+
 			p.itemsAdd(itemsContained);
 			itemSurvivalKit.itemsClear();
 		}
@@ -4181,6 +4346,7 @@ class Scripts
 				"in the office/supply closet/quarters ",
 				"of the Maintenance Specialist (Sanitation Grade) ",
 				"of the starship Pax Aeterna, " ,
+				"part of the fleet of the Inner Orion Arm Commonwealth, ",
 				"currently on an urgent mission to...",
 				"\n\n",
 
@@ -4308,22 +4474,22 @@ class Scripts
 	{
 		var message =
 		[
-			"Try typing something, like 'type whatever'.  "
-			+ "\n\n"
-			+ "Yes, I know what you're thinking: "
-			+ "It's hundreds of years in the future, "
-			+ "and I still have to type stuff?  "
-			+ "And what, are they still using QWERTY?  "
-			+ "\n\n"
-			+ "Don't be stupid.  This is a naval-grade data retrieval console, "
-			+ "not some third-hand clicky-clack from a high-school keyboarding class.  "
-			+ "No, it doesn't use QWERTY.  It uses GHAFTR.  The GHAFTR keyboard layout "
-			+ "is proven to allow the expert typist to type 0.43% faster than QWERTY.  "
-			+ "\n\n"
-			+ "Granted, there are only twelve known GHAFTR experts, "
-			+ "and that's counting four dead ones.  "
-			+ "For everyone else, typing on a GHAFTR keyboard "
-			+ "takes about four times as long.  So you'd better get started."
+			"Try typing something, like 'type whatever'.  ",
+			"\n\n",
+			"Yes, I know what you're thinking: ",
+			"It's hundreds of years in the future, ",
+			"and I still have to type stuff?  ",
+			"And what, are they still using QWERTY?  ",
+			"\n\n",
+			"Don't be stupid.  This is a naval-grade data retrieval console, ",
+			"not some third-hand clicky-clack from a high-school keyboarding class.  ",
+			"No, it doesn't use QWERTY.  It uses GHAFTR.  The GHAFTR keyboard layout ",
+			"is proven to allow the expert typist to type 0.43% faster than QWERTY.  ",
+			"\n\n",
+			"Granted, there are only twelve known GHAFTR experts, ",
+			"and that's counting four dead ones.  ",
+			"For everyone else, typing on a GHAFTR keyboard ",
+			"takes about four times as long.  So you'd better get started."
 		].join("");
 
 		u.messageEnqueue(message);
@@ -4357,6 +4523,99 @@ class Scripts
 			var placeDescription = p.description;
 			u.messageEnqueue(placeDescription);
 		}
+	}
+
+	placePlanetCavernsBarrier_GoBarrier
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var emplacementBarrier = p.emplacementByName("laser barrier");
+
+		var barrierIsActivated = emplacementBarrier.activated();
+
+		var message: string;
+
+		if (barrierIsActivated)
+		{
+			message =
+			[
+				"You walk brazenly through the laser barrier.  ",
+				"Your roommate used to say that it's all about confidence.  ",
+				"And, much to your amazement, confidence works!  ",
+				"You pass through the beams of light ",
+				"and reach the other side in one piece.  ",
+				"\n\n",
+				"For a few moments.  Then you split into several pieces, well, slices really, ",
+				"like a cartoon character who just had a high-speed collision ",
+				"with a cheese cutter.",
+				"\n\n",
+				"You are dead."
+			].join("");
+
+			w.end();
+		}
+		else
+		{
+			var portalBarrier = p.portalByName("barrier");
+			portalBarrier.goThrough(u, w);
+		}
+
+		u.messageEnqueue(message);
+	}
+
+	placePlanetCavernsBarrier_PutGlassInBarrier
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var emplacementBarrier = p.emplacementByName("barrier");
+
+		var barrierIsActivated = emplacementBarrier.activated();
+
+		var message: string;
+
+		var itemGlass = w.agentPlayer.itemByName("glass");
+		
+		if (itemGlass == null)
+		{
+			message = "You don't have any such thing in your possession.";
+		}
+		else if (barrierIsActivated)
+		{
+			message =
+			[
+				"You gingerly hold the shard of reflective glass ",
+				"in one of the beams of the laser barrier.  ",
+				"The beam partially reflects off the semi-mirrored surface, ",
+				"and, due to the poorly chosen angle you're holding the glass at, ",
+				"almost burns your toes off.",
+				"\n\n",
+				"You carefully angle the glass so that the reflected beam ",
+				"returns to its point of origin and impinges on its own emitter port, ",
+				"which, after a few seconds of such exposure, ",
+				"melts, disabling the beam coming out of it.",
+				"\n\n",
+				"You repeat the process with the other beams.  ",
+				"In a few moments, the barrier is no longer functional.",
+				"\n\n",
+				"The instructor of your Remedial Laser Pragmatics class ",
+				"would be proud, you think.  Though it's a little hard ",
+				"to read his expression since you cauterized his eyebrows."
+			].join("");
+
+			var emplacementBarrier = p.emplacementByName("barrier");
+			emplacementBarrier.deactivate();
+		}
+		else
+		{
+			message =
+			[
+				"The barrier is already disabled.  Let it go."
+			].join("");
+		}
+
+		u.messageEnqueue(message);
 	}
 
 	placePlanetCavernsDrips_Update
@@ -4423,6 +4682,125 @@ class Scripts
 
 		u.messageEnqueue(message);
 
+	}
+
+	placePlanetCavernsGrating_CrossGrating
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var itemCanOfSham = p.itemByName("can of sham");
+		var monsterIsDistracted = itemCanOfSham != null;
+
+		var message: string;
+
+		if (monsterIsDistracted)
+		{
+			message =
+				"You quickly cross over the grating while the monster beneath it is distracted.  "
+				+ "Just in time, too.  Just as you step off the grating, "
+				+ "the flaling tentacle manages to split open the can of Sham, "
+				+ "its contents falling in chunks through the grating.  "
+				+ "The slurping noises that follow are indescribably disgusting."
+		}
+		else
+		{
+			message =
+				"Just as you step onto the grating, "
+				+ "a tentacle reaches through one of the holes "
+				+ "and wraps itself tightly around your ankle.  "
+				+ "You are alarmed by this, but then you realize that "
+				+ "you are far too large to be pulled through any of these holes.";
+				+ "\n\n"
+				+ "And that's true, as far as it goes, "
+				+ "but unfortunately the tentacle is so strong "
+				+ "that it pulls you through the hole anyway, "
+				+ "despite the incompatible sizes. "
+				+ "The parts of you that don't fit through the hole get peeled off "
+				+ "of the parts of you that do fit "
+				+ "and flop down onto the grating, "
+				+ "where other tentacles grab those parts, then repeat the process "
+				+ "until all your parts are gone."
+				+ "\n\n"
+				+ "It's kind of like being fed through a pasta extruder, "
+				+ "but if somebody added the marinara sauce before they shaped the noodles."
+				+ "\n\n"
+				+ "You are dead."
+
+			w.end();
+		}
+
+		u.messageEnqueue(message);
+
+		if (w.isOver == false)
+		{
+			var portal = p.portalByName("grating");
+			portal.goThrough(u, w);
+		}
+	}
+
+	placePlanetCavernsGrating_PutCanOfShamOnGrating
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message: string;
+
+		var agentPlayer = w.agentPlayer;
+
+		var itemCanOfSham = agentPlayer.itemByName("can of sham");
+
+		if (itemCanOfSham == null)
+		{
+			message = 
+				"You don't have any Sham (tm) on you at the moment.  "
+				+ "You take a moment to add it to your mental shopping list.";
+		}
+		else
+		{
+			agentPlayer.itemDropQuantityIntoPlace(itemCanOfSham, 1, p);
+
+			message = 
+				"You put the can of Sham (tm) on the grating, "
+				+ "and immediately, a tentacle reaches through one of the holes "
+				+ "wraps itself tightly around the can, "
+				+ "and tries to pull it through.  "
+				+ "But the size and shape of the can, together with "
+				+ "the high-quality, fallout-shelter-gauge metal it's made of, "
+				+ "prevents the tentacle from pulling it through."
+				+ "\n\n"
+				+ "Or at least not immediately.  "
+				+ "However, the frustrated flailing of the tentacle "
+				+ "as it bangs the can against the grating "
+				+ "is putting large dents in the can, "
+				+ "and some of the meat simulant inside is visible through the forming cracks."
+				+ "It won't be long now.";
+		}
+
+		u.messageEnqueue(message);
+	}
+
+	placePlanetCavernsPool_DrinkFromPool
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message =
+		[
+			"Not all transparent liquids are water, you know.  ",
+			"Very few of them are, in fact.  ",
+			"Only one, to be petty about it.",
+			"\n\n",
+			"For example, this particular transparent liquid was a very strong acid, ",
+			"which melts you from the inside out, which is, to look on the bright side, ",
+			"at least a novel way to die.",
+			"\n\n",
+			"You are dead."
+		].join("");
+
+		u.messageEnqueue(message);
+
+		w.end();
 	}
 
 	placePlanetCavernsSteamworks_InsertKeyInSkimmer
