@@ -1337,7 +1337,9 @@ class Places {
             this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
             this.portal(["east"], Places.planetSettlementBarRear_Name()),
             this.portal(["south"], Places.planetDesertDeep_Name()),
-            this.portal(["bar"], Places.planetSettlementBarInterior_Name())
+            this.portal(["bar"], Places.planetSettlementBarInterior_Name()),
+            Agent.fromNamesAndDescription(["person", "being"], "This is a being you met hanging around outside a bar "
+                + "in the middle of the day.  He must be rich.").commandAddFromTextsAndScriptName(["talk to person", "talk to being"], this.scripts.placePlanetSettlementBarFront_TalkToPerson.name)
         ]);
     }
     static planetSettlementBarFront_Name() {
@@ -1371,16 +1373,12 @@ class Places {
             + "A short ascending stairway leads back outside.";
         return this.place3(Places.planetSettlementBarInterior_Name(), description, [
             this.portal(["outside", "door"], Places.planetSettlementBarFront_Name()),
-            this.emplacement2(["band", "performers", "musicians", "singer"], "You like some of their early stuff.").commandAdd(new Command(["talk band", "talk to band"], this.scripts.todo.name
-            /*
-            "You try to talk to the band.  During their live performance.  "
-            + "You're one of those kind of people, huh?  "
-            + "The band, as is their privilege, ignores you.  Lucky them."
-            */
-            )),
+            this.emplacement2(["band", "performers", "musicians", "singer"], "You like some of their early stuff.").commandAdd(new Command(["talk band", "talk to band"], this.scripts.placePlanetSettlementBarInterior_TalkToBand.name)),
             this.emplacement2(["bar"], "The light is neither very bright nor pleasant, "
                 + "nor is the bar polished.  "
-                + "That's a literary reference, kids."),
+                + "That's a literary reference, kids.  "
+                + "It's from a story about a guy who's suicidal.  "
+                + "Looking around this place, you can totally understand why."),
             this.emplacement2(["machine", "slot machine", "gambling machine"], "It appears to be some variant of a slot machine.  "
                 + "When the player inserts some money "
                 + "and pulls the handle on the side, "
@@ -1393,12 +1391,28 @@ class Places {
             this.emplacement2(["bartender", "barman"], "This bartender doesn't appear to be the "
                 + "'listen to your problems' kind of bartender.  "
                 + "You try to catch his eye, but he evades your gaze "
-                + "with the effortless skill of long practice."),
-            this.emplacement2(["customers", "patrons"], "I suppose 'patrons' is a rather grand name "
+                + "with the effortless skill of long practice.").commandAdd(new Command([
+                "talk to bartender", "talk to barman",
+                "talk bartender", "talk barman"
+            ], this.scripts.placePlanetSettlementBarInterior_TalkToBartender.name)).commandAdd(new Command([
+                "buy bru-ale", "buy drink", "buy beer",
+                "order bru-ale", "order drink", "order beer"
+            ], this.scripts.placePlanetSettlementBarInterior_BuyDrink.name)),
+            this.emplacement2(["customers", "patrons", "barflies"], "I suppose 'patrons' is a rather grand name "
                 + "for this motley amalgamation of limbs, tongues, "
-                + "poor attitudes, and bad habits, "
+                + "poor attitudes, bad habits, "
+                + "and unpleasant fluids, "
                 + "but at least if we call them patrons we don't have to focus "
-                + "on their distinguishing characteristics.")
+                + "on their distinguishing characteristics.").commandAdd(new Command(MessageHelper.combinePhraseArrays([
+                ["talk", "talk to"],
+                ["customers", "patrons", "barflies"]
+            ]), this.scripts.placePlanetSettlementBarInterior_TalkToCustomers.name)),
+            this.emplacement3(["slot machine", "gambling machine", "machine"], "It's a Gamblomat Model MDK.  "
+                + "You think this thing might have been banned "
+                + "in the more reputable parts of the Commonwealth.  "
+                + "Something about a bunch of people who used it getting hurt.  "
+                + "You're not sure you understand how.  "
+                + "How dangerous can a slot machine be?  ", this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name)
         ]);
     }
     static planetSettlementBarInterior_Name() {
@@ -1441,10 +1455,10 @@ class Places {
         ]);
     }
     static planetSettlementRobotShopFront_Name() {
-        return "Ekkis II - Buy, Robot - Front";
+        return "Ekkis II - [Farting Noise] - Buy, Robot - Front";
     }
     planetSettlementRobotShopInterior() {
-        return this.place3(Places.planetSettlementRobotShopInterior_Name(), "You stand inside the [Farting Noise] branch of 'Buy, Robot'. "
+        var returnPlace = this.place3(Places.planetSettlementRobotShopInterior_Name(), "You stand inside the [Farting Noise] branch of 'Buy, Robot'. "
             + "Various currently-unmoving robots are displayed on pedestals, "
             + "each bearing a more-or-less conspicious price tag.  "
             + "A salesbeing watches you idly, perhaps waiting "
@@ -1493,7 +1507,7 @@ class Places {
                 + "It's the best pilot/navigator robot money can buy.'  "
                 + "He slaps the robot's... pauldron?... briskly, and continues, "
                 + "'You can fit so many starmaps into this bad boy."
-                + "Its price is 45 credits, or 36 with coupon.'").commandAdd(Command.fromTextAndScriptExecuteName("buy", this.scripts.placePlanetSettlementRobotShopInterior_Buy.name)),
+                + "Its price is 45 credits, or 36 with coupon.'"),
             this.emplacement2([
                 "six-legged robot",
                 "farming robot",
@@ -1545,9 +1559,18 @@ class Places {
                 + "provided the price is right. "
                 + "And that right price is 2500 credits, or 2000 with coupon.'")
         ]);
+        var emplacementsRobots = returnPlace.emplacements;
+        for (var i = 0; i < emplacementsRobots.length; i++) {
+            var emplacementRobot = emplacementsRobots[i];
+            emplacementRobot.commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
+                ["buy", "purchase"],
+                emplacementRobot.names
+            ]), this.scripts.placePlanetSettlementRobotShopInterior_BuyRobot.name);
+        }
+        return returnPlace;
     }
     static planetSettlementRobotShopInterior_Name() {
-        return "Ekkis II - Buy, Robot - Interior";
+        return "Ekkis II - [Farting Noise] - Buy, Robot - Interior";
     }
     planetSettlementRobotShopWest() {
         return this.place3(Places.planetSettlementRobotShopWest_Name(), "You stand in the desert settlement of [Farting Noise], "
@@ -1570,7 +1593,7 @@ class Places {
         ]);
     }
     static planetSettlementRobotShopWest_Name() {
-        return "Ekkis II - Buy, Robot - West";
+        return "Ekkis II - [Farting Noise] - Buy, Robot - West";
     }
     planetSettlementNorthOfUsedShipLot() {
         return this.place3(Places.planetSettlementNorthOfUsedShipLot_Name(), "You stand in the desert settlement of [Farting Noise].  "
@@ -1984,7 +2007,13 @@ class Scripts {
             this.placePlanetCliffsCaveInterior_Update,
             this.placePlanetCliffsBottomNorthwestWestSide_LookInHole,
             this.placePlanetDesertDeep_Update,
-            this.placePlanetSettlementRobotShopInterior_Buy,
+            this.placePlanetSettlementBarFront_TalkToPerson,
+            this.placePlanetSettlementBarInterior_BuyDrink,
+            this.placePlanetSettlementBarInterior_TalkToBand,
+            this.placePlanetSettlementBarInterior_TalkToBartender,
+            this.placePlanetSettlementBarInterior_TalkToCustomers,
+            this.placePlanetSettlementBarInterior_UseSlotMachine,
+            this.placePlanetSettlementRobotShopInterior_BuyRobot,
             this.regionFriendlyShip_UpdateForTurn,
             this.regionPlanetDesert_UpdateForTurn,
             this.todo
@@ -2949,8 +2978,304 @@ class Scripts {
             w.end();
         }
     }
-    placePlanetSettlementRobotShopInterior_Buy(u, w, p, c) {
-        u.messageEnqueue("todo");
+    placePlanetSettlementBarFront_TalkToPerson(u, w, p, c) {
+        var message = "The being eyes your skimmer appreciatively."
+            + "\n\n"
+            + "'Hey, nice skimmer.  That the model with the dual-fuel inlet-outlets?'"
+            + "\n\n"
+            + "Despite the fact that you're pretty sure "
+            + "what he just said is literal nonsense, you nod wisely "
+            + "the way you always do around ground-vehicle enthusiasts."
+            + "\n\n"
+            + "He runs a hand sensually, almost pornographically, along its front fender."
+            + "'Would you be willing to sell it?'"
+            + "\n\n"
+            + "It's an intriguing offer.  "
+            + "On the one hand, it doesn't really belong to you. "
+            + "On the other hand, you did sort of blow up a cave monster for it."
+            + "And the original owners probably don't don't have any use for it, "
+            + "living in a hole under a cliff maze as they do.  "
+            + "And it is almost completely out of fuel, "
+            + "and you have no money to refill it,"
+            + "so it's not doing you, or anybody else, any good as is."
+            + "\n\n"
+            + "'I might,' you say.  'How much is she worth to you?'"
+            + "On the off-chance that calling an inanimate object by a feminine pronoun "
+            + "doesn't sell the impression that you're a mechanically-minded man, "
+            + "you lean casually against the headlight, "
+            + "which promptly cracks off and hangs limply from its wiring."
+            + "\n\n"
+            + "The prospective buyer offers you 50 quatloos "
+            + "and a book full of valuable coupons redeemable at local businesses."
+            + "What do you say, yes or no?";
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementBarInterior_BuyDrink(u, w, p, c) {
+        var message;
+        var itemQuatloos = w.agentPlayer.itemByName("quatloo");
+        var quatloosPerBeer = 2;
+        if (itemQuatloos == null || itemQuatloos.quantity < quatloosPerBeer) {
+            message = "You don't have enough quatloos!";
+        }
+        else {
+            message =
+                [
+                    "You buy a bru-ale and sit at the bar to drink it.  ",
+                    "You're not really much of a bru-ale guy, ",
+                    "but you have to admit that this is a bit better ",
+                    "than dying of thirst in the desert.",
+                    "\n\n",
+                    "As you sip your drink, and nibble at the bar snacks, ",
+                    "you listen idly to the conversations ",
+                    "of your fellow patrons."
+                ].join("");
+            var stateName = "AnecdotesHeardSoFar";
+            var placeStateGroup = p.stateGroup;
+            var anecdotesHeardSoFar = placeStateGroup.stateWithNameGetValue(stateName);
+            if (anecdotesHeardSoFar == null) {
+                anecdotesHeardSoFar = 0;
+            }
+            var barAnecdote;
+            if (anecdotesHeardSoFar == 0) {
+                barAnecdote =
+                    "You hear a joke that ends with the punchline, "
+                        + "'Aldebaran, hell!  That's my WIFE!'  "
+                        + "The joke really only works in Ancient Farconian, "
+                        + "which is a language that neither you "
+                        + "nor the teller of the joke, "
+                        + "nor anyone else at the bar speaks.  "
+                        + "So you're not sure why everybody's laughing.  "
+                        + "But you laugh too.  How else are you going to fit in?";
+            }
+            else if (anecdotesHeardSoFar == 1) {
+                barAnecdote =
+                    "You listen to a fellow patron brag about his sexual prowess.  "
+                        + "Some of the details of his story are mutually irreconcilable, "
+                        + "and those that aren't make him seem less like a sexual dynamo "
+                        + "and more like an inconsiderate boor, "
+                        + "but everyone else seems to accept his tale with convivial bonhomie, "
+                        + "and when the story finally winds up, "
+                        + "just after he confesses some borderline felonies, "
+                        + "they all slap him on various body parts "
+                        + "with congratulatory gusto."
+                        + "\n\n"
+                        + "So you do too.  How else are you going to keep fitting in?";
+            }
+            else if (anecdotesHeardSoFar == 2) {
+                barAnecdote =
+                    "A fellow patron, in hushed, conspiratorial tones, "
+                        + "relates an anecdote of some mysterious goings-on "
+                        + "he witnessed when stopping off to take on hydrogen from a gas giant "
+                        + "in the uncharted starsystem KL-5-6800.  "
+                        + "\n\n"
+                        + "'All of a sudden, my scanner picked up a large amount of mass "
+                        + "heading right for me.  I figured that the locals were sending a "
+                        + "fleet after me, because they didn't take kindly to me "
+                        + "harvesting their Jovian.  So I started the hyperdrive warming up, "
+                        + "in case I needed to make a quick getaway from the law.  "
+                        + "But then the scanner said it couldn't a fleet, "
+                        + "all that mass was all in one piece.  "
+                        + "I thought sure that it was malfunctioning, "
+                        + "but then I saw this monster chug into orbit.  "
+                        + "It must have massed a gigatonne, easy.  Bristling with weapons.  "
+                        + "Had something written in Vadik on the side.  "
+                        + "\n\n"
+                        + "Well, I cut the feed and let my hydro-harvester drop into the giant, "
+                        + "and flicked on the hyperdrive before it the computer "
+                        + "could finish the safety checks.  It blew out after 7 light-years, "
+                        + "and I had to limp to the nearest base on sublight.  "
+                        + "Cost me 2000 quatloos to replace, plus labor.  "
+                        + "\n\n"
+                        + "But I'd do it again.  I don't want no trouble with no Vadik.";
+            }
+            else {
+                barAnecdote =
+                    "After the story about the Vadik warship in KL-5-6800, "
+                        + "the conversation at the bar seems to have hit a permanent lull.  "
+                        + "You finish your drink in silence.";
+            }
+            message += "\n\n" + barAnecdote;
+            anecdotesHeardSoFar++;
+            placeStateGroup.stateWithNameSetToValue(stateName, anecdotesHeardSoFar);
+        }
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementBarInterior_TalkToBand(u, w, p, c) {
+        var message = "You try to talk to the band.  During their live performance.  "
+            + "Ugh.  You're one of those kind of people, huh?  "
+            + "\n\n"
+            + "The band, as is their privilege, ignores you.  Not a bad gig.";
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementBarInterior_TalkToBartender(u, w, p, c) {
+        var message = "Before you can get out so much as a syllable, "
+            + "the bartender cuts you off.  'Bru-ale?' he asks in a clipped tone "
+            + "that makes you feel like you've just been hung up on from orbit.  "
+            + "When you do not immediately respond, "
+            + "the bartender turns back to the other patrons.";
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementBarInterior_TalkToCustomers(u, w, p, c) {
+        var message = [
+            "Your awkward attempt to insert yourself ",
+            "into the conversation is deeply unwelcome.  ",
+            "Your stammering would-be opening ",
+            "is buried under so much sudden icy silence from them ",
+            "that your body temperature actually drops by a degree centigrade.  ",
+            "Under other circumstances, it might actually feel rather refreshing.",
+            "\n\n",
+            "You're unbelievably bad at this sort of thing.  ",
+            "Maybe it would be better just to buy a drink and hang out."
+        ].join("");
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementBarInterior_UseSlotMachine(u, w, p, c) {
+        var message;
+        var emplacementSlotMachine = p.emplacementByName("slot machine");
+        var slotMachineIsActivated = emplacementSlotMachine.activated();
+        if (slotMachineIsActivated == false) {
+            message =
+                "The slot machine claims to be out of order.  "
+                    + "You suspect it's just knows a real high-roller when it sees one, "
+                    + "and is cowering in fear of your gambling prowess.";
+        }
+        else {
+            var itemQuatloos = w.agentPlayer.itemByName("quatloo");
+            if (itemQuatloos == null || itemQuatloos.quantity == 0) {
+                message =
+                    [
+                        "You don't have any more quatloos!"
+                    ].join("");
+            }
+            else {
+                w.agentPlayer.itemRemoveQuantity(itemQuatloos, 1);
+                var messageIntrosToChooseFrom = [
+                    "Fighting down an intrusive recollection of how your great uncle ",
+                    +"died penniless and alone due to his gambling addiction, ",
+                    "Swallowing nervously, ",
+                    "Gazing imploringly at the ceiling, "
+                        + "toward where you imagine Lady Luck lives, ",
+                    "With a shaky hand, ",
+                    "Wiping flop-sweat off your palms and onto your pant legs, "
+                ];
+                var messageIntroIndex = Math.floor(Math.random() * messageIntrosToChooseFrom.length);
+                var messageIntro = messageIntrosToChooseFrom[messageIntroIndex];
+                var symbolLucky = "seven-pointed crystal";
+                var symbolUnlucky = "exposed cranial endoskeleton";
+                var symbolsToChooseFrom = [
+                    "lightly mutated vegetation",
+                    "lightly mutated vegetation",
+                    "lightly mutated vegetation",
+                    "upturned livestock footwear",
+                    "upturned livestock footwear",
+                    "upturned livestock footwear",
+                    symbolLucky,
+                    symbolUnlucky,
+                ];
+                var symbolsToChooseCount = 3;
+                var symbolsChosen = new Array();
+                for (var i = 0; i < symbolsToChooseCount; i++) {
+                    var symbolIndexRandom = Math.floor(Math.random() * symbolsToChooseFrom.length);
+                    var symbolChosen = symbolsToChooseFrom[symbolIndexRandom];
+                    symbolsChosen.push(symbolChosen);
+                }
+                var areAllSymbolsTheSame = symbolsChosen[0] == symbolsChosen[1]
+                    && symbolsChosen[1] == symbolsChosen[2];
+                var messageResult;
+                if (areAllSymbolsTheSame) {
+                    messageResult = "The symbols match!  ";
+                    if (symbolsChosen[0] == symbolLucky) {
+                        messageResult += "And it's the luckiest combination!  You win 20 quatloos!";
+                        itemQuatloos.quantity += 10;
+                    }
+                    else if (symbolsChosen[0] == symbolUnlucky) {
+                        messageResult =
+                            "Unfortunately, this isn't the good kind of match.  "
+                                + "\n\n"
+                                + "A port in the side of the machine slides open, "
+                                + "and the muzzle of a laser blaster emerges.  "
+                                + "You're still staring at it, wondering what it's for, "
+                                + "when it shows you what it's for by emitting a burst of energy "
+                                + "that instantly separates each individual atom "
+                                + "in your body from its neighbors and then, just to be thorough, "
+                                + "sets it on fire. "
+                                + "\n\n"
+                                + "The cleaning bot sweeps up your ashes while the slot machine "
+                                + "plays a couple measures of a whimsical little electronic dirge.  "
+                                + "Then the bot disposes of your ashes "
+                                + "through the dedicated ash-disposal port in the back wall of the bar, "
+                                + "where they drift down to join the ashes of previous unlucky gamblers."
+                                + "\n\n"
+                                + "You are dead.";
+                        w.end();
+                    }
+                    else {
+                        messageResult += "You win 5 quatloos!";
+                    }
+                }
+                else {
+                    messageResult =
+                        "The symbols don't match.  So nothing much happens, "
+                            + "except that the machine emits a sad electronic raspberry noise, "
+                            + "and you lose another quatloo.";
+                }
+                message =
+                    [
+                        messageIntro,
+                        "you insert a quatloo in the slot machine and pull the handle.  ",
+                        "\n\n",
+                        "The reels rotate for a while, and then each stops with a loud thunk.",
+                        "\n\n",
+                        "The symbols visible on the reels are: ", ,
+                        "\n\n",
+                        symbolsChosen.join("\n\n"),
+                        "\n\n",
+                        messageResult
+                    ].join("");
+                var itemQuatloosQuantityMax = 250; // todo
+                if (itemQuatloos.quantity >= itemQuatloosQuantityMax) {
+                    message +=
+                        "\n\n";
+                    "After it pays out one last time, a small status light "
+                        + "on the slot machine lights up, reading 'out of order'.  "
+                        + "What a punk, punking out like that "
+                        + "just when you were on a roll.";
+                    emplacementSlotMachine.deactivate();
+                }
+                ;
+            }
+        }
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementRobotShopInterior_BuyRobot(u, w, p, c) {
+        var message;
+        var messageNotEnoughMoney = "The salesbeing looks at you sadly, and says, "
+            + "'I'm afraid you don't have enough money "
+            + "to purchase this robot.'  Then he shakes his head, "
+            + "while maintaining eye contact, "
+            + "perhaps trying to communicate that he blames "
+            + "the current state of math education, "
+            + "not you personally, for the error.";
+        var robotName = "navigator";
+        var emplacementRobot = p.emplacementByName(robotName);
+        var emplacementRobotNavigatorName = emplacementRobot.name();
+        if (emplacementRobotNavigatorName == robotName) {
+            var agentPlayer = w.agentPlayer;
+            var itemQuatloos = agentPlayer.itemByName("quatloo");
+            var priceOfRobotInQuatloos = 250; // todo
+            if (itemQuatloos.quantity < priceOfRobotInQuatloos) {
+                message = messageNotEnoughMoney;
+            }
+            else {
+                agentPlayer.itemRemoveQuantity(itemQuatloos, priceOfRobotInQuatloos);
+                var agentRobot = Agent.fromNames(emplacementRobot.names);
+                p.agentAdd(agentRobot);
+            }
+        }
+        else {
+            message = messageNotEnoughMoney;
+        }
+        u.messageEnqueue(message);
     }
     regionFriendlyShip_UpdateForTurn(u, w, p, c) {
         var turnsSoFar = w.turnsSoFar;
