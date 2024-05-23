@@ -1605,7 +1605,6 @@ class Places
 	planetCliffsBottomNorthwestWestSide(): Place
 	{
 		var description = 
-
 			"You stand on the sand of the Ekkis II desert, at the base  "
 			+ "of a sheer stone cliff that curves away to the south and east,  "
 			+ "and which blocks passage to the east.  "
@@ -2478,7 +2477,7 @@ class Places
 
 	planetCavernsProjectionRoom(): Place
 	{
-		return this.place3
+		return this.place4
 		(
 			Places.planetCavernsProjectionRoom_Name(),
 
@@ -2490,9 +2489,15 @@ class Places
 			+ "In retrospect, that giant alien head really livened up the decor."
 			+ "A passage leads back to the east.",
 
+			this.scripts.placePlanetCavernsProjectionRoom_Update.name,
+
 			[
 				this.portal( [ "west" ], Places.planetCavernsDrips3_Name() ),
-				this.portal( [ "north" ], Places.planetCavernsSteamworks_Name() )
+				this.portal
+				(
+					[ "north" ],
+					Places.planetCavernsSteamworks_Name()
+				).block().hide()
 			]
 		);
 	}
@@ -3759,6 +3764,7 @@ class Scripts
 			this.placePlanetCavernsPool_DrinkFromPool,
 			this.placePlanetCavernsSteamworks_InsertKeyInSkimmer,
 			this.placePlanetCavernsSteamworks_TalkToAlien,
+			this.placePlanetCavernsProjectionRoom_Update,
 			this.placePlanetCliffsTopSouth_CrossBridge,
 			this.placePlanetCliffsCaveInterior_GoEast,
 			this.placePlanetCliffsCaveInterior_GoWest,
@@ -4744,10 +4750,10 @@ class Scripts
 					+ (drippingOrNot[0] ? "not " : "") + "dripping.  ",
 
 				"The second, middle set of drips is currently "
-					+ (drippingOrNot[0] ? "not " : "") + "dripping.  ",
+					+ (drippingOrNot[1] ? "not " : "") + "dripping.  ",
 
 				"The third, easternmost set of drips is currently "
-					+ (drippingOrNot[0] ? "not " : "") + "dripping."
+					+ (drippingOrNot[2] ? "not " : "") + "dripping."
 
 			].join("\n\n");
 		}
@@ -4903,6 +4909,155 @@ class Scripts
 		u.messageEnqueue(message);
 
 		w.placeCurrentSetByName(Places.planetSettlementBarFront_Name() )
+	}
+	
+	placePlanetCavernsProjectionRoom_Update
+	(
+		u: Universe, w: World, p: Place, c: Command
+	)
+	{
+		var agentPlayer = w.agentPlayer;
+
+		var itemCaveBeastChunk = agentPlayer.itemByName("cave beast chunk");
+		var playerHasEvidenceOfKill = (itemCaveBeastChunk != null);
+
+		var itemGadget = agentPlayer.itemByName("gadget");
+		var translatorIsActive = itemGadget.activated();
+
+		var messagePlayerPresentsProofOfKill =
+		[
+			"You hold up the chunk of cave beast flesh, and ask the giant head ",
+			"if it's good enough.",
+			"\n\n",
+			"'ER... YES, ' the head responds.",
+			"\n\n",
+			"The projection disappears, and a doorway opens in the north wall of the cave.  ",
+			"\n\n",
+			"Its purpose fulfilled, you discard the chunk of flesh into the shadows.  ",
+			"After your time in the desert sun, you smell quite bad enough on your own."
+		].join("");
+
+		var portalNorth = p.portalByName("north");
+
+		if (p.hasBeenVisited() == false)
+		{
+			p.visit();
+
+			var message =
+			[
+				"You step into a pitch-black space.  ",
+				"From the feel of the air around you, ",
+				"it seems to be perhaps twenty meters across.  ",
+				"You stand still a while, waiting for your eyes to adjust, ",
+				"but it actually seems to get a bit darker.",
+				"\n\n",
+				"Suddenly, a phosphorescent image of a huge alien head, ",
+				"five meters from chin to scalp, kindles into existence ",
+				"in the center of the chamber.  You stagger back a bit in shock, ",
+				"at the apparent size of his pores if nothing else, ",
+				"then cover your ears as the apparition begins to speak.",
+				"\n\n",
+			].join("");
+
+			if (translatorIsActive)
+			{
+				message +=
+				[
+					"As the alien speaks, presumably in his own language, ",
+					"the gadget you found in the closet on the Pax Aeterna ",
+					"begins speaking just after him, in similar inflections.  ",
+					"Apparently it's been a translator all along.  ",
+					"\n\n",
+					"'YOU HAVE DONE WELL MAKING IT THIS FAR, OUTWORLDER,'",
+					"bellows the head, with excessive volume, 'THIS FACILITY IS DESIGNED ",
+					"TO WINNOW OUT THOSE OF LOW INTELLIGENCE.  BUT YOU CLEARLY ",
+					"HAVE NEED OF OUR ASSISTANCE.  WE DO NOT OFFER SUCH HELP CHEAPLY.  ",
+					"YOU MUST OFFER RECOMPENSE.  IN A CAVE ON THE EAST SIDE OF THE CLIFFS ",
+					"ABOVE THIS FACILITY, THERE IS A BEAST.  IT IS INCONVENIENT TO US.  ",
+					"KILL IT, THEN RETURN HERE WITH PROOF OF ITS DEMISE.'  ",
+					"\n\n",
+				].join("");
+
+				if (playerHasEvidenceOfKill)
+				{
+					message += messagePlayerPresentsProofOfKill;
+					portalNorth.unblock().show();
+				}
+			}
+			else
+			{
+				message +=
+				[
+					"Whatever the alien is saying, he's sure saying it loud.  ",
+					"But unfortunately, he's not saying it in any language you recognize.",
+					"\n\n",
+				].join("");
+			}
+
+			if (playerHasEvidenceOfKill == false || translatorIsActive == false)
+			{
+				message +=
+				[
+					"As the alien finishes his speech, ",
+					"a trap door in the floor irises open, and you fall through it.  ",,
+					"You are whisked through some, like, pneumatic tubes, ",
+					"and then you feel yourself risFing upward for a sustained stretch.  ",
+					"\n\n",
+					"You emerge into the sunlight on top of the cliffs of the Ekkis II desert, ",
+					"in the same place, between the two broken stone horns, ",
+					"from which you first descended into the caverns.  ",
+					"You can't puzzle out how that works, mechanically, but here you are."
+				].join("");
+
+				w.placeCurrentSetByName(Places.planetCliffsTopNortheast_Name() );
+			}
+		}
+		else // hasBeenVisited == true
+		{
+			message +=
+			[
+				"You step back into the darkness of the projection chamber.  ",
+				"The image of the alien head springs back into existence, ",
+				"and speaks.",
+				"\n\n",
+			].join("");
+
+			if (translatorIsActive)
+			{
+				message +=
+				[
+					"'YOU HAVE RETURNED.  DO YOU HAVE PROOF OF THE BEAST'S DEATH?  ",
+					"IF SO, SHOW IT TO ME.'",
+					"\n\n"
+				].join("");
+
+				if (playerHasEvidenceOfKill)
+				{
+					message += messagePlayerPresentsProofOfKill;
+					portalNorth.unblock().show();
+				}
+			}
+			else
+			{
+				message +=
+				[
+					"The alien's speech this time is much shorter, ",
+					"and seems to have the cadence of a question.  ",
+					"As he finishes, you stand silently for a few seconds, ",
+					"feeling like you did just before you flunked out ",
+					"of Remedial Martian class.",
+					"\n\n",
+					"After a few more seconds, the alien makes an unmistakable scoffing noise, ",
+					"and then the trap-door in the floor irises open under you again.  ",
+					"In a few seconds, you're back at the top of the cliff.  ",
+					"Maybe you've been given a second chance?  To do what, you're not sure."
+				].join("");
+
+				w.placeCurrentSetByName(Places.planetCliffsTopNortheast_Name() );
+			}
+		}
+
+		u.messageEnqueue(message);
 	}
 
 	placePlanetCavernsSteamworks_TalkToAlien
