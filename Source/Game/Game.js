@@ -30,6 +30,7 @@ class Items {
         this.Multitool = this.multitool();
         this.Quatloos = this.quatloos();
         this.ReflectiveGlass = this.reflectiveGlass();
+        this.Rock = this.rock();
         this.SkimmerKey = this.skimmerKey();
         this.SpaceSuit = this.spaceSuit();
         // Containers.
@@ -44,6 +45,7 @@ class Items {
                 this.Multitool,
                 this.Quatloos,
                 this.ReflectiveGlass,
+                this.Rock,
                 this.SkimmerKey,
                 this.SpaceSuit,
                 this.SurvivalKit
@@ -149,6 +151,19 @@ class Items {
             + "\n\n"
             + "It's been mostly good, but there are some downsides.  "
             + "That's where quatloos come in.");
+    }
+    rock() {
+        return Item.fromNamesAndDescription(["rock", "stone"], "It's a rock.  It's got one round end and one pointy end."
+            + "It's kind of teardrop shaped, you guess?"
+            + "\n\n"
+            + "You remember a ancient video where a kid "
+            + "was participating in a candy-distribution festival "
+            + "and got distributed a rock instead.  "
+            + "You're not sure what the moral of the story was.  "
+            + "Seemingly, it was that kid's life sucked.  "
+            + "But that was pretty obvious from the get-go, "
+            + "because even though he was pre-pubescent, "
+            + "he was already bald.");
     }
     skimmerKey() {
         return Item.fromNamesAndDescription(["skimmer key"], "This is the starter key for a sand skimmer.").commandAdd(new Command(["put key in skimmer", "insert key in skimmer", "use key on skimmer"], Scripts.Instance().placePlanetCavernsSteamworks_InsertKeyInSkimmer.name));
@@ -1146,8 +1161,9 @@ class Places {
             + "The elevator door lies at the east side of the passage."
             + "\n\n"
             + "From there, the passage runs to the west, deeper into the cavern.", [
-            this.portal(["elevator", "door"], Places.planetCliffsTopNortheast_Name()),
-            this.portal(["west"], Places.planetCavernsGratingEastSide_Name())
+            this.portal(["elevator", "door", "up", "east"], Places.planetCliffsTopNortheast_Name()),
+            this.portal(["west"], Places.planetCavernsGratingEastSide_Name()),
+            Items.Instance().Rock,
         ]);
     }
     static planetCavernsElevator_Name() {
@@ -1175,7 +1191,12 @@ class Places {
                 + "Aw, what a bubbly, happy little guy. "
                 + "It's a good thing the sun isn't blazing so hot inside this cavern,"
                 + "Or you'd be tempted to take a drink of the steaming hot liquid.  "
-                + "And that, even assuming it's just water, would melt your esophagus.  ")
+                + "And that, even assuming it's just water, would melt your esophagus.  ").commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
+                ["put", "insert", "place", "shove", "jam"],
+                ["rock", "stone"],
+                [null, "in", "into", "on"],
+                ["geyser", "hole", "stalagmite"]
+            ]), this.scripts.placePlanetCavernsGeyser_PutRockInGeyser.name)
         ]);
     }
     static planetCavernsGeyser_Name() {
@@ -1304,7 +1325,7 @@ class Places {
     }
     // Places - Ekkis 2 - Village of [Farting Noise].
     planetSettlementBarFront() {
-        return this.place3(Places.planetSettlementBarFront_Name(), "You stand in the tiny settlement named, "
+        return this.place4(Places.planetSettlementBarFront_Name(), "You stand in the tiny settlement named, "
             + " as near as you can make out from the signs in Universal Phonospeak, "
             + "[Farting Noise].  "
             + "In the natives' defense, maybe their farts "
@@ -1332,14 +1353,23 @@ class Places {
             + "You look nervously at the field generator unit, "
             + "which looks dusty, battered, and none too new.  "
             + "But you're standing here, instead of in a sand-swimmer's belly, "
-            + "so you guess it must work.", [
+            + "so you guess it must work.", this.scripts.placePlanetSettlementBarFront_Update.name, [
             this.portal(["north"], Places.planetSettlementRobotShopWest_Name()),
             this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
             this.portal(["east"], Places.planetSettlementBarRear_Name()),
             this.portal(["south"], Places.planetDesertDeep_Name()),
             this.portal(["bar"], Places.planetSettlementBarInterior_Name()),
             Agent.fromNamesAndDescription(["person", "being"], +"This being is hanging around outside a bar "
-                + "in the middle of the day.  He must be rich.").commandAddFromTextsAndScriptName(["talk to person", "talk to being"], this.scripts.placePlanetSettlementBarFront_TalkToPerson.name)
+                + "in the middle of the day.  He must be rich.").commandAddFromTextsAndScriptName(["talk to person", "talk to being"], this.scripts.placePlanetSettlementBarFront_TalkToPerson.name),
+            this.emplacement2(["skimmer", "vehicle", "car"], "This is the sand-skimmer that the ancient desert cavern aliens "
+                + "gave you after you did that contract killing for them.  "
+                + "\n\n"
+                + "Man, space is weird.").commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
+                ["get", "take"],
+                [null, "skimmer"],
+                [null, "ignition"],
+                ["key"]
+            ]), this.scripts.placePlanetSettlementBarFront_GetSkimmerKey.name)
         ]);
     }
     static planetSettlementBarFront_Name() {
@@ -1996,6 +2026,7 @@ class Scripts {
             this.placePlanetCavernsBarrier_GoBarrier,
             this.placePlanetCavernsBarrier_PutGlassInBarrier,
             this.placePlanetCavernsDrips_Update,
+            this.placePlanetCavernsGeyser_PutRockInGeyser,
             this.placePlanetCavernsGrating_CrossGrating,
             this.placePlanetCavernsGrating_PutCanOfShamOnGrating,
             this.placePlanetCavernsPool_DrinkFromPool,
@@ -2009,6 +2040,7 @@ class Scripts {
             this.placePlanetCliffsBottomNorthwestWestSide_LookInHole,
             this.placePlanetDesertDeep_Update,
             this.placePlanetSettlementBarFront_TalkToPerson,
+            this.placePlanetSettlementBarFront_GetSkimmerKey,
             this.placePlanetSettlementBarInterior_BuyDrink,
             this.placePlanetSettlementBarInterior_TalkToBand,
             this.placePlanetSettlementBarInterior_TalkToBartender,
@@ -2674,6 +2706,44 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
+    placePlanetCavernsGeyser_PutRockInGeyser(u, w, p, c) {
+        var message;
+        var emplacementGeyser = p.emplacementByName("geyser");
+        var rockIsAlreadyInGeyser = emplacementGeyser.itemByName("rock") != null;
+        if (rockIsAlreadyInGeyser) {
+            message =
+                "You already put a rock in the geyser.  "
+                    + "Isn't that enough for you?  No?  "
+                    + "Wait a minute, you don't even have another rock, "
+                    + "do you?  What sick game are you playing?";
+        }
+        else if (w.agentPlayer.itemByName("rock") != null) {
+            message =
+                "You jam the pointier end of the rock into the geyser, "
+                    + "stopping the flow of steam, but not before it burns "
+                    + "your fingers slightly.  "
+                    + "\n\n"
+                    + "As you stick the burned hand in your mouth to dull the pain, "
+                    + "you hear some labored mechanical noises from inside "
+                    + "the rock wall to the west.  "
+                    + "A previously hidden door appears in the stone "
+                    + "and slides aside to reveal a passage leading deeper into the cave.";
+            var portalDoor = p.portalByName("door");
+            portalDoor.show().unblock();
+        }
+        else {
+            message =
+                "You don't see any rock here!  "
+                    + "\n\n"
+                    + "Maybe I should explain how all this works again.  "
+                    + "I'm not, like, a genie.  I can't magic up rocks out of nothing.  "
+                    + "If you want to put a rock into a geyser, "
+                    + "you have to find a rock somewhere, pick it up, "
+                    + "take it to someplace where a geyser already is, "
+                    + "and then jam it in.  Manually.";
+        }
+        u.messageEnqueue(message);
+    }
     placePlanetCavernsGrating_CrossGrating(u, w, p, c) {
         var itemCanOfSham = p.itemByName("can of sham");
         var monsterIsDistracted = itemCanOfSham != null;
@@ -3099,6 +3169,32 @@ class Scripts {
             w.end();
         }
     }
+    placePlanetSettlementBarFront_GetSkimmerKey(u, w, p, c) {
+        var message;
+        var emplacementSkimmer = p.emplacementByName("skimmer");
+        var itemSkimmerKey = emplacementSkimmer.itemByName("skimmer key");
+        var keyHasAlreadyBeenTaken = itemSkimmerKey == null;
+        if (keyHasAlreadyBeenTaken) {
+            message =
+                "You've already taken the key, remember?  "
+                    + "\n\n"
+                    + "Are you okay?  Maybe you need a neurologist.  "
+                    + "Or at least some gingko biloba.";
+        }
+        else {
+            message =
+                "You remove the skimmer's ignition key "
+                    + "from the skimmer, and put it in your pocket.  "
+                    + "\n\n"
+                    + "Good thinking.  I'd say this looks like a rough "
+                    + "part of town, but that would imply that there are parts "
+                    + "of this town that aren't rough.  "
+                    + "And I just can't make that promise.";
+            var agentPlayer = w.agentPlayer;
+            agentPlayer.itemAdd(itemSkimmerKey);
+        }
+        u.messageEnqueue(message);
+    }
     placePlanetSettlementBarFront_TalkToPerson(u, w, p, c) {
         var message = "The being eyes your skimmer appreciatively."
             + "\n\n"
@@ -3126,9 +3222,43 @@ class Scripts {
             + "you lean casually against the headlight, "
             + "which promptly cracks off and hangs limply from its wiring."
             + "\n\n"
-            + "The prospective buyer offers you 50 quatloos "
-            + "and a book full of valuable coupons redeemable at local businesses."
+            + "The prospective buyer offers you 30 quatloos "
             + "What do you say, yes or no?";
+        u.messageEnqueue(message);
+    }
+    placePlanetSettlementBarFront_Update(u, w, p, c) {
+        var message;
+        if (p.hasBeenVisited()) {
+            var emplacementSkimmer = p.emplacementByName("skimmer");
+            if (emplacementSkimmer == null) {
+                // Do nothing.
+            }
+            else {
+                var itemKeyFromSkimmer = emplacementSkimmer.itemByName("skimmer key");
+                var keyWasLeftInSkimmer = (itemKeyFromSkimmer != null);
+                if (keyWasLeftInSkimmer) {
+                    message =
+                        "You're pretty sure this is where you parked your skimmer.  "
+                            + "But it's not here any more.  You probably should have taken "
+                            + "the key out of the ignition.";
+                }
+                else // keyWasLeftInSkimmer == false
+                 {
+                    var stateName = "HasSecondSaleOfferForSkimmerBeenRefused";
+                    var hasSecondSaleOfferBeenRefused = p.stateGroup.stateWithNameGetValue(stateName);
+                    if (hasSecondSaleOfferBeenRefused == false) {
+                        message =
+                            "That guy who tried to buy your skimmer "
+                                + " is here.  "
+                                + "'Hey,' he says, 'look.  I'm willing to throw in"
+                                + "this jetpack.  It's a real good jetpack.  "
+                                + "So, my final offer is, 30 quatloos, a jetpack, "
+                                + "and the coupon book.  What do you say?";
+                    }
+                    // todo - Add agent and command.
+                }
+            }
+        }
         u.messageEnqueue(message);
     }
     placePlanetSettlementBarInterior_BuyDrink(u, w, p, c) {
