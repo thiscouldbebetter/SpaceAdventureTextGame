@@ -353,7 +353,7 @@ class Places {
                 "push button"
             ], this.scripts.placeFriendlyShipDockingBayHangar_PressPlatformButton.name)),
             this.emplacement2(["hatch", "trapdoor"], "This is a trapdoor in the floor, "
-                + "perhaps three meters by five meters,"
+                + "perhaps three meters by five meters, "
                 + "split down the middle into two retractible doors."),
             this.emplacement(["docking bay doors", "bay doors", "doors"]).lock().descriptionSet("The bay doors are closed.")
         ]);
@@ -562,7 +562,7 @@ class Places {
             this.emplacement2(["table"], "The table provides a comfortable place "
                 + "for the more literate members of the crew to research data tapes."
                 + "\n\n"
-                + "You, on the other hand, have only used it once,"
+                + "You, on the other hand, have only used it once, "
                 + "as an improvised playfield for a game of Vir-Naki Caroms "
                 + "with the cartridge-retrieval bot. "
                 + "But they made you stop before you could even "
@@ -895,7 +895,7 @@ class Places {
             + "To the east is a tall, confused jumble of rocks, "
             + " in which a large, shadowy cave mouth opens.  "
             + "What with the sun(s) and all, "
-            + "you feel you could really go for some shadows about now,"
+            + "you feel you could really go for some shadows about now, "
             + "even though you normally sleep with a night-light."
             + "\n\n"
             + "On the west side of the clearing, a stone slope rises jaggedly "
@@ -1058,7 +1058,7 @@ class Places {
             + "and continues to the north."
             + "\n\n"
             + "The word 'arroyo' crosses your mind.  "
-            + "You're not exactly sure what an arroyo is,"
+            + "You're not exactly sure what an arroyo is, "
             + "and you're reasonably sure this isn't one, "
             + "but this whole place feels pretty arroyoey.", [
             this.portal(["north"], Places.planetCliffsTopNorthwest_Name()),
@@ -1073,7 +1073,7 @@ class Places {
         return this.place3(Places.planetCavernsBarrier_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II.  "
             + "\n\n"
             + "The path to the west is blocked by several closely spaced "
-            + "and intensely bright beams of light,"
+            + "and intensely bright beams of light, "
             + "which are emitted from small round ports the rock walls, "
             + "and which pass into similar ports on the other side.  "
             + "\n\n"
@@ -1257,9 +1257,9 @@ class Places {
                 + "Well, usually a number and a unit.  Like 'megayear'."),
             this.emplacement2(["geyser"], "You examine the geyser.  "
                 + "Aw, what a bubbly, happy little guy. "
-                + "It's a good thing the sun isn't blazing so hot inside this cavern,"
+                + "It's a good thing the sun isn't blazing so hot inside this cavern, "
                 + "Or you'd be tempted to take a drink of the steaming hot liquid.  "
-                + "And that, even assuming it's just water, would melt your esophagus.  ").commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
+                + "And that, even assuming it's just water, would melt your esophagus.").commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
                 ["put", "insert", "place", "shove", "jam"],
                 ["rock", "stone"],
                 [null, "in", "into", "on"],
@@ -1393,35 +1393,37 @@ class Places {
     }
     // Places - Ekkis 2 - Village of [Farting Noise].
     planetSettlementBarFront() {
-        return this.place4(Places.planetSettlementBarFront_Name(), "You stand in the tiny settlement named, "
-            + " as near as you can make out from the signs in Universal Phonospeak, "
-            + "[Farting Noise].  "
-            + "In the natives' defense, maybe their farts "
-            + "sound completely different from yours."
-            + "\n\n"
-            + "To the east stands a pourstone igloo with an arched entrance, "
-            + "above which is a lighted sign that reads "
-            + "'Poot-Poot-P-Phttt' in Universal Phonospeak,"
-            + "followed by 'BAR' in "
-            + "several of the more common, less aspirated, languages "
-            + "of this sector of space."
-            + "\n\n"
-            + "Several spaceships, presumably belonging to the bar's patrons,"
-            + "stand nearby."
-            + "\n\n"
-            + "To the west, you can see another, cubical building, with a few more "
-            + "run-down looking spaceships in front of it, and decorated with "
-            + "strings of cheap but festive plastic pennants."
-            + "\n\n"
-            + "Away to the north is the edge of another domelike building, "
-            + "possibly a store of some sort."
-            + "\n\n"
-            + "To the south, a faint shimmer in the air betrays the force field "
-            + "that protects this settlement from the native predatory sand-swimmers.  "
-            + "You look nervously at the field generator unit, "
-            + "which looks dusty, battered, and none too new.  "
-            + "But you're standing here, instead of in a sand-swimmer's belly, "
-            + "so you guess it must work.", this.scripts.placePlanetSettlementBarFront_Update.name, [
+        return this.place4(Places.planetSettlementBarFront_Name(), [
+            "You stand in the tiny settlement named, ",
+            " as near as you can make out from the signs in Universal Phonospeak, ",
+            "[Farting Noise].  ",
+            "In the natives' defense, maybe their farts ",
+            "sound completely different from yours.",
+            "\n\n",
+            "To the east stands a pourstone igloo with an arched entrance, ",
+            "above which is a lighted sign that reads ",
+            "'Poot-Poot-P-Phttt' in Universal Phonospeak,",
+            "followed by 'BAR' in ",
+            "several of the more common, less aspirated, languages ",
+            "of this sector of space.",
+            "\n\n",
+            "Several spaceships, presumably belonging to the bar's patrons,",
+            "stand nearby.",
+            "\n\n",
+            "To the west, you can see another, cubical building, with a few more ",
+            "run-down looking spaceships in front of it, and decorated with ",
+            "strings of cheap but festive plastic pennants.",
+            "\n\n",
+            "Away to the north is the edge of another domelike building, ",
+            "possibly a store of some sort.",
+            "\n\n",
+            "To the south, a faint shimmer in the air betrays the force field ",
+            "that protects this settlement from the native predatory sand-swimmers.  ",
+            "You look nervously at the field generator unit, ",
+            "which looks dusty, battered, and none too new.  ",
+            "But you're standing here, instead of in a sand-swimmer's belly, ",
+            "so you guess it must work."
+        ].join(""), this.scripts.placePlanetSettlementBarFront_Update.name, [
             this.portal(["north"], Places.planetSettlementRobotShopWest_Name()),
             this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
             this.portal(["east"], Places.planetSettlementBarRear_Name()),
@@ -1721,7 +1723,7 @@ class Places {
         return "Ekkis II - [Farting Noise] - North of Non-Gelatinous George's Used Ships";
     }
     planetSettlementUsedShipLot() {
-        return this.place3(Places.planetSettlementNorthOfUsedShipLot_Name(), "You stand in the desert settlement of [Farting Noise], "
+        return this.place3(Places.planetSettlementUsedShipLot_Name(), "You stand in the desert settlement of [Farting Noise], "
             + "in a sandy lot brighly decorated with colorful pennants "
             + " strung along lines, and containing several ships "
             + "in various states of wear.  "
@@ -3005,7 +3007,7 @@ class Scripts {
                         "begins speaking just after him, in similar inflections.  ",
                         "Apparently it's been a translator all along.  ",
                         "\n\n",
-                        "'YOU HAVE DONE WELL MAKING IT THIS FAR, OUTWORLDER,'",
+                        "'YOU HAVE DONE WELL MAKING IT THIS FAR, OUTWORLDER,' ",
                         "bellows the head, with excessive volume, 'THIS FACILITY IS DESIGNED ",
                         "TO WINNOW OUT THOSE OF LOW INTELLIGENCE.  BUT YOU CLEARLY ",
                         "HAVE NEED OF OUR ASSISTANCE.  WE DO NOT OFFER SUCH HELP CHEAPLY.  ",
@@ -3033,7 +3035,7 @@ class Scripts {
                         "As the alien finishes his speech, ",
                         "a trap door in the floor irises open, and you fall through it.  ", ,
                         "You are whisked through some, like, pneumatic tubes, ",
-                        "and then you feel yourself risFing upward for a sustained stretch.  ",
+                        "and then you feel yourself rising upward for a sustained stretch.  ",
                         "\n\n",
                         "You emerge into the sunlight on top of the cliffs of the Ekkis II desert, ",
                         "in the same place, between the two broken stone horns, ",
@@ -3171,7 +3173,7 @@ class Scripts {
             var message;
             if (turnsSinceLastEnteringCave == 0) {
                 message =
-                    "From far back in the cave, you hear a slapping noise,"
+                    "From far back in the cave, you hear a slapping noise, "
                         + "as of spatulate feet running across rocks.";
             }
             else if (turnsSinceLastEnteringCave == 1) {
@@ -3749,7 +3751,7 @@ class Scripts {
             u.messageEnqueue("The ship tears itself into a thousand pieces, "
                 + "with a sound louder than ears can hear.  "
                 + "Luckily, the ear-shattering noise only lasts a moment, "
-                + "because all the ship's air rushes out into the surrounding vaccuum."
+                + "because all the ship's air rushes out into the surrounding vaccuum.  "
                 + "Luckier still, you don't die of asphixiation, because you're "
                 + "sheared into seven separate pieces by shrapnel from the explosion first."
                 + "\n\n"

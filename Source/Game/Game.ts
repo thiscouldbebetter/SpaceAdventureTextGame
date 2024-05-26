@@ -358,7 +358,7 @@ class Items
 				"to gamble on blood sports with non-consenting combatants, ",
 				"and were thus outlawed in most jurisdictions.  ",
 				"But eventually, all forms of cash were outlawed by the authorities, ",
-				"since nobody used cash for anything that wasn't illegal.",
+				"since nobody used cash for anything that wasn't illegal.  ",
 				"Eventually, those same authorities realized that pretty much anybody ",
 				"using any medium of exchange was up to no good, ",
 				"so a lot of them outlawed money in general.",
@@ -381,7 +381,7 @@ class Items
 			[ "rock", "stone" ],
 
 			[
-				"It's a rock.  It's got one round end and one pointy end.",
+				"It's a rock.  It's got one round end and one pointy end.  ",
 				"It's kind of teardrop shaped, you guess?",
 				"\n\n",
 				"You remember a ancient video where a kid ",
@@ -554,10 +554,10 @@ class Places
 
 			"This is the command bridge of the starship Pax Aeterna.  "
 			+ "A large transparent hemispherical dome arches overhead, "
-			+ "showing the brilliantly shining surrounding stars."
+			+ "showing the brilliantly shining surrounding stars.  "
 			+ "Banks of mostly incomprehensible controls "
 			+ "line the circular wall, with the nearby seats "
-			+ "either empty or filled with the slumped bodies of dead crew."
+			+ "either empty or filled with the slumped bodies of dead crew.  "
 			+ "There're several bodies scattered on the floor, as well.  "
 			+ "A prominent pedestal in the center "
 			+ "formerly held the Stellar Juvenator, but now stands vacant."
@@ -759,7 +759,7 @@ class Places
 					[ "hatch", "trapdoor" ],
 
 					"This is a trapdoor in the floor, "
-					+ "perhaps three meters by five meters,"
+					+ "perhaps three meters by five meters, "
 					+ "split down the middle into two retractible doors."
 				),
 
@@ -876,7 +876,7 @@ class Places
 					"These are the controls for the docking bay doors, "
 					+ "which are visible through the nearby window.  "
 					+ "There are two buttons, one that says 'open bay doors' "
-					+ "and another that says 'close bay doors'."
+					+ "and another that says 'close bay doors'.  "
 					+ "It doesn't take a rocket scientist to operate these controls, "
 					+ "although there is prominently placed placard that says otherwise."
 				),
@@ -1209,7 +1209,7 @@ class Places
 					"The table provides a comfortable place "
 					+ "for the more literate members of the crew to research data tapes."
 					+ "\n\n"
-					+ "You, on the other hand, have only used it once,"
+					+ "You, on the other hand, have only used it once, "
 					+ "as an improvised playfield for a game of Vir-Naki Caroms "
 					+ "with the cartridge-retrieval bot. "
 					+ "But they made you stop before you could even "
@@ -1574,7 +1574,7 @@ class Places
 			"You stand in the trackless desert of the planet Ekkis II, "
 			+ "just south of the wreck of your crashed escape pod.  "
 			+ "Some cliffs rise to the northeast.  "
-			+ "A sea of dunes stretches away in every other direction."
+			+ "A sea of dunes stretches away in every other direction.  "
 			+ "Except... there!  In the distance!  You see... "
 			+ "No, on second thought, that's just an eyeball floater.  "
 			+ "It was a pretty rough crash.  You should get checked out "
@@ -1803,7 +1803,7 @@ class Places
 			+ "To the east is a tall, confused jumble of rocks, "
 			+ " in which a large, shadowy cave mouth opens.  "
 			+ "What with the sun(s) and all, "
-			+ "you feel you could really go for some shadows about now,"
+			+ "you feel you could really go for some shadows about now, "
 			+ "even though you normally sleep with a night-light."
 			+ "\n\n"
 			+ "On the west side of the clearing, a stone slope rises jaggedly "
@@ -1923,7 +1923,7 @@ class Places
 
 			"You stand atop a rocky cliff rising from the desert "
 			+ "of the planet Ekkis II.  "
-			+ "The top of the cliff continues to the west and east."
+			+ "The top of the cliff continues to the west and east.  "
 			+ "The path is especially narrow and precarious here.  "
 			+ "You're glad you can just type 'go east' or whatever "
 			+ "rather than turning the game speed way down "
@@ -1954,13 +1954,13 @@ class Places
 			+ "\n\n"
 			+ "(Are they columns if they're not completely vertical, though?"
 			+ "Hmm, maybe they're slashes.  "
-			+ "Or, one is a slash, and the other a backslash."
+			+ "Or, one is a slash, and the other a backslash.  "
 			+ "Anyway, they're definitely not rows.)"
 			+ "\n\n"
 			+ "The stone horns look especially cool up close.  "
 			+ "You woozily compose an album cover in your head, "
 			+ "with the stone horns pictured in the background "
-			+ "and with you looking bored and fully hydrated in the foreground."
+			+ "and with you looking bored and fully hydrated in the foreground.  "
 			+ "You further fantasize about your imaginary band's groupies, "
 			+ "each of which is offering you a cool fruity drink."
 			+ "\n\n"
@@ -2104,7 +2104,7 @@ class Places
 			+ "and continues to the north."
 			+ "\n\n"
 			+ "The word 'arroyo' crosses your mind.  "
-			+ "You're not exactly sure what an arroyo is,"
+			+ "You're not exactly sure what an arroyo is, "
 			+ "and you're reasonably sure this isn't one, "
 			+ "but this whole place feels pretty arroyoey.", 
 
@@ -2135,7 +2135,7 @@ class Places
 			"You are in a cavern deep beneath the desert of the planet Ekkis II.  "
 			+ "\n\n"
 			+ "The path to the west is blocked by several closely spaced "
-			+ "and intensely bright beams of light,"
+			+ "and intensely bright beams of light, "
 			+ "which are emitted from small round ports the rock walls, "
 			+ "and which pass into similar ports on the other side.  "
 			+ "\n\n"
@@ -2410,7 +2410,7 @@ class Places
 
 			"You are in a cavern deep beneath the desert of the planet Ekkis II."
 			+ "\n\n"
-			+ "The passage to the west ends abruptly in a solid rock wall."
+			+ "The passage to the west ends abruptly in a solid rock wall.  "
 			+ "Nearby, a small geyser shoots out of a hole "
 			+ "in the top of a stalagmite, wetly and steamily, "
 			+ "but not in, like, a gross way.  "
@@ -2440,9 +2440,9 @@ class Places
 
 					"You examine the geyser.  "
 					+ "Aw, what a bubbly, happy little guy. "
-					+ "It's a good thing the sun isn't blazing so hot inside this cavern,"
+					+ "It's a good thing the sun isn't blazing so hot inside this cavern, "
 					+ "Or you'd be tempted to take a drink of the steaming hot liquid.  "
-					+ "And that, even assuming it's just water, would melt your esophagus.  "
+					+ "And that, even assuming it's just water, would melt your esophagus."
 				).commandAddFromTextsAndScriptName
 				(
 					MessageHelper.combinePhraseArrays
@@ -2481,7 +2481,7 @@ class Places
 				(
 					[ "grate", "grating", "grille" ],
 
-					"You bend over and look closely at the grating."
+					"You bend over and look closely at the grating.  "
 					+ "You think you see something moving down there.  "
 					+ "And maybe you hear some sloshing.  "
 					+ "And, yeah, there's a smell.  "
@@ -2541,7 +2541,7 @@ class Places
 
 					this.scripts.placePlanetCavernsGrating_CrossGrating.name,
 
-					"You bend over and look closely at the grating."
+					"You bend over and look closely at the grating.  "
 					+ "You can see some slight movement, "
 					+ "hear some bathtub noises,  "
 					+ "and there is, as there frequently is in your life lately, a smell.  "
@@ -2596,7 +2596,7 @@ class Places
 						"fed from above by drops that rain from the ceiling, ",
 						"making concentric circles on the otherwise still surface.  ",
 						"\n\n",
-						"It's so Zen that it gets you excited.",
+						"It's so Zen that it gets you excited.  ",
 						"Which makes it not Zen.  ",
 						"Which, in turn, makes it even more Zen.  ",
 						"Zen is tricky like that."
@@ -2632,7 +2632,7 @@ class Places
 			+ "This space is completely dark at the moment.  "
 			+ "Earlier, it was lit only " 
 			+ "by a holographic projection of a triangular-headed alien.  "
-			+ "In retrospect, that giant alien head really livened up the decor."
+			+ "In retrospect, that giant alien head really livened up the decor.  "
 			+ "A passage leads back to the east.",
 
 			this.scripts.placePlanetCavernsProjectionRoom_Update.name,
@@ -2715,35 +2715,37 @@ class Places
 		(
 			Places.planetSettlementBarFront_Name(),
 
-			"You stand in the tiny settlement named, "
-			+ " as near as you can make out from the signs in Universal Phonospeak, "
-			+ "[Farting Noise].  "
-			+ "In the natives' defense, maybe their farts "
-			+ "sound completely different from yours."
-			+ "\n\n"
-			+ "To the east stands a pourstone igloo with an arched entrance, "
-			+ "above which is a lighted sign that reads "
-			+ "'Poot-Poot-P-Phttt' in Universal Phonospeak,"
-			+ "followed by 'BAR' in "
-			+ "several of the more common, less aspirated, languages "
-			+ "of this sector of space."
-			+ "\n\n"
-			+ "Several spaceships, presumably belonging to the bar's patrons,"
-			+ "stand nearby."
-			+ "\n\n"
-			+ "To the west, you can see another, cubical building, with a few more "
-			+ "run-down looking spaceships in front of it, and decorated with "
-			+ "strings of cheap but festive plastic pennants."
-			+ "\n\n"
-			+ "Away to the north is the edge of another domelike building, "
-			+ "possibly a store of some sort."
-			+ "\n\n"
-			+ "To the south, a faint shimmer in the air betrays the force field "
-			+ "that protects this settlement from the native predatory sand-swimmers.  "
-			+ "You look nervously at the field generator unit, "
-			+ "which looks dusty, battered, and none too new.  "
-			+ "But you're standing here, instead of in a sand-swimmer's belly, "
-			+ "so you guess it must work.",
+			[
+				"You stand in the tiny settlement named, ",
+				" as near as you can make out from the signs in Universal Phonospeak, ",
+				"[Farting Noise].  ",
+				"In the natives' defense, maybe their farts ",
+				"sound completely different from yours.",
+				"\n\n",
+				"To the east stands a pourstone igloo with an arched entrance, ",
+				"above which is a lighted sign that reads ",
+				"'Poot-Poot-P-Phttt' in Universal Phonospeak,",
+				"followed by 'BAR' in ",
+				"several of the more common, less aspirated, languages ",
+				"of this sector of space.",
+				"\n\n",
+				"Several spaceships, presumably belonging to the bar's patrons,",
+				"stand nearby.",
+				"\n\n",
+				"To the west, you can see another, cubical building, with a few more ",
+				"run-down looking spaceships in front of it, and decorated with ",
+				"strings of cheap but festive plastic pennants.",
+				"\n\n",
+				"Away to the north is the edge of another domelike building, ",
+				"possibly a store of some sort.",
+				"\n\n",
+				"To the south, a faint shimmer in the air betrays the force field ",
+				"that protects this settlement from the native predatory sand-swimmers.  ",
+				"You look nervously at the field generator unit, ",
+				"which looks dusty, battered, and none too new.  ",
+				"But you're standing here, instead of in a sand-swimmer's belly, ",
+				"so you guess it must work."
+			].join(""),
 
 			this.scripts.placePlanetSettlementBarFront_Update.name,
 
@@ -2873,25 +2875,31 @@ class Places
 				(
 					[ "machine", "slot machine", "gambling machine" ],
 
-					"It appears to be some variant of a slot machine.  "
-					+ "When the player inserts some money "
-					+ "and pulls the handle on the side, "
-					+ "behind each of three little viewing slots, "
-					+ "a reel printed with various symbols around its edge spins, "
-					+ "eventually stopping so that a random symbol is visible through the slot."
-					+ "If the symbols match, you presumably get some sort of prize."
-					+ "\n\n"
-					+ "You were never cool, or dumb, enough to enjoy gambling."
+					[
+						"It appears to be some variant of a slot machine.  ",
+						"When the player inserts some money ",
+						"and pulls the handle on the side, ",
+						"behind each of three little viewing slots, ",
+						"a reel printed with various symbols around its edge spins, ",
+						"eventually stopping so that a random symbol ",
+						"is visible through the slot.  ",
+						"If the symbols match, you presumably get some sort of prize.",
+						"\n\n",
+						"You were never cool, or dumb, enough to enjoy gambling."
+					].join("")
 				),
 
 				this.emplacement2
 				(
 					[ "bartender", "barman" ],
 
-					"This bartender doesn't appear to be the "
-					+ "'listen to your problems' kind of bartender.  "
-					+ "You try to catch his eye, but he evades your gaze "
-					+ "with the effortless skill of long practice."
+					[
+						"This bartender doesn't appear to be the ",
+						"'listen to your problems' kind of bartender.  ",
+						"You try to catch his eye, but he evades your gaze ",
+						"with the effortless skill of long practice."
+					].join("")
+
 				).commandAdd
 				(
 					new Command
@@ -2918,12 +2926,14 @@ class Places
 				(
 					[ "customers", "patrons", "barflies" ],
 
-					"I suppose 'patrons' is a rather grand name "
-					+ "for this motley amalgamation of limbs, tongues, "
-					+ "poor attitudes, bad habits, "
-					+ "and unpleasant fluids, "
-					+ "but at least if we call them patrons we don't have to focus "
-					+ "on their distinguishing characteristics."
+					[
+						"I suppose 'patrons' is a rather grand name ",
+						"for this motley amalgamation of limbs, tongues, ",
+						"poor attitudes, bad habits, ",
+						"and unpleasant fluids, ",
+						"but at least if we call them patrons we don't have to focus ",
+						"on their distinguishing characteristics."
+					].join("")
 				).commandAdd
 				(
 					new Command
@@ -2940,13 +2950,14 @@ class Places
 				this.emplacement3
 				(
 					[ "slot machine", "gambling machine", "machine" ],
-
-					"It's a Gamblomat Model MDK.  "
-					+ "You think this thing might have been banned "
-					+ "in the more reputable parts of the Commonwealth.  "
-					+ "Something about a bunch of people who used it getting hurt.  "
-					+ "You're not sure you understand how.  "
-					+ "How dangerous can a slot machine be?  ",
+					[
+						"It's a Gamblomat Model MDK.  ",
+						"You think this thing might have been banned ",
+						"in the more reputable parts of the Commonwealth.  ",
+						"Something about a bunch of people who used it getting hurt.  ",
+						"You're not sure you understand how.  ",
+						"How dangerous can a slot machine be?  "
+					].join(""),
 
 					this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name
 				)
@@ -2966,17 +2977,19 @@ class Places
 		(
 			Places.planetSettlementBarRear_Name(),
 
-			"You stand behind the [Farting Noise] bar.  "
-			+ "It is somewhat secluded here."
-			+ "Anti-sand-swimmer force-fields block access to the surrounding desert "
-			+ "to the east and south.  "
-			+ "You can see another, larger building to the north.  "
-			+ "\n\n"
-			+ "As you stand around loitering behind a bar, "
-			+ "reflecting on how Mom said this is exactly how you'd end up,"
-			+ "a hatch in the back wall of the bar opens "
-			+ "and expels some fine white powder, "
-			+ "which settles onto a larger heap of powder below.",
+			[
+				"You stand behind the [Farting Noise] bar.  ",
+				"It is somewhat secluded here.",
+				"Anti-sand-swimmer force-fields block access to the surrounding desert ",
+				"to the east and south.  ",
+				"You can see another, larger building to the north.  ",
+				"\n\n",
+				"As you stand around loitering behind a bar, ",
+				"reflecting on how Mom said this is exactly how you'd end up,",
+				"a hatch in the back wall of the bar opens ",
+				"and expels some fine white powder, ",
+				"which settles onto a larger heap of powder below."
+			].join(""),
 
 			[
 				this.portal( [ "north" ], Places.planetSettlementRobotShopWest_Name() ),
@@ -3005,15 +3018,17 @@ class Places
 		(
 			Places.planetSettlementRobotShopFront_Name(),
 
-			"You stand in the desert settlement of [Farting Noise], "
-			+ "to the south of the entrance door of a domed building "
-			+ "bearing the sign 'Buy, Robot'.  "
-			+ "\n\n"
-			+ "You figure that name is probably a half-haunched "
-			+ "joking reference to something.  "
-			+ "You generally don't get joking references, "
-			+ "but you find they get even less funny "
-			+ "if you ask someone to explain them.  So never mind.",
+			[
+				"You stand in the desert settlement of [Farting Noise], ",
+				"to the south of the entrance door of a domed building ",
+				"bearing the sign 'Buy, Robot'.",
+				"\n\n",
+				"You figure that name is probably a half-haunched ",
+				"joking reference to something.  ",
+				"You generally don't get joking references, ",
+				"but you find they get even less funny ",
+				"if you ask someone to explain them.  So never mind."
+			].join(""),
 
 			[
 				this.portal( [ "west" ], Places.planetSettlementRobotShopWest_Name() ),
@@ -3033,16 +3048,18 @@ class Places
 		(
 			Places.planetSettlementRobotShopInterior_Name(),
 
-			"You stand inside the [Farting Noise] branch of 'Buy, Robot'. "
-			+ "Various currently-unmoving robots are displayed on pedestals, "
-			+ "each bearing a more-or-less conspicious price tag.  "
-			+ "A salesbeing watches you idly, perhaps waiting "
-			+ "to see if you require assistance "
-			+ "or if you're just going to ask to use the bathroom.  "
-			+ "Maybe they're even making a little bet with themself "
-			+ "over which it will be."
-			+ "\n\n"
-			+ "A door leads back outside, as doors do.",
+			[
+				"You stand inside the [Farting Noise] branch of 'Buy, Robot'. ",
+				"Various currently-unmoving robots are displayed on pedestals, ",
+				"each bearing a more-or-less conspicious price tag.  ",
+				"A salesbeing watches you idly, perhaps waiting ",
+				"to see if you require assistance ",
+				"or if you're just going to ask to use the bathroom.  ",
+				"Maybe they're even making a little bet with themself ",
+				"over which it will be.",
+				"\n\n",
+				"A door leads back outside, as doors do."
+			].join(""),
 
 			[
 				this.portal
@@ -3098,7 +3115,7 @@ class Places
 					+ "'This is the Astromatix Stardodger QG.  "
 					+ "It's the best pilot/navigator robot money can buy.'  "
 					+ "He slaps the robot's... pauldron?... briskly, and continues, "
-					+ "'You can fit so many starmaps into this bad boy."
+					+ "'You can fit so many starmaps into this bad boy.  "
 					+ "Its price is 45 credits, or 36 with coupon.'"
 				),
 
@@ -3122,7 +3139,7 @@ class Places
 					+ "here on the deserts of Ekkis II.  And you'd be right.  "
 					+ "But that just means you have an opportunity "
 					+ "to get in on the ground floor.  "
-					+ "Or the ground ground, in this case."
+					+ "Or the ground ground, in this case.  "
 					+ "Its price is 300 credits, or 240 with coupon.'"
 				),
 
@@ -3141,7 +3158,7 @@ class Places
 					+ "the salesbeing smoothly interposes themself.  "
 					+ "'This is the Stope & Adit Deep Dolly.  "
 					+ "It's a mining robot.  "
-					+ "And I always say, what's mine is yours."
+					+ "And I always say, what's mine is yours.  "
 					+ "For only 700 credits, or 560 with coupon.'"
 				),
 
@@ -3239,15 +3256,15 @@ class Places
 
 			"You stand in the desert settlement of [Farting Noise].  "
 			+ "You see a spaceship standing here, and, to the south,"
-			+ "a brightly decorated lot containing several more ships."
-			+ " To the east, you see a large domed building. "
+			+ "a brightly decorated lot containing several more ships.  "
+			+ "To the east, you see a large domed building. "
 			+ "\n\n"
 			+ "A smaller domed building with a sign that says 'Bar' lies to the southeast. "
 			+ "\n\n"
 			+ "A force field blocks access to the open desert to the north and west.  "
 			+ "You idly wonder who's paying to run all these force fields.  "
 			+ "Probably there's some kind of committee that takes up a periodic collection.  "
-			+ "You envy whoever got the contract.  It's bound to be a steady job."
+			+ "You envy whoever got the contract.  It's bound to be a steady job.  "
 			+ "No matter where you go, "
 			+ "people are always not going to want to be eaten.",
 
@@ -3267,24 +3284,27 @@ class Places
 	{
 		return this.place3
 		(
-			Places.planetSettlementNorthOfUsedShipLot_Name(),
+			Places.planetSettlementUsedShipLot_Name(),
 
-			"You stand in the desert settlement of [Farting Noise], "
-			+ "in a sandy lot brighly decorated with colorful pennants "
-			+ " strung along lines, and containing several ships "
-			+ "in various states of wear.  "
-			+ "Just to the north you see another ship standing by itself."
-			+ "\n\n"
-			+ "At one edge of the lot is a small cubical building "
-			+ "bearing a sign that says, 'Non-Gelatinous George's Used Ships'."
-			+ "\n\n"
-			+ "A domed building with a sign that says 'Bar', among other things, stands to the east. "
-			+ "\n\n"
-			+ "A larger domed building stands to the northeast. "
-			+ "\n\n"
-			+ "A force field blocks access to the open desert to the south and west, "
-			+ "keeping out the predatory sand-swimmers, and, "
-			+ "as Non-Gelatinous George would say, keeping in the savings.",
+			[
+				"You stand in the desert settlement of [Farting Noise], ",
+				"in a sandy lot brighly decorated with colorful pennants ",
+				" strung along lines, and containing several ships ",
+				"in various states of wear.  ",
+				"Just to the north you see another ship standing by itself.",
+				"\n\n",
+				"At one edge of the lot is a small cubical building ",
+				"bearing a sign that says, 'Non-Gelatinous George's Used Ships'.",
+				"\n\n"
+				"A domed building with a sign that says 'Bar', ",
+				"among other things, stands to the east. ",
+				"\n\n",
+				"A larger domed building stands to the northeast. ",
+				"\n\n",
+				"A force field blocks access to the open desert to the south and west, ",
+				"keeping out the predatory sand-swimmers, and, ",
+				"as Non-Gelatinous George would say, keeping in the savings."
+			].join(""),
 
 			[
 				this.portal( [ "east" ], Places.planetSettlementBarFront_Name() ),
@@ -3370,17 +3390,20 @@ class Places
 		(
 			Places.enemyShipArmory_Name(),
 
-			"This is the armory of the Venipositor.  "
-			+ "\n\n"
-			+ "At the aft end, a high counter, with a heavily robot standing watch behind it, "
-			+ "blocks the path to the weapon racks.  "
-			+ "The Vadik seem to all be professional soldier/assassin/murderers, "
-			+ "so you have to worry about what kind of weapons they keep under lock and key.  "
-			+ "But maybe they just want to keep track of what kind of weapons are popular, "
-			+ "so they can order more of them?"
-			+ "\n\n"
-			+ "A door to forward leads back "
-			+ "out onto the catwalk above the Stellar Juvenator chamber.",
+			[
+				"This is the armory of the Venipositor.  ",
+				"\n\n",
+				"At the aft end, a high counter, ",
+				"with a heavily-armed robot standing watch behind it, ",
+				"blocks the path to the weapon racks.  ",
+				"The Vadik seem to all be professional soldier/assassin/murderers, ",
+				"so you have to worry about what kind of weapons they keep under lock and key.  ",
+				"But maybe they just want to keep track of what kind of weapons are popular, ",
+				"so they can order more of them?",
+				"\n\n",
+				"A door to forward leads back ",
+				"out onto the catwalk above the Stellar Juvenator chamber.",
+			].join("")
 
 			[
 				this.portal
@@ -3400,14 +3423,77 @@ class Places
 
 	enemyShipLaundry(): Place
 	{
+		var washerAndDryerDescription =
+			"Both the washing machine and dryer are huge and currently empty.";
+
 		return this.place3
 		(
 			Places.enemyShipLaundry_Name(),
 
-			"This is a laundry room on the Venipositor.",
+			[
+				"This is a laundry room on the Venipositor.  ",
+				"Even on board this mobile killing machine, ",
+				"it's not all gunports and missile bays.  ",
+				"People still need to get their clothes cleaned.  ",
+				"And the Vadik need their clothes cleaned more than average, ",
+				"given the amount of times that they mus go wading through blood ",
+				"in any given week.",
+				"\n\n",
+				"The port wall of the chamber is occupied by a giant clothes washing machine  "
+				"and a giant drier, each having a door about two meters in diameter.  ",
+				"The rest of the room is filled with bins full of dirty and/or clean ",
+				"Vadik underwear.",
+				"\n\n",
+				"A vent high in the aft wall provides ventilation for the steamy air."
+			].join(""),
 
 			[
-				// todo
+				this.portal("washer", Places.enemyShipWasher_Name() ),
+				this.portal("dryer", Places.enemyShipWasher_Name() ),
+				this.portal("vent", Places.enemyShipWasher_Name() ).block(),
+
+				this.emplacement2
+				(
+					[ "washer", "clothes washer", "washing machine"],
+					washerAndDryerDescription
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in washer" ],
+						this.scripts.placeEnemyShipLaundry_GetInWasher.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "dryer", "clothes dryer"],
+					washerAndDryerDescription
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in dryer" ],
+						this.scripts.placeEnemyShipLaundry_GetInDryer.name
+					)
+				),
+
+				this.emplacement2
+				(
+					"vent",
+
+					[
+						"The vent is about three meters above the ground, ",
+						"and is secured to the wall with standard screw at each corner."
+					].join("")
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in vent" ],
+						this.scripts.placeEnemyShipLaundry_GetInVent.name
+					)
+				)
 			]
 		);
 	}
@@ -3915,6 +4001,12 @@ class Scripts
 			this.itemKeycardUse,
 			this.itemSurvivalKitOpen,
 
+			this.placeEnemyShipLaundry_GetInDryer,
+			this.placeEnemyShipLaundry_GetInVent,
+			this.placeEnemyShipLaundry_GetInWasher,
+			this.placeEnemyShipLaundryWasher_Update,
+			this.placeEnemyShipLaundryDryer_Update,
+
 			this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
 			this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
 			this.placeFriendlyShipDockingBayAntechamber_PressRightButton,
@@ -4092,7 +4184,8 @@ class Scripts
 				"\n\n",
 				"On the video, the man says, 'This is Slade Gorham, Chief Scientist of ",
 				"the Commonwealth ship Pax Aeterna.  The Vadik have taken over the ship.  ",
-				"They have taken the Stellar Juvenator.  They must not be allowed to possess it.",
+				"They have taken the Stellar Juvenator.  ",
+				"They must not be allowed to possess it.  ",
 				"In their hands, its unimaginable power could mean the end of civilized life ",
 				"in the galaxy.",
 				"\n\n",
@@ -4101,7 +4194,7 @@ class Scripts
 				"\n\n",
 				"    star juvie go boom-boom bye now gorham alpha 9",
 				"\n\n",
-				"Good luck, we're all depending on you.",
+				"Good luck, we're all depending on you.  ",
 				"May the universe guide you to victory.'",
 				"\n\n",
 				"And that's where the video ends.  Whoa, dramatic."
@@ -4192,7 +4285,7 @@ class Scripts
 
 	itemSurvivalKitOpen(u: Universe, w: World, p: Place, c: Command): void
 	{
-		var message = "You open the survival kit.  .";
+		var message = "You open the survival kit.  ";
 
 		var itemSurvivalKit = w.agentPlayer.itemByName("survival kit");
 		var itemsContained = itemSurvivalKit.items;
@@ -4226,6 +4319,73 @@ class Scripts
 	}
 
 	// Places.
+
+	placeEnemyShipLaundryDryer_Update
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		if (p.visited() == false)
+		{
+			p.visit();
+
+			var message = 
+			[
+				"You climb into the empty clothes dryer.",
+				"\n\n",
+				"After a few moments, a Vadik soldier--laundry worker?--enters, "
+				"pushing ahead of him another wheeled bin of dirty laundry.  "
+				"He opens the door of the washing machine "
+				"and transfers the contents of the washer into an empty bin.  "
+				"He then opens the door of the dryer, "
+				"attaches the bin to a hoisting mechanism built into the front of the machine ",
+				"and presses a button that automatically raises the bin and tilts it, ",
+				"dumping the cold wet contents into the dryer.  "
+				"Then he closes the door of the dryer.  "
+				"The good news is that he didn't notice you crouching in the dryer.  "
+				"The bad news is that now you're nearly buried in wet laundry.  "
+				"The worse news is that he presses the dryer's start button, "
+				"which starts the barrel of the tumble dryer rotating, "
+				"and also starts the heating system."
+				"\n\n"
+				"As you begin to tumble among the clothes, accumulating painful knocks, "
+				"you dizzily notice the Vadik laundry worker loading the binful of dirty laundry "
+				"into the washer via an identical mechanism, and starting it as well.  "
+				"Then he leaves."
+				"\n\n"
+				"It's starting to get hot in here."
+			].join("");
+		}
+
+		u.messageEnqueue(message);
+	}
+
+	placeEnemyShipLaundryWasher_Update
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		if (p.visited() == false)
+		{
+			p.visit();
+
+			var message = 
+			[
+				"You climb into the clothes washer.",
+				"\n\n",
+				"After a few moments, a Vadik soldier--laundry worker?--enters, ",
+				"pushing ahead of him another wheeled bin of dirty laundry.  ",
+				"He opens the door of the washing machine ",
+				"then attaches the bin of dirty clothes "
+				"to the hoisting mechanism built into the front of the washer.  "
+				"The bin of dirty laundry is raised automatically "
+				"and its contents are dumped onto you.  They smell."
+				"\n\n",
+			].join("");
+		}
+
+		u.messageEnqueue(message);
+	}
 
 	placeFriendlyShipDockingBayAntechamber_GoAirlock
 	(
@@ -5237,7 +5397,7 @@ class Scripts
 					"begins speaking just after him, in similar inflections.  ",
 					"Apparently it's been a translator all along.  ",
 					"\n\n",
-					"'YOU HAVE DONE WELL MAKING IT THIS FAR, OUTWORLDER,'",
+					"'YOU HAVE DONE WELL MAKING IT THIS FAR, OUTWORLDER,' ",
 					"bellows the head, with excessive volume, 'THIS FACILITY IS DESIGNED ",
 					"TO WINNOW OUT THOSE OF LOW INTELLIGENCE.  BUT YOU CLEARLY ",
 					"HAVE NEED OF OUR ASSISTANCE.  WE DO NOT OFFER SUCH HELP CHEAPLY.  ",
@@ -5270,7 +5430,7 @@ class Scripts
 					"As the alien finishes his speech, ",
 					"a trap door in the floor irises open, and you fall through it.  ",,
 					"You are whisked through some, like, pneumatic tubes, ",
-					"and then you feel yourself risFing upward for a sustained stretch.  ",
+					"and then you feel yourself rising upward for a sustained stretch.  ",
 					"\n\n",
 					"You emerge into the sunlight on top of the cliffs of the Ekkis II desert, ",
 					"in the same place, between the two broken stone horns, ",
@@ -5469,7 +5629,7 @@ class Scripts
 			if (turnsSinceLastEnteringCave == 0)
 			{
 				message =
-					"From far back in the cave, you hear a slapping noise,"
+					"From far back in the cave, you hear a slapping noise, "
 					+ "as of spatulate feet running across rocks.";
 			}
 			else if (turnsSinceLastEnteringCave == 1)
@@ -6283,7 +6443,7 @@ class Scripts
 				"The ship tears itself into a thousand pieces, "
 				+ "with a sound louder than ears can hear.  "
 				+ "Luckily, the ear-shattering noise only lasts a moment, "
-				+ "because all the ship's air rushes out into the surrounding vaccuum."
+				+ "because all the ship's air rushes out into the surrounding vaccuum.  "
 				+ "Luckier still, you don't die of asphixiation, because you're "
 				+ "sheared into seven separate pieces by shrapnel from the explosion first."
 				+ "\n\n"

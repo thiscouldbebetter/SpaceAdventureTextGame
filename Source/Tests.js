@@ -288,7 +288,7 @@ class Tests {
         // So they all stop dripping every 30 turns.
         // But the player must pass under on the
         // eighth, ninth, and tenth turns after that,
-        // because 8 is divisible by 2, 9 by 3, and 10 by 5.	
+        // because 8 is divisible by 2, 9 by 3, and 10 by 5.
         while (world.turnsSoFar % 30 != 7) {
             run("wait");
         }
@@ -309,6 +309,7 @@ class Tests {
         // projection room
         run("go north");
         // steamworks
+        Assert.areEqual(Places.planetCavernsSteamworks_Name(), world.placeCurrent().name);
         run("talk to alien");
         run("get skimmer key");
         run("insert key in skimmer");
