@@ -16,9 +16,13 @@ class Game
 				(
 					[ "washrag", "rag" ],
 
-					"This is a rag you use to clean things sometimes.  "
-					+ "You may or may not have given it a name.  "
-					+ "And a backstory."
+					[
+						"This is a rag you use to clean things sometimes.  ",
+						"You may or may not have given it a name.  ",
+						"And a backstory.  And a love interest.  ",
+						"And a ragtag group of friends ",
+						"that it may or may not go on adventures with."
+					].join("")
 				)
 			]
 		);
@@ -59,14 +63,14 @@ class Game
 class Items
 {
 	CanOfSham: Item;
-	Cartridge: Item;
-	DehydratedWater: Item;
+	Canteen: Item;
+	CaveBeastClaw: Item;
+	DataCartridge: Item;
 	Gadget: Item; // Translator.
 	GasGrenade: Item;
 	Keycard: Item;
 	Jetpack: Item;
 	Multitool: Item;
-	OratPart: Item;
 	PulseRifle: Item;
 	Quatloos: Item;
 	ReflectiveGlass: Item;
@@ -80,7 +84,9 @@ class Items
 	constructor()
 	{
 		this.CanOfSham = this.canOfSham();
-		this.DehydratedWater = this.dehydratedWater();
+		this.CaveBeastClaw = this.caveBeastClaw();
+		this.Canteen = this.canteen();
+		this.DataCartridge = this.dataCartridge();
 		this.Gadget = this.gadget();
 		this.GasGrenade = this.gasGrenade();
 		this.Keycard = this.keycard();
@@ -94,13 +100,15 @@ class Items
 		// Containers.
 		this.SurvivalKit = this.survivalKit
 		(
-			[ this.DehydratedWater, this.Multitool, this.CanOfSham ]
+			[ this.Canteen, this.Multitool, this.CanOfSham ]
 		);
 
 		this._All =
 		[
 			this.CanOfSham,
-			this.DehydratedWater,
+			this.Canteen,
+			this.CaveBeastClaw,
+			this.DataCartridge,
 			this.Gadget,
 			this.GasGrenade,
 			this.Keycard,
@@ -130,42 +138,74 @@ class Items
 		(
 			[ "can of Sham", "can of sham", "can", "sham" ],
 
-			"These are cans of Sham (tm) taken from the survival kit "
-			+ "of the Pax Aeterna's escape pod.  "
-			+ "\n\n"
-			+ "If you're not familiar with the product, "
-			+ "Sham (tm) is a... popular... brand of "
-			+ "canned artificial cultured animal muscle protein.  "
-			+ "\n\n"
-			+ "Nobody eats real meat anymore, "
-			+ "because people feel guilty about the cruelty to animals.  "
-			+ "Sham (tm) puts the cruelty where it belongs--in the consumer's mouth."
+			[
+				"These are cans of Sham (tm) taken from the survival kit ",
+				"of the Pax Aeterna's escape pod.  ",
+				"\n\n",
+				"If you're not familiar with the product, ",
+				"Sham (tm) is a... popular... brand of ",
+				"canned artificial cultured animal muscle protein.  ",
+				"\n\n",
+				"Nobody eats real meat anymore, ",
+				"because people feel guilty about the cruelty to animals.  ",
+				"Sham (tm) puts the cruelty where it belongs--in the consumer's mouth.",
+			].join("")
 		).quantitySet(3);
 	}
 
-	dehydratedWater(): Item
+	caveBeastClaw(): Item
 	{
 		return Item.fromNamesAndDescription
 		(
-			[ "dehydrated water", "water", "canteen", "bottle" ],
+			[ "cave beast claw", "beast claw", "claw" ],
 
-			"This is a bottle full of hydrogen gas "
-			+ "under an incredible amount of pressure, enough to liquefy it.  "
-			+ "When the valve in the bottle's neck is opened, "
-			+ "it allows a small amount of the gas out "
-			+ "to combust in the oxygen (hopefully!) of the surrounding (hopefully!) air, "
-			+ "which creates a small amount of water vapor "
-			+ "that condenses in the mouth of the bottle, " 
-			+ "thus providing a small quantity of drinkable water."
-			+ "\n\n"
-			+ "This technology theoretically makes it possible to carry "
-			+ "about nine times more water that one could with a normal canteen, "
-			+ "but as a practical matter, all the pressurizing and processing equipment "
-			+ "adds almost as much weight as it saves.  "
-			+ "You suspect this thing only exists because somebody's cousin "
-			+ "got a lucrative government contract to develop it."
-			+ "\n\n"
-			+ "Besides that, the water that comes out is warm.  Yuck."
+			[
+				"This is one of the claws of the cave beast of Ekkis II, ",
+				"whom you murdered.  But it was coming right for you!  ",
+				"It was self-defense.  You think.  ",
+				"And that makes it not murder, right?  ",
+				"Maybe it was, like, beastslaughter?",
+				"\n\n",
+				"Anyway, you killed a living being whose appearance and demeanor ",
+				"made you feel scared, and then you picked up his severed hand ",
+				"and took it with you.  Classy.  You suppose maybe the claw could be useful ",
+				"for retrieving cans off of high shelves, if you can figure out how to ",
+				"make the fingers open and close from the near end of the stump, ",
+				"and if you survive long enough to find any high shelves with cans on them."
+			].join("")
+		);
+	}
+
+	canteen(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "canteen", "dehydrated water", "water", "bottle" ],
+
+			[
+				"This is a canteen filled with water, sort of.  ",
+				"But, as a prominent warning label clearly reads, it's 'dehydrated water'.",
+				"\n\n",
+				"What that means is that it's full of hydrogen gas ",
+				"under an incredible amount of pressure, enough to liquefy it.  ",
+				"When the valve in the bottle's neck is opened, ",
+				"it allows a small amount of the gas out ",
+				"to combust in the oxygen (hopefully!) of the surrounding (hopefully!) air, ",
+				"which creates a small amount of water vapor ",
+				"that condenses in the mouth of the bottle, " ,
+				"thus providing a small quantity of drinkable water, ",
+				"along with a medium quantity of danger of a hydrogen explosion.",
+				"\n\n",
+				"This technology theoretically makes it possible to carry ",
+				"about nine times more water that one could with a normal canteen, ",
+				"but as a practical matter, all the pressurizing and processing equipment ",
+				"adds almost as much weight as it saves.  ",
+				"You suspect this thing only exists because somebody's cousin ",
+				"got a lucrative government contract to develop it.",
+				"\n\n",
+				"Besides that, the water that comes out is warm.  Yuck."
+			].join("")
+
 		).commandAdd
 		(
 			new Command
@@ -184,21 +224,57 @@ class Items
 		);
 	}
 
+	dataCartridge(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "data cartridge", "cartridge" ],
+
+			[
+				"This is a data cartridge labelled 'astral bodies' ",
+				"that you retrieved from the library of the Pax Aeterna ",
+				"using the skills you learned in the Remedial Library Literacy course ",
+				"they made you take when you came on board.",
+				"\n\n",
+				"A dying man used his last breath to recommend it to you, ",
+				"so you figure it must be good."
+			].join("")
+
+		).commandAdd
+		(
+			new Command
+			(
+				MessageHelper.combinePhraseArrays
+				([
+					[ "put", "place", "insert" ],
+					[ "cartridge", "data cartridge" ],
+					[ null, "in", "into" ],
+					[ "slot", "reader" ]
+				]),
+
+				Scripts.Instance().itemDataCartridge_PutInSlot.name
+			)
+		);
+	}
+
 	gadget(): Item
 	{
 		return Item.fromNamesAndDescription
 		(
 			[ "gadget" ],
 
-			"This is a gadget you found in a closet, "
-			+ "then just picked up and put in your pocket, "
-			+ "even though it's not yours and you don't know what it does.  "
-			+ "It sounds weird when you put it like that."
-			+ "\n\n"
-			+ "The gadget's intended function is cryptic.  "
-			+ "There's a button and an indicator light.  "
-			+ "And some sort of... grille?.. on one end.  "
-			+ "That's it, though."
+			[
+				"This is a gadget you found in a closet, ",
+				"then just picked up and put in your pocket, ",
+				"even though it's not yours and you don't know what it does.  ",
+				"It sounds weird when you put it like that.",
+				"\n\n",
+				"The gadget's intended function is cryptic.  ",
+				"There's a button and an indicator light.  ",
+				"And some sort of... grille?.. on one end.  ",
+				"That's it, though."
+			].join("")
+
 		).commandAdd
 		(
 			new Command
@@ -276,18 +352,25 @@ class Items
 		(
 			[ "quatloos", "credits", "coins", "money" ],
 
-			"Quatloos are the most widely-shared form of currency "
-			+ "in the galaxy.  They were originally used exclusively "
-			+ "to gamble on blood sports with non-consenting combatants, "
-			+ "and were thus outlawed in most jurisdictions.  "
-			+ "But eventually, all forms of cash were outlawed by the authorities, "
-			+ "since nobody used cash for anything that wasn't illegal."
-			+ "Eventually, those same authorities realized that pretty much anybody "
-			+ "using any medium of exchange was up to no good, "
-			+ "so a lot of them outlawed money in general."
-			+ "\n\n"
-			+ "It's been mostly good, but there are some downsides.  "
-			+ "That's where quatloos come in."
+			[
+				"Quatloos are the most widely-shared form of currency ",
+				"in the galaxy.  They were originally used exclusively ",
+				"to gamble on blood sports with non-consenting combatants, ",
+				"and were thus outlawed in most jurisdictions.  ",
+				"But eventually, all forms of cash were outlawed by the authorities, ",
+				"since nobody used cash for anything that wasn't illegal.",
+				"Eventually, those same authorities realized that pretty much anybody ",
+				"using any medium of exchange was up to no good, ",
+				"so a lot of them outlawed money in general.",
+				"\n\n",
+				"It's been mostly positive, but there are some downsides.  ",
+				"Like when, as happens from time to time, ",
+				"especially when one is on an adventure, ",
+				"one finds it necessary to transact business with less enlightened beings ",
+				"who aren't committed to the cause of abolishing resource contention ",
+				"for the common good.  Which turns out to be a lot of people.  ",
+				"That's where quatloos come in."
+			].join("")
 		);
 	}
 
@@ -297,17 +380,19 @@ class Items
 		(
 			[ "rock", "stone" ],
 
-			"It's a rock.  It's got one round end and one pointy end."
-			+ "It's kind of teardrop shaped, you guess?"
-			+ "\n\n"
-			+ "You remember a ancient video where a kid "
-			+ "was participating in a candy-distribution festival "
-			+ "and got distributed a rock instead.  "
-			+ "You're not sure what the moral of the story was.  "
-			+ "Seemingly, it was that kid's life sucked.  "
-			+ "But that was pretty obvious from the get-go, "
-			+ "because even though he was pre-pubescent, "
-			+ "he was already bald."
+			[
+				"It's a rock.  It's got one round end and one pointy end.",
+				"It's kind of teardrop shaped, you guess?",
+				"\n\n",
+				"You remember a ancient video where a kid ",
+				"was participating in a candy-distribution festival ",
+				"and got distributed a rock instead.  ",
+				"You're not sure what the moral of the story was.  ",
+				"Seemingly, it was that kid's life sucked.  ",
+				"But that was pretty obvious from the get-go, ",
+				"because even though he was pre-pubescent, ",
+				"he was already bald."
+			].join("")
 		);
 	}
 
@@ -357,7 +442,7 @@ class Items
 			contents
 		).commandAddFromTextsAndScriptName
 		(
-			[ "open survival kit" ],
+			[ "open survival kit", "open kit" ],
 			Scripts.Instance().itemSurvivalKitOpen.name
 		);
 	}
@@ -1722,13 +1807,14 @@ class Places
 			+ "even though you normally sleep with a night-light."
 			+ "\n\n"
 			+ "On the west side of the clearing, a stone slope rises jaggedly "
-			+ "upward between jutting upright stones, climbing as it runs northward.",
+			+ "upward between jutting upright stones, forming a natural stone ramp "
+			+ "that climbs as it runs northward and then turns west toward the top.",
 
 			[
 				this.portal( [ "north" ], Places.planetCliffsBottomSouth_Name() ),
 				this.portal( [ "west" ], Places.planetCliffsBottomSouth_Name() ),
-				this.portal( [ "east" ], Places.planetCliffsCaveInterior_Name() ),
-				this.portal( [ "up" ], Places.planetCliffsTopSouthEastSide_Name() )
+				this.portal( [ "east", "cave" ], Places.planetCliffsCaveInterior_Name() ),
+				this.portal( [ "up", "slope", "ramp" ], Places.planetCliffsTopSouthEastSide_Name() )
 			]
 		);
 	}
@@ -1786,7 +1872,7 @@ class Places
 			[
 				this.portal3
 				(
-					[ "west" ],
+					[ "west", "out", "outside" ],
 					Places.planetCliffsBottomSoutheast_Name(),
 					this.scripts.placePlanetCliffsCaveInterior_GoWest.name
 				),
@@ -1796,10 +1882,31 @@ class Places
 					[ "east" ],
 					Places.planetCliffsBottomSoutheast_Name(),
 					this.scripts.placePlanetCliffsCaveInterior_GoEast.name
+				),
+
+				Agent.fromNamesAndDescription
+				(
+					[ "cave beast", "beast", "monster", "creature" ],
+					
+					"It's dark in here, but as near as you can make out, "
+					+ "you think this might be a monster charging toward you, "
+					+ "presumably to kill you."
+				).commandAdd
+				(
+					new Command
+					(
+						MessageHelper.combinePhraseArrays
+						([
+							[ "throw" ],
+							[ "canteen", "bottle", "dehydrated water" ],
+							[ null, "at" ],
+							[ "cave beast", "beast", "monster", "creature" ]
+						]),
+
+						this.scripts.placePlanetCliffsCaveInterior_ThrowCanteenAtBeast.name
+					)
 				)
-
 			]
-
 		);
 	}
 
@@ -2313,7 +2420,7 @@ class Places
 			+ "Another passage leads back east, toward the cavern entrance.",
 
 			[
-				this.portal( [ "west" ], Places.planetCavernsPool_Name() ),
+				this.portal( [ "west", "door" ], Places.planetCavernsPool_Name() ).block().hide(),
 				this.portal( [ "east" ], Places.planetCavernsGratingWestSide_Name() ),
 
 				this.emplacement2
@@ -2691,31 +2798,37 @@ class Places
 	planetSettlementBarInterior() : Place
 	{
 		var description =
-			"You stand inside the [Farting Noise] bar.  "
-			+ "\n\n"
-			+ "On a small stage, a band of garishly dressed bipeds "
-			+ "manipulating complicated instruments loudly emits "
-			+ "what you can only assume is a song, "
-			+ "and that you can only further assume to be one of their hits.  "
-			+ "Like every musical act in every bar ever, "
-			+ "nobody pays them the least attention.  "
-			+ "\n\n"
-			+ "The bar proper runs along the opposite wall, "
-			+ "where an expressionless bartender "
-			+ "delivers drinks to patrons seated on stools, "
-			+ "some of whom are engaged in conversation, "
-			+ "or at least reciprocal bluster, with each other. "
-			+ "Some of these patrons periodically expel clouds of smoke and/or vapor, "
-			+ "which you suppose, under ordinary circumstances, might rise, "
-			+ "except that the space nearer the apex of the dome "
-			+ "is already full of similar high-opacity particulates "
-			+ "and is not accepting further contributions at this time."
-			+ "\n\n"
-			+ "A cabinet housing some sort of video gambling machine "
-			+ "stands in the back.  "
-			+ "A squat cleaning robot busily sweeps the floor around the machine, "
-			+ "then empties a load of its sweepings into a porthole in the back wall.  "
-			+ "A short ascending stairway leads back outside.";
+		[
+			"You stand inside the [Farting Noise] bar.  ",
+			"\n\n",
+			"A short ascending stairway set into the west wall ",
+			"of the dome-shaped building ",
+			"leads back outside.",
+			"\n\n",
+			"A small stage occupies the north wall, ",
+			"where a band of garishly dressed (and even more garishly undressed) bipeds ",
+			"manipulating complicated instruments loudly emit ",
+			"what you can only assume is a song, ",
+			"and that you can only further assume to be one of their hits.  ",
+			"Like every musical act in every bar ever, ",
+			"nobody pays them the least attention.  ",
+			"\n\n",
+			"The bar proper runs along the opposite, south wall, ",
+			"where an expressionless bartender ",
+			"delivers drinks to patrons seated on stools, ",
+			"some of whom are engaged in conversation, ",
+			"or at least reciprocal bluster, with each other, ",
+			"and who periodically expel clouds of smoke and/or vapor, ",
+			"which, under ordinary circumstances, might rise, ",
+			"except that the space nearer the apex of the dome ",
+			"is already full of similar high-opacity particulates ",
+			"and is not accepting further contributions at this time.",
+			"\n\n",
+			"A cabinet housing some sort of video gambling machine ",
+			"stands near the east wall.  ",
+			"A squat cleaning robot busily sweeps the floor around the machine, ",
+			"then empties a load of its sweepings into a porthole in the back wall.  "
+		].join("");
 
 		return this.place3
 		(
@@ -2724,7 +2837,11 @@ class Places
 			description,
 
 			[
-				this.portal( [ "outside", "door" ], Places.planetSettlementBarFront_Name() ),
+				this.portal
+				(
+					[ "west", "out", "outside", "door" ],
+					Places.planetSettlementBarFront_Name()
+				),
 
 				this.emplacement2
 				(
@@ -3792,7 +3909,7 @@ class Scripts
 			this.emplacementBodyEmptySearch,
 			this.emplacementBodyKeycardSearch,
 
-			this.itemCartridgeUse,
+			this.itemDataCartridge_PutInSlot,
 			this.itemDehydratedWaterUse,
 			this.itemGadgetPressButton,
 			this.itemKeycardUse,
@@ -3830,13 +3947,15 @@ class Scripts
 			this.placePlanetCliffsTopSouth_CrossBridge,
 			this.placePlanetCliffsCaveInterior_GoEast,
 			this.placePlanetCliffsCaveInterior_GoWest,
+			this.placePlanetCliffsCaveInterior_ThrowCanteenAtBeast,
 			this.placePlanetCliffsCaveInterior_Update,
 			this.placePlanetCliffsBottomNorthwestWestSide_LookInHole,
 
 			this.placePlanetDesertDeep_Update,
 
-			this.placePlanetSettlementBarFront_TalkToPerson,
 			this.placePlanetSettlementBarFront_GetSkimmerKey,
+			this.placePlanetSettlementBarFront_TalkToPerson,
+			this.placePlanetSettlementBarFront_Update,
 			this.placePlanetSettlementBarInterior_BuyDrink,
 			this.placePlanetSettlementBarInterior_TalkToBand,
 			this.placePlanetSettlementBarInterior_TalkToBartender,
@@ -3936,24 +4055,57 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	itemCartridgeUse(u: Universe, w: World, p: Place, c: Command): void
+	itemDataCartridge_PutInSlot(u: Universe, w: World, p: Place, c: Command): void
 	{
 		var message;
 
-		if (p.emplacementByName("reader") == null)
+		var cartridgeReaderIsPresent = (p.emplacementByName("reader") != null);
+
+		if (cartridgeReaderIsPresent)
 		{
-			message = "There is no cartridge reader here.";
+			message =
+			[
+				"There is no cartridge reader here, ",
+				"and we're decades away from self-reading data cartridges.  ",
+				"Or so you assume."
+			].join("");
 		}
 		else
 		{
 			message =
-				"You insert the cartridge into the reader.  "
-				+ "The display lights up with glowing text, "
-				+ "describing the majestic formation of astral bodies, "
-				+ "and their complex and sometimes surprising relationships "
-				+ "with all life in the universe."
-				+ "\n\n"
-				+ "My word, it's boring.  School never was your strong suit.";
+			[
+				"You insert the cartridge into the reader.  ",
+				"The display lights up with breathtaking video ",
+				"showing the majestic formation of astral bodies, ",
+				"while a narrator melliflously explains ",
+				"their complex, intriguing, sometimes surprising relationships ",
+				"with each other and, indeed, with all life in the universe.",
+				"\n\n",
+				"My word, it's boring.  School never was your strong suit.",
+				"\n\n",
+				"Just as you're about to eject the cartridge, possibly to burn it, ",
+				"there's a sudden discontinuity in the video, ",
+				"and a wild-eyed, wild-haired man appears in frame.  ",
+				"Hey, you know him!.  He's the scientist guy who died on the floor ",
+				"of the Pax Aeterna library while you did nothing to help.  ",
+				"You didn't know he was a movie star.",
+				"\n\n",
+				"On the video, the man says, 'This is Slade Gorham, Chief Scientist of ",
+				"the Commonwealth ship Pax Aeterna.  The Vadik have taken over the ship.  ",
+				"They have taken the Stellar Juvenator.  They must not be allowed to possess it.",
+				"In their hands, its unimaginable power could mean the end of civilized life ",
+				"in the galaxy.",
+				"\n\n",
+				"'Whoever's seeing this: You must destroy the Stellar Juvenator.  ",
+				"The code to initiate the built-in self destruct is: ",
+				"\n\n",
+				"    star juvie go boom-boom bye now gorham alpha 9",
+				"\n\n",
+				"Good luck, we're all depending on you.",
+				"May the universe guide you to victory.'",
+				"\n\n",
+				"And that's where the video ends.  Whoa, dramatic."
+			].join("");
 		}
 
 		u.messageEnqueue(message);
@@ -4500,7 +4652,7 @@ class Scripts
 				"\n\n",
 
 				"No, wait, you remember now.  They're transporting some gadget ",
-				"called a 'stellar juvenator' to... somewhere or other.  ",
+				"called a 'Stellar Juvenator' to... somewhere or other.  ",
 				"Something about how somebody's stellar needs juvenating.  ",
 				"Whatever it does, it's a big ol' whatchamazig.  ",
 				"It takes up quite a lot of floor space you'd otherwise have to mop, ",
@@ -4568,16 +4720,19 @@ class Scripts
 		else if (cartridgeNameTyped == "astral bodies")
 		{
 			message =
-				"You type 'astral bodies' (without the quotes: protip) "
-				+ "into the control console's keyboard.  "
-				+ "The retrieval robot skitters into action, "
-				+ "traversing the shelves with a fluid rhythm of limbs "
-				+ "that makes you feel both jealous and a little grossed-out.  "
-				+ "It plucks a data tape from its place "
-				+ "and returns it to the console, "
-				+ "where it drops it into the retrieval hopper.  "
-				+ "(See?  You just don't get that kind of satisfying clatter "
-				+ "with solid-state.)";
+			[
+				"You type 'astral bodies' (without the quotes: protip) ",
+				"into the control console's keyboard.  ",
+				"The retrieval robot skitters into action, ",
+				"traversing the shelves with a fluid rhythm of limbs ",
+				"that makes you feel both jealous and a little grossed-out.  ",
+				"It plucks a data tape from its place ",
+				"and returns it to the console, ",
+				"where it drops it into the retrieval hopper.  ",
+				"\n\n",
+				"See?  You just don't get that kind of satisfying clatter ",
+				"with solid-state."
+			].join("");
 
 			p.itemAdd
 			(
@@ -4594,7 +4749,7 @@ class Scripts
 							"put cartridge in slot",
 							"use cartridge on reader"
 						],
-						Scripts.Instance().itemCartridgeUse.name
+						Scripts.Instance().itemDataCartridge_PutInSlot.name
 					)
 				)
 			);
@@ -5032,7 +5187,7 @@ class Scripts
 	{
 		var agentPlayer = w.agentPlayer;
 
-		var itemCaveBeastChunk = agentPlayer.itemByName("cave beast chunk");
+		var itemCaveBeastChunk = agentPlayer.itemByName("cave beast claw");
 		var playerHasEvidenceOfKill = (itemCaveBeastChunk != null);
 
 		var itemGadget = agentPlayer.itemByName("gadget");
@@ -5040,7 +5195,7 @@ class Scripts
 
 		var messagePlayerPresentsProofOfKill =
 		[
-			"You hold up the chunk of cave beast flesh, and ask the giant head ",
+			"You hold up the claw of the deceased beast, and ask the giant head ",
 			"if it's good enough.",
 			"\n\n",
 			"'ER... YES, ' the head responds.",
@@ -5226,21 +5381,47 @@ class Scripts
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		u.messageEnqueue
-		(
-			"You stumble a few hesitant steps forward into the darkness of the cave."
-			+ "Even though you've only moved a few meters deeper into the cave, "
-			+ "the smell has intensified to an almost unbearable degree.  "
-			+ "Behind you, the light from the cave mouth seems very inviting."
-			+ "While you were very down on it before, you find that "
-			+ "even a few moments in this cave has really given you a new appreciation "
-			+ "for the burning sun of the desert outside."
-			+ "\n\n"
-			+ "In a few moments, a cave monster either knocks you unconscious "
-			+ "or possibly decapitates you.  Its hard to tell in the dark."
-			+ "\n\n"
-			+ "You are dead."
-		);
+
+		var message =
+		[
+			"You stumble a few hesitant steps forward into the darkness of the cave.",
+			"Even though you've only moved a few meters deeper into the cave, ",
+			"the smell has intensified to an almost unbearable degree.  ",
+			"Behind you, the light from the cave mouth seems very inviting.",
+			"While you were very down on it before, you find that ",
+			"even a few moments in this cave has really given you a new appreciation ",
+			"for the burning sun of the desert outside.",
+			"\n\n"
+		].join("");
+
+		var caveBeastIsAlive = (p.agentByName("beast") != null);
+
+		if (caveBeastIsAlive)
+		{
+			message +=
+			[
+				"In a few moments, a cave monster either knocks you unconscious ",
+				"or possibly decapitates you.  Its hard to tell in the dark.",
+				"\n\n",
+				"You are dead."
+			].join("");
+
+			w.end();
+		}
+		else
+		{
+			message +=
+			[
+				"You're no master spelunker, but you know a smelly empty hole when you feel it.",
+				"That cave beast wasn't a dragon.  There no hoard of treasure back here, ",
+				"Unless you covet cave beast droppings, and, while you have a lot of faults, ",
+				"that's not one of them.",
+				"\n\n",
+				"After a few more moments you head back to the mouth of the cave."
+			].join("");
+		}
+
+		u.messageEnqueue(message);
 	}
 
 	placePlanetCliffsCaveInterior_GoWest
@@ -5254,6 +5435,9 @@ class Scripts
 		(
 			stateName, 0
 		);
+
+		var portal = p.portalByName("out");
+		portal.goThrough(u, w);
 	}
 
 	placePlanetCliffsCaveInterior_Update
@@ -5267,65 +5451,102 @@ class Scripts
 			p.visit();
 		}
 
-		var stateName = "TurnsSinceLastEnteringCave";
-		var turnsSinceLastEnteringCave =
-			w.agentPlayer.stateGroup.stateWithNameGetValue(stateName);
-		if (turnsSinceLastEnteringCave == null)
-		{
-			turnsSinceLastEnteringCave = 0;
-		}
+		var agentCaveBeast = p.agentByName("cave beast");
 
-		var message: string;
-		if (turnsSinceLastEnteringCave == 0)
-		{
-			message =
-				"From far back in the cave, you hear a slapping noise,"
-				+ "as of spatulate feet running across rocks.";
-		}
-		else if (turnsSinceLastEnteringCave == 1)
-		{
-			message =
-				"That slapping-footsteps noise you heard coming from the back of the cave "
-				+ "is now coming from the middle of the cave, "
-				+ "and seems to be heading for the front of the cave, "
-				+ "which makes you uncomfortable, because that's where you are.  "
-				+ "In the shadows, you can just make out something big coming toward you."
-		}
-		else if (turnsSinceLastEnteringCave == 2)
-		{
-			message =
-				"A nightmarish beast charges into the dim light at the mouth of the cave.  "
-				+ "It looks like a bear married a frog married a spider, "
-				+ "and then their offspring ate all three of its parents "
-				+ "and then got a wicked sunburn on its full-body excema."
-				+ "\n\n"
-				+ "You think it would have killed you already, "
-				+ "but luckily even the low light here seems to blind it, stun it, maybe hurt it.  "
-				+ "It staggers a bit, throwing one claw over its eyes.  "
-				+ "It still has several other claws left over to deal with you, though.  "
-				+ "And it's still moving toward you."
-		}
-		else if (turnsSinceLastEnteringCave == 3)
-		{
-			message =
-				"Well, you waited too long.  "
-				+ "If you were hoping the bellowing, charging claw monster "
-				+ "would turn out to be friendly, I'm afraid I must inform you "
-				+ "that this is not that kind of game."
-				+ "\n\n"
-				+ "You are dead.";
+		var caveBeastIsStillAlive = (agentCaveBeast != null);
 
-			w.end();
+		if (caveBeastIsStillAlive)
+		{
+			var stateName = "TurnsSinceLastEnteringCave";
+			var turnsSinceLastEnteringCave =
+				w.agentPlayer.stateGroup.stateWithNameGetValue(stateName);
+			if (turnsSinceLastEnteringCave == null)
+			{
+				turnsSinceLastEnteringCave = 0;
+			}
+
+			var message: string;
+			if (turnsSinceLastEnteringCave == 0)
+			{
+				message =
+					"From far back in the cave, you hear a slapping noise,"
+					+ "as of spatulate feet running across rocks.";
+			}
+			else if (turnsSinceLastEnteringCave == 1)
+			{
+				message =
+					"That slapping-footsteps noise you heard coming from the back of the cave "
+					+ "is now coming from the middle of the cave, "
+					+ "and seems to be heading for the front of the cave, "
+					+ "which makes you uncomfortable, because that's where you are.  "
+					+ "In the shadows, you can just make out something big coming toward you."
+			}
+			else if (turnsSinceLastEnteringCave == 2)
+			{
+				message =
+					"A nightmarish beast charges into the dim light at the mouth of the cave.  "
+					+ "It looks like a bear married a frog married a spider, "
+					+ "and then their offspring ate all three of its parents "
+					+ "and then got a wicked sunburn on its full-body excema."
+					+ "\n\n"
+					+ "You think it would have killed you already, "
+					+ "but luckily even the low light here seems to blind it, stun it, maybe hurt it.  "
+					+ "It staggers a bit, throwing one claw over its eyes.  "
+					+ "It still has several other claws left over to deal with you, though.  "
+					+ "And it's still moving toward you."
+			}
+			else if (turnsSinceLastEnteringCave == 3)
+			{
+				message =
+					"Well, you waited too long.  "
+					+ "If you were hoping the bellowing, charging claw monster "
+					+ "would turn out to be friendly, I'm afraid I must inform you "
+					+ "that this is not that kind of game."
+					+ "\n\n"
+					+ "You are dead.";
+
+				w.end();
+			}
+
+			u.messageEnqueue(message);
+
+			turnsSinceLastEnteringCave++;
+
+			w.agentPlayer.stateGroup.stateWithNameSetToValue
+			(
+				stateName, turnsSinceLastEnteringCave
+			);
 		}
+	}
+
+	placePlanetCliffsCaveInterior_ThrowCanteenAtBeast
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message =
+		[
+			"You throw your canteen full of pressurized hydrogen gas ",
+			"toward the charging beast.  ",
+			"Despite the darkness, you clearly see the gleam of its teeth ",
+			"as it snaps at the incoming tidbit ",
+			"like a domestic pet grabbing a treat out of the air, ",
+			"clamping its jaws around the bottle and piercing its sides.",
+			"\n\n",
+			"The canteen explodes.  So does the beast.  So do you, almost.",
+			"\n\n",
+			"Ears ringing fiercely, you pick yourself up off the floor of the cave ",
+			"and survey the aftermath.  There are tiny bits of cave beast everywhere, ",
+			"glued to various cave surfaces with the beast's formerly-internal fluids.  ",
+			"A single claw that somehow miraculously survived the explosion relatively intact ",
+			"lies near the mouth of the cave. "
+		].join("");
+
+		p.agentRemove(p.agentByName("beast") );
+		var itemCaveBeastClaw = Items.Instance().CaveBeastClaw;
+		p.itemAdd(itemCaveBeastClaw);
 
 		u.messageEnqueue(message);
-
-		turnsSinceLastEnteringCave++;
-
-		w.agentPlayer.stateGroup.stateWithNameSetToValue
-		(
-			stateName, turnsSinceLastEnteringCave
-		);
 	}
 
 	placePlanetCliffsTopSouth_CrossBridge
@@ -5608,7 +5829,7 @@ class Scripts
 			message =
 			[
 				"You buy a bru-ale and sit at the bar to drink it.  ",
-				"You're not really much of a bru-ale guy, ",
+				"You're normally not much of a bru-ale guy, ",
 				"but you have to admit that this is a bit better ",
 				"than dying of thirst in the desert.",
 				"\n\n",
@@ -5650,7 +5871,7 @@ class Scripts
 					+ "and more like an inconsiderate boor, "
 					+ "but everyone else seems to accept his tale with convivial bonhomie, "
 					+ "and when the story finally winds up, "
-					+ "just after he confesses some borderline felonies, "
+					+ "just after he confesses to some borderline felonies, "
 					+ "they all slap him on various body parts "
 					+ "with congratulatory gusto."
 					+ "\n\n"

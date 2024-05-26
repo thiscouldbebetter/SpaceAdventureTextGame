@@ -230,7 +230,7 @@ class Tests {
         // Pod crashes on planet.
         run("get survival kit");
         run("open survival kit");
-        run("get dehydrated water");
+        run("get canteen");
         run("get can of sham");
         run("take off safety harness");
         run("go door");
@@ -245,11 +245,11 @@ class Tests {
         // beneath bridge
         run("go east");
         // bottom ramp, cave
-        run("go up");
         run("go cave");
-        run("throw dehydrated water at monster");
-        run("get chunk");
+        run("throw canteen at monster");
+        run("get claw");
         run("go outside");
+        run("go up");
         // bridge arch, east side
         run("go west");
         // bridge arch, west side
@@ -272,6 +272,7 @@ class Tests {
         // grating, west side
         run("go west");
         // geyser
+        run("put rock in geyser");
         run("go west");
         // pool
         run("go west");
@@ -303,6 +304,7 @@ class Tests {
         run("go east");
         // east of drips
         Assert.areEqual(Places.planetCavernsDripsAfter_Name(), world.placeCurrent().name);
+        run("turn on gadget");
         run("go east");
         // projection room
         run("go north");
@@ -312,8 +314,32 @@ class Tests {
         run("insert key in skimmer");
         // Village of [Farting Noise].
         Assert.areEqual(Places.planetSettlementBarFront_Name(), world.placeCurrent().name);
+        run("get skimmer key");
         run("go bar");
         run("go outside");
+        // Sell the skimmer for 30 quatloos, a jetpack, and a coupon book.
+        run("say yes");
+        run("go bar");
+        run("buy drink");
+        run("buy drink");
+        run("buy drink");
+        // Hear the location of the enemy ship.
+        var agentPlayer = world.agentPlayer;
+        var itemQuatloos = agentPlayer.itemByName("quatloos");
+        var place = world.placeCurrent();
+        var emplacementSlotMachine = place.emplacementByName("slot machine");
+        while (emplacementSlotMachine.activated()) {
+            run("save gambling");
+            var quatloosBeforeGambling = itemQuatloos.quantity;
+            run("put quatloo in slot machine");
+            var quatloosAfterGambling = itemQuatloos.quantity;
+            var shouldRestore = (quatloosAfterGambling < quatloosBeforeGambling)
+                || world.isOver;
+            if (shouldRestore) {
+                run("restore gambling");
+            }
+        }
+        run("go out");
         run("go north");
         run("go east");
         run("go door");
@@ -324,6 +350,19 @@ class Tests {
         run("go west");
         // ship lot north
         Assert.areEqual(Places.planetSettlementNorthOfUsedShipLot_Name(), world.placeCurrent().name);
+        run("go south");
+        // ship lot
+        run("talk to salesbeing");
+        run("go north");
+        // ship lot north
+        run("look ship");
+        run("buy ship");
+        run("get in ship");
+        run("press load button");
+        run("press launch button");
+        run("talk to robot");
+        run("KL-5-6800");
+        Assert.areEqual(Places.enemyShipAirlockExterior_Name(), world.placeCurrent().name);
     }
     survive_PlanetDesert_DrinkToPreventDyingOfThirst() {
         this.universeAndWorldCreateAndSet();
