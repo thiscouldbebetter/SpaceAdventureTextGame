@@ -195,7 +195,7 @@ class Items {
             "to gamble on blood sports with non-consenting combatants, ",
             "and were thus outlawed in most jurisdictions.  ",
             "But eventually, all forms of cash were outlawed by the authorities, ",
-            "since nobody used cash for anything that wasn't illegal.",
+            "since nobody used cash for anything that wasn't illegal.  ",
             "Eventually, those same authorities realized that pretty much anybody ",
             "using any medium of exchange was up to no good, ",
             "so a lot of them outlawed money in general.",
@@ -211,7 +211,7 @@ class Items {
     }
     rock() {
         return Item.fromNamesAndDescription(["rock", "stone"], [
-            "It's a rock.  It's got one round end and one pointy end.",
+            "It's a rock.  It's got one round end and one pointy end.  ",
             "It's kind of teardrop shaped, you guess?",
             "\n\n",
             "You remember a ancient video where a kid ",
@@ -276,10 +276,10 @@ class Places {
     friendlyShipBridge() {
         return this.place2(Places.friendlyShipBridge_Name(), "This is the command bridge of the starship Pax Aeterna.  "
             + "A large transparent hemispherical dome arches overhead, "
-            + "showing the brilliantly shining surrounding stars."
+            + "showing the brilliantly shining surrounding stars.  "
             + "Banks of mostly incomprehensible controls "
             + "line the circular wall, with the nearby seats "
-            + "either empty or filled with the slumped bodies of dead crew."
+            + "either empty or filled with the slumped bodies of dead crew.  "
             + "There're several bodies scattered on the floor, as well.  "
             + "A prominent pedestal in the center "
             + "formerly held the Stellar Juvenator, but now stands vacant.");
@@ -412,7 +412,7 @@ class Places {
             ], "These are the controls for the docking bay doors, "
                 + "which are visible through the nearby window.  "
                 + "There are two buttons, one that says 'open bay doors' "
-                + "and another that says 'close bay doors'."
+                + "and another that says 'close bay doors'.  "
                 + "It doesn't take a rocket scientist to operate these controls, "
                 + "although there is prominently placed placard that says otherwise."),
             this.emplacement2([
@@ -757,7 +757,7 @@ class Places {
         return this.place3(Places.planetDesertSouth_Name(), "You stand in the trackless desert of the planet Ekkis II, "
             + "just south of the wreck of your crashed escape pod.  "
             + "Some cliffs rise to the northeast.  "
-            + "A sea of dunes stretches away in every other direction."
+            + "A sea of dunes stretches away in every other direction.  "
             + "Except... there!  In the distance!  You see... "
             + "No, on second thought, that's just an eyeball floater.  "
             + "It was a pretty rough crash.  You should get checked out "
@@ -955,7 +955,7 @@ class Places {
     planetCliffsTopNorth() {
         return this.place3(Places.planetCliffsTopNorth_Name(), "You stand atop a rocky cliff rising from the desert "
             + "of the planet Ekkis II.  "
-            + "The top of the cliff continues to the west and east."
+            + "The top of the cliff continues to the west and east.  "
             + "The path is especially narrow and precarious here.  "
             + "You're glad you can just type 'go east' or whatever "
             + "rather than turning the game speed way down "
@@ -975,13 +975,13 @@ class Places {
             + "\n\n"
             + "(Are they columns if they're not completely vertical, though?"
             + "Hmm, maybe they're slashes.  "
-            + "Or, one is a slash, and the other a backslash."
+            + "Or, one is a slash, and the other a backslash.  "
             + "Anyway, they're definitely not rows.)"
             + "\n\n"
             + "The stone horns look especially cool up close.  "
             + "You woozily compose an album cover in your head, "
             + "with the stone horns pictured in the background "
-            + "and with you looking bored and fully hydrated in the foreground."
+            + "and with you looking bored and fully hydrated in the foreground.  "
             + "You further fantasize about your imaginary band's groupies, "
             + "each of which is offering you a cool fruity drink."
             + "\n\n"
@@ -1240,7 +1240,7 @@ class Places {
     planetCavernsGeyser() {
         return this.place3(Places.planetCavernsGeyser_Name(), "You are in a cavern deep beneath the desert of the planet Ekkis II."
             + "\n\n"
-            + "The passage to the west ends abruptly in a solid rock wall."
+            + "The passage to the west ends abruptly in a solid rock wall.  "
             + "Nearby, a small geyser shoots out of a hole "
             + "in the top of a stalagmite, wetly and steamily, "
             + "but not in, like, a gross way.  "
@@ -1277,7 +1277,7 @@ class Places {
             + "In the floor leading to the west, a thick metal grating "
             + "perforated with holes about 10 centimeters wide "
             + "stretches from wall to wall across the entire passage. ", [
-            this.emplacement2(["grate", "grating", "grille"], "You bend over and look closely at the grating."
+            this.emplacement2(["grate", "grating", "grille"], "You bend over and look closely at the grating.  "
                 + "You think you see something moving down there.  "
                 + "And maybe you hear some sloshing.  "
                 + "And, yeah, there's a smell.  "
@@ -1307,7 +1307,7 @@ class Places {
             + "it seems only fair to remind you, in case you've forgotten, "
             + "that there's a monster down there able to, and willing to, "
             + "eat an unopened can of Sham (tm) in a matter of seconds.", [
-            this.emplacement3(["grate", "grating", "grille"], this.scripts.placePlanetCavernsGrating_CrossGrating.name, "You bend over and look closely at the grating."
+            this.emplacement3(["grate", "grating", "grille"], this.scripts.placePlanetCavernsGrating_CrossGrating.name, "You bend over and look closely at the grating.  "
                 + "You can see some slight movement, "
                 + "hear some bathtub noises,  "
                 + "and there is, as there frequently is in your life lately, a smell.  "
@@ -1336,7 +1336,7 @@ class Places {
                 "fed from above by drops that rain from the ceiling, ",
                 "making concentric circles on the otherwise still surface.  ",
                 "\n\n",
-                "It's so Zen that it gets you excited.",
+                "It's so Zen that it gets you excited.  ",
                 "Which makes it not Zen.  ",
                 "Which, in turn, makes it even more Zen.  ",
                 "Zen is tricky like that."
@@ -1356,7 +1356,7 @@ class Places {
             + "This space is completely dark at the moment.  "
             + "Earlier, it was lit only "
             + "by a holographic projection of a triangular-headed alien.  "
-            + "In retrospect, that giant alien head really livened up the decor."
+            + "In retrospect, that giant alien head really livened up the decor.  "
             + "A passage leads back to the east.", this.scripts.placePlanetCavernsProjectionRoom_Update.name, [
             this.portal(["west"], Places.planetCavernsDrips3_Name()),
             this.portal(["north"], Places.planetCavernsSteamworks_Name()).block().hide()
@@ -1485,57 +1485,68 @@ class Places {
                 + "That's a literary reference, kids.  "
                 + "It's from a story about a guy who's suicidal.  "
                 + "Looking around this place, you can totally understand why."),
-            this.emplacement2(["machine", "slot machine", "gambling machine"], "It appears to be some variant of a slot machine.  "
-                + "When the player inserts some money "
-                + "and pulls the handle on the side, "
-                + "behind each of three little viewing slots, "
-                + "a reel printed with various symbols around its edge spins, "
-                + "eventually stopping so that a random symbol is visible through the slot."
-                + "If the symbols match, you presumably get some sort of prize."
-                + "\n\n"
-                + "You were never cool, or dumb, enough to enjoy gambling."),
-            this.emplacement2(["bartender", "barman"], "This bartender doesn't appear to be the "
-                + "'listen to your problems' kind of bartender.  "
-                + "You try to catch his eye, but he evades your gaze "
-                + "with the effortless skill of long practice.").commandAdd(new Command([
+            this.emplacement2(["machine", "slot machine", "gambling machine"], [
+                "It appears to be some variant of a slot machine.  ",
+                "When the player inserts some money ",
+                "and pulls the handle on the side, ",
+                "behind each of three little viewing slots, ",
+                "a reel printed with various symbols around its edge spins, ",
+                "eventually stopping so that a random symbol ",
+                "is visible through the slot.  ",
+                "If the symbols match, you presumably get some sort of prize.",
+                "\n\n",
+                "You were never cool, or dumb, enough to enjoy gambling."
+            ].join("")),
+            this.emplacement2(["bartender", "barman"], [
+                "This bartender doesn't appear to be the ",
+                "'listen to your problems' kind of bartender.  ",
+                "You try to catch his eye, but he evades your gaze ",
+                "with the effortless skill of long practice."
+            ].join("")).commandAdd(new Command([
                 "talk to bartender", "talk to barman",
                 "talk bartender", "talk barman"
             ], this.scripts.placePlanetSettlementBarInterior_TalkToBartender.name)).commandAdd(new Command([
                 "buy bru-ale", "buy drink", "buy beer",
                 "order bru-ale", "order drink", "order beer"
             ], this.scripts.placePlanetSettlementBarInterior_BuyDrink.name)),
-            this.emplacement2(["customers", "patrons", "barflies"], "I suppose 'patrons' is a rather grand name "
-                + "for this motley amalgamation of limbs, tongues, "
-                + "poor attitudes, bad habits, "
-                + "and unpleasant fluids, "
-                + "but at least if we call them patrons we don't have to focus "
-                + "on their distinguishing characteristics.").commandAdd(new Command(MessageHelper.combinePhraseArrays([
+            this.emplacement2(["customers", "patrons", "barflies"], [
+                "I suppose 'patrons' is a rather grand name ",
+                "for this motley amalgamation of limbs, tongues, ",
+                "poor attitudes, bad habits, ",
+                "and unpleasant fluids, ",
+                "but at least if we call them patrons we don't have to focus ",
+                "on their distinguishing characteristics."
+            ].join("")).commandAdd(new Command(MessageHelper.combinePhraseArrays([
                 ["talk", "talk to"],
                 ["customers", "patrons", "barflies"]
             ]), this.scripts.placePlanetSettlementBarInterior_TalkToCustomers.name)),
-            this.emplacement3(["slot machine", "gambling machine", "machine"], "It's a Gamblomat Model MDK.  "
-                + "You think this thing might have been banned "
-                + "in the more reputable parts of the Commonwealth.  "
-                + "Something about a bunch of people who used it getting hurt.  "
-                + "You're not sure you understand how.  "
-                + "How dangerous can a slot machine be?  ", this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name)
+            this.emplacement3(["slot machine", "gambling machine", "machine"], [
+                "It's a Gamblomat Model MDK.  ",
+                "You think this thing might have been banned ",
+                "in the more reputable parts of the Commonwealth.  ",
+                "Something about a bunch of people who used it getting hurt.  ",
+                "You're not sure you understand how.  ",
+                "How dangerous can a slot machine be?  "
+            ].join(""), this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name)
         ]);
     }
     static planetSettlementBarInterior_Name() {
         return "Ekkis II - [Farting Noise] - Bar - Interior";
     }
     planetSettlementBarRear() {
-        return this.place3(Places.planetSettlementBarRear_Name(), "You stand behind the [Farting Noise] bar.  "
-            + "It is somewhat secluded here."
-            + "Anti-sand-swimmer force-fields block access to the surrounding desert "
-            + "to the east and south.  "
-            + "You can see another, larger building to the north.  "
-            + "\n\n"
-            + "As you stand around loitering behind a bar, "
-            + "reflecting on how Mom said this is exactly how you'd end up,"
-            + "a hatch in the back wall of the bar opens "
-            + "and expels some fine white powder, "
-            + "which settles onto a larger heap of powder below.", [
+        return this.place3(Places.planetSettlementBarRear_Name(), [
+            "You stand behind the [Farting Noise] bar.  ",
+            "It is somewhat secluded here.",
+            "Anti-sand-swimmer force-fields block access to the surrounding desert ",
+            "to the east and south.  ",
+            "You can see another, larger building to the north.  ",
+            "\n\n",
+            "As you stand around loitering behind a bar, ",
+            "reflecting on how Mom said this is exactly how you'd end up,",
+            "a hatch in the back wall of the bar opens ",
+            "and expels some fine white powder, ",
+            "which settles onto a larger heap of powder below."
+        ].join(""), [
             this.portal(["north"], Places.planetSettlementRobotShopWest_Name()),
             this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
             this.portal(["east"], Places.planetSettlementBarRear_Name()),
@@ -1547,15 +1558,17 @@ class Places {
         return "Ekkis II - [Farting Noise] - Bar - Rear";
     }
     planetSettlementRobotShopFront() {
-        return this.place3(Places.planetSettlementRobotShopFront_Name(), "You stand in the desert settlement of [Farting Noise], "
-            + "to the south of the entrance door of a domed building "
-            + "bearing the sign 'Buy, Robot'.  "
-            + "\n\n"
-            + "You figure that name is probably a half-haunched "
-            + "joking reference to something.  "
-            + "You generally don't get joking references, "
-            + "but you find they get even less funny "
-            + "if you ask someone to explain them.  So never mind.", [
+        return this.place3(Places.planetSettlementRobotShopFront_Name(), [
+            "You stand in the desert settlement of [Farting Noise], ",
+            "to the south of the entrance door of a domed building ",
+            "bearing the sign 'Buy, Robot'.",
+            "\n\n",
+            "You figure that name is probably a half-haunched ",
+            "joking reference to something.  ",
+            "You generally don't get joking references, ",
+            "but you find they get even less funny ",
+            "if you ask someone to explain them.  So never mind."
+        ].join(""), [
             this.portal(["west"], Places.planetSettlementRobotShopWest_Name()),
             this.portal(["door", "shop", "store", "inside"], Places.planetSettlementRobotShopInterior_Name())
         ]);
@@ -1564,16 +1577,18 @@ class Places {
         return "Ekkis II - [Farting Noise] - Buy, Robot - Front";
     }
     planetSettlementRobotShopInterior() {
-        var returnPlace = this.place3(Places.planetSettlementRobotShopInterior_Name(), "You stand inside the [Farting Noise] branch of 'Buy, Robot'. "
-            + "Various currently-unmoving robots are displayed on pedestals, "
-            + "each bearing a more-or-less conspicious price tag.  "
-            + "A salesbeing watches you idly, perhaps waiting "
-            + "to see if you require assistance "
-            + "or if you're just going to ask to use the bathroom.  "
-            + "Maybe they're even making a little bet with themself "
-            + "over which it will be."
-            + "\n\n"
-            + "A door leads back outside, as doors do.", [
+        var returnPlace = this.place3(Places.planetSettlementRobotShopInterior_Name(), [
+            "You stand inside the [Farting Noise] branch of 'Buy, Robot'. ",
+            "Various currently-unmoving robots are displayed on pedestals, ",
+            "each bearing a more-or-less conspicious price tag.  ",
+            "A salesbeing watches you idly, perhaps waiting ",
+            "to see if you require assistance ",
+            "or if you're just going to ask to use the bathroom.  ",
+            "Maybe they're even making a little bet with themself ",
+            "over which it will be.",
+            "\n\n",
+            "A door leads back outside, as doors do."
+        ].join(""), [
             this.portal(["outside", "door"], Places.planetSettlementRobotShopFront_Name()),
             this.emplacement2([
                 "wheeled robot",
@@ -1612,7 +1627,7 @@ class Places {
                 + "'This is the Astromatix Stardodger QG.  "
                 + "It's the best pilot/navigator robot money can buy.'  "
                 + "He slaps the robot's... pauldron?... briskly, and continues, "
-                + "'You can fit so many starmaps into this bad boy."
+                + "'You can fit so many starmaps into this bad boy.  "
                 + "Its price is 45 credits, or 36 with coupon.'"),
             this.emplacement2([
                 "six-legged robot",
@@ -1630,7 +1645,7 @@ class Places {
                 + "here on the deserts of Ekkis II.  And you'd be right.  "
                 + "But that just means you have an opportunity "
                 + "to get in on the ground floor.  "
-                + "Or the ground ground, in this case."
+                + "Or the ground ground, in this case.  "
                 + "Its price is 300 credits, or 240 with coupon.'"),
             this.emplacement2([
                 "drill-faced robot",
@@ -1643,7 +1658,7 @@ class Places {
                 + "the salesbeing smoothly interposes themself.  "
                 + "'This is the Stope & Adit Deep Dolly.  "
                 + "It's a mining robot.  "
-                + "And I always say, what's mine is yours."
+                + "And I always say, what's mine is yours.  "
                 + "For only 700 credits, or 560 with coupon.'"),
             this.emplacement2([
                 "gun-armed robot",
@@ -1704,15 +1719,15 @@ class Places {
     planetSettlementNorthOfUsedShipLot() {
         return this.place3(Places.planetSettlementNorthOfUsedShipLot_Name(), "You stand in the desert settlement of [Farting Noise].  "
             + "You see a spaceship standing here, and, to the south,"
-            + "a brightly decorated lot containing several more ships."
-            + " To the east, you see a large domed building. "
+            + "a brightly decorated lot containing several more ships.  "
+            + "To the east, you see a large domed building. "
             + "\n\n"
             + "A smaller domed building with a sign that says 'Bar' lies to the southeast. "
             + "\n\n"
             + "A force field blocks access to the open desert to the north and west.  "
             + "You idly wonder who's paying to run all these force fields.  "
             + "Probably there's some kind of committee that takes up a periodic collection.  "
-            + "You envy whoever got the contract.  It's bound to be a steady job."
+            + "You envy whoever got the contract.  It's bound to be a steady job.  "
             + "No matter where you go, "
             + "people are always not going to want to be eaten.", [
             this.portal(["east"], Places.planetSettlementRobotShopWest_Name()),
@@ -1723,22 +1738,25 @@ class Places {
         return "Ekkis II - [Farting Noise] - North of Non-Gelatinous George's Used Ships";
     }
     planetSettlementUsedShipLot() {
-        return this.place3(Places.planetSettlementUsedShipLot_Name(), "You stand in the desert settlement of [Farting Noise], "
-            + "in a sandy lot brighly decorated with colorful pennants "
-            + " strung along lines, and containing several ships "
-            + "in various states of wear.  "
-            + "Just to the north you see another ship standing by itself."
-            + "\n\n"
-            + "At one edge of the lot is a small cubical building "
-            + "bearing a sign that says, 'Non-Gelatinous George's Used Ships'."
-            + "\n\n"
-            + "A domed building with a sign that says 'Bar', among other things, stands to the east. "
-            + "\n\n"
-            + "A larger domed building stands to the northeast. "
-            + "\n\n"
-            + "A force field blocks access to the open desert to the south and west, "
-            + "keeping out the predatory sand-swimmers, and, "
-            + "as Non-Gelatinous George would say, keeping in the savings.", [
+        return this.place3(Places.planetSettlementUsedShipLot_Name(), [
+            "You stand in the desert settlement of [Farting Noise], ",
+            "in a sandy lot brighly decorated with colorful pennants ",
+            " strung along lines, and containing several ships ",
+            "in various states of wear.  ",
+            "Just to the north you see another ship standing by itself.",
+            "\n\n",
+            "At one edge of the lot is a small cubical building ",
+            "bearing a sign that says, 'Non-Gelatinous George's Used Ships'.",
+            "\n\n",
+            "A domed building with a sign that says 'Bar', ",
+            "among other things, stands to the east. ",
+            "\n\n",
+            "A larger domed building stands to the northeast. ",
+            "\n\n",
+            "A force field blocks access to the open desert to the south and west, ",
+            "keeping out the predatory sand-swimmers, and, ",
+            "as Non-Gelatinous George would say, keeping in the savings."
+        ].join(""), [
             this.portal(["east"], Places.planetSettlementBarFront_Name()),
             this.portal(["north"], Places.planetSettlementNorthOfUsedShipLot_Name())
         ]);
@@ -1775,27 +1793,90 @@ class Places {
         return "Venipositor - Exterior - Airlock Door";
     }
     enemyShipArmory() {
-        return this.place3(Places.enemyShipArmory_Name(), "This is the armory of the Venipositor.  "
-            + "\n\n"
-            + "At the aft end, a high counter, with a heavily robot standing watch behind it, "
-            + "blocks the path to the weapon racks.  "
-            + "The Vadik seem to all be professional soldier/assassin/murderers, "
-            + "so you have to worry about what kind of weapons they keep under lock and key.  "
-            + "But maybe they just want to keep track of what kind of weapons are popular, "
-            + "so they can order more of them?"
-            + "\n\n"
-            + "A door to forward leads back "
-            + "out onto the catwalk above the Stellar Juvenator chamber.", [
+        return this.place3(Places.enemyShipArmory_Name(), [
+            "This is the armory of the Venipositor.  ",
+            "\n\n",
+            "At the aft end, a high counter, ",
+            "with a heavily-armed robot standing watch behind it, ",
+            "blocks the path to the weapon racks.  ",
+            "The Vadik seem to all be professional soldier/assassin/murderers, ",
+            "so you have to worry about what kind of weapons they keep under lock and key.  ",
+            "But maybe they just want to keep track of what kind of weapons are popular, ",
+            "so they can order more of them?",
+            "\n\n",
+            "A door to forward leads back ",
+            "out onto the catwalk above the Stellar Juvenator chamber.",
+        ].join(""), [
             this.portal(["forward"], Places.enemyShipStellarJuvenatorChamberCatwalk_Name()),
-            Items.Instance().GasGrenade.name
+            Items.Instance().gasGrenade.name
         ]);
     }
     static enemyShipArmory_Name() {
         return "Venipositor - Armory";
     }
     enemyShipLaundry() {
-        return this.place3(Places.enemyShipLaundry_Name(), "This is a laundry room on the Venipositor.", [
-        // todo
+        return this.place3(Places.enemyShipLaundry_Name(), [
+            "This is a laundry room on the Venipositor.  ",
+            "Yes, you read that right: a laundry room.",
+            "Even on board this city-sized mobile killing machine, ",
+            "it's not all gunports and missile bays.  ",
+            "People still need to get their clothes cleaned.  ",
+            "And the Vadik need their clothes cleaned more than average, ",
+            "given the amount of times that they mus go wading through blood ",
+            "in any given week.",
+            "\n\n",
+            "Still, as a Maintenance Specialist (Sanitation Grade), ",
+            "you have to admit that this is a pretty swanky laundry setup.",
+            "The entire port wall of the laundry room is taken up ",
+            "by an enormous washer and dryer, ",
+            "each of which has a door easily two meters in diameter, ",
+            "side-by-side with an automated presser and folder.",
+            "Running horizontally in front of the machines is a track, on which ",
+            "large, wheeled laundry bins made of transparent plastic ride. ",
+            "Rising vertically under each cleaning machine ",
+            "is a mechanism for raising the nearest bin on the track, ",
+            "hoisting it above the door and tilting it until its contents ",
+            "fall inside the corresponding machine.",
+            "Then the machine does its assigned task, and ",
+            "another mechanism unloads the processed clothes ",
+            "back into the waiting empty bin. ",
+            "Then all the bins on the track are advanced to the next station: ",
+            "the dirty bins, if any, move toward the washer, ",
+            "the bin currently in front of the washer moves toward the dryer, ",
+            "the bin currently in front of the dryer moves toward the pressing and folding machine, ",
+            "and the bin currently in front of the presser/folder moves into the outgoing-laundry zone, ",
+            "from which a worker rolls the bins out of the laundry to distribute ",
+            "the laundered clothes back amongst the crew quarters.",
+            "\n\n",
+            "A vent high in the aft wall provides ventilation for the steamy air."
+        ].join(""), [
+            this.emplacement2(["dirty bin"], "This laundry bin is full of used, dirty clothes awaiting washing.  ").commandAdd(new Command(["get in bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)).commandAdd(new Command(["get in dirty bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["washer bin"], "This empty laundry bin stands in front of the washer, "
+                + "waiting to be loaded with clean wet clothes.  ").commandAdd(new Command(["get in washer bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["washer", "clothes washer", "washing machine"], "The washer is full of wet clothes that it is in the process of washing.").commandAdd(new Command(["get in washer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
+            this.emplacement2(["wet bin"], "This laundry bin is full of clean, wet clothes awaiting drying."),
+            this.emplacement2(["dryer", "clothes dryer"], "The dryer is full of clean, wet clothes that it is currently drying.").commandAdd(new Command(["get in dryer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
+            this.emplacement2(["dryer bin"], "This empty laundry bin stand in front of the dryer, "
+                + "waiting to be loaded with clean dry clothes.").commandAdd(new Command(["get in dryer bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["dry bin"], "This laundry bin is full of clean, dry clothes "
+                + "awaiting pressing and folding.").commandAdd(new Command(["get in dry bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["presser"], [
+                "The presser/folder's robotic arms are taking clean, ",
+                "dry clothes from its intake hopper and ",
+                "feeding them carefully onto a conveyor belt, ",
+                "which passes the clothes through the rollers of a steam presser.  ",
+                "From there, other machines fold the clothes ",
+                "and deposit them in the waiting laundry bin."
+            ].join("")).commandAdd(new Command(["get in dryer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
+            this.emplacement2(["presser bin"], "This laundry bin stands in front of the presser/folder, "
+                + "which is currently in the process of loading it "
+                + "with clean, dry, pressed, and folded clothes.").commandAdd(new Command(["get in presser bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["pressed bin"], "This laundry bin is full of clean, dry, pressed, and folded clothes "
+                + "awaiting delivery to their owners' respective quarters.").commandAdd(new Command(["get in pressed bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["vent"], [
+                "The rectangular vent cover is about three meters above the ground, ",
+                "and is secured to the wall with a standard screw at each corner."
+            ].join("")).commandAdd(new Command(["get in vent"], this.scripts.placeEnemyShipLaundry_GetInVent.name))
         ]);
     }
     static enemyShipLaundry_Name() {
@@ -2081,6 +2162,9 @@ class Scripts {
             this.itemGadgetPressButton,
             this.itemKeycardUse,
             this.itemSurvivalKitOpen,
+            this.placeEnemyShipLaundry_GetInBin,
+            this.placeEnemyShipLaundry_GetInMachine,
+            this.placeEnemyShipLaundry_GetInVent,
             this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
             this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
             this.placeFriendlyShipDockingBayAntechamber_PressRightButton,
@@ -2210,7 +2294,8 @@ class Scripts {
                     "\n\n",
                     "On the video, the man says, 'This is Slade Gorham, Chief Scientist of ",
                     "the Commonwealth ship Pax Aeterna.  The Vadik have taken over the ship.  ",
-                    "They have taken the Stellar Juvenator.  They must not be allowed to possess it.",
+                    "They have taken the Stellar Juvenator.  ",
+                    "They must not be allowed to possess it.  ",
                     "In their hands, its unimaginable power could mean the end of civilized life ",
                     "in the galaxy.",
                     "\n\n",
@@ -2219,7 +2304,7 @@ class Scripts {
                     "\n\n",
                     "    star juvie go boom-boom bye now gorham alpha 9",
                     "\n\n",
-                    "Good luck, we're all depending on you.",
+                    "Good luck, we're all depending on you.  ",
                     "May the universe guide you to victory.'",
                     "\n\n",
                     "And that's where the video ends.  Whoa, dramatic."
@@ -2281,7 +2366,7 @@ class Scripts {
         u.messageEnqueue(message);
     }
     itemSurvivalKitOpen(u, w, p, c) {
-        var message = "You open the survival kit.  .";
+        var message = "You open the survival kit.  ";
         var itemSurvivalKit = w.agentPlayer.itemByName("survival kit");
         var itemsContained = itemSurvivalKit.items;
         if (itemsContained.length == 0) {
@@ -2308,6 +2393,202 @@ class Scripts {
         u.messageEnqueue(message);
     }
     // Places.
+    placeEnemyShipLaundry_GetInBin(u, w, p, c) {
+        var vadikEnters = [
+            "After a few moments, a Vadik soldier--laundry worker?--enters, ",
+            "pushing ahead of him another wheeled bin of dirty laundry, ",
+            "which he adds to the end of the queue behind the already-present dirty bin.",
+            "\n\n"
+        ].join("");
+        var vadikSeesPlayerInEmptyBin = [
+            "Then he sees you.  It's not like you're well hidden.",
+            "The bin you're trying to hide in is transparent, remember?",
+            "\n\n",
+            "He zaps you, through the wall of the bin, with his ray gun."
+        ].join();
+        var vadikSeesPlayerTryingToHideInFoldedLaundry = [
+            "Then the Vadik sees you attempting to hide in the bin of folded laundry.  ",
+            "The helmet he wears conceals his features and expression, ",
+            "but you could almost swear he was laughing as he pulls the trigger.  ",
+            "\n\n",
+            "(If it makes you feel any better, ",
+            "even if you'd managed to dig deep enough to hide, ",
+            "he would have noticed that the laundry on top of you was no longer neatly folded.)"
+        ].join("");
+        var vadikGoofsOff = [
+            "Then he crosses the room to the other end of the queue, ",
+            "where a bin of clean, dry, pressed, and folded laundry awaits delivery.",
+            "\n\n",
+            "Then he leans against the outgoing bin ",
+            "and fiddles idly with his pocket computer.  ",
+            "Soon you realize he's playing a game.  ",
+            "And he's really into it.  He's not going anywhere for a while.",
+            "\n\n",
+            "Meanwhile, the laundry machines along the track finish their particular tasks.  ",
+            "The washer and dryer unload their contents into the bins waiting in front of them.",
+            "All the bins then move along the track to the next station, ",
+            "where their contents are loaded back into the momentarily vacant machines."
+        ].join("");
+        var commandText = c.text();
+        var binName = commandText.split(" ")[2];
+        var climbIntoBin;
+        var vadikSeesPlayerOrGoofsOff;
+        var fateOfBinPlayerIsIn;
+        if (binName == "bin") {
+            u.messageEnqueue("Which bin?  There are several here.");
+            return;
+        }
+        else if (binName == "dirty") {
+            climbIntoBin =
+                [
+                    "You climb into the bin of dirty clothes awaiting washing",
+                    "and burrow down to conceal yourself under them, ",
+                    "keeping one eye exposed to monitor the room.  ",
+                    "Your open eye waters from the stench of vigorously used laundry."
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikGoofsOff;
+            fateOfBinPlayerIsIn =
+                [
+                    "The bin you're hiding in is loaded into the washer,",
+                    "which, after several seconds, fills completely with warm soapy water, ",
+                    "Well, that's okay, you won't drown, ",
+                    "because of your environment suit.",
+                    "\n\n",
+                    "But your suit is intended for the vaccuum of space, ",
+                    "not for underwater work.  Its systems instantly short out, ",
+                    "leaving it a dead husk.  It remains watertight, ",
+                    "but no more air is being supplied.  ",
+                    "If you can't get out of this machine and get your helmet off, ",
+                    "you will soon suffocate.",
+                    "\n\n",
+                    "You wait in increasing discomfort as the washer runs through its cycle", ,
+                    "filling, soaking, agitating, draining, rinsing, and draining again.  ",
+                    "Nearing asphixiation, you tear your helmet off as the machine enters the spin cycle, ",
+                    "and gasp desperately as the g-forces try to press you through the wall.",
+                    "\n\n",
+                    "Then it's over.  The washer dumps you and its charge of clothing ",
+                    "into the laundry bin waiting in front of it.",
+                    "\n\n",
+                    "The Vadik laundry tech is no longer present.  You have survived."
+                ].join("");
+        }
+        else if (binName == "washer") {
+            climbIntoBin =
+                [
+                    "You climb into the empty bin waiting in front of the washer.  ",
+                    "Since there are no clothes in the bin, it's easy to see out.  ",
+                    "But it's equally easy to see in.  "
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikSeesPlayerInEmptyBin;
+            fateOfBinPlayerIsIn = "You are dead.";
+        }
+        else if (binName == "wet") {
+            climbIntoBin =
+                [
+                    "You climb into the bin of damp clothes awaiting drying",
+                    "and burrow down to conceal yourself under them, ",
+                    "(which is difficult, because damp clothes are heavy and lumpy,) ",
+                    "keeping one eye exposed to monitor the room."
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikGoofsOff;
+            fateOfBinPlayerIsIn =
+                [
+                    "The bin you're hiding in is loaded into the dryer.  ",
+                    "As you begin to tumble among the clothes, painfully accumulating bruises, ",
+                    "the dryer starts to get very hot, ",
+                    "hotter than your environment suit is rated to handle, ",
+                    "even if it wasn't quickly broken from being ",
+                    "repeatedly pounded against the dryer's interior.  ",
+                    "You are being simultaneously beaten and cooked to death.",
+                    "\n\n",
+                    "Soon you are unable to take the agony anymore, ",
+                    "so you try to open the door, happy to let the Vadik put you out of your misery, ",
+                    "but the door is very hard to even get to, ",
+                    "and impossible to open, while the machine is running.",
+                    "\n\n",
+                    "You are dead."
+                ].join("");
+        }
+        else if (binName == "dryer") {
+            climbIntoBin =
+                [
+                    "You climb into the empty bin waiting in front of the dryer.  ",
+                    "Since there are no clothes in the bin, it's easy to see out.  ",
+                    "But it's equally easy to see in.  "
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikSeesPlayerInEmptyBin;
+            fateOfBinPlayerIsIn = "You are dead.";
+        }
+        else if (binName == "dry") {
+            climbIntoBin =
+                [
+                    "You climb into the bin of dry clothes awaiting pressing and folding",
+                    "and burrow down to conceal yourself under them, ",
+                    "keeping one eye exposed to monitor the room."
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikGoofsOff;
+            fateOfBinPlayerIsIn =
+                [
+                    "The bin you're hiding in is loaded into the presser/folder's intake hopper.  ",
+                    "The regret sets in almost immedately as the robotics ",
+                    "pick the clothes off the top of the pile you're hiding under ",
+                    "and feed them into the presser.  Soon the robotic grippers grab you ",
+                    "and feed you into the presser as well.",
+                    "\n\n",
+                    "Then they fold you, but you're not a alive for that part.",
+                    "\n\n",
+                    "You are dead."
+                ].join("");
+        }
+        else if (binName == "presser") {
+            climbIntoBin =
+                [
+                    "You climb into the laundry bin waiting in front of the presser/folder.  ",
+                    "It's not easy.  The presser loads the bin with folded clothes as it works, ",
+                    "so the bin is already almost full.  ",
+                    "You try to burrow under the folded clothes, ",
+                    "but the folded clothes form hard strata that are not easy to burrow into."
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikSeesPlayerTryingToHideInFoldedLaundry;
+            fateOfBinPlayerIsIn = "You are dead.";
+        }
+        else if (binName == "pressed") {
+            climbIntoBin =
+                [
+                    "You climb into the laundry bin full of outgoing pressed laundry ",
+                    "waiting delivery to its respective owners.",
+                    "You try to burrow under the folded clothes, but it's not easy.  ",
+                    "The folded clothes form hard strata that are not easy to burrow into."
+                ].join("");
+            vadikSeesPlayerOrGoofsOff = vadikSeesPlayerTryingToHideInFoldedLaundry;
+            fateOfBinPlayerIsIn = "You are dead.";
+        }
+        var message = [
+            climbIntoBin,
+            "\n\n",
+            vadikEnters,
+            "\n\n",
+            vadikSeesPlayerOrGoofsOff,
+            "\n\n",
+            fateOfBinPlayerIsIn
+        ].join("");
+        u.messageEnqueue(message);
+    }
+    placeEnemyShipLaundry_GetInMachine(u, w, p, c) {
+        var message = [
+            "The laundry machines have safety interlocks to ensure that ",
+            "nothing gets inside them except what's in the laundry bins.  ",
+            "That makes sense.  The Vadik are a proud warrior culture, ",
+            "and nobody wants to die doing laundry."
+        ].join("");
+        u.messageEnqueue(message);
+    }
+    placeEnemyShipLaundry_GetInVent(u, w, p, c) {
+        var message = [
+            "todo"
+        ].join("");
+        u.messageEnqueue(message);
+    }
     placeFriendlyShipDockingBayAntechamber_GoAirlock(u, w, p, c) {
         var playerIsWearingSpaceSuit = (w.agentPlayer.itemByName("space suit") != null);
         if (playerIsWearingSpaceSuit == false) {

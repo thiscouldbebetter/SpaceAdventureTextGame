@@ -3295,7 +3295,7 @@ class Places
 				"\n\n",
 				"At one edge of the lot is a small cubical building ",
 				"bearing a sign that says, 'Non-Gelatinous George's Used Ships'.",
-				"\n\n"
+				"\n\n",
 				"A domed building with a sign that says 'Bar', ",
 				"among other things, stands to the east. ",
 				"\n\n",
@@ -3403,7 +3403,7 @@ class Places
 				"\n\n",
 				"A door to forward leads back ",
 				"out onto the catwalk above the Stellar Juvenator chamber.",
-			].join("")
+			].join(""),
 
 			[
 				this.portal
@@ -3411,7 +3411,7 @@ class Places
 					[ "forward" ],
 					Places.enemyShipStellarJuvenatorChamberCatwalk_Name()
 				),
-				Items.Instance().GasGrenade.name
+				Items.Instance().gasGrenade.name
 			]
 		);
 	}
@@ -3423,68 +3423,207 @@ class Places
 
 	enemyShipLaundry(): Place
 	{
-		var washerAndDryerDescription =
-			"Both the washing machine and dryer are huge and currently empty.";
-
 		return this.place3
 		(
 			Places.enemyShipLaundry_Name(),
 
 			[
 				"This is a laundry room on the Venipositor.  ",
-				"Even on board this mobile killing machine, ",
+				"Yes, you read that right: a laundry room.",
+				"Even on board this city-sized mobile killing machine, ",
 				"it's not all gunports and missile bays.  ",
 				"People still need to get their clothes cleaned.  ",
 				"And the Vadik need their clothes cleaned more than average, ",
 				"given the amount of times that they mus go wading through blood ",
 				"in any given week.",
 				"\n\n",
-				"The port wall of the chamber is occupied by a giant clothes washing machine  "
-				"and a giant drier, each having a door about two meters in diameter.  ",
-				"The rest of the room is filled with bins full of dirty and/or clean ",
-				"Vadik underwear.",
+				"Still, as a Maintenance Specialist (Sanitation Grade), ",
+				"you have to admit that this is a pretty swanky laundry setup.",
+				"The entire port wall of the laundry room is taken up ",
+				"by an enormous washer and dryer, ",
+				"each of which has a door easily two meters in diameter, ",
+				"side-by-side with an automated presser and folder.",
+				"Running horizontally in front of the machines is a track, on which ",
+				"large, wheeled laundry bins made of transparent plastic ride. ",
+				"Rising vertically under each cleaning machine ",
+				"is a mechanism for raising the nearest bin on the track, ",
+				"hoisting it above the door and tilting it until its contents ",
+				"fall inside the corresponding machine.",
+				"Then the machine does its assigned task, and ",
+				"another mechanism unloads the processed clothes ",
+				"back into the waiting empty bin. ",
+				"Then all the bins on the track are advanced to the next station: ",
+				"the dirty bins, if any, move toward the washer, ",
+				"the bin currently in front of the washer moves toward the dryer, ",
+				"the bin currently in front of the dryer moves toward the pressing and folding machine, ",
+				"and the bin currently in front of the presser/folder moves into the outgoing-laundry zone, ",
+				"from which a worker rolls the bins out of the laundry to distribute ",
+				"the laundered clothes back amongst the crew quarters.",
 				"\n\n",
 				"A vent high in the aft wall provides ventilation for the steamy air."
 			].join(""),
 
 			[
-				this.portal("washer", Places.enemyShipWasher_Name() ),
-				this.portal("dryer", Places.enemyShipWasher_Name() ),
-				this.portal("vent", Places.enemyShipWasher_Name() ).block(),
+				this.emplacement2
+				(
+					[ "dirty bin" ],
+
+					"This laundry bin is full of used, dirty clothes awaiting washing.  "
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in dirty bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "washer bin" ],
+
+					"This empty laundry bin stands in front of the washer, "
+					+ "waiting to be loaded with clean wet clothes.  "
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in washer bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				),
 
 				this.emplacement2
 				(
 					[ "washer", "clothes washer", "washing machine"],
-					washerAndDryerDescription
+
+					"The washer is full of wet clothes that it is in the process of washing."
 				).commandAdd
 				(
 					new Command
 					(
 						[ "get in washer" ],
-						this.scripts.placeEnemyShipLaundry_GetInWasher.name
+						this.scripts.placeEnemyShipLaundry_GetInMachine.name
 					)
+				),
+
+				this.emplacement2
+				(
+					[ "wet bin" ],
+					"This laundry bin is full of clean, wet clothes awaiting drying."
 				),
 
 				this.emplacement2
 				(
 					[ "dryer", "clothes dryer"],
-					washerAndDryerDescription
+
+					"The dryer is full of clean, wet clothes that it is currently drying."
 				).commandAdd
 				(
 					new Command
 					(
 						[ "get in dryer" ],
-						this.scripts.placeEnemyShipLaundry_GetInDryer.name
+						this.scripts.placeEnemyShipLaundry_GetInMachine.name
 					)
 				),
 
 				this.emplacement2
 				(
-					"vent",
+					[ "dryer bin" ],
+
+					"This empty laundry bin stand in front of the dryer, "
+					+ "waiting to be loaded with clean dry clothes."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in dryer bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "dry bin" ],
+
+					"This laundry bin is full of clean, dry clothes "
+					+ "awaiting pressing and folding."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in dry bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "presser" ],
 
 					[
-						"The vent is about three meters above the ground, ",
-						"and is secured to the wall with standard screw at each corner."
+						"The presser/folder's robotic arms are taking clean, ",
+						"dry clothes from its intake hopper and ",
+						"feeding them carefully onto a conveyor belt, ",
+						"which passes the clothes through the rollers of a steam presser.  ",
+						"From there, other machines fold the clothes ",
+						"and deposit them in the waiting laundry bin."
+					].join("")
+
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in dryer" ],
+						this.scripts.placeEnemyShipLaundry_GetInMachine.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "presser bin" ],
+
+					"This laundry bin stands in front of the presser/folder, "
+					+ "which is currently in the process of loading it "
+					+ "with clean, dry, pressed, and folded clothes."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in presser bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "pressed bin" ],
+
+					"This laundry bin is full of clean, dry, pressed, and folded clothes "
+					+ "awaiting delivery to their owners' respective quarters."
+				).commandAdd
+				(
+					new Command
+					(
+						[ "get in pressed bin" ],
+						this.scripts.placeEnemyShipLaundry_GetInBin.name
+					)
+				),
+
+				this.emplacement2
+				(
+					[ "vent" ],
+
+					[
+						"The rectangular vent cover is about three meters above the ground, ",
+						"and is secured to the wall with a standard screw at each corner."
 					].join("")
 				).commandAdd
 				(
@@ -4001,11 +4140,9 @@ class Scripts
 			this.itemKeycardUse,
 			this.itemSurvivalKitOpen,
 
-			this.placeEnemyShipLaundry_GetInDryer,
+			this.placeEnemyShipLaundry_GetInBin,
+			this.placeEnemyShipLaundry_GetInMachine,
 			this.placeEnemyShipLaundry_GetInVent,
-			this.placeEnemyShipLaundry_GetInWasher,
-			this.placeEnemyShipLaundryWasher_Update,
-			this.placeEnemyShipLaundryDryer_Update,
 
 			this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
 			this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
@@ -4320,69 +4457,253 @@ class Scripts
 
 	// Places.
 
-	placeEnemyShipLaundryDryer_Update
+	placeEnemyShipLaundry_GetInBin
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		if (p.visited() == false)
-		{
-			p.visit();
+		var vadikEnters =
+		[
+			"After a few moments, a Vadik soldier--laundry worker?--enters, ",
+			"pushing ahead of him another wheeled bin of dirty laundry, ",
+			"which he adds to the end of the queue behind the already-present dirty bin.",
+			"\n\n"
+		].join("");
 
-			var message = 
+		var vadikSeesPlayerInEmptyBin =
+		[
+			"Then he sees you.  It's not like you're well hidden.",
+			"The bin you're trying to hide in is transparent, remember?",
+			"\n\n",
+			"He zaps you, through the wall of the bin, with his ray gun."
+		].join();
+
+		var vadikSeesPlayerTryingToHideInFoldedLaundry =
+		[
+			"Then the Vadik sees you attempting to hide in the bin of folded laundry.  ",
+			"The helmet he wears conceals his features and expression, ",
+			"but you could almost swear he was laughing as he pulls the trigger.  ",
+			"\n\n",
+			"(If it makes you feel any better, ",
+			"even if you'd managed to dig deep enough to hide, ",
+			"he would have noticed that the laundry on top of you was no longer neatly folded.)"
+		].join("");
+
+		var vadikGoofsOff =
+		[
+			"Then he crosses the room to the other end of the queue, ",
+			"where a bin of clean, dry, pressed, and folded laundry awaits delivery.",
+			"\n\n",
+			"Then he leans against the outgoing bin ",
+			"and fiddles idly with his pocket computer.  ",
+			"Soon you realize he's playing a game.  ",
+			"And he's really into it.  He's not going anywhere for a while.",
+			"\n\n",
+			"Meanwhile, the laundry machines along the track finish their particular tasks.  ",
+			"The washer and dryer unload their contents into the bins waiting in front of them.",
+			"All the bins then move along the track to the next station, ",
+			"where their contents are loaded back into the momentarily vacant machines."
+		].join("");
+
+		var commandText = c.text();
+		var binName = commandText.split(" ")[2];
+
+		var climbIntoBin: string;
+		var vadikSeesPlayerOrGoofsOff: string;
+		var fateOfBinPlayerIsIn: string;
+
+		if (binName == "bin")
+		{
+			u.messageEnqueue("Which bin?  There are several here.");
+			return;
+		}
+		else if (binName == "dirty")
+		{
+			climbIntoBin = 
 			[
-				"You climb into the empty clothes dryer.",
+				"You climb into the bin of dirty clothes awaiting washing",
+				"and burrow down to conceal yourself under them, ",
+				"keeping one eye exposed to monitor the room.  ",
+				"Your open eye waters from the stench of vigorously used laundry."
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikGoofsOff;
+
+			fateOfBinPlayerIsIn =
+			[
+				"The bin you're hiding in is loaded into the washer,",
+				"which, after several seconds, fills completely with warm soapy water, ",
+				"Well, that's okay, you won't drown, ",
+				"because of your environment suit.",
 				"\n\n",
-				"After a few moments, a Vadik soldier--laundry worker?--enters, "
-				"pushing ahead of him another wheeled bin of dirty laundry.  "
-				"He opens the door of the washing machine "
-				"and transfers the contents of the washer into an empty bin.  "
-				"He then opens the door of the dryer, "
-				"attaches the bin to a hoisting mechanism built into the front of the machine ",
-				"and presses a button that automatically raises the bin and tilts it, ",
-				"dumping the cold wet contents into the dryer.  "
-				"Then he closes the door of the dryer.  "
-				"The good news is that he didn't notice you crouching in the dryer.  "
-				"The bad news is that now you're nearly buried in wet laundry.  "
-				"The worse news is that he presses the dryer's start button, "
-				"which starts the barrel of the tumble dryer rotating, "
-				"and also starts the heating system."
-				"\n\n"
-				"As you begin to tumble among the clothes, accumulating painful knocks, "
-				"you dizzily notice the Vadik laundry worker loading the binful of dirty laundry "
-				"into the washer via an identical mechanism, and starting it as well.  "
-				"Then he leaves."
-				"\n\n"
-				"It's starting to get hot in here."
+				"But your suit is intended for the vaccuum of space, ",
+				"not for underwater work.  Its systems instantly short out, ",
+				"leaving it a dead husk.  It remains watertight, ",
+				"but no more air is being supplied.  ",
+				"If you can't get out of this machine and get your helmet off, ",
+				"you will soon suffocate.",
+				"\n\n",
+				"You wait in increasing discomfort as the washer runs through its cycle",,
+				"filling, soaking, agitating, draining, rinsing, and draining again.  ",
+				"Nearing asphixiation, you tear your helmet off as the machine enters the spin cycle, ",
+				"and gasp desperately as the g-forces try to press you through the wall.",
+				"\n\n",
+				"Then it's over.  The washer dumps you and its charge of clothing ",
+				"into the laundry bin waiting in front of it.",
+				"\n\n",
+				"The Vadik laundry tech is no longer present.  You have survived."
+			].join("")
+
+		}
+		else if (binName == "washer")
+		{
+			climbIntoBin = 
+			[
+				"You climb into the empty bin waiting in front of the washer.  ",
+				"Since there are no clothes in the bin, it's easy to see out.  ",
+				"But it's equally easy to see in.  "
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikSeesPlayerInEmptyBin;
+
+			fateOfBinPlayerIsIn = "You are dead.";
+		}
+		else if (binName == "wet")
+		{
+			climbIntoBin = 
+			[
+				"You climb into the bin of damp clothes awaiting drying",
+				"and burrow down to conceal yourself under them, ",
+				"(which is difficult, because damp clothes are heavy and lumpy,) ",
+				"keeping one eye exposed to monitor the room."
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikGoofsOff;
+
+			fateOfBinPlayerIsIn =
+			[
+				"The bin you're hiding in is loaded into the dryer.  ",
+				"As you begin to tumble among the clothes, painfully accumulating bruises, ",
+				"the dryer starts to get very hot, ",
+				"hotter than your environment suit is rated to handle, ",
+				"even if it wasn't quickly broken from being ",
+				"repeatedly pounded against the dryer's interior.  ",
+				"You are being simultaneously beaten and cooked to death.",
+				"\n\n",
+				"Soon you are unable to take the agony anymore, ",
+				"so you try to open the door, happy to let the Vadik put you out of your misery, ",
+				"but the door is very hard to even get to, ",
+				"and impossible to open, while the machine is running.",
+				"\n\n",
+				"You are dead."
 			].join("");
 		}
+		else if (binName == "dryer")
+		{
+			climbIntoBin = 
+			[
+				"You climb into the empty bin waiting in front of the dryer.  ",
+				"Since there are no clothes in the bin, it's easy to see out.  ",
+				"But it's equally easy to see in.  "
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikSeesPlayerInEmptyBin;
+
+			fateOfBinPlayerIsIn = "You are dead.";
+		}
+		else if (binName == "dry")
+		{
+			climbIntoBin = 
+			[
+				"You climb into the bin of dry clothes awaiting pressing and folding",
+				"and burrow down to conceal yourself under them, ",
+				"keeping one eye exposed to monitor the room."
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikGoofsOff;
+
+			fateOfBinPlayerIsIn =
+			[
+				"The bin you're hiding in is loaded into the presser/folder's intake hopper.  ",
+				"The regret sets in almost immedately as the robotics ",
+				"pick the clothes off the top of the pile you're hiding under ",
+				"and feed them into the presser.  Soon the robotic grippers grab you ",
+				"and feed you into the presser as well.",
+				"\n\n",
+				"Then they fold you, but you're not a alive for that part.",
+				"\n\n",
+				"You are dead."
+			].join("");
+		}
+		else if (binName == "presser")
+		{
+			climbIntoBin = 
+			[
+				"You climb into the laundry bin waiting in front of the presser/folder.  ",
+				"It's not easy.  The presser loads the bin with folded clothes as it works, ",
+				"so the bin is already almost full.  ",
+				"You try to burrow under the folded clothes, ",
+				"but the folded clothes form hard strata that are not easy to burrow into."
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikSeesPlayerTryingToHideInFoldedLaundry;
+
+			fateOfBinPlayerIsIn = "You are dead.";
+		}
+		else if (binName == "pressed")
+		{
+			climbIntoBin = 
+			[
+				"You climb into the laundry bin full of outgoing pressed laundry ",
+				"waiting delivery to its respective owners.",
+				"You try to burrow under the folded clothes, but it's not easy.  ",
+				"The folded clothes form hard strata that are not easy to burrow into."
+			].join("");
+
+			vadikSeesPlayerOrGoofsOff = vadikSeesPlayerTryingToHideInFoldedLaundry;
+
+			fateOfBinPlayerIsIn = "You are dead.";
+		}
+
+		var message = 
+		[
+			climbIntoBin,
+			"\n\n",
+			vadikEnters,
+			"\n\n",
+			vadikSeesPlayerOrGoofsOff,
+			"\n\n",
+			fateOfBinPlayerIsIn
+		].join("");
 
 		u.messageEnqueue(message);
 	}
 
-	placeEnemyShipLaundryWasher_Update
+	placeEnemyShipLaundry_GetInMachine
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
-		if (p.visited() == false)
-		{
-			p.visit();
+		var message =
+		[
+			"The laundry machines have safety interlocks to ensure that ",
+			"nothing gets inside them except what's in the laundry bins.  ",
+			"That makes sense.  The Vadik are a proud warrior culture, ",
+			"and nobody wants to die doing laundry."
+		].join("");
 
-			var message = 
-			[
-				"You climb into the clothes washer.",
-				"\n\n",
-				"After a few moments, a Vadik soldier--laundry worker?--enters, ",
-				"pushing ahead of him another wheeled bin of dirty laundry.  ",
-				"He opens the door of the washing machine ",
-				"then attaches the bin of dirty clothes "
-				"to the hoisting mechanism built into the front of the washer.  "
-				"The bin of dirty laundry is raised automatically "
-				"and its contents are dumped onto you.  They smell."
-				"\n\n",
-			].join("");
-		}
+		u.messageEnqueue(message);
+	}
+
+	placeEnemyShipLaundry_GetInVent
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message =
+		[
+			"todo"
+		].join("");
 
 		u.messageEnqueue(message);
 	}
