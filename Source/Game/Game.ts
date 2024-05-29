@@ -65,6 +65,7 @@ class Items
 	CanOfSham: Item;
 	Canteen: Item;
 	CaveBeastClaw: Item;
+	CouponBook: Item;
 	DataCartridge: Item;
 	Gadget: Item; // Translator.
 	GasGrenade: Item;
@@ -86,6 +87,7 @@ class Items
 		this.CanOfSham = this.canOfSham();
 		this.CaveBeastClaw = this.caveBeastClaw();
 		this.Canteen = this.canteen();
+		this.CouponBook = this.couponBook();
 		this.DataCartridge = this.dataCartridge();
 		this.Gadget = this.gadget();
 		this.GasGrenade = this.gasGrenade();
@@ -108,6 +110,7 @@ class Items
 			this.CanOfSham,
 			this.Canteen,
 			this.CaveBeastClaw,
+			this.CouponBook,
 			this.DataCartridge,
 			this.Gadget,
 			this.GasGrenade,
@@ -221,6 +224,23 @@ class Items
 
 				Scripts.Instance().itemDehydratedWaterUse.name
 			)
+		);
+	}
+
+	couponBook(): Item
+	{
+		return Item.fromNamesAndDescription
+		(
+			[ "coupon book" ],
+
+			[
+				"This is a coupon book that purports to facilitate big savings ",
+				"for customers of the businesses in the settlement of [Farting Noise], ",
+				"of which, as near as you can figure out from looking at the coupons, ",
+				"there are three: a bar, a spaceship dealership, and a robot emporium.  ",
+				"You imagine their Chamber of Commerce meetings ",
+				"could be held inside an elevator."
+			].join("")
 		);
 	}
 
@@ -407,7 +427,13 @@ class Items
 		(
 			new Command
 			(
-				[ "put key in skimmer", "insert key in skimmer", "use key on skimmer" ],
+				MessageHelper.combinePhraseArrays
+				([
+					[ "put", "insert", "use" ],
+					[ "key", "skimmer key" ],
+					[ null, "in", "on" ],
+					[ "skimmer" ]
+				]),
 				Scripts.Instance().placePlanetCavernsSteamworks_InsertKeyInSkimmer.name
 			)
 		);
@@ -2724,12 +2750,12 @@ class Places
 				"\n\n",
 				"To the east stands a pourstone igloo with an arched entrance, ",
 				"above which is a lighted sign that reads ",
-				"'Poot-Poot-P-Phttt' in Universal Phonospeak,",
+				"'Poot-Poot-P-Phttt' in Universal Phonospeak, ",
 				"followed by 'BAR' in ",
 				"several of the more common, less aspirated, languages ",
 				"of this sector of space.",
 				"\n\n",
-				"Several spaceships, presumably belonging to the bar's patrons,",
+				"Several spaceships, presumably belonging to the bar's patrons, ",
 				"stand nearby.",
 				"\n\n",
 				"To the west, you can see another, cubical building, with a few more ",
@@ -2787,6 +2813,9 @@ class Places
 						[ "key" ]
 					]),
 					this.scripts.placePlanetSettlementBarFront_GetSkimmerKey.name
+				).itemAdd
+				(
+					Items.Instance().SkimmerKey
 				)
 			]
 		);
@@ -2873,24 +2902,6 @@ class Places
 
 				this.emplacement2
 				(
-					[ "machine", "slot machine", "gambling machine" ],
-
-					[
-						"It appears to be some variant of a slot machine.  ",
-						"When the player inserts some money ",
-						"and pulls the handle on the side, ",
-						"behind each of three little viewing slots, ",
-						"a reel printed with various symbols around its edge spins, ",
-						"eventually stopping so that a random symbol ",
-						"is visible through the slot.  ",
-						"If the symbols match, you presumably get some sort of prize.",
-						"\n\n",
-						"You were never cool, or dumb, enough to enjoy gambling."
-					].join("")
-				),
-
-				this.emplacement2
-				(
 					[ "bartender", "barman" ],
 
 					[
@@ -2950,14 +2961,30 @@ class Places
 				this.emplacement3
 				(
 					[ "slot machine", "gambling machine", "machine" ],
+
 					[
-						"It's a Gamblomat Model MDK.  ",
-						"You think this thing might have been banned ",
-						"in the more reputable parts of the Commonwealth.  ",
-						"Something about a bunch of people who used it getting hurt.  ",
-						"You're not sure you understand how.  ",
-						"How dangerous can a slot machine be?  "
+						"It appears to be some variant of a slot machine.  ",
+						"When the player inserts some money ",
+						"and pulls the handle on the side, ",
+						"behind each of three little viewing slots, ",
+						"a reel printed with various symbols around its edge spins, ",
+						"eventually stopping so that a random symbol ",
+						"is visible through the slot.  ",
+						"If the symbols match, you presumably get some sort of prize.",
+						"\n\n",
+						"You were never cool, or dumb, enough to enjoy gambling."
 					].join(""),
+
+					this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name
+				).activate().commandAddFromTextsAndScriptName
+				(
+					MessageHelper.combinePhraseArrays
+					([
+						[ "put", "insert" ],
+						[ "quatloo", "coin", "money" ],
+						[ null, "in" ],
+						[ "slot machine", "gambling machine", "machine" ]
+					]),
 
 					this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name
 				)
@@ -2985,7 +3012,7 @@ class Places
 				"You can see another, larger building to the north.  ",
 				"\n\n",
 				"As you stand around loitering behind a bar, ",
-				"reflecting on how Mom said this is exactly how you'd end up,",
+				"reflecting on how Mom said this is exactly how you'd end up, ",
 				"a hatch in the back wall of the bar opens ",
 				"and expels some fine white powder, ",
 				"which settles onto a larger heap of powder below."
@@ -2998,10 +3025,18 @@ class Places
 
 				this.emplacement2
 				(
-					[ "heap", "pile" ],
+					[ "heap", "pile", "powder", "white powder", "ashes" ],
 
-					"This is a heap of finely divided white power.  "
+					"This is a heap of finely divided white powder.  "
 					+ "Looks a bit like ashes, except who burns things anymore?"
+				).commandAddFromTextsAndScriptName
+				(
+					MessageHelper.combinePhraseArrays
+					([
+						[ "search", "look through" ],
+						[ "heap", "pile", "powder", "white powder", "ashes" ],
+					]),
+					this.scripts.placePlanetSettlementBarRear_SearchAshes.name
 				)
 			]
 		);
@@ -3091,7 +3126,7 @@ class Places
 					+ "You suppose these moments must be the ones he lives for, "
 					+ "if you can call that living."
 					+ "\n\n"
-					+ "Its price is 40 credits, or 32 with coupon.'"
+					+ "Its price is 400 credits, or 320 with coupon.'"
 				),
 
 				this.emplacement2
@@ -3101,6 +3136,7 @@ class Places
 						"pilot/navigator robot",
 						"pilot robot",
 						"navigator robot",
+						"navigation robot",
 						"pilot/navigator",
 						"pilot",
 						"navigator",
@@ -3116,13 +3152,14 @@ class Places
 					+ "It's the best pilot/navigator robot money can buy.'  "
 					+ "He slaps the robot's... pauldron?... briskly, and continues, "
 					+ "'You can fit so many starmaps into this bad boy.  "
-					+ "Its price is 45 credits, or 36 with coupon.'"
+					+ "Its price is 300 credits, or 240 with coupon.'"
 				),
 
 				this.emplacement2
 				(
 					[
 						"six-legged robot",
+						"agricultural robot",
 						"farming robot",
 						"farmer",
 						"Agron Cultivo F-12",
@@ -3140,7 +3177,7 @@ class Places
 					+ "But that just means you have an opportunity "
 					+ "to get in on the ground floor.  "
 					+ "Or the ground ground, in this case.  "
-					+ "Its price is 300 credits, or 240 with coupon.'"
+					+ "Its price is 400 credits, or 320 with coupon.'"
 				),
 
 				this.emplacement2
@@ -3182,7 +3219,7 @@ class Places
 					+ "It's a military/security/military security robot.  "
 					+ "We're technically only supposed to sell this to governments.  "
 					+ "But if I may say so, you have a rather sovereign look about you, "
-					+ "so I might be convinced to expedite the paperwork for you,"
+					+ "so I might be convinced to expedite the paperwork for you, "
 					+ "provided the price is right. "
 					+ "And that right price is 2500 credits, or 2000 with coupon.'"
 				)
@@ -3255,7 +3292,7 @@ class Places
 			Places.planetSettlementNorthOfUsedShipLot_Name(),
 
 			"You stand in the desert settlement of [Farting Noise].  "
-			+ "You see a spaceship standing here, and, to the south,"
+			+ "You see a spaceship standing here, and, to the south, "
 			+ "a brightly decorated lot containing several more ships.  "
 			+ "To the east, you see a large domed building. "
 			+ "\n\n"
@@ -4075,9 +4112,12 @@ class Regions
 
 	planetSettlement(places: Places, scripts: Scripts): Region
 	{
-		return Region.fromNameAndPlaces
+		return Region.fromNameScriptUpdateForTurnNameAndPlaces
 		(
 			"Ekkis 2 - Settlement",
+
+			scripts.regionPlanetSettlement_UpdateForTurn.name,
+
 			[
 				places.planetSettlementBarFront(),
 				places.planetSettlementBarInterior(),
@@ -4190,10 +4230,12 @@ class Scripts
 			this.placePlanetSettlementBarInterior_TalkToBartender,
 			this.placePlanetSettlementBarInterior_TalkToCustomers,
 			this.placePlanetSettlementBarInterior_UseSlotMachine,
+			this.placePlanetSettlementBarRear_SearchAshes,
 			this.placePlanetSettlementRobotShopInterior_BuyRobot,
 
 			this.regionFriendlyShip_UpdateForTurn,
 			this.regionPlanetDesert_UpdateForTurn,
+			this.regionPlanetSettlement_UpdateForTurn,
 
 			this.todo
 		];
@@ -4531,7 +4573,7 @@ class Scripts
 
 			fateOfBinPlayerIsIn =
 			[
-				"The bin you're hiding in is loaded into the washer,",
+				"The bin you're hiding in is loaded into the washer, ",
 				"which, after several seconds, fills completely with warm soapy water, ",
 				"Well, that's okay, you won't drown, ",
 				"because of your environment suit.",
@@ -5041,11 +5083,11 @@ class Scripts
 		{
 			message +=
 			[
-				"smashes into the cargo bay doors, "
-				+ "which some idiot left closed, ",
-				+ "and explodes."
-				+ "\n\n"
-				+ "You are dead."
+				"smashes into the cargo bay doors, ",
+				"which some idiot left closed, ",
+				"and explodes.",
+				"\n\n",
+				"You are dead."
 			].join("");
 
 			w.end();
@@ -5637,30 +5679,38 @@ class Scripts
 	): void
 	{
 		var message =
-			"You put the key into a similarly-shaped hole in the skimmer control panel, "
-			+ "then stare at the controls in confusion for a few moments "
-			+ "before you figure out what to do next. "
-			+ "Then you turn the key sharply clockwise for a moment, "
-			+ "and the skimmer's engines hum to life.  Whoa, retro."
-			+ "\n\n"
-			+ "The 100-kilometer trip to the nearest settlement is uneventful, "
-			+ "your skimmer gliding swiftly and effortlessly a couple dozen centimeters "
-			+ "above the surface of the sand.  "
-			+ "There are a few rocks along the way, "
-			+ "but you skillfully avoid them.  Most of them.  A lot of them, anyway.  "
-			+ "You must admit you aren't great at the action parts."
-			+ "\n\n"
-			+ "A half-hour or so later, you and your slightly-worse-for-the-wear "
-			+ "secondhand sand sled slide through the shield of a small settlement.  "
-			+ "You park the skimmer outside of a bar.  That's just like you."
-			+ "\n\n"
-			+ "As you pull up, an alien walks out of the bar and eyes your skimmer appreciatively."
+		[
+			"You put the key into a similarly-shaped hole in the skimmer control panel, ",
+			"then stare at the controls in confusion for a few moments ",
+			"before you figure out what to do next. ",
+			"Then you turn the key sharply clockwise for a moment, ",
+			"and the skimmer's engines hum to life.  Whoa, retro.",
+			"\n\n",
+			"The 100-kilometer trip to the nearest settlement is uneventful, ",
+			"your skimmer gliding swiftly and effortlessly a couple dozen centimeters ",
+			"above the surface of the sand.  ",
+			"There are a few rocks along the way, ",
+			"but you skillfully avoid them.  Most of them.  A lot of them, anyway.  ",
+			"You must admit you aren't great at the action parts.  ",
+			"You wish there was a way to skip them.",
+			"\n\n",
+			"A half-hour or so later, you and your slightly-worse-for-the-wear ",
+			"secondhand sand sled slide up to the shield of a small settlement.  ",
+			"Automated equipment detects the skimmer's approach, ",
+			"and an aperture in the shield opens just long enough for you to pass through.",
+			"\n\n",
+			"You park the skimmer outside of a bar.  That's just like you.",
+		].join("");
 
 		u.messageEnqueue(message);
 
-		w.placeCurrentSetByName(Places.planetSettlementBarFront_Name() )
+		var player = w.agentPlayer;
+		var itemSkimmerKey = player.itemByName("skimmer key");
+		player.itemRemove(itemSkimmerKey);
+
+		w.placeCurrentSetByName(Places.planetSettlementBarFront_Name() );
 	}
-	
+
 	placePlanetCavernsProjectionRoom_Update
 	(
 		u: Universe, w: World, p: Place, c: Command
@@ -5816,18 +5866,20 @@ class Scripts
 	): void
 	{
 		var message =
-			"The alien greets you from the catwalk above, "
-			+ "and explains that it is part of an ancient race "
-			+ "that once ruled this planet, but now lives underground.  "
-			+ "You briefly wonder if you have to feel guilty about this, "
-			+ "but the alien has already moved on to thank you for destroying the cave beast, "
-			+ "and, as a reward, throws down to you the starter key to a sand skimmer "
-			+ "that the alien says should allow you to reach the nearest settlement "
-			+ "without being eaten by sand-swimmers.  "
-			+ "The alien then turns and walks off into the depths of the steamworks, "
-			+ "but not before muttering something about the skimmer's throttle being stuck.";
+		[
+			"The alien greets you from the catwalk above, ",
+			"and explains that it is part of an ancient race ",
+			"that once ruled this planet, but now lives underground.  ",
+			"You briefly wonder if you have to feel guilty about this, ",
+			"but the alien has already moved on to thank you for destroying the cave beast, ",
+			"and, as a reward, throws down to you the starter key to a sand skimmer ",
+			"that the alien says should allow you to reach the nearest settlement ",
+			"without being eaten by sand-swimmers.  ",
+			"The alien then turns and walks off into the depths of the steamworks, ",
+			"but not before muttering something about the skimmer's throttle sticking a bit."
+		].join("");
 
-		u.messageEnqueue(message)
+		u.messageEnqueue(message);
 
 		p.itemAdd(Items.Instance().SkimmerKey);
 	}
@@ -6175,21 +6227,27 @@ class Scripts
 		if (keyHasAlreadyBeenTaken)
 		{
 			message =
-				"You've already taken the key, remember?  "
-				+ "\n\n"
-				+ "Are you okay?  Maybe you need a neurologist.  "
-				+ "Or at least some gingko biloba."
+			[
+				"You've already taken the key, remember?  ",
+				"\n\n",
+				"Are you okay?  Maybe you need a neurologist.  ",
+				"Or at least some ground tarkan root.  ",
+				"It's the all-natural memory aid that the sky-monks of Shadalon ",
+				"have depended on for centuries."
+			].join("");
 		}
 		else
 		{
 			message =
-				"You remove the skimmer's ignition key "
-				+ "from the skimmer, and put it in your pocket.  "
-				+ "\n\n"
-				+ "Good thinking.  I'd say this looks like a rough "
-				+ "part of town, but that would imply that there are parts "
-				+ "of this town that aren't rough.  "
-				+ "And I just can't make that promise."
+			[
+				"You remove the skimmer's ignition key ",
+				"from the skimmer, and put it in your pocket.  ",
+				"\n\n",
+				"Good thinking.  I'd say this looks like a rough ",
+				"part of town, but that would imply that there are parts ",
+				"of this town that aren't rough.  ",
+				"And, looking around, I just can't make that promise."
+			].join("")
 
 			var agentPlayer = w.agentPlayer;
 			agentPlayer.itemAdd(itemSkimmerKey);
@@ -6221,7 +6279,7 @@ class Scripts
 			+ "And the original owners probably don't don't have any use for it, "
 			+ "living in a hole under a cliff maze as they do.  "
 			+ "And it is almost completely out of fuel, "
-			+ "and you have no money to refill it,"
+			+ "and you have no money to refill it, "
 			+ "so it's not doing you, or anybody else, any good as is."
 			+ "\n\n"
 			+ "'I might,' you say.  'How much is she worth to you?'"
@@ -6249,40 +6307,26 @@ class Scripts
 
 			if (emplacementSkimmer == null)
 			{
-				// Do nothing.
+				message =
+					"You're pretty sure this is where you parked your skimmer.  "
+					+ "But it's not here any more.  You probably should have taken "
+					+ "the key out of the ignition.";
 			}
 			else
 			{
-				var itemKeyFromSkimmer =
-					emplacementSkimmer.itemByName("skimmer key");
+				var stateName = "HasSecondSaleOfferForSkimmerBeenRefused";
+				var hasSecondSaleOfferBeenRefused =
+					p.stateGroup.stateWithNameGetValue(stateName);
 
-				var keyWasLeftInSkimmer = (itemKeyFromSkimmer != null)
-
-				if (keyWasLeftInSkimmer)
+				if (hasSecondSaleOfferBeenRefused == false)
 				{
 					message =
-						"You're pretty sure this is where you parked your skimmer.  "
-						+ "But it's not here any more.  You probably should have taken "
-						+ "the key out of the ignition."
-				}
-				else // keyWasLeftInSkimmer == false
-				{
-					var stateName = "HasSecondSaleOfferForSkimmerBeenRefused";
-					var hasSecondSaleOfferBeenRefused =
-						p.stateGroup.stateWithNameGetValue(stateName);
-
-					if (hasSecondSaleOfferBeenRefused == false)
-					{
-						message =
-							"That guy who tried to buy your skimmer "
-							+ " is here.  "
-							+ "'Hey,' he says, 'look.  I'm willing to throw in"
-							+ "this jetpack.  It's a real good jetpack.  "
-							+ "So, my final offer is, 30 quatloos, a jetpack, "
-							+ "and the coupon book.  What do you say?"
-					}
-
-					// todo - Add agent and command.
+						"That guy who tried to buy your skimmer "
+						+ " is here.  "
+						+ "'Hey,' he says, 'look.  I'm willing to throw in"
+						+ "this jetpack.  It's a real good jetpack.  "
+						+ "So, my final offer is, 30 quatloos, a jetpack, "
+						+ "and the coupon book.  What do you say?"
 				}
 			}
 		}
@@ -6297,7 +6341,7 @@ class Scripts
 	{
 		var message: string;
 
-		var itemQuatloos = w.agentPlayer.itemByName("quatloo");
+		var itemQuatloos = w.agentPlayer.itemByName("quatloos");
 
 		var quatloosPerBeer = 2;
 
@@ -6472,7 +6516,7 @@ class Scripts
 		else
 		{
 
-			var itemQuatloos = w.agentPlayer.itemByName("quatloo");
+			var itemQuatloos = w.agentPlayer.itemByName("quatloos");
 
 			if (itemQuatloos == null || itemQuatloos.quantity == 0)
 			{
@@ -6497,11 +6541,11 @@ class Scripts
 
 					"With a shaky hand, ",
 
-					"Wiping flop-sweat off your palms and onto your pant legs, "
+					"Wiping flop sweat off your palms and onto your pant legs, "
 				];
 
 				var messageIntroIndex =
-					Math.floor(Math.random() * messageIntrosToChooseFrom.length);
+					Math.floor(u.randomNumberGenerator.next() * messageIntrosToChooseFrom.length);
 				var messageIntro = messageIntrosToChooseFrom[messageIntroIndex];
 
 				var symbolLucky = "seven-pointed crystal";
@@ -6523,7 +6567,7 @@ class Scripts
 				for (var i = 0; i < symbolsToChooseCount; i++)
 				{
 					var symbolIndexRandom =
-						Math.floor(Math.random() * symbolsToChooseFrom.length);
+						Math.floor(u.randomNumberGenerator.next() * symbolsToChooseFrom.length);
 					var symbolChosen = symbolsToChooseFrom[symbolIndexRandom];
 					symbolsChosen.push(symbolChosen);
 				}
@@ -6611,6 +6655,34 @@ class Scripts
 
 		u.messageEnqueue(message);
 	}
+	
+	placePlanetSettlementBarRear_SearchAshes
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message: string;
+
+		var emplacementAshes = p.emplacementByName("ashes");
+		var itemQuatloos = emplacementAshes.itemByName("quatloos");
+		if (itemQuatloos == null)
+		{
+			message =
+				"You sift the ashes again, but there's nothing here.  "
+				+ "You're just getting dirty.  Dirtier.";
+		}
+		else
+		{
+			message =
+				"Searching through the ashes, you find a blackened, "
+				+ "slightly melted quatloo.  Nice! ";
+
+			var player = w.agentPlayer;
+			player.itemAdd(itemQuatloos);
+		}
+
+		u.messageEnqueue(message);
+	}
 
 	placePlanetSettlementRobotShopInterior_BuyRobot
 	(
@@ -6628,15 +6700,25 @@ class Scripts
 				+ "the current state of math education, "
 				+ "not you personally, for the error.";
 
-		var robotName = "navigator";
-		var emplacementRobot = p.emplacementByName(robotName);
-		var emplacementRobotNavigatorName = emplacementRobot.name();
-		if (emplacementRobotNavigatorName == robotName)
+		var commandText = c.text();
+		var robotToPurchaseName = commandText.split(" ").slice(1).join(" ");
+		var emplacementRobotNavigator = p.emplacementByName("navigator");
+		var robotToPurchaseIsNavigator =
+			emplacementRobotNavigator.namesInclude(robotToPurchaseName);
+
+		if (robotToPurchaseIsNavigator)
 		{
 			var agentPlayer = w.agentPlayer;
-			var itemQuatloos = agentPlayer.itemByName("quatloo");
-			var priceOfRobotInQuatloos = 250; // todo
-			if (itemQuatloos.quantity < priceOfRobotInQuatloos)
+
+			var itemCouponBook = agentPlayer.itemByName("coupon book");
+			var playerHasCouponBook = (itemCouponBook != null);
+
+			var priceOfRobotInQuatloos =
+				playerHasCouponBook ? 250 : 300;
+
+			var itemQuatloos = agentPlayer.itemByName("quatloos");
+
+			if (itemQuatloos == null || itemQuatloos.quantity < priceOfRobotInQuatloos)
 			{
 				message = messageNotEnoughMoney;
 			}
@@ -6645,9 +6727,9 @@ class Scripts
 				agentPlayer.itemRemoveQuantity(itemQuatloos, priceOfRobotInQuatloos);
 				var agentRobot = Agent.fromNames
 				(
-					emplacementRobot.names
+					emplacementRobotNavigator.names
 				);
-				p.agentAdd(agentRobot);
+				p.agentAdd(agentRobot, w);
 			}
 		}
 		else
@@ -6834,7 +6916,26 @@ class Scripts
 		(
 			stateName, turnsSinceLastDrink
 		);
+	}
 
+	regionPlanetSettlement_UpdateForTurn(u: Universe, w: World, p: Place, c: Command): void
+	{
+		var placeBarFront =
+			w.placeByName(Places.planetSettlementBarFront_Name() );
+
+		if (p.name != placeBarFront.name)
+		{
+			var emplacementSkimmer = placeBarFront.emplacementByName("skimmer");
+			if (emplacementSkimmer != null)
+			{
+				var itemSkimmerKey = emplacementSkimmer.itemByName("skimmer key")
+				var keyWasLeftInSkimmer = (itemSkimmerKey != null);
+				if (keyWasLeftInSkimmer)
+				{
+					placeBarFront.emplacementRemove(emplacementSkimmer);
+				}
+			}
+		}
 	}
 
 }

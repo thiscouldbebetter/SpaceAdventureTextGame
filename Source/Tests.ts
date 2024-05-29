@@ -9,6 +9,14 @@ class Assert
 		}
 	}
 
+	static isFalse(conditionToCheck: boolean): void
+	{
+		if (conditionToCheck != false)
+		{
+			throw new Error("Expected: false, but was: not false.");
+		}
+	}
+
 	static isNotNull(objectToCheck: object): void
 	{
 		if (objectToCheck == null)
@@ -17,11 +25,11 @@ class Assert
 		}
 	}
 
-	static isFalse(conditionToCheck: boolean): void
+	static isNull(objectToCheck: object): void
 	{
-		if (conditionToCheck != false)
+		if (objectToCheck != null)
 		{
-			throw new Error("Expected: false, but was: not false.");
+			throw new Error("Expected: null, but was: not null.");
 		}
 	}
 
@@ -279,6 +287,54 @@ class Tests
 			run("wait");
 		}
 		Assert.isTrue(world.isOver);
+	}
+
+	die_PlanetSettlement_LosingAtGambling(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto " + Places.planetSettlementBarInterior_Name() );
+		run("cheat get quatloos 1" );
+
+		Assert.isFalse(world.isOver);
+
+		var randomNumberGenerator = this.universe.randomNumberGenerator;
+
+		// We need three unlucky symbols to lose,
+		// but there are other random numbers being taken off the queue.
+		randomNumberGenerator.enqueue(.999999); 
+		randomNumberGenerator.enqueue(.999999); 
+		randomNumberGenerator.enqueue(.999999);
+		randomNumberGenerator.enqueue(.999999);
+		randomNumberGenerator.enqueue(.999999);
+
+		run("put quatloo in slot machine");
+
+		Assert.isTrue(world.isOver);
+	}
+
+	fail_PlanetSettlement_SkimmerGetsStolen(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+		var run = this.run.bind(this);
+
+		run("cheat goto " + Places.planetSettlementBarFront_Name() );
+
+		var placeBarFront = world.placeCurrent();
+
+		var emplacementSkimmer = placeBarFront.emplacementByName("skimmer");
+
+		Assert.isNotNull(emplacementSkimmer);
+
+		run("go north");
+		run("go south");
+
+		var emplacementSkimmer = placeBarFront.emplacementByName("skimmer");
+
+		Assert.isNull(emplacementSkimmer);
 	}
 
 	playFromStartToEnd(): void
@@ -641,6 +697,9 @@ var testFixture = new TestFixture
 		() => tests.die_PlanetCliffs_EatenByCaveMonster(),
 		() => tests.die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(),
 		() => tests.die_PlanetDesert_OfThirst(),
+		() => tests.die_PlanetSettlement_LosingAtGambling(),
+
+		() => tests.fail_PlanetSettlement_SkimmerGetsStolen(),
 
 		() => tests.playFromStartToEnd(),
 

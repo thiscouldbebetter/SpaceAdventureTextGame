@@ -5,14 +5,19 @@ class Assert {
             throw new Error("Expected: '" + expected + "', but was: '" + actual + "'.");
         }
     }
+    static isFalse(conditionToCheck) {
+        if (conditionToCheck != false) {
+            throw new Error("Expected: false, but was: not false.");
+        }
+    }
     static isNotNull(objectToCheck) {
         if (objectToCheck == null) {
             throw new Error("Expected: not null, but was: null.");
         }
     }
-    static isFalse(conditionToCheck) {
-        if (conditionToCheck != false) {
-            throw new Error("Expected: false, but was: not false.");
+    static isNull(objectToCheck) {
+        if (objectToCheck != null) {
+            throw new Error("Expected: null, but was: not null.");
         }
     }
     static isTrue(conditionToCheck) {
@@ -178,6 +183,37 @@ class Tests {
             run("wait");
         }
         Assert.isTrue(world.isOver);
+    }
+    die_PlanetSettlement_LosingAtGambling() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
+        run("cheat goto " + Places.planetSettlementBarInterior_Name());
+        run("cheat get quatloos 1");
+        Assert.isFalse(world.isOver);
+        var randomNumberGenerator = this.universe.randomNumberGenerator;
+        // We need three unlucky symbols to lose,
+        // but there are other random numbers being taken off the queue.
+        randomNumberGenerator.enqueue(.999999);
+        randomNumberGenerator.enqueue(.999999);
+        randomNumberGenerator.enqueue(.999999);
+        randomNumberGenerator.enqueue(.999999);
+        randomNumberGenerator.enqueue(.999999);
+        run("put quatloo in slot machine");
+        Assert.isTrue(world.isOver);
+    }
+    fail_PlanetSettlement_SkimmerGetsStolen() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var run = this.run.bind(this);
+        run("cheat goto " + Places.planetSettlementBarFront_Name());
+        var placeBarFront = world.placeCurrent();
+        var emplacementSkimmer = placeBarFront.emplacementByName("skimmer");
+        Assert.isNotNull(emplacementSkimmer);
+        run("go north");
+        run("go south");
+        var emplacementSkimmer = placeBarFront.emplacementByName("skimmer");
+        Assert.isNull(emplacementSkimmer);
     }
     playFromStartToEnd() {
         this.universeAndWorldCreateAndSet();
@@ -413,6 +449,8 @@ var testFixture = new TestFixture("All Tests", [
     () => tests.die_PlanetCliffs_EatenByCaveMonster(),
     () => tests.die_PlanetDesert_EscapePodCrashesWithNoSeatBelt(),
     () => tests.die_PlanetDesert_OfThirst(),
+    () => tests.die_PlanetSettlement_LosingAtGambling(),
+    () => tests.fail_PlanetSettlement_SkimmerGetsStolen(),
     () => tests.playFromStartToEnd(),
     () => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst()
 ]);
