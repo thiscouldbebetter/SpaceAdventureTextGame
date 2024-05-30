@@ -2782,22 +2782,27 @@ class Places
 				this.portal( [ "south" ], Places.planetDesertDeep_Name() ),
 				this.portal( [ "bar" ], Places.planetSettlementBarInterior_Name() ),
 
-				Agent.fromNamesAndDescription
+				this.emplacement2
 				(
-					[ "person", "being" ],
+					[ "skimmer enthusiast", "person", "being", "buyer" ],
 
-					+ "This being is hanging around outside a bar "
-					+ "in the middle of the day.  He must be rich."
+					"This being is hanging around outside a bar "
+					+ "in the middle of the day.  He must be so rich."
 
 				).commandAddFromTextsAndScriptName
 				(
-					[ "talk to person", "talk to being" ],
+					MessageHelper.combinePhraseArrays
+					([
+						[ "talk" ],
+						[ null, "to" ],
+						[ "skimmer enthusiast", "person", "being", "buyer" ]
+					]),
 					this.scripts.placePlanetSettlementBarFront_TalkToPerson.name
 				),
 
 				this.emplacement2
 				(
-					[ "skimmer", "vehicle", "car" ],
+					[ "skimmer", "sand-skimmer", "vehicle", "car" ],
 
 					"This is the sand-skimmer that the ancient desert cavern aliens "
 					+ "gave you after you did that contract killing for them.  "
@@ -4223,6 +4228,8 @@ class Scripts
 			this.placePlanetDesertDeep_Update,
 
 			this.placePlanetSettlementBarFront_GetSkimmerKey,
+			this.placePlanetSettlementBarFront_RefuseToSellSkimmer,
+			this.placePlanetSettlementBarFront_SellSkimmer,
 			this.placePlanetSettlementBarFront_TalkToPerson,
 			this.placePlanetSettlementBarFront_Update,
 			this.placePlanetSettlementBarInterior_BuyDrink,
@@ -6256,40 +6263,134 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
+	placePlanetSettlementBarFront_RefuseToSellSkimmer
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var emplacementSkimmerEnthusiast =
+			p.emplacementByName("skimmer enthusiast");
+		var stateName = "OffersToBuySkimmerRefusedSoFar";
+		var stateGroup = emplacementSkimmerEnthusiast.stateGroup;
+
+		var offersToBuySkimmerRefusedSoFar = parseInt
+		(
+			stateGroup.stateWithNameGetValue(stateName)
+		);
+
+		offersToBuySkimmerRefusedSoFar++;
+		stateGroup.stateWithNameSetToValue(stateName, offersToBuySkimmerRefusedSoFar);
+	}
+
+	placePlanetSettlementBarFront_SellSkimmer
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var items = Items.Instance();
+
+		var itemsToTradeForSkimmer =
+		[
+			items.Quatloos.clone().quantitySet(30)
+		];
+
+		var emplacementSkimmerEnthusiast =
+			p.emplacementByName("skimmer enthusiast");
+		var stateName = "OffersToBuySkimmerRefusedSoFar";
+		var stateGroup = emplacementSkimmerEnthusiast.stateGroup;
+
+		var offersToBuySkimmerRefusedSoFar = parseInt
+		(
+			stateGroup.stateWithNameGetValue(stateName)
+		);
+
+		if (offersToBuySkimmerRefusedSoFar >= 1)
+		{
+			itemsToTradeForSkimmer.push(items.CouponBook);
+		}
+
+		if (offersToBuySkimmerRefusedSoFar >= 2)
+		{
+			itemsToTradeForSkimmer.push(items.Jetpack);
+		}
+
+		var itemsToTradeForSkimmerAsString =
+			itemsToTradeForSkimmer.map(x => x.nameAndQuantity() ).join(",");
+
+		var message =
+		[
+			"You hand the skimmer key to the ground-car enthusiast, ",
+			"and he hands you the ",
+			itemsToTradeForSkimmerAsString,
+			", and you both shake hands.  ",
+			"(You definitely don't have enough hands for this, but never mind.)  ",
+			"He then gets into the skimmer, turns the key, ",
+			"and soon vanishes into the distance.",
+			"\n\n",
+			"Where the heck is he even going?"
+		].join("");
+
+		u.messageEnqueue(message);
+
+		var player = w.agentPlayer;
+		player.itemWithNameRemove("skimmer key");
+		player.itemsAdd(itemsToTradeForSkimmer);
+
+		p.emplacementWithNameRemove("skimmer");
+		p.emplacementWithNameRemove("skimmer enthusiast");
+	}
+
 	placePlanetSettlementBarFront_TalkToPerson
 	(
 		u: Universe, w: World, p: Place, c: Command
 	): void
 	{
 		var message =
-			"The being eyes your skimmer appreciatively."
-			+ "\n\n"
-			+ "'Hey, nice skimmer.  That the model with the dual-fuel inlet-outlets?'"
-			+ "\n\n"
-			+ "Despite the fact that you're pretty sure "
-			+ "what he just said is literal nonsense, you nod wisely "
-			+ "the way you always do around ground-vehicle enthusiasts."
-			+ "\n\n"
-			+ "He runs a hand sensually, almost pornographically, along its front fender."
-			+ "'Would you be willing to sell it?'"
-			+ "\n\n"
-			+ "It's an intriguing offer.  "
-			+ "On the one hand, it doesn't really belong to you. "
-			+ "On the other hand, you did sort of blow up a cave monster for it."
-			+ "And the original owners probably don't don't have any use for it, "
-			+ "living in a hole under a cliff maze as they do.  "
-			+ "And it is almost completely out of fuel, "
-			+ "and you have no money to refill it, "
-			+ "so it's not doing you, or anybody else, any good as is."
-			+ "\n\n"
-			+ "'I might,' you say.  'How much is she worth to you?'"
-			+ "On the off-chance that calling an inanimate object by a feminine pronoun "
-			+ "doesn't sell the impression that you're a mechanically-minded man, " 
-			+ "you lean casually against the headlight, "
-			+ "which promptly cracks off and hangs limply from its wiring."
-			+ "\n\n"
-			+ "The prospective buyer offers you 30 quatloos "
-			+ "What do you say, yes or no?"
+		[
+			"The being eyes your sand-skimmer appreciatively, almost lustfully.",
+			"\n\n",
+			"'Hey, nice skimmer.  That the model with the dual-fuel inlet-outlets?'",
+			"\n\n",
+			"Despite the fact that you're pretty sure ",
+			"what he just said is literal nonsense, you nod wisely ",
+			"the way you always do around ground-vehicle enthusiasts.",
+			"\n\n",
+			"He runs a hand sensually, almost pornographically, along its front fender.  ",
+			"'Would you be willing to sell it?'",
+			"\n\n",
+			"It's an intriguing offer.  ",
+			"On the one hand, it doesn't really belong to you. ",
+			"On the other hand, you did sort of blow up a cave monster for it.  ",
+			"And the original owners probably don't don't have any use for it, ",
+			"living in a hole under a cliff maze as they do.  ",
+			"And it is almost completely out of fuel, ",
+			"and you have no money to refill it, ",
+			"so it's not doing you, or anybody else, any good as is.",
+			"\n\n",
+			"After a moment's thought, you ask how much 'she' is worth to him.  ",
+			"On the off-chance that calling an inanimate object by a feminine pronoun ",
+			"doesn't sell the impression that you're a mechanically-minded man, ",
+			"you lean casually against the headlight, ",
+			"which promptly cracks off and hangs limply from its wiring.",
+			"\n\n",
+			"The prospective buyer offers you 30 quatloos.  ",
+			"(Probably it would have been higher before the headlight.)  ",
+			"What do you say, yes or no?"
+		].join("");
+
+		var emplacementSkimmerBuyer = p.emplacementByName("person");
+		var scripts = Scripts.Instance();
+		emplacementSkimmerBuyer.commandWithTextRemove("talk to person");
+		emplacementSkimmerBuyer.commandAddFromTextsAndScriptName
+		(
+			[ "say yes", "yes", "sell skimmer", "deal" ],
+			scripts.placePlanetSettlementBarFront_SellSkimmer.name
+		)
+		emplacementSkimmerBuyer.commandAddFromTextsAndScriptName
+		(
+			[ "say no", "no", "refuse", "no deal" ],
+			scripts.placePlanetSettlementBarFront_RefuseToSellSkimmer.name
+		);
 
 		u.messageEnqueue(message);
 	}
@@ -6308,9 +6409,11 @@ class Scripts
 			if (emplacementSkimmer == null)
 			{
 				message =
-					"You're pretty sure this is where you parked your skimmer.  "
-					+ "But it's not here any more.  You probably should have taken "
-					+ "the key out of the ignition.";
+				[
+					"You're pretty sure this is where you parked your skimmer.  ",
+					"But it's not here any more.  You probably should have taken ",
+					"the key out of the ignition."
+				].join("");
 			}
 			else
 			{
@@ -6552,6 +6655,7 @@ class Scripts
 				var symbolUnlucky = "exposed cranial endoskeleton";
 				var symbolsToChooseFrom =
 				[
+					symbolUnlucky,
 					"lightly mutated vegetation",
 					"lightly mutated vegetation",
 					"lightly mutated vegetation",
@@ -6559,7 +6663,6 @@ class Scripts
 					"upturned livestock footwear",
 					"upturned livestock footwear",
 					symbolLucky,
-					symbolUnlucky,
 				]
 
 				var symbolsToChooseCount = 3;

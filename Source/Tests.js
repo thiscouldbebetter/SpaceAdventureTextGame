@@ -194,11 +194,11 @@ class Tests {
         var randomNumberGenerator = this.universe.randomNumberGenerator;
         // We need three unlucky symbols to lose,
         // but there are other random numbers being taken off the queue.
-        randomNumberGenerator.enqueue(.999999);
-        randomNumberGenerator.enqueue(.999999);
-        randomNumberGenerator.enqueue(.999999);
-        randomNumberGenerator.enqueue(.999999);
-        randomNumberGenerator.enqueue(.999999);
+        randomNumberGenerator.enqueue(0);
+        randomNumberGenerator.enqueue(0);
+        randomNumberGenerator.enqueue(0);
+        randomNumberGenerator.enqueue(0);
+        randomNumberGenerator.enqueue(0);
         run("put quatloo in slot machine");
         Assert.isTrue(world.isOver);
     }
@@ -352,10 +352,13 @@ class Tests {
         // Village of [Farting Noise].
         Assert.areEqual(Places.planetSettlementBarFront_Name(), world.placeCurrent().name);
         run("get skimmer key");
+        // Sell the skimmer for 30 quatloos,
+        // with no jetpack and no coupon book.
+        // Note, this makes the game unwinnable.
+        run("talk to person");
+        run("say yes");
         run("go bar");
         run("go outside");
-        // Sell the skimmer for 30 quatloos, a jetpack, and a coupon book.
-        run("say yes");
         run("go bar");
         run("buy drink");
         run("buy drink");
@@ -365,7 +368,10 @@ class Tests {
         var itemQuatloos = agentPlayer.itemByName("quatloos");
         var place = world.placeCurrent();
         var emplacementSlotMachine = place.emplacementByName("slot machine");
-        while (emplacementSlotMachine.activated()) {
+        var timesSlotMachinePlayed = 0;
+        var timesToPlaySlotMachineMax = 1000;
+        while (emplacementSlotMachine.activated()
+            && timesSlotMachinePlayed < timesToPlaySlotMachineMax) {
             run("save gambling");
             var quatloosBeforeGambling = itemQuatloos.quantity;
             run("put quatloo in slot machine");
@@ -375,6 +381,7 @@ class Tests {
             if (shouldRestore) {
                 run("restore gambling");
             }
+            timesSlotMachinePlayed++;
         }
         run("go out");
         run("go north");
