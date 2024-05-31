@@ -1,7 +1,7 @@
 "use strict";
 class Game {
     static worldBuild() {
-        var player = Agent.fromNames(["self", "me", "myself"]).descriptionSet("This is you.  You have to start getting used to this.").itemsAdd([
+        var player = Agent.fromNames(["self", "me", "myself"]).descriptionWhenExaminedSet("This is you.  You have to start getting used to this.").itemsAdd([
             Item.fromNamesAndDescription(["washrag", "rag"], [
                 "This is a rag you use to clean things sometimes.  ",
                 "You may or may not have given it a name.  ",
@@ -245,12 +245,12 @@ class Items {
         ]), Scripts.Instance().placePlanetCavernsSteamworks_InsertKeyInSkimmer.name));
     }
     spaceSuit() {
-        return Item.fromNames(["space suit", "spacesuit", "suit"]).descriptionSet("This is space suit from the starship Pax Aeterna.  "
+        return Item.fromNames(["space suit", "spacesuit", "suit"]).descriptionWhenExaminedSet("This is space suit from the starship Pax Aeterna.  "
             + "It keeps the space out and the air in.  "
             + "Maybe they should call it an air suit.").scriptGetNameSet(Scripts.Instance().placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit.name);
     }
     survivalKit(contents) {
-        return Item.fromNames(["survival kit", "kit"]).descriptionSet("This is a survival kit from the Pax Aeterna's escape pod.").itemsAdd(contents).commandAddFromTextSourceAndScriptName(TextSourceStrings.fromStrings(["open survival kit", "open kit"]), Scripts.Instance().itemSurvivalKitOpen.name);
+        return Item.fromNames(["survival kit", "kit"]).descriptionWhenExaminedSet("This is a survival kit from the Pax Aeterna's escape pod.").itemsAdd(contents).commandAddFromTextSourceAndScriptName(TextSourceStrings.fromStrings(["open survival kit", "open kit"]), Scripts.Instance().itemSurvivalKitOpen.name);
     }
 } // end class Items
 class Places {
@@ -260,11 +260,12 @@ class Places {
     emplacement(names) {
         return Emplacement.fromNames(names);
     }
-    emplacement2(names, description) {
-        return Emplacement.fromNamesAndDescription(names, description);
+    emplacement2(names, descriptionWhenExamined) {
+        return Emplacement.fromNamesAndDescriptions(names, null, descriptionWhenExamined);
     }
-    emplacement3(names, description, scriptUseName) {
-        return Emplacement.fromNamesDescriptionAndScriptUseName(names, description, scriptUseName);
+    emplacement3(names, descriptionWhenExamined, scriptUseName) {
+        return Emplacement.fromNamesDescriptionsAndScriptUseName(names, null, // descriptionAsPartOfPlace
+        descriptionWhenExamined, scriptUseName);
     }
     place2(name, description) {
         return Place.fromNameDescriptionScriptNameAndObjects(name, description, null, // scriptName
@@ -313,8 +314,8 @@ class Places {
             + " An elevator leads back to the engineering deck.", [
             this.portal3(["airlock"], Places.friendlyShipDockingBayHangar_Name(), this.scripts.placeFriendlyShipDockingBayAntechamber_GoAirlock.name),
             this.portal(["elevator"], Places.friendlyShipEngineeringDeckAft_Name()),
-            this.portal(["left closet"], Places.friendlyShipDockingBayAntechamberClosetLeft_Name()).lock().descriptionSet("The door to the left closet is closed."),
-            this.portal(["right closet"], Places.friendlyShipDockingBayAntechamberClosetRight_Name()).lock().descriptionSet("The door to the right closet is closed."),
+            this.portal(["left closet"], Places.friendlyShipDockingBayAntechamberClosetLeft_Name()).lock().descriptionWhenExaminedSet("The door to the left closet is closed."),
+            this.portal(["right closet"], Places.friendlyShipDockingBayAntechamberClosetRight_Name()).lock().descriptionWhenExaminedSet("The door to the right closet is closed."),
             this.emplacement(["controls", "console", "control console"]),
             this.emplacement(["left button", "button"]).commandAdd(Command.fromTextsAndScriptExecuteName(["press left button"], this.scripts.placeFriendlyShipDockingBayAntechamber_PressLeftButton.name)),
             this.emplacement(["right button", "button"]).commandAdd(Command.fromTextsAndScriptExecuteName(["press right button"], this.scripts.placeFriendlyShipDockingBayAntechamber_PressRightButton.name))
@@ -357,7 +358,7 @@ class Places {
             + " allows ships to enter and depart when open, "
             + " and keeps everything safely sheltered when closed.", [
             this.portal(["airlock"], Places.friendlyShipDockingBayAntechamber_Name()),
-            this.portal(["escape pod", "pod"], Places.friendlyShipEscapePod_Name()).descriptionSet("The pod is kind of cramped-looking, "
+            this.portal(["escape pod", "pod"], Places.friendlyShipEscapePod_Name()).descriptionWhenExaminedSet("The pod is kind of cramped-looking, "
                 + "but as it's your only hope of survival right now, "
                 + "you prefer to think of it as 'cozy'.").hide().block(),
             this.emplacement2([
@@ -372,7 +373,7 @@ class Places {
             this.emplacement2(["hatch", "trapdoor"], "This is a trapdoor in the floor, "
                 + "perhaps three meters by five meters, "
                 + "split down the middle into two retractible doors."),
-            this.emplacement(["docking bay doors", "bay doors", "doors"]).lock().descriptionSet("The bay doors are closed.")
+            this.emplacement(["docking bay doors", "bay doors", "doors"]).lock().descriptionWhenExaminedSet("The bay doors are closed.")
         ]);
     }
     static friendlyShipDockingBayHangar_Name() {
@@ -1429,7 +1430,9 @@ class Places {
             "\n\n",
             "To the west, you can see another, cubical building, with a few more ",
             "run-down looking spaceships in front of it, and decorated with ",
-            "strings of cheap but festive plastic pennants.",
+            "strings of cheap but festive plastic pennants. ",
+            "A large sign reads 'Non-Gelatinous George's Used Ships' in friendly, ",
+            "or at least extroverted, letters.",
             "\n\n",
             "Away to the north is the edge of another domelike building, ",
             "possibly a store of some sort.",
@@ -1446,8 +1449,10 @@ class Places {
             this.portal(["east"], Places.planetSettlementBarRear_Name()),
             this.portal(["south"], Places.planetDesertDeep_Name()),
             this.portal(["bar"], Places.planetSettlementBarInterior_Name()),
-            this.emplacement2(["skimmer enthusiast", "person", "being", "buyer"], "This being is hanging around outside a bar "
-                + "in the middle of the day.  He must be so rich.").commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
+            this.emplacement2(["seedy-looking being", "skimmer enthusiast", "person", "being", "buyer"], "This being is hanging around outside a bar "
+                + "in the middle of the day.  He must be so rich.").descriptionAsPartOfPlaceSet("A seedy-looking being loitering near the entrance to the bar "
+                + "eyes your skimmer appreciatively.  You think those are eyes, "
+                + "anyway.").commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
                 ["talk"],
                 [null, "to"],
                 ["skimmer enthusiast", "person", "being", "buyer"]
@@ -1606,7 +1611,10 @@ class Places {
             "if you ask someone to explain them.  So never mind."
         ].join(""), [
             this.portal(["west"], Places.planetSettlementRobotShopWest_Name()),
-            this.portal(["door", "shop", "store", "inside"], Places.planetSettlementRobotShopInterior_Name())
+            this.portal(["door", "shop", "store", "in", "inside"], Places.planetSettlementRobotShopInterior_Name()),
+            this.emplacement2(["store", "shop", "dome", "Buy, Robot", "Buy Robot"], "The domed building occupied by Buy, Robot "
+                + "is a bit less lived-in-looking than the other buildings in town.  "
+                + "You're not sure whether that means business is good or bad.")
         ]);
     }
     static planetSettlementRobotShopFront_Name() {
@@ -1623,7 +1631,9 @@ class Places {
             "Maybe they're even making a little bet with themself ",
             "over which it will be.",
             "\n\n",
-            "A door leads back outside, as doors do."
+            "A door leads back outside, as doors do.",
+            "\n\n",
+            "The robots currently on display are:"
         ].join(""), [
             this.portal(["outside", "door"], Places.planetSettlementRobotShopFront_Name()),
             this.emplacement2([
@@ -1645,7 +1655,7 @@ class Places {
                 + "You suppose these moments must be the ones he lives for, "
                 + "if you can call that living."
                 + "\n\n"
-                + "Its price is 400 credits, or 320 with coupon.'"),
+                + "Its price is 400 credits, or 320 with coupon.'").descriptionAsPartOfPlaceSet("- A wheeled robot."),
             this.emplacement2([
                 "bipedal robot",
                 "pilot/navigator robot",
@@ -1665,7 +1675,7 @@ class Places {
                 + "It's the best pilot/navigator robot money can buy.'  "
                 + "He slaps the robot's... pauldron?... briskly, and continues, "
                 + "'You can fit so many starmaps into this bad boy.  "
-                + "Its price is 300 credits, or 240 with coupon.'"),
+                + "Its price is 300 credits, or 240 with coupon.'").descriptionAsPartOfPlaceSet("- A bipedal robot."),
             this.emplacement2([
                 "six-legged robot",
                 "agricultural robot",
@@ -1684,7 +1694,7 @@ class Places {
                 + "But that just means you have an opportunity "
                 + "to get in on the ground floor.  "
                 + "Or the ground ground, in this case.  "
-                + "Its price is 400 credits, or 320 with coupon.'"),
+                + "Its price is 400 credits, or 320 with coupon.'").descriptionAsPartOfPlaceSet("- A six-legged robot."),
             this.emplacement2([
                 "drill-faced robot",
                 "mining robot",
@@ -1697,7 +1707,7 @@ class Places {
                 + "'This is the Stope & Adit Deep Dolly.  "
                 + "It's a mining robot.  "
                 + "And I always say, what's mine is yours.  "
-                + "For only 700 credits, or 560 with coupon.'"),
+                + "For only 700 credits, or 560 with coupon.'").descriptionAsPartOfPlaceSet("- A drill-faced robot."),
             this.emplacement2([
                 "gun-armed robot",
                 "military/security/military security robot",
@@ -1716,7 +1726,7 @@ class Places {
                 + "But if I may say so, you have a rather sovereign look about you, "
                 + "so I might be convinced to expedite the paperwork for you, "
                 + "provided the price is right. "
-                + "And that right price is 2500 credits, or 2000 with coupon.'")
+                + "And that right price is 2500 credits, or 2000 with coupon.'").descriptionAsPartOfPlaceSet("- A gun-armed robot.")
         ]);
         var emplacementsRobots = returnPlace.emplacements;
         for (var i = 0; i < emplacementsRobots.length; i++) {
@@ -2399,7 +2409,7 @@ class Scripts {
                 message =
                     "You insert the keycard in the slot.  "
                         + "The elevator door slides open.";
-                portalElevator.unlock().descriptionSet("The elevator door is open.");
+                portalElevator.unlock().descriptionWhenExaminedSet("The elevator door is open.");
             }
             else {
                 message = "The elevator door is already open.";
@@ -2654,11 +2664,11 @@ class Scripts {
         var message;
         if (doorIsLocked) {
             message = "The door of the left closet slides open.";
-            portalCloset.unlock().descriptionSet("The door to the left closet is open.");
+            portalCloset.unlock().descriptionWhenExaminedSet("The door to the left closet is open.");
         }
         else {
             message = "The door of the left closet slides closed.";
-            portalCloset.lock().descriptionSet("The door to the right closet is closed.");
+            portalCloset.lock().descriptionWhenExaminedSet("The door to the right closet is closed.");
         }
         u.messageEnqueue(message);
     }
@@ -2668,11 +2678,11 @@ class Scripts {
         var message;
         if (doorIsLocked) {
             message = "The door of the right closet slides open.";
-            portalCloset.unlock().descriptionSet("The door to the right closet is open.");
+            portalCloset.unlock().descriptionWhenExaminedSet("The door to the right closet is open.");
         }
         else {
             message = "The door of the right closet slides closed.";
-            portalCloset.lock().descriptionSet("The door to the right closet is closed.");
+            portalCloset.lock().descriptionWhenExaminedSet("The door to the right closet is closed.");
         }
         u.messageEnqueue(message);
     }
@@ -3739,7 +3749,7 @@ class Scripts {
     }
     placePlanetSettlementBarFront_TalkToPerson(u, w, p, c) {
         var message = [
-            "The being eyes your sand-skimmer appreciatively, almost lustfully.",
+            "The being gazes at your sand-skimmer longingly, almost lustfully.",
             "\n\n",
             "'Hey, nice skimmer.  That the model with the dual-fuel inlet-outlets?'",
             "\n\n",

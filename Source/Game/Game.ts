@@ -6,7 +6,7 @@ class Game
 		var player = Agent.fromNames
 		(
 			[ "self", "me", "myself" ]
-		).descriptionSet
+		).descriptionWhenExaminedSet
 		(
 			"This is you.  You have to start getting used to this.",
 		).itemsAdd
@@ -444,7 +444,7 @@ class Items
 		return Item.fromNames
 		(
 			[ "space suit", "spacesuit", "suit" ]
-		).descriptionSet
+		).descriptionWhenExaminedSet
 		(
 			"This is space suit from the starship Pax Aeterna.  "
 			+ "It keeps the space out and the air in.  "
@@ -460,7 +460,7 @@ class Items
 		return Item.fromNames
 		(
 			[ "survival kit", "kit" ]
-		).descriptionSet
+		).descriptionWhenExaminedSet
 		(
 			"This is a survival kit from the Pax Aeterna's escape pod."
 		).itemsAdd
@@ -489,16 +489,27 @@ class Places
 		return Emplacement.fromNames(names);
 	}
 
-	emplacement2(names: string[], description: string): Emplacement
+	emplacement2(names: string[], descriptionWhenExamined: string): Emplacement
 	{
-		return Emplacement.fromNamesAndDescription(names, description);
+		return Emplacement.fromNamesAndDescriptions
+		(
+			names, null, descriptionWhenExamined
+		);
 	}
 
-	emplacement3(names: string[], description: string, scriptUseName: string): Emplacement
+	emplacement3
+	(
+		names: string[],
+		descriptionWhenExamined: string,
+		scriptUseName: string
+	): Emplacement
 	{
-		return Emplacement.fromNamesDescriptionAndScriptUseName
+		return Emplacement.fromNamesDescriptionsAndScriptUseName
 		(
-			names, description, scriptUseName
+			names,
+			null, // descriptionAsPartOfPlace
+			descriptionWhenExamined,
+			scriptUseName
 		);
 	}
 
@@ -626,7 +637,7 @@ class Places
 				(
 					[ "left closet" ],
 					Places.friendlyShipDockingBayAntechamberClosetLeft_Name()
-				).lock().descriptionSet
+				).lock().descriptionWhenExaminedSet
 				(
 					"The door to the left closet is closed."
 				),
@@ -635,7 +646,7 @@ class Places
 				(
 					[ "right closet" ],
 					Places.friendlyShipDockingBayAntechamberClosetRight_Name()
-				).lock().descriptionSet
+				).lock().descriptionWhenExaminedSet
 				(
 					"The door to the right closet is closed."
 				),
@@ -751,7 +762,7 @@ class Places
 				this.portal
 				(
 					[ "escape pod", "pod" ], Places.friendlyShipEscapePod_Name()
-				).descriptionSet
+				).descriptionWhenExaminedSet
 				(
 					"The pod is kind of cramped-looking, "
 					+ "but as it's your only hope of survival right now, "
@@ -792,7 +803,7 @@ class Places
 				this.emplacement
 				(
 					[ "docking bay doors", "bay doors", "doors" ],
-				).lock().descriptionSet
+				).lock().descriptionWhenExaminedSet
 				(
 					"The bay doors are closed."
 				)
@@ -2760,7 +2771,9 @@ class Places
 				"\n\n",
 				"To the west, you can see another, cubical building, with a few more ",
 				"run-down looking spaceships in front of it, and decorated with ",
-				"strings of cheap but festive plastic pennants.",
+				"strings of cheap but festive plastic pennants. ",
+				"A large sign reads 'Non-Gelatinous George's Used Ships' in friendly, ",
+				"or at least extroverted, letters.",
 				"\n\n",
 				"Away to the north is the edge of another domelike building, ",
 				"possibly a store of some sort.",
@@ -2784,11 +2797,16 @@ class Places
 
 				this.emplacement2
 				(
-					[ "skimmer enthusiast", "person", "being", "buyer" ],
+					[ "seedy-looking being", "skimmer enthusiast", "person", "being", "buyer" ],
 
 					"This being is hanging around outside a bar "
 					+ "in the middle of the day.  He must be so rich."
 
+				).descriptionAsPartOfPlaceSet
+				(
+					"A seedy-looking being loitering near the entrance to the bar "
+					+ "eyes your skimmer appreciatively.  You think those are eyes, "
+					+ "anyway."
 				).commandAddFromTextsAndScriptName
 				(
 					MessageHelper.combinePhraseArrays
@@ -3087,7 +3105,20 @@ class Places
 
 			[
 				this.portal( [ "west" ], Places.planetSettlementRobotShopWest_Name() ),
-				this.portal( [ "door", "shop", "store", "inside" ], Places.planetSettlementRobotShopInterior_Name() )
+				this.portal
+				(
+					[ "door", "shop", "store", "in", "inside" ],
+					Places.planetSettlementRobotShopInterior_Name()
+				),
+
+				this.emplacement2
+				(
+					[ "store", "shop", "dome", "Buy, Robot", "Buy Robot"],
+
+					"The domed building occupied by Buy, Robot "
+					+ "is a bit less lived-in-looking than the other buildings in town.  "
+					+ "You're not sure whether that means business is good or bad."
+				)
 			]
 		);
 	}
@@ -3113,7 +3144,9 @@ class Places
 				"Maybe they're even making a little bet with themself ",
 				"over which it will be.",
 				"\n\n",
-				"A door leads back outside, as doors do."
+				"A door leads back outside, as doors do.",
+				"\n\n",
+				"The robots currently on display are:"
 			].join(""),
 
 			[
@@ -3147,6 +3180,9 @@ class Places
 					+ "if you can call that living."
 					+ "\n\n"
 					+ "Its price is 400 credits, or 320 with coupon.'"
+				).descriptionAsPartOfPlaceSet
+				(
+					"- A wheeled robot."
 				),
 
 				this.emplacement2
@@ -3173,6 +3209,9 @@ class Places
 					+ "He slaps the robot's... pauldron?... briskly, and continues, "
 					+ "'You can fit so many starmaps into this bad boy.  "
 					+ "Its price is 300 credits, or 240 with coupon.'"
+				).descriptionAsPartOfPlaceSet
+				(
+					"- A bipedal robot."
 				),
 
 				this.emplacement2
@@ -3198,6 +3237,9 @@ class Places
 					+ "to get in on the ground floor.  "
 					+ "Or the ground ground, in this case.  "
 					+ "Its price is 400 credits, or 320 with coupon.'"
+				).descriptionAsPartOfPlaceSet
+				(
+					"- A six-legged robot."
 				),
 
 				this.emplacement2
@@ -3217,6 +3259,9 @@ class Places
 					+ "It's a mining robot.  "
 					+ "And I always say, what's mine is yours.  "
 					+ "For only 700 credits, or 560 with coupon.'"
+				).descriptionAsPartOfPlaceSet
+				(
+					"- A drill-faced robot."
 				),
 
 				this.emplacement2
@@ -3242,6 +3287,9 @@ class Places
 					+ "so I might be convinced to expedite the paperwork for you, "
 					+ "provided the price is right. "
 					+ "And that right price is 2500 credits, or 2000 with coupon.'"
+				).descriptionAsPartOfPlaceSet
+				(
+					"- A gun-armed robot."
 				)
 
 			]
@@ -4473,7 +4521,7 @@ class Scripts
 				message =
 					"You insert the keycard in the slot.  "
 					+ "The elevator door slides open.";
-				portalElevator.unlock().descriptionSet("The elevator door is open.");
+				portalElevator.unlock().descriptionWhenExaminedSet("The elevator door is open.");
 			}
 			else
 			{
@@ -4813,12 +4861,12 @@ class Scripts
 		if (doorIsLocked)
 		{
 			message = "The door of the left closet slides open.";
-			portalCloset.unlock().descriptionSet("The door to the left closet is open.");
+			portalCloset.unlock().descriptionWhenExaminedSet("The door to the left closet is open.");
 		}
 		else
 		{
 			message = "The door of the left closet slides closed.";
-			portalCloset.lock().descriptionSet("The door to the right closet is closed.");
+			portalCloset.lock().descriptionWhenExaminedSet("The door to the right closet is closed.");
 		}
 		u.messageEnqueue(message);
 	}
@@ -4834,12 +4882,12 @@ class Scripts
 		if (doorIsLocked)
 		{
 			message = "The door of the right closet slides open.";
-			portalCloset.unlock().descriptionSet("The door to the right closet is open.");
+			portalCloset.unlock().descriptionWhenExaminedSet("The door to the right closet is open.");
 		}
 		else
 		{
 			message = "The door of the right closet slides closed.";
-			portalCloset.lock().descriptionSet("The door to the right closet is closed.");
+			portalCloset.lock().descriptionWhenExaminedSet("The door to the right closet is closed.");
 		}
 		u.messageEnqueue(message);
 	}
@@ -6362,7 +6410,7 @@ class Scripts
 	{
 		var message =
 		[
-			"The being eyes your sand-skimmer appreciatively, almost lustfully.",
+			"The being gazes at your sand-skimmer longingly, almost lustfully.",
 			"\n\n",
 			"'Hey, nice skimmer.  That the model with the dual-fuel inlet-outlets?'",
 			"\n\n",
