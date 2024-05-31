@@ -2981,9 +2981,24 @@ class Places
 					].join(""),
 
 					this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name
-				).activate().commandAddFromTextsAndScriptName
+				)
+				.activate()
+				.commandAddFromTextSourceAndScriptName
 				(
-					MessageHelper.combinePhraseArrays
+					/*
+					TextSourceStrings.fromStrings
+					(
+						MessageHelper.combinePhraseArrays
+						([
+							[ "put", "insert" ],
+							[ "quatloo", "coin", "money" ],
+							[ null, "in" ],
+							[ "slot machine", "gambling machine", "machine" ]
+						])
+					),
+					*/
+
+					TextSourcePhraseCombination.fromPhraseArrays
 					([
 						[ "put", "insert" ],
 						[ "quatloo", "coin", "money" ],

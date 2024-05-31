@@ -1540,7 +1540,22 @@ class Places {
                 "If the symbols match, you presumably get some sort of prize.",
                 "\n\n",
                 "You were never cool, or dumb, enough to enjoy gambling."
-            ].join(""), this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name).activate().commandAddFromTextsAndScriptName(MessageHelper.combinePhraseArrays([
+            ].join(""), this.scripts.placePlanetSettlementBarInterior_UseSlotMachine.name)
+                .activate()
+                .commandAddFromTextSourceAndScriptName(
+            /*
+            TextSourceStrings.fromStrings
+            (
+                MessageHelper.combinePhraseArrays
+                ([
+                    [ "put", "insert" ],
+                    [ "quatloo", "coin", "money" ],
+                    [ null, "in" ],
+                    [ "slot machine", "gambling machine", "machine" ]
+                ])
+            ),
+            */
+            TextSourcePhraseCombination.fromPhraseArrays([
                 ["put", "insert"],
                 ["quatloo", "coin", "money"],
                 [null, "in"],
