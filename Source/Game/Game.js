@@ -120,7 +120,7 @@ class Items {
             "got a lucrative government contract to develop it.",
             "\n\n",
             "Besides that, the water that comes out is warm.  Yuck."
-        ].join("")).commandAdd(new Command([
+        ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName([
             "drink dehydrated water",
             "drink water",
             "drink bottle",
@@ -148,7 +148,7 @@ class Items {
             "\n\n",
             "A dying man used his last breath to recommend it to you, ",
             "so you figure it must be good."
-        ].join("")).commandAdd(new Command(MessageHelper.combinePhraseArrays([
+        ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
             ["put", "place", "insert"],
             ["cartridge", "data cartridge"],
             [null, "in", "into"],
@@ -166,7 +166,7 @@ class Items {
             "There's a button and an indicator light.  ",
             "And some sort of... grille?.. on one end.  ",
             "That's it, though."
-        ].join("")).commandAdd(new Command([
+        ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName([
             "press button on gadget",
             "turn on gadget",
             "turn off gadget",
@@ -237,7 +237,7 @@ class Items {
         ].join(""));
     }
     skimmerKey() {
-        return Item.fromNamesAndDescription(["skimmer key"], "This is the starter key for a sand skimmer.").commandAdd(new Command(MessageHelper.combinePhraseArrays([
+        return Item.fromNamesAndDescription(["skimmer key"], "This is the starter key for a sand skimmer.").commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
             ["put", "insert", "use"],
             ["key", "skimmer key"],
             [null, "in", "on"],
@@ -250,7 +250,7 @@ class Items {
             + "Maybe they should call it an air suit.").scriptGetNameSet(Scripts.Instance().placeFriendlyShipDockingBayAntechamberClosetRight_GetSpaceSuit.name);
     }
     survivalKit(contents) {
-        return Item.fromNames(["survival kit", "kit"]).descriptionSet("This is a survival kit from the Pax Aeterna's escape pod.").itemsAdd(contents).commandAddFromTextsAndScriptName(["open survival kit", "open kit"], Scripts.Instance().itemSurvivalKitOpen.name);
+        return Item.fromNames(["survival kit", "kit"]).descriptionSet("This is a survival kit from the Pax Aeterna's escape pod.").itemsAdd(contents).commandAddFromTextSourceAndScriptName(TextSourceStrings.fromStrings(["open survival kit", "open kit"]), Scripts.Instance().itemSurvivalKitOpen.name);
     }
 } // end class Items
 class Places {
@@ -316,8 +316,8 @@ class Places {
             this.portal(["left closet"], Places.friendlyShipDockingBayAntechamberClosetLeft_Name()).lock().descriptionSet("The door to the left closet is closed."),
             this.portal(["right closet"], Places.friendlyShipDockingBayAntechamberClosetRight_Name()).lock().descriptionSet("The door to the right closet is closed."),
             this.emplacement(["controls", "console", "control console"]),
-            this.emplacement(["left button", "button"]).commandAdd(new Command(["press left button"], this.scripts.placeFriendlyShipDockingBayAntechamber_PressLeftButton.name)),
-            this.emplacement(["right button", "button"]).commandAdd(new Command(["press right button"], this.scripts.placeFriendlyShipDockingBayAntechamber_PressRightButton.name))
+            this.emplacement(["left button", "button"]).commandAdd(Command.fromTextsAndScriptExecuteName(["press left button"], this.scripts.placeFriendlyShipDockingBayAntechamber_PressLeftButton.name)),
+            this.emplacement(["right button", "button"]).commandAdd(Command.fromTextsAndScriptExecuteName(["press right button"], this.scripts.placeFriendlyShipDockingBayAntechamber_PressRightButton.name))
         ]);
     }
     static friendlyShipDockingBayAntechamber_Name() {
@@ -395,7 +395,7 @@ class Places {
             + "Next to the elevator door is a small panel with a slot in it.", [
             this.portal3(["elevator", "door"], Places.friendlyShipDockingBayAntechamber_Name(), this.scripts.placeFriendlyShipEngineeringDeckAft_GoElevator.name).lockedSet(true),
             this.portal(["forward"], Places.friendlyShipEngineeringDeckAmidships_Name()),
-            this.emplacement2(["slot", "lock", "keycard slot", "keyhole"], "The slot is intended to accept a security keycard.").commandAdd(new Command([
+            this.emplacement2(["slot", "lock", "keycard slot", "keyhole"], "The slot is intended to accept a security keycard.").commandAdd(Command.fromTextsAndScriptExecuteName([
                 "use keycard on slot",
                 "insert keycard in slot",
                 "put keycard in slot"
@@ -440,7 +440,7 @@ class Places {
                 "button"
             ], "This button opens the docking bay doors, "
                 + "if they happen to be closed.  "
-                + "Otherwise, they do nothing.  Or so you assume.").visibleSet(false).commandAdd(new Command([
+                + "Otherwise, they do nothing.  Or so you assume.").visibleSet(false).commandAdd(Command.fromTextsAndScriptExecuteName([
                 "press open button",
                 "press open bay button",
                 "press open bay doors button",
@@ -453,7 +453,7 @@ class Places {
                 "button"
             ], "This button closes the docking bay doors, "
                 + "if they happen to be open.  "
-                + "Otherwise, they do nothing.  Or so you assume.").visibleSet(false).commandAdd(new Command([
+                + "Otherwise, they do nothing.  Or so you assume.").visibleSet(false).commandAdd(Command.fromTextsAndScriptExecuteName([
                 "press close button",
                 "press close bay button",
                 "press close bay doors button"
@@ -467,8 +467,8 @@ class Places {
                 + "The view is not especially interesting.  "
                 + "This is a pretty down-to-business window, on the whole, "
                 + "especially when the bay doors are closed."),
-            this.emplacement(["body"]).commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name)),
-            this.emplacement(["other body"]).commandAdd(new Command(["search other body"], this.scripts.emplacementBodyEmptySearch.name))
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name)),
+            this.emplacement(["other body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search other body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipEngineeringDeckAmidships_Name() {
@@ -502,14 +502,14 @@ class Places {
             + "the pod's surroundings can be seen.", [
             this.portal3(["door", "outside", "out"], null, // destination
             this.scripts.placeFriendlyShipEscapePod_GoDoor.name),
-            this.emplacement(["window"]).commandAdd(new Command(["look window", "look through window", "look out window"], this.scripts.placeFriendlyShipEscapePod_LookWindow.name)),
-            this.emplacement(["autonav button", "autonav", "button"]).commandAdd(new Command(["press autonav", "press autonav button"], this.scripts.placeFriendlyShipEscapePod_PressAutonavButton.name)),
+            this.emplacement(["window"]).commandAdd(Command.fromTextsAndScriptExecuteName(["look window", "look through window", "look out window"], this.scripts.placeFriendlyShipEscapePod_LookWindow.name)),
+            this.emplacement(["autonav button", "autonav", "button"]).commandAdd(Command.fromTextsAndScriptExecuteName(["press autonav", "press autonav button"], this.scripts.placeFriendlyShipEscapePod_PressAutonavButton.name)),
             this.emplacement(["buttons"]),
             this.emplacement(["console"]),
             this.emplacement(["don't button", "button"]),
-            this.emplacement(["launch button", "button"]).commandAdd(new Command(["press launch", "press launch button"], this.scripts.placeFriendlyShipEscapePod_PressLaunchButton.name)),
+            this.emplacement(["launch button", "button"]).commandAdd(Command.fromTextsAndScriptExecuteName(["press launch", "press launch button"], this.scripts.placeFriendlyShipEscapePod_PressLaunchButton.name)),
             this.emplacement(["monitor screen"]),
-            this.emplacement(emplacementSafetyHarnessNames).commandAdd(new Command(MessageHelper.combinePhraseArrays([
+            this.emplacement(emplacementSafetyHarnessNames).commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
                 ["use", "fasten", "put on"],
                 emplacementSafetyHarnessNames
             ]), this.scripts.placeFriendlyShipEscapePod_PutOnSafetyHarness.name)),
@@ -575,7 +575,7 @@ class Places {
                 + "From there, the cartridge is generally slotted into a reader "
                 + "and its contents displayed on a screen.  "
                 + "It's a complicated system, to be sure, "
-                + "but that sixteen hours of training you took was probably enough.", this.scripts.placeFriendlyShipLibrary_UseConsole.name).commandAdd(new Command(["type", "enter"], this.scripts.placeFriendlyShipLibrary_Type.name)),
+                + "but that sixteen hours of training you took was probably enough.", this.scripts.placeFriendlyShipLibrary_UseConsole.name).commandAdd(Command.fromTextsAndScriptExecuteName(["type", "enter"], this.scripts.placeFriendlyShipLibrary_Type.name)),
             this.emplacement2(["table"], "The table provides a comfortable place "
                 + "for the more literate members of the crew to research data tapes."
                 + "\n\n"
@@ -588,7 +588,7 @@ class Places {
             this.emplacement2(["scientist", "man", "person", "body", "corpse", "being"], "The scientist is not moving in any perceptible way.  "
                 + "You can't tell from here if he's even breathing, "
                 + "which is the most important kind of moving, "
-                + "when you think about it.").commandAdd(new Command([
+                + "when you think about it.").commandAdd(Command.fromTextsAndScriptExecuteName([
                 "search body",
                 "search man",
                 "search corpse",
@@ -618,7 +618,7 @@ class Places {
             + "when he was alive.  Every time he talked to you, at a minimum.", [
             this.portal(["forward"], Places.friendlyShipLowerDeckHallAmidships_Name()),
             this.portal(["elevator"], Places.friendlyShipUpperDeckHallAft_Name()),
-            this.emplacement(["body"]).commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipLowerDeckHallAft_Name() {
@@ -654,7 +654,7 @@ class Places {
             + "You start to feel sorry for whoever has to clean all this up.", [
             this.portal(["aft"], Places.friendlyShipLowerDeckHallAmidships_Name()),
             this.portal(["elevator", "door"], Places.friendlyShipEngineeringDeckForward_Name()),
-            this.emplacement(["body"]).commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipLowerDeckHallForward_Name() {
@@ -671,7 +671,7 @@ class Places {
             + "This is the most awkward pose yet.", [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallAmidships_Name()),
             this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallAft_Name()),
-            this.emplacement(["body"]).commandAdd(new Command(["search body"], this.scripts.emplacementBodyEmptySearch.name))
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipUpperDeckHallAft_Name() {
@@ -705,7 +705,7 @@ class Places {
             + "and nobody's been down this hall to find them until just now.  "
             + "Unlikely, but we shouldn't rule anything out.", [
             this.portal(["aft", "library"], Places.friendlyShipLibrary_Name()),
-            this.emplacement(["body"]).commandAdd(new Command(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
         ]);
     }
     static friendlyShipUpperDeckHallForward_Name() {
@@ -880,7 +880,7 @@ class Places {
             this.emplacement2(["hole"], "This is a hole in the side of the cliff face, "
                 + "about 40 centimeters in diameter.  Its interior is "
                 + "deeply shadowed, making it impossible to see what, "
-                + "if anything, might be inside it.").commandAdd(new Command(["look hole", "look in hole", "reach in hole", "put hand in hole"], this.scripts.placePlanetCliffsBottomNorthwestWestSide_LookInHole.name))
+                + "if anything, might be inside it.").commandAdd(Command.fromTextsAndScriptExecuteName(["look hole", "look in hole", "reach in hole", "put hand in hole"], this.scripts.placePlanetCliffsBottomNorthwestWestSide_LookInHole.name))
         ]);
     }
     static planetCliffsBottomNorthwestWestSide_Name() {
@@ -958,7 +958,7 @@ class Places {
             this.portal3(["east"], Places.planetCliffsBottomSoutheast_Name(), this.scripts.placePlanetCliffsCaveInterior_GoEast.name),
             Agent.fromNamesAndDescription(["cave beast", "beast", "monster", "creature"], "It's dark in here, but as near as you can make out, "
                 + "you think this might be a monster charging toward you, "
-                + "presumably to kill you.").commandAdd(new Command(MessageHelper.combinePhraseArrays([
+                + "presumably to kill you.").commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
                 ["throw"],
                 ["canteen", "bottle", "dehydrated water"],
                 [null, "at"],
@@ -1113,7 +1113,7 @@ class Places {
                 "beams",
                 "beams of light",
                 "light"
-            ]).activate().commandAdd(new Command(MessageHelper.combinePhraseArrays([
+            ]).activate().commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
                 ["put", "place", "hold", "use"],
                 [
                     "reflective glass",
@@ -1402,7 +1402,7 @@ class Places {
                 + "a lost civilization under the surface of a barely inhabited planet.  "
                 + "You knew the cartridge technology wasn't exactly state-of-the-art, "
                 + "but this is ridiculous."),
-            this.emplacement(["alien"]).commandAdd(new Command(["talk to alien"], this.scripts.placePlanetCavernsSteamworks_TalkToAlien.name))
+            this.emplacement(["alien"]).commandAdd(Command.fromTextsAndScriptExecuteName(["talk to alien"], this.scripts.placePlanetCavernsSteamworks_TalkToAlien.name))
         ]);
     }
     static planetCavernsSteamworks_Name() {
@@ -1500,7 +1500,7 @@ class Places {
         ].join("");
         return this.place3(Places.planetSettlementBarInterior_Name(), description, [
             this.portal(["west", "out", "outside", "door"], Places.planetSettlementBarFront_Name()),
-            this.emplacement2(["band", "performers", "musicians", "singer"], "You like some of their early stuff.").commandAdd(new Command(["talk band", "talk to band"], this.scripts.placePlanetSettlementBarInterior_TalkToBand.name)),
+            this.emplacement2(["band", "performers", "musicians", "singer"], "You like some of their early stuff.").commandAdd(Command.fromTextsAndScriptExecuteName(["talk band", "talk to band"], this.scripts.placePlanetSettlementBarInterior_TalkToBand.name)),
             this.emplacement2(["bar"], "The light is neither very bright nor pleasant, "
                 + "nor is the bar polished.  "
                 + "That's a literary reference, kids.  "
@@ -1511,10 +1511,10 @@ class Places {
                 "'listen to your problems' kind of bartender.  ",
                 "You try to catch his eye, but he evades your gaze ",
                 "with the effortless skill of long practice."
-            ].join("")).commandAdd(new Command([
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName([
                 "talk to bartender", "talk to barman",
                 "talk bartender", "talk barman"
-            ], this.scripts.placePlanetSettlementBarInterior_TalkToBartender.name)).commandAdd(new Command([
+            ], this.scripts.placePlanetSettlementBarInterior_TalkToBartender.name)).commandAdd(Command.fromTextsAndScriptExecuteName([
                 "buy bru-ale", "buy drink", "buy beer",
                 "order bru-ale", "order drink", "order beer"
             ], this.scripts.placePlanetSettlementBarInterior_BuyDrink.name)),
@@ -1525,7 +1525,7 @@ class Places {
                 "and unpleasant fluids, ",
                 "but at least if we call them patrons we don't have to focus ",
                 "on their distinguishing characteristics."
-            ].join("")).commandAdd(new Command(MessageHelper.combinePhraseArrays([
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
                 ["talk", "talk to"],
                 ["customers", "patrons", "barflies"]
             ]), this.scripts.placePlanetSettlementBarInterior_TalkToCustomers.name)),
@@ -1873,16 +1873,16 @@ class Places {
             "\n\n",
             "A vent high in the aft wall provides ventilation for the steamy air."
         ].join(""), [
-            this.emplacement2(["dirty bin"], "This laundry bin is full of used, dirty clothes awaiting washing.  ").commandAdd(new Command(["get in bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)).commandAdd(new Command(["get in dirty bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["dirty bin"], "This laundry bin is full of used, dirty clothes awaiting washing.  ").commandAdd(Command.fromTextsAndScriptExecuteName(["get in bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["get in dirty bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
             this.emplacement2(["washer bin"], "This empty laundry bin stands in front of the washer, "
-                + "waiting to be loaded with clean wet clothes.  ").commandAdd(new Command(["get in washer bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
-            this.emplacement2(["washer", "clothes washer", "washing machine"], "The washer is full of wet clothes that it is in the process of washing.").commandAdd(new Command(["get in washer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
+                + "waiting to be loaded with clean wet clothes.  ").commandAdd(Command.fromTextsAndScriptExecuteName(["get in washer bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+            this.emplacement2(["washer", "clothes washer", "washing machine"], "The washer is full of wet clothes that it is in the process of washing.").commandAdd(Command.fromTextsAndScriptExecuteName(["get in washer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
             this.emplacement2(["wet bin"], "This laundry bin is full of clean, wet clothes awaiting drying."),
-            this.emplacement2(["dryer", "clothes dryer"], "The dryer is full of clean, wet clothes that it is currently drying.").commandAdd(new Command(["get in dryer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
+            this.emplacement2(["dryer", "clothes dryer"], "The dryer is full of clean, wet clothes that it is currently drying.").commandAdd(Command.fromTextsAndScriptExecuteName(["get in dryer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
             this.emplacement2(["dryer bin"], "This empty laundry bin stand in front of the dryer, "
-                + "waiting to be loaded with clean dry clothes.").commandAdd(new Command(["get in dryer bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+                + "waiting to be loaded with clean dry clothes.").commandAdd(Command.fromTextsAndScriptExecuteName(["get in dryer bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
             this.emplacement2(["dry bin"], "This laundry bin is full of clean, dry clothes "
-                + "awaiting pressing and folding.").commandAdd(new Command(["get in dry bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+                + "awaiting pressing and folding.").commandAdd(Command.fromTextsAndScriptExecuteName(["get in dry bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
             this.emplacement2(["presser"], [
                 "The presser/folder's robotic arms are taking clean, ",
                 "dry clothes from its intake hopper and ",
@@ -1890,16 +1890,16 @@ class Places {
                 "which passes the clothes through the rollers of a steam presser.  ",
                 "From there, other machines fold the clothes ",
                 "and deposit them in the waiting laundry bin."
-            ].join("")).commandAdd(new Command(["get in dryer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["get in dryer"], this.scripts.placeEnemyShipLaundry_GetInMachine.name)),
             this.emplacement2(["presser bin"], "This laundry bin stands in front of the presser/folder, "
                 + "which is currently in the process of loading it "
-                + "with clean, dry, pressed, and folded clothes.").commandAdd(new Command(["get in presser bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+                + "with clean, dry, pressed, and folded clothes.").commandAdd(Command.fromTextsAndScriptExecuteName(["get in presser bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
             this.emplacement2(["pressed bin"], "This laundry bin is full of clean, dry, pressed, and folded clothes "
-                + "awaiting delivery to their owners' respective quarters.").commandAdd(new Command(["get in pressed bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
+                + "awaiting delivery to their owners' respective quarters.").commandAdd(Command.fromTextsAndScriptExecuteName(["get in pressed bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
             this.emplacement2(["vent"], [
                 "The rectangular vent cover is about three meters above the ground, ",
                 "and is secured to the wall with a standard screw at each corner."
-            ].join("")).commandAdd(new Command(["get in vent"], this.scripts.placeEnemyShipLaundry_GetInVent.name))
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["get in vent"], this.scripts.placeEnemyShipLaundry_GetInVent.name))
         ]);
     }
     static enemyShipLaundry_Name() {
@@ -2960,7 +2960,7 @@ class Scripts {
                     "See?  You just don't get that kind of satisfying clatter ",
                     "with solid-state."
                 ].join("");
-            p.itemAdd(Item.fromNamesAndDescription(["cartridge", "data cartridge", "cart", "data cart"], "A label printed on this data cartridge reads 'Astral Bodies'.").commandAdd(new Command([
+            p.itemAdd(Item.fromNamesAndDescription(["cartridge", "data cartridge", "cart", "data cart"], "A label printed on this data cartridge reads 'Astral Bodies'.").commandAdd(Command.fromTextsAndScriptExecuteName([
                 "put cartridge in reader",
                 "put cartridge in slot",
                 "use cartridge on reader"

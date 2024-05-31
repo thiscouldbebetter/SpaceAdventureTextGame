@@ -211,7 +211,7 @@ class Items
 
 		).commandAdd
 		(
-			new Command
+			Command.fromTextsAndScriptExecuteName
 			(
 				[
 					"drink dehydrated water",
@@ -262,7 +262,7 @@ class Items
 
 		).commandAdd
 		(
-			new Command
+			Command.fromTextsAndScriptExecuteName
 			(
 				MessageHelper.combinePhraseArrays
 				([
@@ -297,7 +297,7 @@ class Items
 
 		).commandAdd
 		(
-			new Command
+			Command.fromTextsAndScriptExecuteName
 			(
 				[
 					"press button on gadget",
@@ -425,7 +425,7 @@ class Items
 			"This is the starter key for a sand skimmer."
 		).commandAdd
 		(
-			new Command
+			Command.fromTextsAndScriptExecuteName
 			(
 				MessageHelper.combinePhraseArrays
 				([
@@ -466,9 +466,9 @@ class Items
 		).itemsAdd
 		(
 			contents
-		).commandAddFromTextsAndScriptName
+		).commandAddFromTextSourceAndScriptName
 		(
-			[ "open survival kit", "open kit" ],
+			TextSourceStrings.fromStrings([ "open survival kit", "open kit" ]),
 			Scripts.Instance().itemSurvivalKitOpen.name
 		);
 	}
@@ -647,7 +647,7 @@ class Places
 					[ "left button", "button" ]
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "press left button" ],
 						this.scripts.placeFriendlyShipDockingBayAntechamber_PressLeftButton.name
@@ -659,7 +659,7 @@ class Places
 					[ "right button", "button" ]
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "press right button" ],
 						this.scripts.placeFriendlyShipDockingBayAntechamber_PressRightButton.name
@@ -846,7 +846,7 @@ class Places
 					"The slot is intended to accept a security keycard."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"use keycard on slot",
@@ -923,7 +923,7 @@ class Places
 
 				).visibleSet(false).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"press open button",
@@ -950,7 +950,7 @@ class Places
 					+ "Otherwise, they do nothing.  Or so you assume."
 				).visibleSet(false).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"press close button",
@@ -984,7 +984,7 @@ class Places
 
 				this.emplacement( [ "body" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						["search body"],
 						this.scripts.emplacementBodyEmptySearch.name
@@ -993,7 +993,7 @@ class Places
 
 				this.emplacement( [ "other body" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "search other body" ],
 						this.scripts.emplacementBodyEmptySearch.name
@@ -1076,7 +1076,7 @@ class Places
 					[ "window" ]
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "look window", "look through window", "look out window" ],
 						this.scripts.placeFriendlyShipEscapePod_LookWindow.name
@@ -1085,7 +1085,7 @@ class Places
 
 				this.emplacement( [ "autonav button", "autonav", "button" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "press autonav", "press autonav button" ],
 						this.scripts.placeFriendlyShipEscapePod_PressAutonavButton.name
@@ -1096,7 +1096,7 @@ class Places
 				this.emplacement( [ "don't button", "button" ] ),
 				this.emplacement( [ "launch button", "button" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "press launch", "press launch button" ],
 						this.scripts.placeFriendlyShipEscapePod_PressLaunchButton.name
@@ -1109,7 +1109,7 @@ class Places
 					emplacementSafetyHarnessNames
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						MessageHelper.combinePhraseArrays
 						([
@@ -1221,7 +1221,7 @@ class Places
 					this.scripts.placeFriendlyShipLibrary_UseConsole.name
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "type", "enter" ],
 						this.scripts.placeFriendlyShipLibrary_Type.name
@@ -1252,7 +1252,7 @@ class Places
 					+ "when you think about it."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"search body",
@@ -1302,7 +1302,7 @@ class Places
 				this.portal( [ "elevator" ], Places.friendlyShipUpperDeckHallAft_Name() ),
 				this.emplacement( [ "body" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "search body" ],
 						this.scripts.emplacementBodyEmptySearch.name
@@ -1368,7 +1368,7 @@ class Places
 				this.portal( [ "elevator", "door" ], Places.friendlyShipEngineeringDeckForward_Name() ),
 				this.emplacement( [ "body" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "search body" ],
 						this.scripts.emplacementBodyEmptySearch.name
@@ -1403,7 +1403,7 @@ class Places
 				this.portal( [ "elevator", "door" ], Places.friendlyShipLowerDeckHallAft_Name() ),
 				this.emplacement( [ "body" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "search body" ],
 						this.scripts.emplacementBodyEmptySearch.name
@@ -1481,7 +1481,7 @@ class Places
 
 				this.emplacement( [ "body" ] ).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						["search body"],
 						this.scripts.emplacementBodyKeycardSearch.name
@@ -1772,7 +1772,7 @@ class Places
 					+ "if anything, might be inside it."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "look hole", "look in hole", "reach in hole", "put hand in hole" ],
 						this.scripts.placePlanetCliffsBottomNorthwestWestSide_LookInHole.name
@@ -1919,7 +1919,7 @@ class Places
 					+ "presumably to kill you."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						MessageHelper.combinePhraseArrays
 						([
@@ -2197,7 +2197,7 @@ class Places
 					]
 				).activate().commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						MessageHelper.combinePhraseArrays
 						([
@@ -2718,7 +2718,7 @@ class Places
 					[ "alien" ]
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "talk to alien" ],
 						this.scripts.placePlanetCavernsSteamworks_TalkToAlien.name
@@ -2886,7 +2886,7 @@ class Places
 					"You like some of their early stuff."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "talk band", "talk to band" ],
 
@@ -2918,7 +2918,7 @@ class Places
 
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"talk to bartender", "talk to barman",
@@ -2928,7 +2928,7 @@ class Places
 					)
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"buy bru-ale", "buy drink", "buy beer",
@@ -2952,7 +2952,7 @@ class Places
 					].join("")
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						MessageHelper.combinePhraseArrays
 						([
@@ -3513,14 +3513,14 @@ class Places
 					"This laundry bin is full of used, dirty clothes awaiting washing.  "
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
 					)
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in dirty bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
@@ -3535,7 +3535,7 @@ class Places
 					+ "waiting to be loaded with clean wet clothes.  "
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in washer bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
@@ -3549,7 +3549,7 @@ class Places
 					"The washer is full of wet clothes that it is in the process of washing."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in washer" ],
 						this.scripts.placeEnemyShipLaundry_GetInMachine.name
@@ -3569,7 +3569,7 @@ class Places
 					"The dryer is full of clean, wet clothes that it is currently drying."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in dryer" ],
 						this.scripts.placeEnemyShipLaundry_GetInMachine.name
@@ -3584,7 +3584,7 @@ class Places
 					+ "waiting to be loaded with clean dry clothes."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in dryer bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
@@ -3599,7 +3599,7 @@ class Places
 					+ "awaiting pressing and folding."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in dry bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
@@ -3621,7 +3621,7 @@ class Places
 
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in dryer" ],
 						this.scripts.placeEnemyShipLaundry_GetInMachine.name
@@ -3637,7 +3637,7 @@ class Places
 					+ "with clean, dry, pressed, and folded clothes."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in presser bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
@@ -3652,7 +3652,7 @@ class Places
 					+ "awaiting delivery to their owners' respective quarters."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in pressed bin" ],
 						this.scripts.placeEnemyShipLaundry_GetInBin.name
@@ -3669,7 +3669,7 @@ class Places
 					].join("")
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[ "get in vent" ],
 						this.scripts.placeEnemyShipLaundry_GetInVent.name
@@ -5272,7 +5272,7 @@ class Scripts
 					"A label printed on this data cartridge reads 'Astral Bodies'."
 				).commandAdd
 				(
-					new Command
+					Command.fromTextsAndScriptExecuteName
 					(
 						[
 							"put cartridge in reader",
