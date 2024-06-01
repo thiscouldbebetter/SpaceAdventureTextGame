@@ -1635,7 +1635,7 @@ class Places {
             "\n\n",
             "The robots currently on display are:"
         ].join(""), [
-            this.portal(["outside", "door"], Places.planetSettlementRobotShopFront_Name()),
+            this.portal(["out", "outside", "door"], Places.planetSettlementRobotShopFront_Name()),
             this.emplacement2([
                 "wheeled robot",
                 "domestic robot",
@@ -1655,7 +1655,7 @@ class Places {
                 + "You suppose these moments must be the ones he lives for, "
                 + "if you can call that living."
                 + "\n\n"
-                + "Its price is 400 credits, or 320 with coupon.'").descriptionAsPartOfPlaceSet("- A wheeled robot."),
+                + "'Its price is 400 credits, or 320 with coupon.'").descriptionAsPartOfPlaceSet("- A wheeled robot."),
             this.emplacement2([
                 "bipedal robot",
                 "pilot/navigator robot",
@@ -2263,6 +2263,7 @@ class Scripts {
             this.regionFriendlyShip_UpdateForTurn,
             this.regionPlanetDesert_UpdateForTurn,
             this.regionPlanetSettlement_UpdateForTurn,
+            this.regionPlanetSettlement_NavigationRobotUpdate,
             this.todo
         ];
         var scripts = new Array();
@@ -3571,7 +3572,7 @@ class Scripts {
             "A single claw that somehow miraculously survived the explosion relatively intact ",
             "lies near the mouth of the cave. "
         ].join("");
-        p.agentRemove(p.agentByName("beast"));
+        p.agentRemove(p.agentByName("beast"), w);
         var itemCaveBeastClaw = Items.Instance().CaveBeastClaw;
         p.itemAdd(itemCaveBeastClaw);
         u.messageEnqueue(message);
@@ -4076,13 +4077,16 @@ class Scripts {
             + "to purchase this robot.'  Then he shakes his head, "
             + "while maintaining eye contact, "
             + "perhaps trying to communicate that he blames "
-            + "the current state of math education, "
+            + "the current state of mathematics education, "
             + "not you personally, for the error.";
         var commandText = c.text();
         var robotToPurchaseName = commandText.split(" ").slice(1).join(" ");
         var emplacementRobotNavigator = p.emplacementByName("navigator");
         var robotToPurchaseIsNavigator = emplacementRobotNavigator.namesInclude(robotToPurchaseName);
-        if (robotToPurchaseIsNavigator) {
+        if (robotToPurchaseIsNavigator == false) {
+            message = messageNotEnoughMoney;
+        }
+        else {
             var agentPlayer = w.agentPlayer;
             var itemCouponBook = agentPlayer.itemByName("coupon book");
             var playerHasCouponBook = (itemCouponBook != null);
@@ -4092,13 +4096,22 @@ class Scripts {
                 message = messageNotEnoughMoney;
             }
             else {
+                message =
+                    "The salesbeing, with evident joy, "
+                        + "accepts your money, then instructs the robot "
+                        + "that you are its new owner.  "
+                        + "It begins to follow you, awaiting your command.  "
+                        + "You're not sure what commands to give a navigation robot.  "
+                        + "You guess you'll need to buy a spaceship too, now.  "
+                        + "That's how they get you.";
                 agentPlayer.itemRemoveQuantity(itemQuatloos, priceOfRobotInQuatloos);
-                var agentRobot = Agent.fromNames(emplacementRobotNavigator.names);
+                p.emplacementRemove(emplacementRobotNavigator);
+                var agentRobot = Agent.fromNames(emplacementRobotNavigator.names).descriptionAsPartOfPlaceSet("The navigation robot you purchased follows obediently behind you.").descriptionWhenExaminedSet("This is your navigation robot.  "
+                    + "If only your high-school classmates could see you now.  "
+                    + "They'd be so jealous.  Well, except maybe for Todd Astromatix.  "
+                    + "He's loaded.  You hear he invented some revolutionary new kind of thing.").scriptUpdateForTurnNameSet(Scripts.Instance().regionPlanetSettlement_NavigationRobotUpdate.name);
                 p.agentAdd(agentRobot, w);
             }
-        }
-        else {
-            message = messageNotEnoughMoney;
         }
         u.messageEnqueue(message);
     }
@@ -4206,6 +4219,20 @@ class Scripts {
         }
         turnsSinceLastDrink++;
         agentPlayer.stateGroup.stateWithNameSetToValue(stateName, turnsSinceLastDrink);
+    }
+    regionPlanetSettlement_NavigationRobotUpdate(u, w, p, c) {
+        var placeBarInterior = w.placeByName(Places.planetSettlementBarInterior_Name());
+        var placeCurrent = w.placeCurrent();
+        if (placeCurrent.name != placeBarInterior.name) {
+            var region = placeCurrent.region(w);
+            var agentRobot = region.agentByName("navigation robot");
+            if (agentRobot != null) {
+                if (p != placeCurrent) {
+                    p.agentRemove(agentRobot, w);
+                    placeCurrent.agentAdd(agentRobot, w);
+                }
+            }
+        }
     }
     regionPlanetSettlement_UpdateForTurn(u, w, p, c) {
         var placeBarFront = w.placeByName(Places.planetSettlementBarFront_Name());

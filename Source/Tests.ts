@@ -296,7 +296,7 @@ class Tests
 		var run = this.run.bind(this);
 
 		run("cheat goto " + Places.planetSettlementBarInterior_Name() );
-		run("cheat get quatloos 1" );
+		run("cheat get 1 quatloos" );
 
 		Assert.isFalse(world.isOver);
 
