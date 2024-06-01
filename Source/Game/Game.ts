@@ -1348,7 +1348,24 @@ class Places
 
 			[
 				this.portal( [ "forward" ], Places.friendlyShipLowerDeckHallForward_Name() ),
-				this.portal( [ "aft" ] , Places.friendlyShipLowerDeckHallAft_Name() )
+				this.portal( [ "aft" ] , Places.friendlyShipLowerDeckHallAft_Name() ),
+
+				Agent.fromNamesDescriptionsAndScriptUpdateForTurnName
+				(
+					[ "vadik soldier", "vadik", "enemy" ],
+
+					"A Vadik soldier points his weapon in your direction.  "
+					+ "You hope it's pointing at someone behind you--people usually are--"
+					+ "but in this instance, you have a bad feeling that it means you.",
+
+					"The Vadik soldier is dressed head-to-toe in a suit of gleaming black "
+					+ "battle armor.  It's roughly human-shaped, but the armor coverage "
+					+ "doesn't give any more details as to what it looks like.  "
+					+ "Anyway, his most salient feature at the moment "
+					+ "is the wicked-looking gun he has trained on you.",
+
+					this.scripts.regionFriendlyShip_AgentEnemyUpdateForTurn.name
+				),
 			]
 		);
 	}
@@ -4303,6 +4320,7 @@ class Scripts
 			this.placePlanetSettlementBarRear_SearchAshes,
 			this.placePlanetSettlementRobotShopInterior_BuyRobot,
 
+			this.regionFriendlyShip_AgentEnemyUpdateForTurn,
 			this.regionFriendlyShip_UpdateForTurn,
 			this.regionPlanetDesert_UpdateForTurn,
 			this.regionPlanetSettlement_UpdateForTurn,
@@ -7046,6 +7064,82 @@ class Scripts
 
 			w.end();
 		}
+	}
+
+	regionFriendlyShip_AgentEnemyUpdateForTurn
+	(
+		u: Universe, w: World, p: Place, c: Command
+	): void
+	{
+		var message: string;
+
+		var placeOccupiedByEnemy = p;
+		var placeOccupiedByPlayer = w.placeCurrent();
+		var agentEnemy = placeOccupiedByEnemy.agentByName("enemy");
+
+		if (placeOccupiedByEnemy == placeOccupiedByPlayer)
+		{
+			message = "The Vadik soldier zaps you.  You are dead.";
+			placeOccupiedByPlayer.agentRemove(agentEnemy, w);
+			w.end();
+		}
+		else
+		{
+			var portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
+
+			var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find
+			(
+				x => x.placeDestinationName == placeOccupiedByPlayer.name
+			);
+
+			var portalToGoThrough =
+				(portalLeadingDirectlyToPlayer == null)
+				? u.randomNumberGenerator.randomElementFromArray(portalsEnemyMayGoThrough)
+				: portalLeadingDirectlyToPlayer;
+
+			agentEnemy.goThroughPortal(portalToGoThrough, w);
+
+			placeOccupiedByEnemy = agentEnemy.place(w);
+			if (placeOccupiedByEnemy == placeOccupiedByPlayer)
+			{
+				message =
+					"A Vadik soldier strides into view and immediately trains its weapon on you."
+					+ "Terrifying as it is, you can't help but admire its confident bearing.";
+			}
+			else
+			{
+				portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
+
+				var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find
+				(
+					x => x.placeDestinationName == placeOccupiedByPlayer.name
+				);
+
+				if (portalLeadingDirectlyToPlayer != null)
+				{
+					var portalLeadingFromPlayerToEnemy =
+						placeOccupiedByPlayer.portals.find
+						(
+							x => x.placeDestinationName == placeOccupiedByEnemy.name
+						);
+
+					var portalLeadingFromPlayerToEnemyName =
+						portalLeadingFromPlayerToEnemy.name();
+
+					var directions = [ "forward", "aft", "outside" ];
+
+					var isDefiniteArticleNeeded =
+						directions.indexOf(portalLeadingFromPlayerToEnemyName) < 0;
+
+					message =
+						"You hear the tramping of heavy feet coming from "
+						+ (isDefiniteArticleNeeded ? "the " : "")
+						+ portalLeadingFromPlayerToEnemyName + ".";
+				}
+			}
+		}
+
+		u.messageEnqueue(message);
 	}
 
 	regionPlanetDesert_UpdateForTurn(u: Universe, w: World, p: Place, c: Command): void

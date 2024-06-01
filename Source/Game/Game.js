@@ -637,7 +637,14 @@ class Places {
             + "\n\n"
             + "The hall continues to forward and to aft.", [
             this.portal(["forward"], Places.friendlyShipLowerDeckHallForward_Name()),
-            this.portal(["aft"], Places.friendlyShipLowerDeckHallAft_Name())
+            this.portal(["aft"], Places.friendlyShipLowerDeckHallAft_Name()),
+            Agent.fromNamesDescriptionsAndScriptUpdateForTurnName(["vadik soldier", "vadik", "enemy"], "A Vadik soldier points his weapon in your direction.  "
+                + "You hope it's pointing at someone behind you--people usually are--"
+                + "but in this instance, you have a bad feeling that it means you.", "The Vadik soldier is dressed head-to-toe in a suit of gleaming black "
+                + "battle armor.  It's roughly human-shaped, but the armor coverage "
+                + "doesn't give any more details as to what it looks like.  "
+                + "Anyway, his most salient feature at the moment "
+                + "is the wicked-looking gun he has trained on you.", this.scripts.regionFriendlyShip_AgentEnemyUpdateForTurn.name),
         ]);
     }
     static friendlyShipLowerDeckHallAmidships_Name() {
@@ -1448,7 +1455,7 @@ class Places {
             this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
             this.portal(["east"], Places.planetSettlementBarRear_Name()),
             this.portal(["south"], Places.planetDesertDeep_Name()),
-            this.portal(["bar"], Places.planetSettlementBarInterior_Name()),
+            this.portal(["bar", "in", "inside"], Places.planetSettlementBarInterior_Name()),
             this.emplacement2(["seedy-looking being", "skimmer enthusiast", "person", "being", "buyer"], "This being is hanging around outside a bar "
                 + "in the middle of the day.  He must be so rich.").descriptionAsPartOfPlaceSet("A seedy-looking being loitering near the entrance to the bar "
                 + "eyes your skimmer appreciatively.  You think those are eyes, "
@@ -2260,6 +2267,7 @@ class Scripts {
             this.placePlanetSettlementBarInterior_UseSlotMachine,
             this.placePlanetSettlementBarRear_SearchAshes,
             this.placePlanetSettlementRobotShopInterior_BuyRobot,
+            this.regionFriendlyShip_AgentEnemyUpdateForTurn,
             this.regionFriendlyShip_UpdateForTurn,
             this.regionPlanetDesert_UpdateForTurn,
             this.regionPlanetSettlement_UpdateForTurn,
@@ -4183,6 +4191,46 @@ class Scripts {
                 + "You are dead.");
             w.end();
         }
+    }
+    regionFriendlyShip_AgentEnemyUpdateForTurn(u, w, p, c) {
+        var message;
+        var placeOccupiedByEnemy = p;
+        var placeOccupiedByPlayer = w.placeCurrent();
+        var agentEnemy = placeOccupiedByEnemy.agentByName("enemy");
+        if (placeOccupiedByEnemy == placeOccupiedByPlayer) {
+            message = "The Vadik soldier zaps you.  You are dead.";
+            placeOccupiedByPlayer.agentRemove(agentEnemy, w);
+            w.end();
+        }
+        else {
+            var portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
+            var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find(x => x.placeDestinationName == placeOccupiedByPlayer.name);
+            var portalToGoThrough = (portalLeadingDirectlyToPlayer == null)
+                ? u.randomNumberGenerator.randomElementFromArray(portalsEnemyMayGoThrough)
+                : portalLeadingDirectlyToPlayer;
+            agentEnemy.goThroughPortal(portalToGoThrough, w);
+            placeOccupiedByEnemy = agentEnemy.place(w);
+            if (placeOccupiedByEnemy == placeOccupiedByPlayer) {
+                message =
+                    "A Vadik soldier strides into view and immediately trains its weapon on you."
+                        + "Terrifying as it is, you can't help but admire its confident bearing.";
+            }
+            else {
+                portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
+                var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find(x => x.placeDestinationName == placeOccupiedByPlayer.name);
+                if (portalLeadingDirectlyToPlayer != null) {
+                    var portalLeadingFromPlayerToEnemy = placeOccupiedByPlayer.portals.find(x => x.placeDestinationName == placeOccupiedByEnemy.name);
+                    var portalLeadingFromPlayerToEnemyName = portalLeadingFromPlayerToEnemy.name();
+                    var directions = ["forward", "aft", "outside"];
+                    var isDefiniteArticleNeeded = directions.indexOf(portalLeadingFromPlayerToEnemyName) < 0;
+                    message =
+                        "You hear the tramping of heavy feet coming from "
+                            + (isDefiniteArticleNeeded ? "the " : "")
+                            + portalLeadingFromPlayerToEnemyName + ".";
+                }
+            }
+        }
+        u.messageEnqueue(message);
     }
     regionPlanetDesert_UpdateForTurn(u, w, p, c) {
         var stateName = "TurnsSinceLastDrink";
