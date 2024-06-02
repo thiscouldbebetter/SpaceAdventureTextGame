@@ -7,7 +7,11 @@ class Game {
                 "You may or may not have given it a name.  ",
                 "And a backstory.  And a love interest.  ",
                 "And a ragtag group of friends ",
-                "that it may or may not go on adventures with."
+                "that it may or may not go on adventures with.",
+                "\n\n",
+                "He's Terry C. Washburn, heir to the Whammy-Chamois dynasty, ",
+                "beloved of the lovely Bubbles Scrubbington, and leader of the ",
+                "Moisture Satiety Society"
             ].join(""))
         ]);
         var scriptsCustom = new Scripts();
@@ -141,7 +145,7 @@ class Items {
     }
     dataCartridge() {
         return Item.fromNamesAndDescription(["data cartridge", "cartridge"], [
-            "This is a data cartridge labelled 'astral bodies' ",
+            "This is a data cartridge labelled 'Pandimensional Metacalculus for Hypernavigators' ",
             "that you retrieved from the library of the Pax Aeterna ",
             "using the skills you learned in the Remedial Library Literacy course ",
             "they made you take when you came on board.",
@@ -292,15 +296,69 @@ class Places {
     // Places.
     // Places - Pax Aeterna.
     friendlyShipBridge() {
-        return this.place2(Places.friendlyShipBridge_Name(), "This is the command bridge of the starship Pax Aeterna.  "
-            + "A large transparent hemispherical dome arches overhead, "
-            + "showing the brilliantly shining surrounding stars.  "
-            + "Banks of mostly incomprehensible controls "
-            + "line the circular wall, with the nearby seats "
-            + "either empty or filled with the slumped bodies of dead crew.  "
-            + "There're several bodies scattered on the floor, as well.  "
-            + "A prominent pedestal in the center "
-            + "formerly held the Stellar Juvenator, but now stands vacant.");
+        return this.place3(Places.friendlyShipBridge_Name(), [
+            "This is the command bridge of the starship Pax Aeterna.  ",
+            "A large transparent hemispherical dome arches overhead, ",
+            "showing the brilliantly shining surrounding stars.  ",
+            "\n\n",
+            "Banks of incomprehensible--to you, at least--controls ",
+            "line the aft wall, with the nearby seats ",
+            "either empty or filled with the slumped bodies of dead crew, ",
+            "including the science officer and the tactical officer.  ",
+            "\n\n",
+            "There're also some bodies scattered on the floor: ",
+            "the navigator, the helmsman, the first officer, and the counselor.",
+            "\n\n",
+            "Near the center of the room is the captain's chair.  ",
+            "It looks extra comfortable, and you've secretly always wanted to sit in it, ",
+            "but it is currently occupied, as it usually is, by the captain.  ",
+            "She's dead right now, but still.",
+            "\n\n",
+            "A prominent pedestal behind the captain's chair ",
+            "formerly held the Stellar Juvenator, but now stands vacant.",
+            "\n\n",
+            "A door leads back out to the corridor."
+        ].join(""), [
+            this.portal(["door", "outside", "hall", "corridor"], Places.friendlyShipUpperDeckHallForward_Name()),
+            this.emplacement2(["captain"], "The captain still looks calm and self-assured, even with a "
+                + "ten-centimeter hole blasted through her midsection.  "
+                + "What a class act.").commandAdd(Command.fromTextsAndScriptExecuteName(["search captain"], this.scripts.emplacementBodyKeycardSearch.name)),
+            this.emplacement2(["counselor"], "The counselor's uniform is, for some reason, "
+                + "in a completey different style from everybody else's uniforms.  "
+                + "You never really understood why that was.  "
+                + "Can you even really call it a uniform?"
+                + "\n\n"
+                + "You liked her.  She would nod at you whenever she passed you in the hall.  "
+                + "A few times you could've sworn "
+                + "she even seemed like she was trying to remember your name.").commandAdd(Command.fromTextsAndScriptExecuteName(["search counselor"], this.scripts.emplacementBodyEmptySearch.name)),
+            this.emplacement2(["first officer"], "The first officer's body lies on the floor here.  "
+                + "You didn't much like this guy.  He was only ever nice to you "
+                + "when the counselor was around."
+                + "\n\n"
+                + "And his facial hair kept changing.  "
+                + "Beard or no beard?  No beard or beard? "
+                + "Decide, already, dude, you're in your forties now.  "
+                + "\n\n"
+                + "Anyway, half his beard is gone now, "
+                + "because half his face is gone.  Poetic justice, you guess.").commandAdd(Command.fromTextsAndScriptExecuteName(["search first officer"], this.scripts.emplacementBodyEmptySearch.name)),
+            this.emplacement2(["helmsman"], "The helmsman hit on you one time.  "
+                + "Honestly, you were flattered: He kept it tight.").commandAdd(Command.fromTextsAndScriptExecuteName(["search helmsman"], this.scripts.emplacementBodyEmptySearch.name)),
+            this.emplacement2(["navigator"], "You never understood anything this kid said.  Plus his accent seemed fakey.").commandAdd(Command.fromTextsAndScriptExecuteName(["search navigator"], this.scripts.emplacementBodyEmptySearch.name)),
+            this.emplacement2(["science officer"], "You knew this guy even less well than the rest of the bridge crew.  "
+                + "He spent so much time bent over his science scope thing "
+                + "studying anomalies or whatever that until this very moment "
+                + "you couldn't have said for sure whether he even had eyes."
+                + "He does, though.  They're green.  Kind of pretty, really.  "
+                + "Their vacant gaze is a little disturbing, "
+                + "though, so you reach out nad close them.").commandAdd(Command.fromTextsAndScriptExecuteName(["search science officer"], this.scripts.emplacementBodyEmptySearch.name)),
+            this.emplacement2(["tactical officer"], "This guy gave you the creeps.  He would sit in the mess hall "
+                + "sharpening knives.  What were those knives even for?  "
+                + "He didn't eat with them.  He sure wasn't using them for his job.  "
+                + "And how did they keep getting dull?"
+                + "\n\n"
+                + "Anyway, it's lucky for everybody he's dead.  Losing the battle for this ship "
+                + "would have definitely put him in a worse-than-usual mood.").commandAdd(Command.fromTextsAndScriptExecuteName(["search tactical officer"], this.scripts.emplacementBodyEmptySearch.name))
+        ]);
     }
     static friendlyShipBridge_Name() {
         return "Pax Aeterna - Bridge";
@@ -400,7 +458,14 @@ class Places {
                 "use keycard on slot",
                 "insert keycard in slot",
                 "put keycard in slot"
-            ], this.scripts.itemKeycardUse.name))
+            ], this.scripts.itemKeycardUse.name)),
+            Agent.fromNamesDescriptionsAndScriptUpdateForTurnName(["vadik soldier", "vadik", "enemy"], "A Vadik soldier points his weapon in your direction.  "
+                + "You hope it's pointing at someone behind you--people usually are--"
+                + "but in this instance, you have a bad feeling that it means you.", "The Vadik soldier is dressed head-to-toe in a suit of gleaming black "
+                + "battle armor.  It's roughly human-shaped, but the armor coverage "
+                + "doesn't give any more details as to what it looks like.  "
+                + "Anyway, his most salient feature at the moment "
+                + "is the wicked-looking gun he has trained on you.", this.scripts.regionFriendlyShip_AgentEnemyUpdateForTurn.name),
         ]);
     }
     static friendlyShipEngineeringDeckAft_Name() {
@@ -536,7 +601,7 @@ class Places {
             + "\n\n"
             + "A door leads out to the corridor.  "
             + "(You tried sleeping out there once, but someone got mad.)", this.scripts.placeFriendlyShipJanitorsCloset_Update.name, [
-            this.portal(["corridor", "door", "hall", "out", "outside"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["corridor", "door", "hall", "out", "outside"], Places.friendlyShipLowerDeckHallAft_Name()),
         ]);
     }
     static friendlyShipJanitorsCloset_Name() {
@@ -544,7 +609,7 @@ class Places {
     }
     friendlyShipLibrary() {
         return this.place3(Places.friendlyShipLibrary_Name(), "This is the Pax Aeterna's library.  "
-            + "Doors in the fore and aft walls lead to hallways.  "
+            + "A door leads back out into the hallway.  "
             + "\n\n"
             + "The high walls are occupied almost completely with floor-to-ceiling shelves, "
             + "and the shelves are occupied almost completely "
@@ -561,13 +626,12 @@ class Places {
             + "\n\n"
             + "Well, broke it, really.  But then you lost the pieces."
             + "\n\n"
-            + "On one wall is a retrieval console with a keyboard and screen, "
+            + "On the wall opposite the door is a retrieval console with a keyboard and screen, "
             + "a spiderlike cartridge-retrieval robot clinging to the shelves just above it."
             + "\n\n"
             + "A man wearing a scientist's smock lies face-down "
             + "on the floor in front of the console. ", [
-            this.portal(["forward"], Places.friendlyShipUpperDeckHallForward_Name()),
-            this.portal(["aft"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["out", "outside", "door", "hall", "corridor"], Places.friendlyShipLowerDeckHallAmidships_Name()),
             this.emplacement3(["console", "retrieval console", "controls"], "This is a standard data cartridge retrieval console.  "
                 + "If the title of a desired data cartridge is typed "
                 + "on the console's keyboard, "
@@ -604,22 +668,23 @@ class Places {
         return "Pax Aeterna - Library";
     }
     friendlyShipLowerDeckHallAft() {
-        return this.place3(Places.friendlyShipLowerDeckHallAft_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
+        return this.place4(Places.friendlyShipLowerDeckHallAft_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
             + "The hall continues to forward, and ends in a bulkhead to aft.  "
             + "A door here opens onto an elevator."
             + "\n\n"
-            + "The lower deck looks almost exactly like the upper deck. "
-            + "Honestly, there'd be no way to tell them apart, "
-            + "if the buttons in the elevator weren't labelled."
-            + "\n\n"
-            + "Well, to be fair, the scattered corpses are slighly different on this deck.  "
-            + "The body of your supervisor lies supine in this corridor, "
-            + "brows furrowed in a disapproving expression even in death.  "
-            + "A hard trick to pull off, but then again, he put in lots of practice "
-            + "when he was alive.  Every time he talked to you, at a minimum.", [
+            + "To aft, the hall ends in another door, "
+            + "this one leading to the office/supply closet/quarters "
+            + "of the Maintenance Specialist (Sanitation Grade), "
+            + "which is where you, our hero, came boldly to this story, "
+            + "as soon as you figured out how to 'go door'.", this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name, [
+            this.portal(["closet", "office", "door", "closet door", "office door"], Places.friendlyShipJanitorsCloset_Name()),
             this.portal(["forward"], Places.friendlyShipLowerDeckHallAmidships_Name()),
             this.portal(["elevator"], Places.friendlyShipUpperDeckHallAft_Name()),
-            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
+            this.emplacement(["body"]).descriptionAsPartOfPlaceSet("The dead body of one of the ship's crew "
+                + "lies on the floor near your closet's door, "
+                + "his hand outstretched as if to operate the door button. "
+                + "You guess it's lucky he didn't get inside before he got killed. "
+                + "Lucky for you, that is, not for him.").commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipLowerDeckHallAft_Name() {
@@ -635,16 +700,11 @@ class Places {
             + "before getting back on track.  That very nearly cost it the race, "
             + "but luckily the other scrubber was disqualified for unsportspersonlike conduct."
             + "\n\n"
-            + "The hall continues to forward and to aft.", [
+            + "The hall continues to forward and to aft.  "
+            + "There is a door labelled 'Library' that leads who knows where.", [
             this.portal(["forward"], Places.friendlyShipLowerDeckHallForward_Name()),
             this.portal(["aft"], Places.friendlyShipLowerDeckHallAft_Name()),
-            Agent.fromNamesDescriptionsAndScriptUpdateForTurnName(["vadik soldier", "vadik", "enemy"], "A Vadik soldier points his weapon in your direction.  "
-                + "You hope it's pointing at someone behind you--people usually are--"
-                + "but in this instance, you have a bad feeling that it means you.", "The Vadik soldier is dressed head-to-toe in a suit of gleaming black "
-                + "battle armor.  It's roughly human-shaped, but the armor coverage "
-                + "doesn't give any more details as to what it looks like.  "
-                + "Anyway, his most salient feature at the moment "
-                + "is the wicked-looking gun he has trained on you.", this.scripts.regionFriendlyShip_AgentEnemyUpdateForTurn.name),
+            this.portal(["library"], Places.friendlyShipLibrary_Name()),
         ]);
     }
     static friendlyShipLowerDeckHallAmidships_Name() {
@@ -673,10 +733,15 @@ class Places {
             + "The hall continues to forward, and ends in a bulkhead to aft.  "
             + "There is a door here opening on an elevator.  "
             + "\n\n"
-            + "The body of one of your fellow crew members lies prone "
-            + "near the aft bulkhead, the neck bent sharply upwards "
-            + "and the chin propped against the bulkhead itself.  "
-            + "This is the most awkward pose yet.", [
+            + "The upper deck looks almost exactly like the lower deck. "
+            + "Honestly, there'd be no way to tell them apart, "
+            + "if the buttons in the elevator weren't labelled."
+            + "\n\n"
+            + "Well, to be fair, the scattered corpses are slighly more prestigious on this deck.  "
+            + "The body of your supervisor lies supine in this corridor, "
+            + "brows furrowed in a disapproving expression even in death.  "
+            + "A hard trick to pull off, but then again, he put in lots of practice "
+            + "when he was alive.  Every time he talked to you, at a minimum.", [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallAmidships_Name()),
             this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallAft_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
@@ -687,13 +752,11 @@ class Places {
     }
     friendlyShipUpperDeckHallAmidships() {
         return this.place4(Places.friendlyShipUpperDeckHallAmidships_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
-            + "The hall ends in a door to forward labelled 'Library', and continues to aft.  "
-            + "In the middle is a door leading to the office/supply closet/quarters "
-            + "of the Maintenance Specialist (Sanitation Grade), "
-            + "which is where you, our hero, came boldly to this story, "
-            + "as soon as you figured out how to 'go door'.", this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name, [
-            this.portal(["closet", "office", "door", "closet door", "office door"], Places.friendlyShipJanitorsCloset_Name()),
-            this.portal(["forward", "door", "forward door", "library", "library door"], Places.friendlyShipLibrary_Name()),
+            + "The hall continues forward and to aft.  ", +"The body of one of your fellow crew members lies prone "
+            + "against the port wall, the neck bent sharply upwards "
+            + "and the chin propped against the bulkhead itself.  "
+            + "This is the most awkward pose yet.", [
+            this.portal(["forward"], Places.friendlyShipUpperDeckHallForward_Name()),
             this.portal(["aft"], Places.friendlyShipUpperDeckHallAft_Name())
         ]);
     }
@@ -703,17 +766,11 @@ class Places {
     friendlyShipUpperDeckHallForward() {
         return this.place3(Places.friendlyShipUpperDeckHallForward_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna."
             + "\n\n"
-            + "To aft, the hall ends in a door labelled 'Library', "
-            + " and to forward, in a bulkhead, "
-            + "near which the body of another dead crewperson lies crumpled.  "
-            + "\n\n"
-            + "This is a pretty out-of-the way spot.  "
-            + "They must've been hiding here when they got shot.  "
-            + "Either that, or they died of natural causes by coincidence, "
-            + "and nobody's been down this hall to find them until just now.  "
-            + "Unlikely, but we shouldn't rule anything out.", [
-            this.portal(["aft", "library"], Places.friendlyShipLibrary_Name()),
-            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyKeycardSearch.name))
+            + "The hall continues to aft.  To forward, it ends in a door labeled 'Bridge', "
+            + "near which the body of a dead crewperson lies crumpled.  ", [
+            this.portal(["aft"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["bridge", "door", "bridge door"], Places.friendlyShipBridge_Name()),
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipUpperDeckHallForward_Name() {
@@ -2338,13 +2395,14 @@ class Scripts {
             message =
                 [
                     "You insert the cartridge into the reader.  ",
-                    "The display lights up with breathtaking video ",
-                    "showing the majestic formation of astral bodies, ",
-                    "while a narrator melliflously explains ",
-                    "their complex, intriguing, sometimes surprising relationships ",
-                    "with each other and, indeed, with all life in the universe.",
+                    "The display lights up with a bunch of letters and symbols, ",
+                    "while the galaxy's most soporific narrator starts talking about math.  ",
+                    "You think it's math, anyway.  You don't actually understand any of it, ",
+                    "which certainly supports the 'it's math' hypothesis.  ",
+                    "On the other hand, this math doesn't seem to have any numbers in it, ",
+                    "like ones or fours or sevens.  Doesn't math have numbers?",
                     "\n\n",
-                    "My word, it's boring.  School never was your strong suit.",
+                    "School never was your strong suit.",
                     "\n\n",
                     "Just as you're about to eject the cartridge, possibly to burn it, ",
                     "there's a sudden discontinuity in the video, ",
@@ -2959,11 +3017,15 @@ class Scripts {
                     "his eyes spring open.  He stares at you wildly, ",
                     "weakly clutching and unclutching his fingers, ",
                     "then points shakily at the shelves of data cartridges ",
-                    "and harshly croaks out the words 'astral bodies'.  ",
+                    "and harshly croaks out the words 'Pandimensional Metacalculus for Hypernavigators'.  ",
                     "\n\n",
                     "Then he dies.  You think.  You're not a doctor.  ",
                     "But when the roto-scrubber looked as bad as he does, ",
-                    "you had to get a new roto-scrubber."
+                    "you had to get a new roto-scrubber.",
+                    "\n\n",
+                    "Blatz, those are some heavy last words.  You better write them down, ",
+                    "in case you somehow survive this and someone in his family ",
+                    "asks about this moment."
                 ].join("");
             p.stateGroup.stateWithNameSetToTrue(stateScientistIsDeadName);
         }
@@ -2979,10 +3041,11 @@ class Scripts {
                 "Right, I forgot that you failed Remedial Lib-Sci 0001.  "
                     + "Try adding the title of the tape you want retrieved.";
         }
-        else if (cartridgeNameTyped == "astral bodies") {
+        else if (cartridgeNameTyped == "pandimensional metacalculus for hypernavigators") {
             message =
                 [
-                    "You type 'astral bodies' (without the quotes: protip) ",
+                    "You type 'Pandimensional Metacalculus for Hypernavigators' ",
+                    "(without the quotes: protip) ",
                     "into the control console's keyboard.  ",
                     "The retrieval robot skitters into action, ",
                     "traversing the shelves with a fluid rhythm of limbs ",
@@ -2994,7 +3057,8 @@ class Scripts {
                     "See?  You just don't get that kind of satisfying clatter ",
                     "with solid-state."
                 ].join("");
-            p.itemAdd(Item.fromNamesAndDescription(["cartridge", "data cartridge", "cart", "data cart"], "A label printed on this data cartridge reads 'Astral Bodies'.").commandAdd(Command.fromTextsAndScriptExecuteName([
+            p.itemAdd(Item.fromNamesAndDescription(["cartridge", "data cartridge", "cart", "data cart"], "A label printed on this data cartridge reads "
+                + "'Pandimensional Metacalculus for Hypernavigators'.").commandAdd(Command.fromTextsAndScriptExecuteName([
                 "put cartridge in reader",
                 "put cartridge in slot",
                 "use cartridge on reader"
@@ -4193,10 +4257,13 @@ class Scripts {
         }
     }
     regionFriendlyShip_AgentEnemyUpdateForTurn(u, w, p, c) {
-        var message;
         var placeOccupiedByEnemy = p;
-        var placeOccupiedByPlayer = w.placeCurrent();
         var agentEnemy = placeOccupiedByEnemy.agentByName("enemy");
+        var message;
+        var placeOccupiedByPlayer = w.placeCurrent();
+        var stateName = "PlaceOccupiedByPlayerPreviousName";
+        var placeOccupiedByPlayerPreviousName = agentEnemy.stateGroup.stateWithNameGetValue(stateName);
+        var playerHasJustMoved = (placeOccupiedByPlayer.name != placeOccupiedByPlayerPreviousName);
         if (placeOccupiedByEnemy == placeOccupiedByPlayer) {
             message = "The Vadik soldier zaps you.  You are dead.";
             placeOccupiedByPlayer.agentRemove(agentEnemy, w);
@@ -4205,15 +4272,24 @@ class Scripts {
         else {
             var portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
             var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find(x => x.placeDestinationName == placeOccupiedByPlayer.name);
+            var playerAndEnemyAreInAdjacentPlaces = (portalLeadingDirectlyToPlayer != null);
             var portalToGoThrough = (portalLeadingDirectlyToPlayer == null)
                 ? u.randomNumberGenerator.randomElementFromArray(portalsEnemyMayGoThrough)
                 : portalLeadingDirectlyToPlayer;
-            agentEnemy.goThroughPortal(portalToGoThrough, w);
+            // Only move into player's room
+            // if the player hasn't just moved there,
+            // because otherwise the player gets no warning.
+            var shouldEnemyMove = (playerAndEnemyAreInAdjacentPlaces == false)
+                || (playerHasJustMoved == false);
+            if (shouldEnemyMove) {
+                agentEnemy.goThroughPortal(portalToGoThrough, w);
+            }
             placeOccupiedByEnemy = agentEnemy.place(w);
             if (placeOccupiedByEnemy == placeOccupiedByPlayer) {
                 message =
                     "A Vadik soldier strides into view and immediately trains its weapon on you."
-                        + "Terrifying as it is, you can't help but admire its confident bearing.";
+                        + "Terrifying as it is, you can't help but admire its confident bearing.  "
+                        + "And that uniform really pops.";
             }
             else {
                 portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
