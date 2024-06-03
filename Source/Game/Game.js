@@ -303,14 +303,15 @@ class Places {
             "\n\n",
             "Banks of incomprehensible--to you, at least--controls ",
             "line the aft wall, with the nearby seats ",
-            "either empty or filled with the slumped bodies of dead crew, ",
-            "including the science officer and the tactical officer.  ",
+            "most of which are empty, but two of which are filled with the slumped bodies ",
+            "of the counselor and tactical officer.  ",
             "\n\n",
             "There're also some bodies scattered on the floor: ",
-            "the navigator, the helmsman, the first officer, and the counselor.",
+            "the navigator, the helm officer, and the first officer.",
             "\n\n",
             "Near the center of the room is the captain's chair.  ",
-            "It looks extra comfortable, and you've secretly always wanted to sit in it, ",
+            "It is huge, and looks extremely comfortable.  ",
+            "You've secretly always wanted to sit in it, ",
             "but it is currently occupied, as it usually is, by the captain.  ",
             "She's dead right now, but still.",
             "\n\n",
@@ -322,7 +323,9 @@ class Places {
             this.portal(["door", "outside", "hall", "corridor"], Places.friendlyShipUpperDeckHallForward_Name()),
             this.emplacement2(["captain"], "The captain still looks calm and self-assured, even with a "
                 + "ten-centimeter hole blasted through her midsection.  "
-                + "What a class act.").commandAdd(Command.fromTextsAndScriptExecuteName(["search captain"], this.scripts.emplacementBodyKeycardSearch.name)),
+                + "What a class act.").commandAdd(Command.fromTextsAndScriptExecuteName(["search captain"], this.scripts.emplacementBodyKeycardSearch.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.placeFriendlyShipBridge_SearchBody.name)),
+            this.emplacement2(["captain's chair"], "This chair is deluxe.  This chair is so deluxe that it should really "
+                + "be written as two words: de luxe.").commandAdd(Command.fromTextsAndScriptExecuteName(["sit in chair"], this.scripts.placeFriendlyShipBridge_SitInChair.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind captain's chair"], this.scripts.placeFriendlyShipBridge_HideBehindCaptainsChair.name)),
             this.emplacement2(["counselor"], "The counselor's uniform is, for some reason, "
                 + "in a completey different style from everybody else's uniforms.  "
                 + "You never really understood why that was.  "
@@ -344,13 +347,6 @@ class Places {
             this.emplacement2(["helmsman"], "The helmsman hit on you one time.  "
                 + "Honestly, you were flattered: He kept it tight.").commandAdd(Command.fromTextsAndScriptExecuteName(["search helmsman"], this.scripts.emplacementBodyEmptySearch.name)),
             this.emplacement2(["navigator"], "You never understood anything this kid said.  Plus his accent seemed fakey.").commandAdd(Command.fromTextsAndScriptExecuteName(["search navigator"], this.scripts.emplacementBodyEmptySearch.name)),
-            this.emplacement2(["science officer"], "You knew this guy even less well than the rest of the bridge crew.  "
-                + "He spent so much time bent over his science scope thing "
-                + "studying anomalies or whatever that until this very moment "
-                + "you couldn't have said for sure whether he even had eyes."
-                + "He does, though.  They're green.  Kind of pretty, really.  "
-                + "Their vacant gaze is a little disturbing, "
-                + "though, so you reach out nad close them.").commandAdd(Command.fromTextsAndScriptExecuteName(["search science officer"], this.scripts.emplacementBodyEmptySearch.name)),
             this.emplacement2(["tactical officer"], "This guy gave you the creeps.  He would sit in the mess hall "
                 + "sharpening knives.  What were those knives even for?  "
                 + "He didn't eat with them.  He sure wasn't using them for his job.  "
@@ -362,6 +358,24 @@ class Places {
     }
     static friendlyShipBridge_Name() {
         return "Pax Aeterna - Bridge";
+    }
+    friendlyShipCaptainsQuarters() {
+        return this.place3(Places.friendlyShipBridge_Name(), [
+            "You stand in the personal quarters of the captain ",
+            "of the Pax Aeterna.  You feel pretty weird about it.  ",
+            "On some level, you were hoping that her door would be locked.",
+            "\n\n",
+            "A door leads back out to the corridor."
+        ].join(""), [
+            this.portal(["door", "outside", "hall", "corridor"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.emplacement2(["grand piano"], "The captain's grand piano occupies most of the cabin's generous floor space.  "
+                + "She was evidently quite an accomplished pianist.  "
+                + "She'd have to be, to justify using this much space and mass "
+                + "on a working starship.").commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind grand piano", "hide behind piano"], this.scripts.placeFriendlyShipBridge_SearchBody.name)),
+        ]);
+    }
+    static friendlyShipCaptainsQuarters_Name() {
+        return "Pax Aeterna - Captain's Quarters";
     }
     friendlyShipDockingBayAntechamber() {
         return this.place3(Places.friendlyShipDockingBayAntechamber_Name(), "This is the antechamber of the Pax Aeterna's docking bay.  "
@@ -548,7 +562,8 @@ class Places {
             + "\n\n"
             + "The rest of the deck lies to aft.  "
             + "\n\n"
-            + "At the fore end, an door opens on an elevator back to the other decks.", [
+            + "At the fore end, an door opens on an elevator back to the "
+            + "lower-but-not-quite-lowest deck.", [
             this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallForward_Name()),
             this.portal(["aft"], Places.friendlyShipEngineeringDeckAmidships_Name())
         ]);
@@ -615,22 +630,7 @@ class Places {
             + "and the shelves are occupied almost completely "
             + "with rows upon rows of plastic cartridges containing magnetic data tape.  "
             + "(The fleet tried a solid-state, full-digital data storage system for a while, "
-            + " but it was agreed that it just didn't give the same rich tones.)"
-            + "\n\n"
-            + "A spacious round table ringed with upholstered seats, "
-            + "fills a pit in the center of the room.  "
-            + "It is intended to provide a comfortable place to read data cartridges, "
-            + "though there are no cartridge readers present.  "
-            + "Every crew member was issued one on boarding, "
-            + "but you lost yours."
-            + "\n\n"
-            + "Well, broke it, really.  But then you lost the pieces."
-            + "\n\n"
-            + "On the wall opposite the door is a retrieval console with a keyboard and screen, "
-            + "a spiderlike cartridge-retrieval robot clinging to the shelves just above it."
-            + "\n\n"
-            + "A man wearing a scientist's smock lies face-down "
-            + "on the floor in front of the console. ", [
+            + " but it was agreed that it just didn't give the same rich tones.)", [
             this.portal(["out", "outside", "door", "hall", "corridor"], Places.friendlyShipLowerDeckHallAmidships_Name()),
             this.emplacement3(["console", "retrieval console", "controls"], "This is a standard data cartridge retrieval console.  "
                 + "If the title of a desired data cartridge is typed "
@@ -640,7 +640,8 @@ class Places {
                 + "From there, the cartridge is generally slotted into a reader "
                 + "and its contents displayed on a screen.  "
                 + "It's a complicated system, to be sure, "
-                + "but that sixteen hours of training you took was probably enough.", this.scripts.placeFriendlyShipLibrary_UseConsole.name).commandAdd(Command.fromTextsAndScriptExecuteName(["type", "enter"], this.scripts.placeFriendlyShipLibrary_Type.name)),
+                + "but that sixteen hours of training you took was probably enough.", this.scripts.placeFriendlyShipLibrary_UseConsole.name).descriptionAsPartOfPlaceSet("On the wall opposite the door is a retrieval console with a keyboard and screen, "
+                + "a spiderlike cartridge-retrieval robot clinging to the shelves just above it.").commandAdd(Command.fromTextsAndScriptExecuteName(["type", "enter"], this.scripts.placeFriendlyShipLibrary_Type.name)),
             this.emplacement2(["table"], "The table provides a comfortable place "
                 + "for the more literate members of the crew to research data tapes."
                 + "\n\n"
@@ -649,12 +650,21 @@ class Places {
                 + "with the cartridge-retrieval bot. "
                 + "But they made you stop before you could even "
                 + "figure out how to detach the bot from the shelves, "
-                + "much less get a nice volley going."),
-            this.emplacement2(["scientist", "man", "person", "body", "corpse", "being"], "The scientist is not moving in any perceptible way.  "
+                + "much less get a nice volley going.").descriptionAsPartOfPlaceSet("A spacious round table ringed with upholstered seats "
+                + "fills a pit in the center of the room.  "
+                + "It is intended to provide a comfortable place to read data cartridges, "
+                + "though there are no cartridge readers present.  "
+                + "Every crew member was issued one on boarding, "
+                + "but you lost yours."
+                + "\n\n"
+                + "Well, broke it, really.  But then you lost the pieces."),
+            this.emplacement2(["science officer", "scientist", "man", "person", "body", "corpse", "being"], "The science officer is not moving in any perceptible way.  "
                 + "You can't tell from here if he's even breathing, "
                 + "which is the most important kind of moving, "
-                + "when you think about it.").commandAdd(Command.fromTextsAndScriptExecuteName([
+                + "when you think about it.").descriptionAsPartOfPlaceSet("A man wearing the uniform of the ship's science officer  "
+                + "lays face-down on the floor near the cartridge retrieval console.").commandAdd(Command.fromTextsAndScriptExecuteName([
                 "search body",
+                "search science officer",
                 "search man",
                 "search corpse",
                 "search person",
@@ -677,14 +687,16 @@ class Places {
             + "of the Maintenance Specialist (Sanitation Grade), "
             + "which is where you, our hero, came boldly to this story, "
             + "as soon as you figured out how to 'go door'.", this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name, [
-            this.portal(["closet", "office", "door", "closet door", "office door"], Places.friendlyShipJanitorsCloset_Name()),
+            this.portal(["closet", "office", "closet door", "office door"], Places.friendlyShipJanitorsCloset_Name()),
             this.portal(["forward"], Places.friendlyShipLowerDeckHallAmidships_Name()),
             this.portal(["elevator"], Places.friendlyShipUpperDeckHallAft_Name()),
             this.emplacement(["body"]).descriptionAsPartOfPlaceSet("The dead body of one of the ship's crew "
-                + "lies on the floor near your closet's door, "
+                + "lies on the floor near the door of your office/supply/closet/quarters, "
                 + "his hand outstretched as if to operate the door button. "
                 + "You guess it's lucky he didn't get inside before he got killed. "
-                + "Lucky for you, that is, not for him.").commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
+                + "Lucky for you, that is, not for him.  "
+                + "You do feel rather guilty for sleeping through his death, "
+                + "which, from the looks of things, wasn't even an especially quiet one.").commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipLowerDeckHallAft_Name() {
@@ -713,37 +725,81 @@ class Places {
     friendlyShipLowerDeckHallForward() {
         return this.place3(Places.friendlyShipLowerDeckHallForward_Name(), "This is a hallway on the lower deck of the starship Pax Aeterna.  "
             + "The hall continues to aft, and ends in a bulkhead to forward.  "
-            + "Sometimes you can't help but think that "
-            + "this ship's architect went a little heavy on the hallways."
+            + "(Sometimes you can't help but think that "
+            + "this ship's architect went a little heavy on the hallways.)"
             + "\n\n"
-            + "There is a door here opening on an elevator.  "
+            + "A door labelled 'Mess Hall' leads to, you guessed it, the mess hall."
+            + "\n\n"
+            + "Another door opens onto an elevator.  "
             + "\n\n"
             + "Another body of one of your crewmates lies here.  "
             + "You start to feel sorry for whoever has to clean all this up.", [
             this.portal(["aft"], Places.friendlyShipLowerDeckHallAmidships_Name()),
-            this.portal(["elevator", "door"], Places.friendlyShipEngineeringDeckForward_Name()),
+            this.portal(["mess hall"], Places.friendlyShipMessHall_Name()),
+            this.portal(["elevator"], Places.friendlyShipEngineeringDeckForward_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipLowerDeckHallForward_Name() {
         return "Pax Aeterna - Lower Deck - Hall - Forward";
     }
+    friendlyShipMessHall() {
+        return this.place3(Places.friendlyShipMessHall_Name(), [
+            "This is the mess hall of the Pax Aeterna.  "
+                + "You've eaten many a solitary meal here.  "
+                + "If you never see another bowl of gartan root stew, "
+                + "it'll be too soon."
+        ].join(""), [
+            this.portal(["corridor", "door", "hall", "out", "outside"], Places.friendlyShipLowerDeckHallForward_Name()),
+            this.emplacement(["counter"]).descriptionAsPartOfPlaceSet("A few feet from the wall opposite the door is a long counter, "
+                + "behind which the ship's cook (who always insisted he was the ship's 'chef') "
+                + "would prepare technically nourishing meals for the crew.")
+        ]);
+    }
+    static friendlyShipMessHall_Name() {
+        return "Pax Aeterna - Mess Hall";
+    }
+    friendlyShipOfficersQuartersAntechamber() {
+        return this.place3(Places.friendlyShipOfficersQuartersAntechamber_Name(), [
+            "This is a small antechamber for a suite of rooms "
+                + "serving as the personal quarters of of the Pax Aeterna's bridge crew.  "
+                + "Several doors lead from this antechamber to each officer's individual quarters.  "
+                + "A large, bushy, artificial plant occupies a planter in the back of the antechamber."
+        ].join(""), [
+            this.portal(["corridor", "hall", "out", "outside"], Places.friendlyShipLowerDeckHallForward_Name()),
+            this.portal(["counselor's quarters"], null).lock(),
+            this.portal(["first officer's quarters"], null).lock(),
+            this.portal(["helmsman's quarters"], null).lock(),
+            this.portal(["navigator's quarters"], null).lock(),
+            this.portal(["science officer's quarters"], null).lock(),
+            this.portal(["tactical officer's quarters"], null).lock(),
+            this.emplacement(["plant", "artificial plant", "bush", "planter"]).descriptionAsPartOfPlaceSet("This artificial plant is quite bushy.")
+        ]);
+    }
+    static friendlyShipOfficersQuartersAntechamber_Name() {
+        return "Pax Aeterna - Officer's Quarters Antechamber";
+    }
     friendlyShipUpperDeckHallAft() {
-        return this.place3(Places.friendlyShipUpperDeckHallAft_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
-            + "The hall continues to forward, and ends in a bulkhead to aft.  "
-            + "There is a door here opening on an elevator.  "
-            + "\n\n"
-            + "The upper deck looks almost exactly like the lower deck. "
-            + "Honestly, there'd be no way to tell them apart, "
-            + "if the buttons in the elevator weren't labelled."
-            + "\n\n"
-            + "Well, to be fair, the scattered corpses are slighly more prestigious on this deck.  "
-            + "The body of your supervisor lies supine in this corridor, "
-            + "brows furrowed in a disapproving expression even in death.  "
-            + "A hard trick to pull off, but then again, he put in lots of practice "
-            + "when he was alive.  Every time he talked to you, at a minimum.", [
+        return this.place3(Places.friendlyShipUpperDeckHallAft_Name(), [
+            "This is a hallway on the upper deck of the starship Pax Aeterna.  ",
+            +"\n\n",
+            +"The upper deck looks almost exactly like the lower deck. ",
+            +"Honestly, there'd be no way to tell them apart, ",
+            +"if the buttons in the elevator weren't labelled.",
+            +"\n\n",
+            +"Well, to be fair, the scattered corpses are slighly more prestigious on this deck.  ",
+            +"The body of your supervisor lies supine in this corridor, ",
+            +"brows furrowed in a disapproving expression even in death.  ",
+            +"A hard trick to pull off, but then again, he put in lots of practice ",
+            +"when he was alive.  Every time he talked to you, at a minimum.",
+            +"\n\n",
+            +"The hall continues to forward, and ends in a bulkhead to aft.  ",
+            +"There are a couple of doors here, one opening on an elevator, ",
+            +"and the other to a suite of officers' quarters."
+        ].join(""), [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallAmidships_Name()),
-            this.portal(["elevator", "door"], Places.friendlyShipLowerDeckHallAft_Name()),
+            this.portal(["elevator"], Places.friendlyShipLowerDeckHallAft_Name()),
+            this.portal(["officer's quarters", "quarters"], Places.friendlyShipOfficersQuartersAntechamber_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -752,12 +808,17 @@ class Places {
     }
     friendlyShipUpperDeckHallAmidships() {
         return this.place4(Places.friendlyShipUpperDeckHallAmidships_Name(), "This is a hallway on the upper deck of the starship Pax Aeterna.  "
-            + "The hall continues forward and to aft.  ", +"The body of one of your fellow crew members lies prone "
+            + "The hall continues forward and to aft.  ", +"\n\n"
+            + "The body of one of your fellow crew members lies prone "
             + "against the port wall, the neck bent sharply upwards "
             + "and the chin propped against the bulkhead itself.  "
-            + "This is the most awkward pose yet.", [
+            + "This is the most awkward death pose yet."
+            + "\n\n"
+            + "A door here leads to the captain's personal quarters.", [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallForward_Name()),
-            this.portal(["aft"], Places.friendlyShipUpperDeckHallAft_Name())
+            this.portal(["aft"], Places.friendlyShipUpperDeckHallAft_Name()),
+            this.portal(["captain's quarters", "quarters", "door"], Places.friendlyShipCaptainsQuarters_Name()),
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
     static friendlyShipUpperDeckHallAmidships_Name() {
@@ -2277,6 +2338,9 @@ class Scripts {
             this.placeEnemyShipLaundry_GetInBin,
             this.placeEnemyShipLaundry_GetInMachine,
             this.placeEnemyShipLaundry_GetInVent,
+            this.placeFriendlyShipBridge_HideBehindCaptainsChair,
+            this.placeFriendlyShipBridge_SearchBody,
+            this.placeFriendlyShipBridge_SitInChair,
             this.placeFriendlyShipDockingBayAntechamber_GoAirlock,
             this.placeFriendlyShipDockingBayAntechamber_PressLeftButton,
             this.placeFriendlyShipDockingBayAntechamber_PressRightButton,
@@ -2707,6 +2771,16 @@ class Scripts {
             "todo"
         ].join("");
         u.messageEnqueue(message);
+    }
+    placeFriendlyShipBridge_HideBehindCaptainsChair(u, w, p, c) {
+        u.messageEnqueue("You conceal yourself behind the captain's chair.  "
+            + "You reflect that this chair is so big you could have brought a couple friends.");
+    }
+    placeFriendlyShipBridge_SearchBody(u, w, p, c) {
+        u.messageEnqueue("You'll have to be more specific.");
+    }
+    placeFriendlyShipBridge_SitInChair(u, w, p, c) {
+        u.messageEnqueue("Nah.  You don't want to get dead-people germs.");
     }
     placeFriendlyShipDockingBayAntechamber_GoAirlock(u, w, p, c) {
         var playerIsWearingSpaceSuit = (w.agentPlayer.itemByName("space suit") != null);
