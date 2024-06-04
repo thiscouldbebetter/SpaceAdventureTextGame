@@ -78,7 +78,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 16"); // escape pod interior
+		run("cheat goto " + Places.friendlyShipEscapePod_Name() ); // escape pod interior
 		run("press launch button");
 
 		Assert.isTrue(world.isOver);
@@ -113,7 +113,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 12"); // docking bay antechamber
+		run("cheat goto " + Places.friendlyShipDockingBayAntechamber_Name() ); // docking bay antechamber
 		run("go airlock");
 
 		Assert.isTrue(world.isOver);
@@ -125,7 +125,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 40"); // pool
+		run("cheat goto " + Places.planetCavernsPool_Name() ); // pool
 
 		Assert.isFalse(world.isOver);
 
@@ -140,7 +140,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 37"); // east side of grating
+		run("cheat goto " + Places.planetCavernsGratingEastSide_Name() ); // east side of grating
 
 		Assert.isFalse(world.isOver);
 
@@ -155,7 +155,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 42"); // west side of drips
+		run("cheat goto " + Places.planetCavernsDripsBefore_Name() ); // west side of drips
 
 		Assert.isFalse(world.isOver);
 
@@ -175,7 +175,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 41"); // barrier
+		run("cheat goto " + Places.planetCavernsBarrier_Name() ); // barrier
 		run("go barrier");
 		Assert.isTrue(world.isOver);
 	}
@@ -186,7 +186,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 33"); // east side of bridge
+		run("cheat goto " + Places.planetCliffsTopSouthEastSide_Name() ); // east side of bridge
 
 		Assert.isFalse(world.isOver);
 
@@ -212,7 +212,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 17"); // crash site
+		run("cheat goto " + Places.planetDesertCrashSite_Name() ); // crash site
 		run("go east");
 
 		Assert.isFalse(world.isOver);
@@ -228,7 +228,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 29"); // cliff cave interior
+		run("cheat goto " + Places.planetCliffsCaveInterior_Name() ); // cliff cave interior
 
 		Assert.isFalse(world.isOver);
 
@@ -251,10 +251,10 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 10"); // engineering deck amidships
+		run("cheat goto " + Places.friendlyShipEngineeringDeckAmidships_Name() ); // engineering deck amidships
 		run("press open bay doors button");
 
-		run("cheat goto 16"); // escape pod interior
+		run("cheat goto " + Places.friendlyShipEscapePod_Name() ); // escape pod interior
 		run("press launch button");
 
 		Assert.isFalse(world.isOver);
@@ -270,7 +270,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 17"); // crash site
+		run("cheat goto " + Places.planetDesertCrashSite_Name() ); // crash site
 
 		var turnsWaitedSoFar = 0;
 		var turnsToWait = 30;
@@ -638,7 +638,7 @@ class Tests
 		var world = this.world;
 		var run = this.run.bind(this);
 
-		run("cheat goto 17"); // crash site
+		run("cheat goto " + Places.planetDesertCrashSite_Name() ); // crash site
 		run("cheat get dehydrated water");
 
 		var turnsToWait = 30;
