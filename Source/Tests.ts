@@ -337,6 +337,69 @@ class Tests
 		Assert.isNull(emplacementSkimmer);
 	}
 
+	placesAllHaveUniqueNames(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+
+		var places = world.places;
+		var placesNames = places.map(x => x.name);
+		var placesDistinctShareSameName =
+			placesNames.some
+			(
+				placeName =>
+					places.filter(place => place.name == placeName).length > 1
+			);
+		Assert.isFalse(placesDistinctShareSameName);
+	}
+
+	placesAreAllConnectedByPortals(): void
+	{
+		this.universeAndWorldCreateAndSet();
+		var world = this.world;
+
+		var places = world.places;
+
+		var placesThatAreNotConnected =
+		[
+			world.placeByName(Places.friendlyShipEscapePod_Name() ),
+			world.placeByName(Places.planetDesertDeep_Name() ), // hack - This needs to be fixed.
+			world.placeByName(Places.enemyShipNearbySpace_Name() )
+		];
+
+		for (var i = 0; i < places.length; i++)
+		{
+			var place = places[i];
+			var placeIsConnected =
+				(placesThatAreNotConnected.indexOf(place) < 0);
+			if (placeIsConnected)
+			{
+				var placePortals = place.portals;
+				var placesAdjacentNames = placePortals.map(x => x.placeDestinationName);
+				placesAdjacentNames = placesAdjacentNames.filter(x => x != null);
+				var placesAdjacent = placesAdjacentNames.map(x => world.placeByName(x) );
+
+				for (var j = 0; j < placesAdjacent.length; j++)
+				{
+					var placeAdjacent = placesAdjacent[j];
+					var placeAdjacentIsConnected =
+						(placesThatAreNotConnected.indexOf(placeAdjacent) < 0);
+					if (placeAdjacentIsConnected)
+					{
+						var placeAdjacentPortals = placeAdjacent.portals;
+						var doesAReturnPortalExist =
+							placeAdjacentPortals.some(x => x.placeDestinationName == place.name);
+						if (doesAReturnPortalExist == false)
+						{
+							console.log(placeAdjacent.name + " not connected back to: " + place.name);
+						}
+						Assert.isTrue(doesAReturnPortalExist);
+					}
+				}
+			}
+		}
+	}
+
 	playFromStartToEnd(): void
 	{
 		this.universeAndWorldCreateAndSet();
@@ -347,23 +410,28 @@ class Tests
 
 		// Pax Aeterna.
 
-		// Upper deck.
-		run("go door");
-		run("go forward");
-		run("talk to man");
-		run("type astral bodies");
-		run("get cartridge");
-		run("go forward");
-		run("search body");
-		run("get keycard");
-		run("go aft");
-		run("go aft");
-		run("go aft");
+		// Lower deck.
+		run("go out");
 		run("go elevator");
 
-		// Lower deck.
+		// Upper deck.
 		run("go forward");
 		run("go forward");
+		run("go forward");
+
+		// Bridge.
+		run("search captain");
+		run("get keycard");
+
+		// Lower deck again.
+		run("go forward");
+		run("talk to man");
+		run("type pandimensional metacalculus for hypernavigators");
+		run("get cartridge");
+		run("go forward");
+		run("go aft");
+		run("go aft");
+		run("go aft");
 		run("go elevator");
 
 		// Engineering deck.
@@ -713,9 +781,12 @@ var testFixture = new TestFixture
 
 		() => tests.fail_PlanetSettlement_SkimmerGetsStolen(),
 
-		() => tests.playFromStartToEnd(),
+		() => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst(),
 
-		() => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst()
+		() => tests.placesAllHaveUniqueNames(),
+		() => tests.placesAreAllConnectedByPortals(),
+
+		() => tests.playFromStartToEnd(),
 	]
 );
 

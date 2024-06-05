@@ -215,28 +215,71 @@ class Tests {
         var emplacementSkimmer = placeBarFront.emplacementByName("skimmer");
         Assert.isNull(emplacementSkimmer);
     }
+    placesAllHaveUniqueNames() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var places = world.places;
+        var placesNames = places.map(x => x.name);
+        var placesDistinctShareSameName = placesNames.some(placeName => places.filter(place => place.name == placeName).length > 1);
+        Assert.isFalse(placesDistinctShareSameName);
+    }
+    placesAreAllConnectedByPortals() {
+        this.universeAndWorldCreateAndSet();
+        var world = this.world;
+        var places = world.places;
+        var placesThatAreNotConnected = [
+            world.placeByName(Places.friendlyShipEscapePod_Name()),
+            world.placeByName(Places.planetDesertDeep_Name()), // hack - This needs to be fixed.
+            world.placeByName(Places.enemyShipNearbySpace_Name())
+        ];
+        for (var i = 0; i < places.length; i++) {
+            var place = places[i];
+            var placeIsConnected = (placesThatAreNotConnected.indexOf(place) < 0);
+            if (placeIsConnected) {
+                var placePortals = place.portals;
+                var placesAdjacentNames = placePortals.map(x => x.placeDestinationName);
+                placesAdjacentNames = placesAdjacentNames.filter(x => x != null);
+                var placesAdjacent = placesAdjacentNames.map(x => world.placeByName(x));
+                for (var j = 0; j < placesAdjacent.length; j++) {
+                    var placeAdjacent = placesAdjacent[j];
+                    var placeAdjacentIsConnected = (placesThatAreNotConnected.indexOf(placeAdjacent) < 0);
+                    if (placeAdjacentIsConnected) {
+                        var placeAdjacentPortals = placeAdjacent.portals;
+                        var doesAReturnPortalExist = placeAdjacentPortals.some(x => x.placeDestinationName == place.name);
+                        if (doesAReturnPortalExist == false) {
+                            console.log(placeAdjacent.name + " not connected back to: " + place.name);
+                        }
+                        Assert.isTrue(doesAReturnPortalExist);
+                    }
+                }
+            }
+        }
+    }
     playFromStartToEnd() {
         this.universeAndWorldCreateAndSet();
         var world = this.world;
         var run = this.run.bind(this);
         // Start.
         // Pax Aeterna.
+        // Lower deck.
+        run("go out");
+        run("go elevator");
         // Upper deck.
-        run("go door");
+        run("go forward");
+        run("go forward");
+        run("go forward");
+        // Bridge.
+        run("search captain");
+        run("get keycard");
+        // Lower deck again.
         run("go forward");
         run("talk to man");
-        run("type astral bodies");
+        run("type pandimensional metacalculus for hypernavigators");
         run("get cartridge");
         run("go forward");
-        run("search body");
-        run("get keycard");
         run("go aft");
         run("go aft");
         run("go aft");
-        run("go elevator");
-        // Lower deck.
-        run("go forward");
-        run("go forward");
         run("go elevator");
         // Engineering deck.
         run("go aft");
@@ -458,7 +501,9 @@ var testFixture = new TestFixture("All Tests", [
     () => tests.die_PlanetDesert_OfThirst(),
     () => tests.die_PlanetSettlement_LosingAtGambling(),
     () => tests.fail_PlanetSettlement_SkimmerGetsStolen(),
+    () => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst(),
+    () => tests.placesAllHaveUniqueNames(),
+    () => tests.placesAreAllConnectedByPortals(),
     () => tests.playFromStartToEnd(),
-    () => tests.survive_PlanetDesert_DrinkToPreventDyingOfThirst()
 ]);
 testFixture.run();

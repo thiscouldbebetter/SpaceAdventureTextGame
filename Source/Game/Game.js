@@ -382,14 +382,14 @@ class Places {
         return "Pax Aeterna - Bridge";
     }
     friendlyShipCaptainsQuarters() {
-        return this.place3(Places.friendlyShipBridge_Name(), [
+        return this.place3(Places.friendlyShipCaptainsQuarters_Name(), [
             "You stand in the personal quarters of the captain ",
             "of the Pax Aeterna.  You feel pretty weird about it.  ",
             "On some level, you were hoping that her door would be locked.",
             "\n\n",
             "A door leads back out to the corridor."
         ].join(""), [
-            this.portal(["door", "outside", "hall", "corridor"], Places.friendlyShipUpperDeckHallAmidships_Name()),
+            this.portal(["door", "outside", "hall", "corridor"], Places.friendlyShipUpperDeckHallForward_Name()),
             this.emplacement2(["grand piano"], [
                 "The captain's grand piano occupies most of the cabin's generous floor space.  ",
                 "She was evidently quite an accomplished pianist.  ",
@@ -754,18 +754,18 @@ class Places {
     friendlyShipLowerDeckHallAft() {
         return this.place4(Places.friendlyShipLowerDeckHallAft_Name(), [
             "This is a hallway on the lower deck of the starship Pax Aeterna.  ",
-            "The hall continues to forward, and ends in a bulkhead to aft.  ",
-            "A door here opens onto an elevator.",
+            "The hall continues to forward, and ends in a bulkhead to aft, ",
+            "where a door opens onto an elevator.",
             "\n\n",
-            "To aft, the hall ends in another door, ",
-            "this one leading to the office/supply closet/quarters ",
+            "Another door along the hallway ",
+            "leads to the office/supply closet/quarters ",
             "of the Maintenance Specialist (Sanitation Grade), ",
             "which is where you, our hero, came boldly to this story, ",
             "as soon as you figured out how to 'go door'."
         ].join(""), Script.fromName(this.scripts.placeFriendlyShipUpperDeckHallAmidships_Update.name), [
             this.portal(["closet", "office", "closet door", "office door"], Places.friendlyShipJanitorsCloset_Name()),
             this.portal(["forward"], Places.friendlyShipLowerDeckHallAmidships_Name()),
-            this.portal(["elevator"], Places.friendlyShipUpperDeckHallAft_Name()),
+            this.portal(["elevator", "aft"], Places.friendlyShipUpperDeckHallAft_Name()),
             this.emplacement(["body"]).descriptionAsPartOfPlaceSet([
                 "The dead body of one of the ship's crew ",
                 "lies on the floor near the door of your office/supply/closet/quarters, ",
@@ -850,14 +850,16 @@ class Places {
             "Several doors lead from this antechamber to each officer's individual quarters.  ",
             "A large, bushy, artificial plant occupies a planter in the back of the antechamber."
         ].join(""), [
-            this.portal(["corridor", "hall", "out", "outside"], Places.friendlyShipLowerDeckHallForward_Name()),
+            this.portal(["corridor", "hall", "out", "outside"], Places.friendlyShipUpperDeckHallAmidships_Name()),
             this.portal(["counselor's quarters"], null).lock(),
             this.portal(["first officer's quarters"], null).lock(),
             this.portal(["helmsman's quarters"], null).lock(),
             this.portal(["navigator's quarters"], null).lock(),
             this.portal(["science officer's quarters"], null).lock(),
             this.portal(["tactical officer's quarters"], null).lock(),
-            this.emplacement(["plant", "artificial plant", "bush", "planter"]).descriptionAsPartOfPlaceSet("This artificial plant is quite bushy.")
+            this.emplacement(["plant", "artificial plant", "bush", "planter"]).descriptionAsPartOfPlaceSet("This artificial plant is quite bushy.").commandAdd(Command.fromTextsAndScriptExecute(["hide behind plant"], Script.fromNameAndRun("HideBehindPlant", (u, w, p, x, y) => {
+                u.messageEnqueue("You hide behind the plant.");
+            })))
         ]);
     }
     static friendlyShipOfficersQuartersAntechamber_Name() {
@@ -877,13 +879,11 @@ class Places {
             "A hard trick to pull off, but then again, he put in lots of practice ",
             "when he was alive.  Every time he talked to you, at a minimum.",
             "\n\n",
-            "The hall continues to forward, and ends in a bulkhead to aft.  ",
-            "There are a couple of doors here, one opening on an elevator, ",
-            "and the other to a suite of officers' quarters."
+            "The hall continues to forward, and ends in a bulkhead to aft, ",
+            "where a door opens on to an elevator."
         ].join(""), [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallAmidships_Name()),
-            this.portal(["elevator"], Places.friendlyShipLowerDeckHallAft_Name()),
-            this.portal(["officers' quarters", "quarters"], Places.friendlyShipOfficersQuartersAntechamber_Name()),
+            this.portal(["elevator", "aft", "door"], Places.friendlyShipLowerDeckHallAft_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -900,11 +900,11 @@ class Places {
             "and the chin propped against the bulkhead itself.  ",
             "This is the most awkward death pose yet.",
             "\n\n",
-            "A door here leads to the captain's personal quarters."
+            "A door leads to a suite of officers' quarters."
         ].join(""), [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallForward_Name()),
             this.portal(["aft"], Places.friendlyShipUpperDeckHallAft_Name()),
-            this.portal(["captain's quarters", "quarters", "door"], Places.friendlyShipCaptainsQuarters_Name()),
+            this.portal(["officers' quarters", "quarters", "suite"], Places.friendlyShipOfficersQuartersAntechamber_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -916,10 +916,13 @@ class Places {
             "This is a hallway on the upper deck of the starship Pax Aeterna.",
             "\n\n",
             "The hall continues to aft.  To forward, it ends in a door labeled 'Bridge', ",
-            "near which the body of a dead crewperson lies crumpled.  "
+            "near which the body of a dead crewperson lies crumpled.  ",
+            "\n\n",
+            "A door here leads to the captain's personal quarters."
         ].join(""), [
             this.portal(["aft"], Places.friendlyShipUpperDeckHallAmidships_Name()),
-            this.portal(["bridge", "door", "bridge door"], Places.friendlyShipBridge_Name()),
+            this.portal(["bridge", "bridge door", "forward"], Places.friendlyShipBridge_Name()),
+            this.portal(["captain's quarters", "quarters"], Places.friendlyShipCaptainsQuarters_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -955,6 +958,9 @@ class Places {
         ].join(""), [
             this.portal(["pod", "escape pod"], Places.friendlyShipEscapePod_Name()),
             this.portal(["east"], Places.planetCliffsBottomNorthwestWestSide_Name()),
+            this.portal(["north"], Places.planetDesertNorth_Name()),
+            this.portal(["south"], Places.planetDesertSouth_Name()),
+            this.portal(["south"], Places.planetDesertWest_Name()),
             Items.Instance().ReflectiveGlass
         ]);
     }
@@ -1067,7 +1073,7 @@ class Places {
             "as far as the eye can see.  Well, your eyes, at least."
         ].join(""), [
             this.portal(["south"], Places.planetCliffsBottomSoutheast_Name()),
-            this.portal(["west"], Places.planetCliffsBottomNorthwestEastSide_Name()),
+            this.portal(["west"], Places.planetCliffsBottomNorth_Name()),
             this.portal(["east"], Places.planetDesertDeep_Name())
         ]);
     }
@@ -1078,14 +1084,13 @@ class Places {
     planetCliffsBottomNorthwestEastSide() {
         return this.place3(Places.planetCliffsBottomNorthwestEastSide_Name(), [
             "You stand on the sand of the Ekkis II desert, at the base  ",
-            "of a sheer stone cliff that curves away to the south and east.  ",
+            "of a sheer stone cliff.  ",
             "\n\n",
             "The cliff, to an unarguable degree, ",
-            "blocks progress to the north and west, ",
+            "blocks progress to the north, south, and west, ",
             "so don't you even try it."
         ].join(""), [
             this.portal(["east"], Places.planetCliffsBottomNorth_Name()),
-            this.portal(["south"], Places.planetCliffsBottomSouthwest_Name())
         ]);
     }
     static planetCliffsBottomNorthwestEastSide_Name() {
@@ -1157,7 +1162,7 @@ class Places {
             "upward between jutting upright stones, forming a natural stone ramp ",
             "that climbs as it runs northward and then turns west toward the top."
         ].join(""), [
-            this.portal(["north"], Places.planetCliffsBottomSouth_Name()),
+            this.portal(["north"], Places.planetCliffsBottomNortheast_Name()),
             this.portal(["west"], Places.planetCliffsBottomSouth_Name()),
             this.portal(["east", "cave"], Places.planetCliffsCaveInterior_Name()),
             this.portal(["up", "slope", "ramp"], Places.planetCliffsTopSouthEastSide_Name())
@@ -1179,7 +1184,7 @@ class Places {
             "Or maybe they doubled up on yang."
         ].join(""), [
             this.portal(["east"], Places.planetCliffsBottomSouth_Name()),
-            this.portal(["north"], Places.planetCliffsBottomNorthwestEastSide_Name())
+            this.portal(["north"], Places.planetCliffsBottomNorthwestWestSide_Name())
         ]);
     }
     static planetCliffsBottomSouthwest_Name() {
@@ -1664,7 +1669,7 @@ class Places {
             "In retrospect, that giant alien head really livened up the decor.  ",
             "A passage leads back to the east."
         ].join(""), Script.fromName(this.scripts.placePlanetCavernsProjectionRoom_Update.name), [
-            this.portal(["west"], Places.planetCavernsDrips3_Name()),
+            this.portal(["west"], Places.planetCavernsDripsAfter_Name()),
             this.portal(["north"], Places.planetCavernsSteamworks_Name()).block().hide()
         ]);
     }
@@ -1885,9 +1890,8 @@ class Places {
             "and expels some fine white powder, ",
             "which settles onto a larger heap of powder below."
         ].join(""), [
-            this.portal(["north"], Places.planetSettlementRobotShopWest_Name()),
-            this.portal(["west"], Places.planetSettlementUsedShipLot_Name()),
-            this.portal(["east"], Places.planetSettlementBarRear_Name()),
+            this.portal(["north"], Places.planetSettlementRobotShopFront_Name()),
+            this.portal(["west"], Places.planetSettlementBarFront_Name()),
             this.emplacement2(["heap", "pile", "powder", "white powder", "ashes"], [
                 "This is a heap of finely divided white powder.  ",
                 "Looks a bit like ashes, except who burns things anymore?"
@@ -1913,6 +1917,7 @@ class Places {
             "if you ask someone to explain them.  So never mind."
         ].join(""), [
             this.portal(["west"], Places.planetSettlementRobotShopWest_Name()),
+            this.portal(["south"], Places.planetSettlementBarRear_Name()),
             this.portal(["door", "shop", "store", "in", "inside"], Places.planetSettlementRobotShopInterior_Name()),
             this.emplacement2(["store", "shop", "dome", "Buy, Robot", "Buy Robot"], [
                 "The domed building occupied by Buy, Robot ",
@@ -2133,11 +2138,11 @@ class Places {
     // Places - enemyShip.
     enemyShipAirlockAntechamber() {
         return this.place3(Places.enemyShipAirlockAntechamber_Name(), "This is the antechamber of an airlock on the Venipositor.", [
-        // todo
+            this.portal(["airlock"], Places.enemyShipAirlockChamber_Name())
         ]);
     }
     static enemyShipAirlockAntechamber_Name() {
-        return "Venipositor - Airlock - Antechamber";
+        return "Venipositor - Airlock Antechamber";
     }
     enemyShipAirlockChamber() {
         return this.place3(Places.enemyShipAirlockChamber_Name(), [
@@ -2149,7 +2154,7 @@ class Places {
         ]);
     }
     static enemyShipAirlockChamber_Name() {
-        return "Venipositor - Airlock - Chamber";
+        return "Venipositor - Airlock";
     }
     enemyShipAirlockExterior() {
         return this.place3(Places.enemyShipAirlockExterior_Name(), [
@@ -2345,7 +2350,7 @@ class Places {
             "The catwalk runs fore and aft."
         ].join(""), [
             this.portal(["aft"], Places.enemyShipArmory_Name()),
-            this.portal(["forward"], "todo"),
+            this.portal(["forward"], Places.enemyShipLowerDeckHallAft_Name()),
         ]);
     }
     static enemyShipStellarJuvenatorChamberCatwalk_Name() {
