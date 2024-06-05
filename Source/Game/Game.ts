@@ -591,7 +591,7 @@ class Places
 		var returnPortal = Portal
 			.fromNames(names)
 			.placeDestinationNameSet(placeDestinationName)
-			.scriptUseNameSet(scriptUseName);
+			.scriptUseSet(Script.fromName(scriptUseName) );
 
 		return returnPortal;
 	}
@@ -2607,9 +2607,9 @@ class Places
 				(
 					[ "west", "arch", "bridge" ],
 					Places.planetCliffsTopSouthWestSide_Name()
-				).scriptUseNameSet
+				).scriptUseSet
 				(
-					this.scripts.placePlanetCliffsTopSouth_CrossBridge.name
+					Script.fromName(this.scripts.placePlanetCliffsTopSouth_CrossBridge.name)
 				)
 			]
 		);
@@ -2648,9 +2648,9 @@ class Places
 				(
 					[ "east", "arch", "bridge" ],
 					Places.planetCliffsTopSouthEastSide_Name()
-				).scriptUseNameSet
+				).scriptUseSet
 				(
-					this.scripts.placePlanetCliffsTopSouth_CrossBridge.name
+					Script.fromName(this.scripts.placePlanetCliffsTopSouth_CrossBridge.name)
 				),
 
 				this.portal

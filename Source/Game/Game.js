@@ -300,7 +300,7 @@ class Places {
         var returnPortal = Portal
             .fromNames(names)
             .placeDestinationNameSet(placeDestinationName)
-            .scriptUseNameSet(scriptUseName);
+            .scriptUseSet(Script.fromName(scriptUseName));
         return returnPortal;
     }
     // Places.
@@ -1292,7 +1292,7 @@ class Places {
             "But no, you just came from there, and it's all dyllic enough."
         ].join(""), [
             this.portal(["east"], Places.planetCliffsBottomSoutheast_Name()),
-            this.portal(["west", "arch", "bridge"], Places.planetCliffsTopSouthWestSide_Name()).scriptUseNameSet(this.scripts.placePlanetCliffsTopSouth_CrossBridge.name)
+            this.portal(["west", "arch", "bridge"], Places.planetCliffsTopSouthWestSide_Name()).scriptUseSet(Script.fromName(this.scripts.placePlanetCliffsTopSouth_CrossBridge.name))
         ]);
     }
     static planetCliffsTopSouthEastSide_Name() {
@@ -1315,7 +1315,7 @@ class Places {
             "even if you were willing to bite a cactus, ",
             "which past experience tells you you should never do again.  "
         ].join(""), [
-            this.portal(["east", "arch", "bridge"], Places.planetCliffsTopSouthEastSide_Name()).scriptUseNameSet(this.scripts.placePlanetCliffsTopSouth_CrossBridge.name),
+            this.portal(["east", "arch", "bridge"], Places.planetCliffsTopSouthEastSide_Name()).scriptUseSet(Script.fromName(this.scripts.placePlanetCliffsTopSouth_CrossBridge.name)),
             this.portal(["west"], Places.planetCliffsTopSouthwest_Name())
         ]);
     }
