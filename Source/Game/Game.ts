@@ -4077,7 +4077,8 @@ class Places
 			"This is the antechamber of an airlock on the Venipositor.",
 
 			[
-				this.portal( [ "airlock" ], Places.enemyShipAirlockChamber_Name() )
+				this.portal( [ "airlock" ], Places.enemyShipAirlockChamber_Name() ),
+				this.portal( [ "hall" ], Places.enemyShipLowerDeckHall1_Name() ),
 			]
 		);
 	}
@@ -4145,24 +4146,47 @@ class Places
 			[
 				"This is the armory of the Venipositor.  ",
 				"\n\n",
-				"At the aft end, a high counter, ",
-				"with a heavily-armed robot standing watch behind it, ",
-				"blocks the path to the weapon racks.  ",
+				"A trapezoidal leads back ",
+				"out onto the catwalk above the Stellar Juvenator chamber.",
+				"\n\n",
+				"Along the opposite wall, a high counter ",
+				"with a heavily-armed robot standing watch behind it ",
+				"blocks the path to racks and racks of weapons.  ",
+				"\n\n",
 				"The Vadik seem to all be professional soldier/assassin/murderers, ",
 				"so you have to worry about what kind of weapons they keep under lock and key.  ",
 				"But maybe they just want to keep track of what kind of weapons are popular, ",
 				"so they can order more of them?",
 				"\n\n",
-				"A door to forward leads back ",
-				"out onto the catwalk above the Stellar Juvenator chamber.",
 			].join(""),
 
 			[
 				this.portal
 				(
-					[ "forward" ],
+					[ "arch" ],
 					Places.enemyShipStellarJuvenatorChamberCatwalk_Name()
 				),
+
+				Agent.fromNames
+				(
+					[ "robot", "heavily-armed robot", "guard robot" ]
+				).descriptionAsPartOfPlaceSet
+				(
+					[
+						"The guard robot monitors you intently.  ",
+						"You wouldn't say it's aiming its guns at you, exactly, ",
+						"it's just that it has so many guns built into it ",
+						"that it'd be hard to prevent at least a few of them ",
+						"from being pointed at you."
+					].join("")
+				).descriptionWhenExaminedSet
+				(
+					[
+						"This robot guards guns from gun-worshippers for a living, ",
+						"and looks like it.  You don't want to mess with this thing."
+					].join("")
+				),
+
 				Items.Instance().gasGrenade.name
 			]
 		);
@@ -4404,62 +4428,149 @@ class Places
 		return "Venipositor - Laundry";
 	}
 
-	enemyShipLowerDeckHallAft(): Place
+	enemyShipLowerDeckHall1(): Place
 	{
 		return this.place3
 		(
-			Places.enemyShipLowerDeckHallAft_Name(),
-
-			"This is the aft end of a hallway on the lower deck of the Venipositor.",
+			Places.enemyShipLowerDeckHall1_Name(),
 
 			[
-				this.portal( [ "forward" ], Places.enemyShipLowerDeckHallAmidships_Name() )
+				"This is a hallway somwhere on a lower deck of the Venipositor.  ",
+				"A door leads back to the antechamber of the airlock you entered by.",
+				"In the other direction, the hallway takes a leftward bend toward... more hall."
+			].join(),
+
+			[
+				this.portal( [ "door" ], Places.enemyShipAirlockAntechamber_Name() ),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor", "bend" ],
+					Places.enemyShipLowerDeckHall2_Name()
+				),
 			]
 		);
 	}
 
-	static enemyShipLowerDeckHallAft_Name(): string
+	static enemyShipLowerDeckHall1_Name(): string
 	{
-		return "Venipositor - Hall - Lower Deck - Aft";
+		return "Venipositor - Lower Deck - Hall - Outside Airlock Antechamber";
 	}
 
-	enemyShipLowerDeckHallAmidships(): Place
+	enemyShipLowerDeckHall2(): Place
 	{
 		return this.place3
 		(
-			Places.enemyShipLowerDeckHallAmidships_Name(),
-
-			"This is the amidships section of a hallway on the lower deck of the Venipositor.",
+			Places.enemyShipLowerDeckHall2_Name(),
 
 			[
-				this.portal( [ "aft" ], Places.enemyShipLowerDeckHallAft_Name() ),
-				this.portal( [ "forward" ], Places.enemyShipLowerDeckHallFore_Name() )
+				"This is a hallway somwhere on a lower deck of the Venipositor.  ",
+				"The hall ends in a door opening on an elevator.",
+				"\n\n",
+				"In the other direction, the corridor takes a leftward bend ",
+				"back toward the airlock you entered by."
+			].join(),
+
+			[
+				this.portal
+				(
+					[ "elevator" ], Places.enemyShipLowerDeckHall1_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor", "bend" ],
+					Places.enemyShipLowerDeckHall3_Name()
+				)
 			]
 		);
 	}
 
-	static enemyShipLowerDeckHallAmidships_Name(): string
+	static enemyShipLowerDeckHall2_Name(): string
 	{
-		return "Venipositor - Hall - Lower Deck - Amidships";
+		return "Venipositor - Hall - Lower Deck - Elevator";
 	}
 
-	enemyShipLowerDeckHallFore(): Place
+	enemyShipLowerDeckHall3(): Place
 	{
 		return this.place3
 		(
-			Places.enemyShipLowerDeckHallFore_Name(),
-
-			"This is the forward end of a hallway on the lower deck of the Venipositor.",
+			Places.enemyShipLowerDeckHall3_Name(),
 
 			[
-				this.portal( [ "aft" ], Places.enemyShipLowerDeckHallAmidships_Name() ),
+				"This is another hallway somwhere on a lower deck of the Venipositor.  ",
+				"\n\n",
+				"At one end, the hall ends in a tall trapezoidal arch ",
+				"about three times your height.  Wait, can an arch be trapezoidal?",
+				"\n\n",
+				"In the other direction, the corridor continues into the ever-present ",
+				"darkness.  Some well-placed glow-globes would really help this place out.  ",
+				"Plus maybe some carpet.  And some art?  Unless all these weird, ",
+				"angular metal doodads sticking out of the walls are Vadik art?",
+				"\n\n",
+				"In between is a door opening on an elevator."
+			].join(),
+
+			[
+				this.portal
+				(
+					[ "arch" ],
+					Places.enemyShipStellarJuvenatorChamber_Name()
+				),
+				this.portal
+				(
+					[ "elevator" ],
+					Places.enemyShipUpperDeckHall2_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor"  ],
+					Places.enemyShipLowerDeckHall4_Name()
+				)
 			]
 		);
 	}
 
-	static enemyShipLowerDeckHallFore_Name(): string
+	static enemyShipLowerDeckHall3_Name(): string
 	{
-		return "Venipositor - Hall - Lower Deck - Forward";
+		return "Venipositor - Lower Deck - Hall with Trapezoidal Arch and Elevator";
+	}
+
+	enemyShipLowerDeckHall4(): Place
+	{
+		return this.place3
+		(
+			Places.enemyShipLowerDeckHall4_Name(),
+
+			[
+				"You are in yet another hallway somwhere on a lower deck of the Venipositor.",
+				"\n\n",
+				"At one end, the hall ends in an elevator door.  Again.",
+				"\n\n",
+				"In the other direction, it continues into the darkness.  Again.",
+				"\n\n",
+				"Same old, same old.  It seems like if spaceship designers had their way, ",
+				"spaceships would just be all doors and hallways.",
+				"You make a mental note to start a hallway supply company ",
+				"when this is all over."
+			].join(),
+
+			[
+				this.portal
+				(
+					[ "elevator" ],
+					Places.enemyShipUpperDeckHall3_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor"  ],
+					Places.enemyShipLowerDeckHall3_Name()
+				)
+			]
+		);
+	}
+
+	static enemyShipLowerDeckHall4_Name(): string
+	{
+		return "Venipositor - Lower Deck - Halls, Again?";
 	}
 
 	enemyShipNearbySpace(): Place
@@ -4469,7 +4580,10 @@ class Places
 			Places.enemyShipNearbySpace_Name(),
 
 			[
-				"You are in your ship, hovering nearby the Vadik starship Venipositor.",
+				"You are in your ship, hovering nearby an enormous Vadik warship ",
+				"Based on its hull markings, it seems to be named something like 'Venipositor'.  ",
+				"The name sounds menacing, which they probably intended, ",
+				"and also kind of dirty, which they probably didn't.",
 				"\n\n",
 				"It's a terrifying ship.  Its color scheme could best be described as ",
 				"'Dried Blood on Rusty Murder Weapon.'",
@@ -4497,23 +4611,46 @@ class Places
 		return "Venipositor - Nearby Space";
 	}
 
-	enemyShipShuttleBay(): Place
+	enemyShipFighterBay(): Place
 	{
 		return this.place3
 		(
-			Places.enemyShipShuttleBay_Name(),
-
-			"This is the shuttle bay of the Venipositor.",
+			Places.enemyShipFighterBay_Name(),
 
 			[
-				// todo
+				"This is one of the the fighter bays of the Venipositor.  ",
+				"An array of wicked-looking Vadik fighters ",
+				"stand ready to be swiftly launched into space ",
+				"through their respective launch tubes, ",
+				"and thence to thoroughly mess up some civilization's waketime.",
+				"\n\n",
+				"An elevator leads back to the rest of the ship."
+			].join(""),
+
+			[
+				this.portal
+				(
+					[ "elevator" ],
+					Places.enemyShipUpperDeckHall2_Name()
+				),
+
+				this.emplacement2
+				(
+					[ "fighter", "ship" ],
+
+					[
+						"The fighter is everything you'd want a Vadik fighter to be.  ",
+						"It looks like it just got out of prison ",
+						"and immediately knifed the person giving it a ride back to town."
+					].join("")
+				)
 			]
 		);
 	}
 
-	static enemyShipShuttleBay_Name(): string
+	static enemyShipFighterBay_Name(): string
 	{
-		return "Venipositor - Shuttle Bay";
+		return "Venipositor - Fighter Bay";
 	}
 
 	enemyShipStellarJuvenatorChamber(): Place
@@ -4529,9 +4666,12 @@ class Places
 				"with an armed Vadik guard standing nearby.  ",
 				"\n\n",
 				"The Stellar Juvenator glows and crackles with luminous energies.  ",
-				"You're not sure how much of that is its normal operating mode. ",
+				"It doesn't look safe to be around.  ",
+				"You're not sure how much of that is its normal operating mode.  ",
+				"Then again, since the thing is designed to reignite old stars, ",
+				"you suppose even its normal operating mode is pretty scary.",
 				"\n\n",
-				"A catwalk runs overhead."
+				"A catwalk runs overhead.  You're getting vertigo just looking at it."
 			].join(""),
 
 			[
@@ -4553,18 +4693,32 @@ class Places
 
 			[
 				"You are standing on a railed catwalk above a ",
-				"cavernous chamber on the Venipositor.  ",
+				"cavernous chamber on the Venipositor.",
 				"\n\n",
-				"On the floor, far below, the Stellar Juvenator",
+				"On the one hand, a catwalk is a welcome change from another hallway.  ",
+				"On the other hand, a catwalk is kind of like just a half-dressed ",
+				"hallway that you can fall to your death from.",
+				"\n\n",
+				"On the floor, far below, the Stellar Juvenator",,
 				"is mounted on a pedestal, ",
 				"with an armed Vadik guard standing nearby.  ",
 				"\n\n",
-				"The catwalk runs fore and aft."
+				"At either end, the catwalk runs through trapezoidal arches, ",
+				"one leading back to the hallways you came from, ",
+				"and the other bearing a placard reading 'Armory'."
 			].join(""),
 
 			[
-				this.portal( [ "aft" ], Places.enemyShipArmory_Name()),
-				this.portal( [ "forward" ], Places.enemyShipLowerDeckHallAft_Name() ),
+				this.portal
+				(
+					[ "armory" ], 
+					Places.enemyShipArmory_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor" ],
+					Places.enemyShipUpperDeckHall4_Name()
+				),
 			]
 		);
 	}
@@ -4574,65 +4728,196 @@ class Places
 		return "Venipositor - Stellar Juvenator Chamber - Catwalk";
 	}
 
-	enemyShipUpperDeckHallAft(): Place
+	enemyShipUpperDeckHall1(): Place
 	{
 		return this.place3
 		(
-			Places.enemyShipUpperDeckHallAft_Name(),
-
-			"This is the aft end of a hallway on the upper deck of the Venipositor.",
+			Places.enemyShipUpperDeckHall1_Name(),
 
 			[
-				this.portal( [ "forward" ], Places.enemyShipUpperDeckHallAmidships_Name() ),
-			]
-		);
-	}
-
-	static enemyShipUpperDeckHallAft_Name(): string
-	{
-		return "Venipositor - Hall - Upper Deck - Aft";
-	}
-
-	enemyShipUpperDeckHallAmidships(): Place
-	{
-		return this.place3
-		(
-			Places.enemyShipUpperDeckHallAmidships_Name(),
-
-			[
-				"This is the amidships section of a hallway ",
-				"on the upper deck of the Venipositor."
+				"This is a shadowy corridor on an upper deck of the Venipositor.",
+				"\n\n",
+				"The shadowy hallway ends with an shadowy elevator door, ",
+				"and, in the other direction, continues into the shadows.  ",
+				"In between, another short, shadowy, corridor intersects this hallway ",
+				"at a shadowy right angle and itself ends in a shadowy door.",
+				"\n\n",,
+				"Look, it sounds ominous, sure, but if I were you, ",
+				"I wouldn't read too much into all the shadows.  ",
+				"They're not, like, supernatural or anything.  ",
+				"It's just the Vadik don't seem to light their ships very well.  ",
+				"It doesn't mean the ship is haunted.  It's just a normal spaceship",
+				"that just happens to be full of ",
+				"perfectly normal, mundane, genocidal monsters ",
+				"who want to destroy you and all life in the galaxy."
 			].join(""),
 
 			[
-				this.portal( [ "aft" ], Places.enemyShipUpperDeckHallAft_Name() ),
-				this.portal( [ "forward" ], Places.enemyShipUpperDeckHallFore_Name() ),
+				this.portal( [ "elevator" ], Places.enemyShipLowerDeckHall2_Name() ),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor" ],
+					Places.enemyShipUpperDeckHall2_Name()
+				),
+				this.portal
+				(
+					[ "door" ],
+					Places.enemyShipUpperDeckHall3_Name()
+				)
 			]
 		);
 	}
 
-	static enemyShipUpperDeckHallAmidships_Name(): string
+	static enemyShipUpperDeckHall1_Name(): string
 	{
-		return "Venipositor - Hall - Upper Deck - Amidships";
+		return "Venipositor - Upper Deck - Hall - Shadowy Intersection";
 	}
 
-	enemyShipUpperDeckHallFore(): Place
+	enemyShipUpperDeckHall2(): Place
 	{
 		return this.place3
 		(
-			Places.enemyShipUpperDeckHallFore_Name(),
-
-			"This is the forward end of a hallway on the upper deck of the Venipositor.",
+			Places.enemyShipUpperDeckHall2_Name(),
 
 			[
-				this.portal( [ "aft" ], Places.enemyShipUpperDeckHallAmidships_Name() ),
+				"You stand near a small bank of elevators ",
+				"on an upper deck of the Venipositor.  ",
+				"\n\n",
+				"It's a very small bank of elevators.  ",
+				"It is, in fact, two elevators.  ",
+				"That's the minimum possible size an elevator bank can be ",
+				"and still be called a 'bank'.",
+				"One of the elevators is on the left, ",
+				"and the other is on the right.  ",
+				"After a moment's reflection, you are forced to acknowledge ",
+				"that two adjacent elevators pretty much have to be ",
+				"arranged like that.",
+				"\n\n",
+				"Along another wall is a door labelled 'Vadik' in Laundry.  ",
+				"Sorry, no.  It actually says 'Laundry' in Vadik. ",
+				"It's okay, you're still learning.",
+				"\n\n",
+				"In the direction opposite the laundry room door,",
+				"an especially shadowy stretch of hall ",
+				"stretches shadowingly into the shadows.  Shadows!"
+			].join(""),
+
+			[
+				this.portal
+				(
+					[ "door", "laundry" ],
+					Places.enemyShipLaundry_Name()
+				),
+				this.portal
+				(
+					[ "left elevator" ],
+					Places.enemyShipLowerDeckHall3_Name()
+				),
+				this.portal
+				(
+					[ "right elevator" ],
+					Places.enemyShipFighterBay_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor", "shadows", "shadowy stretch of hall" ],
+					Places.enemyShipUpperDeckHall1_Name()
+				),
+
 			]
 		);
 	}
 
-	static enemyShipUpperDeckHallFore_Name(): string
+	static enemyShipUpperDeckHall2_Name(): string
 	{
-		return "Venipositor - Hall - Upper Deck - Forward";
+		return "Venipositor - Upper Deck - Hall - Two Elevators, No Waiting";
+	}
+
+	enemyShipUpperDeckHall3(): Place
+	{
+		return this.place3
+		(
+			Places.enemyShipUpperDeckHall4_Name(),
+
+			[
+				"Sweet gentle gel matrix, you're in yet another hall ",
+				"of the Venipositor.  We'll say this one is on an upper deck, ",
+				"because you arrived here in an elevator going up.  ",
+				"\n\n",
+				"But it looks exactly like the part of the hall on the lower deck ",
+				"that you just took the elevator from to get here.  ",
+				"The ship designer was clearly checked all the way out of the process.",
+				"\n\n",
+				"At one end, the hall ends in the elevator in which you first arrived here.",
+				"\n\n",
+				"In the other direction, it continues into, you guessed it, darkness."
+			].join(),
+
+			[
+				this.portal
+				(
+					[ "elevator" ],
+					Places.enemyShipLowerDeckHall4_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor", "darkness" ],
+					Places.enemyShipUpperDeckHall4_Name()
+				)
+			]
+		);
+	}
+
+	static enemyShipUpperDeckHall3_Name(): string
+	{
+		return "Venipositor - Upper Deck - Are You Kidding Me with These Halls?";
+	}
+
+	enemyShipUpperDeckHall4(): Place
+	{
+		return this.place3
+		(
+			Places.enemyShipUpperDeckHall4_Name(),
+
+			[
+				"More hall.  Venipositor.  Upper deck.",
+				"\n\n",
+				"Hall boring.  All halls boring.  ",
+				"It's been so long now, ",
+				"you've forgotten what rooms even look like.",
+				"Are they long and narrow, and contain only doors?  ",
+				"No, that's what hallways are like.  ",
+				"You think you remember rooms being a little different.  ",
+				"\n\n",
+				"At one end, the hall ends in a familiar-looking trapezoidal arch.  ",
+				"It looks just like the one you saw on the deck below.  ",
+				"At the time, that arch was something new, ",
+				"a breath of architectural fresh air.  ",
+				"But now they've gone and ruined that too.",
+				"\n\n",
+				"The hall continues back in the opposite direction.  ",
+				"You've already been there, though, so there's no hope ",
+				"for anything in that direction but hallway."
+			].join(),
+
+			[
+				this.portal
+				(
+					[ "arch" ],
+					Places.enemyShipStellarJuvenatorChamberCatwalk_Name()
+				),
+				this.portal
+				(
+					[ "hall", "hallway", "corridor", "darkness" ],
+					Places.enemyShipUpperDeckHall3_Name()
+				)
+			]
+		);
+	}
+
+	static enemyShipUpperDeckHall4_Name(): string
+	{
+		return "Venipositor - Upper Deck - Hall Approximately 43 Million";
 	}
 
 	enemyShipVentilationShaft1(): Place
@@ -4643,7 +4928,17 @@ class Places
 
 			[
 				"This is a ventilation shaft on the Venipositor.  ",
-				"A short side branch leads to a vent cover."
+				"A short side branch leads to a vent cover.  ",
+				"\n\n",
+				"The ventilation shaft, being a ventilation shaft, ",
+				"is quite cramped and echoey.  Event the tiniest movement ",
+				"makes so much noise, and it's literally being piped ",
+				"to every room on this deck.  ",
+				"It's the miracle that the Vadik haven't found you and murdered you yet.  ",
+				"\n\n",
+				"Though you do remember one time, growing up, ",
+				"when there were macrolice in the crawlspace, ",
+				"and nobody was too eager to crawl in there after them either."
 			].join(""),
 
 			[
@@ -4689,7 +4984,12 @@ class Places
 		(
 			Places.enemyShipVentilationShaft3_Name(),
 
-			"This is a featureless stretch of ventilation shaft on the Venipositor.",
+			[
+				"This is a featureless stretch of ventilation shaft on the Venipositor.  ",
+				"This being a ventilation duct, there's a constant flow of air running past you.  ",
+				"You don't care for it.  ",,
+				"Leave it to the Vadik to make a breeze somehow unpleasant."
+			].join(""),
 
 			[
 				this.portal( [ "back" ], Places.enemyShipVentilationShaft2_Name() ),
@@ -4709,7 +5009,12 @@ class Places
 		(
 			Places.enemyShipVentilationShaft4_Name(),
 
-			"This is a featureless stretch of ventilation shaft on the Venipositor.",
+			[
+				"This is a featureless stretch of ventilation shaft on the Venipositor.",
+				"And you thought the hallways were boring.  ",
+				"At least the ducts have an excuse: ",
+				"nobody was ever supposed to be in them."
+			].join(""),
 
 			[
 				this.portal( [ "back" ], Places.enemyShipVentilationShaft3_Name() ),
@@ -4881,16 +5186,18 @@ class Regions
 				places.enemyShipAirlockExterior(),
 				places.enemyShipArmory(),
 				places.enemyShipLaundry(),
-				places.enemyShipLowerDeckHallAft(),
-				places.enemyShipLowerDeckHallAmidships(),
-				places.enemyShipLowerDeckHallFore(),
+				places.enemyShipLowerDeckHall1(),
+				places.enemyShipLowerDeckHall2(),
+				places.enemyShipLowerDeckHall3(),
+				places.enemyShipLowerDeckHall4(),
 				places.enemyShipNearbySpace(),
-				places.enemyShipShuttleBay(),
+				places.enemyShipFighterBay(),
 				places.enemyShipStellarJuvenatorChamber(),
 				places.enemyShipStellarJuvenatorChamberCatwalk(),
-				places.enemyShipUpperDeckHallAft(),
-				places.enemyShipUpperDeckHallAmidships(),
-				places.enemyShipUpperDeckHallFore(),
+				places.enemyShipUpperDeckHall1(),
+				places.enemyShipUpperDeckHall2(),
+				places.enemyShipUpperDeckHall3(),
+				places.enemyShipUpperDeckHall4(),
 				places.enemyShipVentilationShaft1(),
 				places.enemyShipVentilationShaft2(),
 				places.enemyShipVentilationShaft3(),
