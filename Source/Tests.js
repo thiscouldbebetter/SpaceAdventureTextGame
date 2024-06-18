@@ -229,7 +229,7 @@ class Tests {
         var places = world.places;
         var placesThatAreNotConnected = [
             world.placeByName(Places.friendlyShipEscapePod_Name()),
-            world.placeByName(Places.planetDesertDeep_Name()),
+            world.placeByName(Places.planetDesertDeep_Name()), // hack - This needs to be fixed.
             world.placeByName(Places.enemyShipNearbySpace_Name())
         ];
         for (var i = 0; i < places.length; i++) {
