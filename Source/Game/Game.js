@@ -2142,9 +2142,39 @@ class Places {
     }
     // Places - enemyShip.
     enemyShipAirlockAntechamber() {
-        return this.place3(Places.enemyShipAirlockAntechamber_Name(), "This is the antechamber of an airlock on the Venipositor.", [
+        return this.place3(Places.enemyShipAirlockAntechamber_Name(), [
+            "This is the antechamber of an airlock on the Venipositor.  ",
+            "\m\m",
+            "The walls are an aesthetic nighmare tangle of conduits, support struts, ",
+            "inscrutable panels, and seemingly purposeless weird (and sharp bumps).  ",
+            "The lighting is somehow simultaneously dim and harsh, the floor is clanky, ",
+            "and the air flowing from a vent three meters overhead is hot and smells of metal.",
+            "\n\n",
+            "A door leads, or so you presume, to the rest of the ship.  ",
+            "If not, you don't know what this airlock is even for.",
+            "\n\n",
+            "The inner airlock door leads back outside."
+        ].join(""), [
             this.portal(["airlock"], Places.enemyShipAirlockChamber_Name()),
-            this.portal(["hall"], Places.enemyShipLowerDeckHall1_Name()),
+            this.portal(["hall", "door"], Places.enemyShipLowerDeckHall1_Name()),
+            this.portal(["vent"], Places.enemyShipVentilationShaft1_Name()).hide().block(),
+            this.emplacement(["trunk", "chest", "box", "case"]).descriptionAsPartOfPlaceSet([
+                "There's some sort of chest on the floor here.  ",
+                "Sorry, not 'chest'.  Calling it a chest implies you found it ",
+                "in a dungeon after you killed a dragon.  ",
+                "I guess I've been playing too many video games.",
+                "Let's call it a 'box'.  But that's too vague.  ",
+                "It does have a hinged lid, so maybe ",
+                "'trunk' is better, though that kind of makes it sound ",
+                "like you found it in a boxcare after you killed a hobo.  ",
+                "Maybe 'case'?"
+            ].join("")),
+            this.emplacement(["vent"]).descriptionWhenExaminedSet([
+                "The vent cover is three meters overhead.  ",
+                "Which, and I know you're sensitive about this, ",
+                "is just out of the reach of your outstretched arms.  ",
+                "Hey, maybe you're a late bloomer."
+            ].join("")),
         ]);
     }
     static enemyShipAirlockAntechamber_Name() {
@@ -2243,6 +2273,7 @@ class Places {
             "\n\n",
             "A vent high in the aft wall provides ventilation for the steamy air."
         ].join(""), [
+            this.portal(["door"], Places.enemyShipUpperDeckHall2_Name()),
             this.emplacement2(["dirty bin"], "This laundry bin is full of used, dirty clothes awaiting washing.  ").commandAdd(Command.fromTextsAndScriptExecuteName(["get in bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["get in dirty bin"], this.scripts.placeEnemyShipLaundry_GetInBin.name)),
             this.emplacement2(["washer bin"], [
                 "This empty laundry bin stands in front of the washer, ",
@@ -2296,7 +2327,7 @@ class Places {
         ]);
     }
     static enemyShipLowerDeckHall1_Name() {
-        return "Venipositor - Lower Deck - Hall - Outside Airlock Antechamber";
+        return "Venipositor - Lower Deck - Halls - Outside Airlock Antechamber";
     }
     enemyShipLowerDeckHall2() {
         return this.place3(Places.enemyShipLowerDeckHall2_Name(), [
@@ -2306,12 +2337,12 @@ class Places {
             "In the other direction, the corridor takes a leftward bend ",
             "back toward the airlock you entered by."
         ].join(), [
-            this.portal(["elevator"], Places.enemyShipLowerDeckHall1_Name()),
-            this.portal(["hall", "hallway", "corridor", "bend"], Places.enemyShipLowerDeckHall3_Name())
+            this.portal(["elevator"], Places.enemyShipUpperDeckHall1_Name()),
+            this.portal(["hall", "hallway", "corridor", "bend"], Places.enemyShipLowerDeckHall1_Name())
         ]);
     }
     static enemyShipLowerDeckHall2_Name() {
-        return "Venipositor - Hall - Lower Deck - Elevator";
+        return "Venipositor - Lower Deck - Halls II: EVB: Elevator v. Bend";
     }
     enemyShipLowerDeckHall3() {
         return this.place3(Places.enemyShipLowerDeckHall3_Name(), [
@@ -2333,7 +2364,7 @@ class Places {
         ]);
     }
     static enemyShipLowerDeckHall3_Name() {
-        return "Venipositor - Lower Deck - Hall with Trapezoidal Arch and Elevator";
+        return "Venipositor - Lower Deck - Halls IV: Operation Trapezoidal Arch";
     }
     enemyShipLowerDeckHall4() {
         return this.place3(Places.enemyShipLowerDeckHall4_Name(), [
@@ -2348,12 +2379,12 @@ class Places {
             "You make a mental note to start a hallway supply company ",
             "when this is all over."
         ].join(), [
-            this.portal(["elevator"], Places.enemyShipUpperDeckHall3_Name()),
+            this.portal(["elevator"], Places.enemyShipUpperDeckHall5_Name()),
             this.portal(["hall", "hallway", "corridor"], Places.enemyShipLowerDeckHall3_Name())
         ]);
     }
     static enemyShipLowerDeckHall4_Name() {
-        return "Venipositor - Lower Deck - Halls, Again?";
+        return "Venipositor - Lower Deck - Halls V: Nobody Asked for More Halls (But Here They Are)";
     }
     enemyShipNearbySpace() {
         return this.place3(Places.enemyShipNearbySpace_Name(), [
@@ -2412,9 +2443,12 @@ class Places {
             "Then again, since the thing is designed to reignite old stars, ",
             "you suppose even its normal operating mode is pretty scary.",
             "\n\n",
-            "A catwalk runs overhead.  You're getting vertigo just looking at it."
+            "A catwalk runs high overhead.  You think.  It could just be a especially wide, ",
+            "especially squarish bit of ductwork.  You're getting vertigo just looking at it.",
+            "\n\n",
+            "A trapezoidal arch leads back the way you entered from.",
         ].join(""), [
-        // todo
+            this.portal(["arch"], Places.enemyShipLowerDeckHall3_Name())
         ]);
     }
     static enemyShipStellarJuvenatorChamber_Name() {
@@ -2438,7 +2472,7 @@ class Places {
             "and the other bearing a placard reading 'Armory'."
         ].join(""), [
             this.portal(["armory"], Places.enemyShipArmory_Name()),
-            this.portal(["hall", "hallway", "corridor"], Places.enemyShipUpperDeckHall4_Name()),
+            this.portal(["hall", "hallway", "corridor"], Places.enemyShipUpperDeckHall6_Name()),
         ]);
     }
     static enemyShipStellarJuvenatorChamberCatwalk_Name() {
@@ -2446,12 +2480,13 @@ class Places {
     }
     enemyShipUpperDeckHall1() {
         return this.place3(Places.enemyShipUpperDeckHall1_Name(), [
-            "This is a shadowy corridor on an upper deck of the Venipositor.",
+            "This is a shadowy junction of shadowy corridors ",
+            "on an upper deck of the Venipositor.",
             "\n\n",
-            "The shadowy hallway ends with an shadowy elevator door, ",
+            "One arm of the shadowy hallway ends with an shadowy elevator door, ",
             "and, in the other direction, continues into the shadows.  ",
             "In between, another short, shadowy, corridor intersects this hallway ",
-            "at a shadowy right angle and itself ends in a shadowy door.",
+            "at a shadowy right angle and itself ends in a door, which is shadowy.",
             "\n\n", ,
             "Look, it sounds ominous, sure, but if I were you, ",
             "I wouldn't read too much into all the shadows.  ",
@@ -2468,7 +2503,7 @@ class Places {
         ]);
     }
     static enemyShipUpperDeckHall1_Name() {
-        return "Venipositor - Upper Deck - Hall - Shadowy Intersection";
+        return "Venipositor - Upper Deck - Halls III: The Upper Deckening";
     }
     enemyShipUpperDeckHall2() {
         return this.place3(Places.enemyShipUpperDeckHall2_Name(), [
@@ -2485,7 +2520,12 @@ class Places {
             "that two adjacent elevators pretty much have to be ",
             "arranged like that.",
             "\n\n",
-            "Along another wall is a door labelled 'Vadik' in Laundry.  ",
+            "On the wall opposite the elevators is an unlabelled door.  ",
+            "You're guessing the lack of a label means more halls lie beyond it.",
+            "\n\n",
+            "Along yet another wall running perpindicular to the walls ",
+            "containing the elevators and door ",
+            "is yet another door, this one labelled 'Vadik' in Laundry.  ",
             "Sorry, no.  It actually says 'Laundry' in Vadik. ",
             "It's okay, you're still learning.",
             "\n\n",
@@ -2493,38 +2533,71 @@ class Places {
             "an especially shadowy stretch of hall ",
             "stretches shadowingly into the shadows.  Shadows!"
         ].join(""), [
-            this.portal(["door", "laundry"], Places.enemyShipLaundry_Name()),
-            this.portal(["left elevator"], Places.enemyShipLowerDeckHall3_Name()),
-            this.portal(["right elevator"], Places.enemyShipFighterBay_Name()),
+            this.portal(["left elevator", "left elevator door", "door"], Places.enemyShipLowerDeckHall3_Name()),
+            this.portal(["right elevator", "right elevator door", "door"], Places.enemyShipFighterBay_Name()),
+            this.portal(["laundry", "laundry room", "laundry door", "door"], Places.enemyShipLaundry_Name()),
+            this.portal(["hall door", "unlabelled door", "door"], Places.enemyShipUpperDeckHall4_Name()),
             this.portal(["hall", "hallway", "corridor", "shadows", "shadowy stretch of hall"], Places.enemyShipUpperDeckHall1_Name()),
         ]);
     }
     static enemyShipUpperDeckHall2_Name() {
-        return "Venipositor - Upper Deck - Hall - Two Elevators, No Waiting";
+        return "Venipositor - Upper Deck - Halls III: The Upper Deckening II: Elevator Fiesta";
     }
     enemyShipUpperDeckHall3() {
-        return this.place3(Places.enemyShipUpperDeckHall4_Name(), [
-            "Sweet gentle gel matrix, you're in yet another hall ",
-            "of the Venipositor.  We'll say this one is on an upper deck, ",
-            "because you arrived here in an elevator going up.  ",
+        return this.place3(Places.enemyShipUpperDeckHall3_Name(), [
+            "This is an especially boring stretch of hallway ",
+            "on an upper deck of the Venipositor.",
             "\n\n",
-            "But it looks exactly like the part of the hall on the lower deck ",
-            "that you just took the elevator from to get here.  ",
-            "The ship designer was clearly checked all the way out of the process.",
+            "A door leads back toward the shadowy junction, ",
+            "whose aesthetic appeal you missed before, ",
+            "but this... yawnway... has really given you a comparative appreciation for it.",
             "\n\n",
-            "At one end, the hall ends in the elevator in which you first arrived here.",
+            "In the other direction, the hallway continues to... more hallway.",
             "\n\n",
-            "In the other direction, it continues into, you guessed it, darkness."
-        ].join(), [
-            this.portal(["elevator"], Places.enemyShipLowerDeckHall4_Name()),
-            this.portal(["hall", "hallway", "corridor", "darkness"], Places.enemyShipUpperDeckHall4_Name())
+            "Wait, I want to change 'yawnway' to 'bore-idor'."
+        ].join(""), [
+            this.portal(["hall", "hallway", "corridor"], Places.enemyShipUpperDeckHall4_Name()),
+            this.portal(["door"], Places.enemyShipUpperDeckHall1_Name())
         ]);
     }
     static enemyShipUpperDeckHall3_Name() {
-        return "Venipositor - Upper Deck - Are You Kidding Me with These Halls?";
+        return "Venipositor - Upper Deck - Halls III: The Upper Deckening III: Worst One Yet";
     }
     enemyShipUpperDeckHall4() {
         return this.place3(Places.enemyShipUpperDeckHall4_Name(), [
+            "This is a stretch of hallway ",
+            "on an upper deck of the Venipositor.",
+            "\n\n",
+            "A unlabelled door leads... somewhere, probably. ",
+            "In any event, there's a Vadik soldier standing guard in front of it.",
+            "\n\n",
+            "In the other direction, the hallway continues to... more hallway."
+        ].join(""), [
+            this.portal(["door"], Places.enemyShipUpperDeckHall2_Name()),
+            this.portal(["hall", "hallway", "corridor"], Places.enemyShipUpperDeckHall3_Name()),
+        ]);
+    }
+    static enemyShipUpperDeckHall4_Name() {
+        return "Venipositor - Upper Deck - Halls III: The Upper Deckening IV: Guarded Passage";
+    }
+    enemyShipUpperDeckHall5() {
+        return this.place3(Places.enemyShipUpperDeckHall5_Name(), [
+            "Sweet gentle gel matrix, you're in yet another hall, ",
+            "somewhere on the upper deck of the Venipositor.",
+            "\n\n",
+            "At one end, the hall ends in the door in which you first arrived here.",
+            "\n\n",
+            "In the other direction, it continues into, you guessed it, darkness."
+        ].join(), [
+            this.portal(["door"], Places.enemyShipLowerDeckHall4_Name()),
+            this.portal(["hall", "hallway", "corridor", "darkness"], Places.enemyShipUpperDeckHall6_Name())
+        ]);
+    }
+    static enemyShipUpperDeckHall5_Name() {
+        return "Venipositor - Upper Deck - Halls III: The Upper Deckening V: Hellway";
+    }
+    enemyShipUpperDeckHall6() {
+        return this.place3(Places.enemyShipUpperDeckHall6_Name(), [
             "More hall.  Venipositor.  Upper deck.",
             "\n\n",
             "Hall boring.  All halls boring.  ",
@@ -2545,11 +2618,11 @@ class Places {
             "for anything in that direction but hallway."
         ].join(), [
             this.portal(["arch"], Places.enemyShipStellarJuvenatorChamberCatwalk_Name()),
-            this.portal(["hall", "hallway", "corridor", "darkness"], Places.enemyShipUpperDeckHall3_Name())
+            this.portal(["hall", "hallway", "corridor", "darkness"], Places.enemyShipUpperDeckHall5_Name())
         ]);
     }
-    static enemyShipUpperDeckHall4_Name() {
-        return "Venipositor - Upper Deck - Hall Approximately 43 Million";
+    static enemyShipUpperDeckHall6_Name() {
+        return "Venipositor - Upper Deck - Hall Approximately Six Million";
     }
     enemyShipVentilationShaft1() {
         return this.place3(Places.enemyShipVentilationShaft1_Name(), [
@@ -2733,6 +2806,8 @@ class Regions {
             places.enemyShipUpperDeckHall2(),
             places.enemyShipUpperDeckHall3(),
             places.enemyShipUpperDeckHall4(),
+            places.enemyShipUpperDeckHall5(),
+            places.enemyShipUpperDeckHall6(),
             places.enemyShipVentilationShaft1(),
             places.enemyShipVentilationShaft2(),
             places.enemyShipVentilationShaft3(),
@@ -3430,8 +3505,7 @@ class Scripts {
                     "But no settlement.  It appears the pod has crashed ",
                     "hundreds of kilometers from the intended landing site."
                 ].join("");
-            p.portalByName("door").placeDestinationName =
-                Places.planetDesertCrashSite_Name();
+            p.portalByName("door").placeDestinationNameSet(Places.planetDesertCrashSite_Name());
         }
         u.messageEnqueue(message);
     }
@@ -4890,91 +4964,70 @@ class Scripts {
         var message;
         var placeOccupiedByEnemy = p;
         var agentEnemy = placeOccupiedByEnemy.agentByName("enemy");
-        var stateNamePlaceOccupiedPreviousName = "PlaceOccupiedPreviousName";
-        var placeOccupiedByEnemyPreviousName = agentEnemy.stateGroup.stateWithNameGetValue(stateNamePlaceOccupiedPreviousName);
-        var placeOccupiedByEnemyPrevious = w.placeByName(placeOccupiedByEnemyPreviousName);
         var agentPlayer = w.agentPlayer;
+        var stateNamePlaceOccupiedPreviousName = "PlaceOccupiedPreviousName";
         var placeOccupiedByPlayerPreviousName = agentPlayer.stateWithNameGetValue(stateNamePlaceOccupiedPreviousName);
         var placeOccupiedByPlayer = w.placeCurrent();
         var playerHasJustMoved = (placeOccupiedByPlayer.name != placeOccupiedByPlayerPreviousName);
         if (placeOccupiedByEnemy == placeOccupiedByPlayer) {
-            var stateNamePlayerIsHidden = "PlayerIsHidden";
-            var playerIsHidden = agentPlayer.stateGroup.stateWithNameGetValue(stateNamePlayerIsHidden);
-            if (playerIsHidden) {
+            var playerIsVisible = agentPlayer.visible();
+            if (playerIsVisible) {
+                message =
+                    [
+                        "You're standing around in plain view when a Vadik soldier ",
+                        "enters the room.",
+                        "\n\n",
+                        "The Vadik soldier zaps you.  With his zap gun.  ",
+                        "It's a gun specially designed for zapping.  ",
+                        "How did you think this was gonna go?",
+                        "\n\n",
+                        "You are dead."
+                    ].join("");
+                placeOccupiedByPlayer.agentRemove(agentEnemy, w);
+                w.end();
+            }
+            else {
                 message =
                     "You hear the door open, and the Vadik solider steps into the room.";
                 "The solider's breathing apparatus rasps as he examines the room, ";
                 "but he doesn't seem to see you where you are hiding.";
             }
-            else {
-                message = "The Vadik soldier zaps you.  You are dead.";
-                placeOccupiedByPlayer.agentRemove(agentEnemy, w);
-                w.end();
-            }
         }
         else {
-            var portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
-            var portalEnemyLastPassedThrough = placeOccupiedByEnemyPrevious.portalByPlaceDestinationName(placeOccupiedByEnemy.name);
-            var portalForEnemyToGoThroughNext;
-            var stateNameMovingFromBottomToTop = "MovingFromBottomToTop";
-            var enemyIsMovingFromBottomToTop = agentEnemy.stateGroup.stateWithNameGetValue(stateNameMovingFromBottomToTop);
-            var enemyIsOnUpperDeck = placeOccupiedByEnemy.name.indexOf("Upper Deck") >= 0;
-            if (portalEnemyLastPassedThrough.name() == "forward"
-                || portalEnemyLastPassedThrough.name() == "aft") {
-                // The enemy has just passed from the previous part of the hall
-                // into this part of the hall,
-                // and will thus next enter the door to whatever room
-                // lies along this hall.
-                portalForEnemyToGoThroughNext =
-                    placeOccupiedByEnemy.portalByName("inside");
+            var stateNamePlaceOnPatrolRouteIndex = "PlaceOnPatrolRouteIndex";
+            var placeOnPatrolRouteIndex = agentEnemy.stateGroup.stateWithNameGetValue(stateNamePlaceOnPatrolRouteIndex);
+            var placesOnPatrolRouteNames = [
+                // todo - Enter the rooms, don't just stay in the halls.
+                Places.friendlyShipLowerDeckHallAmidships_Name(),
+                Places.friendlyShipLowerDeckHallAft_Name(),
+                Places.friendlyShipUpperDeckHallAft_Name(),
+                Places.friendlyShipUpperDeckHallAmidships_Name(),
+                Places.friendlyShipUpperDeckHallForward_Name(),
+                Places.friendlyShipBridge_Name(),
+                Places.friendlyShipUpperDeckHallForward_Name(),
+                Places.friendlyShipUpperDeckHallAmidships_Name(),
+                Places.friendlyShipUpperDeckHallAft_Name(),
+                Places.friendlyShipLowerDeckHallAft_Name(),
+                Places.friendlyShipLowerDeckHallAmidships_Name(),
+                Places.friendlyShipLowerDeckHallForward_Name(),
+            ];
+            var patrolRouteIsComplete = placeOnPatrolRouteIndex == null
+                || placeOnPatrolRouteIndex >= placesOnPatrolRouteNames.length;
+            if (patrolRouteIsComplete) {
+                placeOnPatrolRouteIndex = 0;
             }
-            else {
-                // The enemy has just passed back into the hall
-                // from inside whatever room lies along this hall,
-                // and will thus next pass to the next part of the hall.
-                if (enemyIsMovingFromBottomToTop) {
-                    var enemyIsAtTurnaroundPoint = placeOccupiedByEnemy.name == Places.friendlyShipUpperDeckHallForward_Name();
-                    if (enemyIsOnUpperDeck) {
-                        portalForEnemyToGoThroughNext =
-                            placeOccupiedByEnemy.portalByName("forward");
-                    }
-                    else if (enemyIsAtTurnaroundPoint) {
-                        agentEnemy.stateWithNameSetToValue(stateNameMovingFromBottomToTop, (enemyIsMovingFromBottomToTop == false));
-                        portalForEnemyToGoThroughNext =
-                            placeOccupiedByEnemy.portalByName("forward");
-                    }
-                    else {
-                        portalForEnemyToGoThroughNext =
-                            placeOccupiedByEnemy.portalByName("aft");
-                    }
-                }
-                else // Enemy is moving from top to bottom.
-                 {
-                    var enemyIsAtTurnaroundPoint = placeOccupiedByEnemy.name == Places.friendlyShipLowerDeckHallForward_Name();
-                    if (enemyIsOnUpperDeck) {
-                        portalForEnemyToGoThroughNext =
-                            placeOccupiedByEnemy.portalByName("aft");
-                    }
-                    else if (enemyIsAtTurnaroundPoint) {
-                        agentEnemy.stateWithNameSetToValue(stateNameMovingFromBottomToTop, (enemyIsMovingFromBottomToTop == false));
-                        portalForEnemyToGoThroughNext =
-                            placeOccupiedByEnemy.portalByName("aft");
-                    }
-                    else {
-                        portalForEnemyToGoThroughNext =
-                            placeOccupiedByEnemy.portalByName("forward");
-                    }
-                }
-            }
-            var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find(x => x.placeDestinationName == placeOccupiedByPlayer.name);
-            var playerAndEnemyAreInAdjacentPlaces = (portalLeadingDirectlyToPlayer != null);
+            var placeForEnemyToGoToNextName = placesOnPatrolRouteNames[placeOnPatrolRouteIndex];
+            var placeForEnemyToGoToNext = w.placeByName(placeForEnemyToGoToNextName);
+            var enemyIsAboutToEnterPlaceOccupiedByPlayer = (placeForEnemyToGoToNext == placeOccupiedByPlayer);
             // Only move into player's room
             // if the player hasn't just moved there,
             // because otherwise the player gets no warning.
-            var shouldEnemyMove = (playerAndEnemyAreInAdjacentPlaces == false)
+            var enemyShouldMove = (enemyIsAboutToEnterPlaceOccupiedByPlayer == false)
                 || (playerHasJustMoved == false);
-            if (shouldEnemyMove) {
-                agentEnemy.stateWithNameSetToValue(stateNamePlaceOccupiedPreviousName, placeOccupiedByEnemy.name);
+            if (enemyShouldMove) {
+                placeOnPatrolRouteIndex++;
+                agentEnemy.stateGroup.stateWithNameSetToValue(stateNamePlaceOnPatrolRouteIndex, placeOnPatrolRouteIndex);
+                var portalForEnemyToGoThroughNext = placeOccupiedByEnemy.portalByPlaceDestinationName(placeForEnemyToGoToNextName);
                 agentEnemy.goThroughPortal(portalForEnemyToGoThroughNext, w);
             }
             placeOccupiedByEnemy = agentEnemy.place(w);
@@ -4986,21 +5039,15 @@ class Scripts {
                         "And that uniform really pops."
                     ].join("");
             }
-            else {
-                portalsEnemyMayGoThrough = placeOccupiedByEnemy.portalsVisible();
-                var portalLeadingDirectlyToPlayer = portalsEnemyMayGoThrough.find(x => x.placeDestinationName == placeOccupiedByPlayer.name);
-                if (portalLeadingDirectlyToPlayer != null) {
-                    var portalLeadingFromPlayerToEnemy = placeOccupiedByPlayer.portals.find(x => x.placeDestinationName == placeOccupiedByEnemy.name);
-                    var portalLeadingFromPlayerToEnemyName = portalLeadingFromPlayerToEnemy.name();
-                    var directions = ["forward", "aft", "outside"];
-                    var isDefiniteArticleNeeded = directions.indexOf(portalLeadingFromPlayerToEnemyName) < 0;
-                    message =
-                        [
-                            "You hear the tramping of heavy feet coming from ",
-                            (isDefiniteArticleNeeded ? "the " : ""),
-                            portalLeadingFromPlayerToEnemyName + "."
-                        ].join("");
-                }
+            else if (enemyIsAboutToEnterPlaceOccupiedByPlayer) {
+                var isDefiniteArticleNeeded = false; // todo
+                var portalEnemyWillArriveThrough = placeOccupiedByPlayer.portalByPlaceDestinationName(placeOccupiedByEnemy.name);
+                message =
+                    [
+                        "You hear the tramping of heavy feet approaching from ",
+                        (isDefiniteArticleNeeded ? "the " : ""),
+                        portalEnemyWillArriveThrough.name + "."
+                    ].join("");
             }
         }
         u.messageEnqueue(message);
