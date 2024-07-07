@@ -2918,6 +2918,7 @@ class Scripts {
             this.regionFriendlyShip_HideUnsuccessfully,
             this.regionFriendlyShip_UpdateForTurn,
             this.regionPlanetDesert_UpdateForTurn,
+            this.regionPlanetDesert_AssassinDroneUpdate,
             this.regionPlanetSettlement_UpdateForTurn,
             this.regionPlanetSettlement_NavigationRobotUpdate,
             this.todo
@@ -5153,10 +5154,69 @@ class Scripts {
         }
         u.messageEnqueue(message);
     }
+    regionPlanetDesert_AssassinDroneUpdate(u, w, p, c) {
+        var placeCurrent = w.placeCurrent();
+        var region = placeCurrent.region(w);
+        var agentDrone = region.agentByName("assassin drone");
+        if (agentDrone != null) {
+            // todo - The drone should actually move toward the player,
+            // and actually do something when it gets there.
+            if (p != placeCurrent) {
+                p.agentRemove(agentDrone, w);
+                placeCurrent.agentAdd(agentDrone, w);
+            }
+        }
+    }
     regionPlanetDesert_UpdateForTurn(u, w, p, c) {
-        var stateName = "TurnsSinceLastDrink";
         var agentPlayer = w.agentPlayer;
-        var turnsSinceLastDrink = agentPlayer.stateGroup.stateWithNameGetValue(stateName);
+        var playerState = agentPlayer.stateGroup;
+        var stateNameTurnsSinceArriving = "TurnsSinceArriving";
+        var turnsSinceArriving = playerState.stateWithNameGetValue(stateNameTurnsSinceArriving);
+        if (turnsSinceArriving == 15) {
+            u.messageEnqueue([
+                "You hear a whooshing sound, then a thud from a few hundred meters to the west.  ",
+                "You look to the western sky and see a diagonal trail of vapor hanging in the air. ",
+                "It seems almost like a meteor has struck, ",
+                "and, at that very moment, become a meteorite.",
+                "\n\n",
+                "You take a moment to be proud of yourself ",
+                "for still remembering the meteor/meteorite thing.  ",
+                "It's been decades since middle school science class.  ",
+                "\n\n",
+                "However, after a moment, you start to worry a bit.  ",
+                "You weren't listening closely when Mr. Halversen went over ",
+                "the probability of how often meteors strike, ",
+                "because you were still trying to memorize the '-ite' thing.  ",
+                "But it seems pretty unlikely that a meteor would just happen to land ",
+                "in the same part of the uninhabited desert that you happened to land in, ",
+                "mere minutes before.",
+                "\n\n",
+                "This meteor may be up to something."
+            ].join(""));
+            var agentAssassinDrone = Agent.fromNames(["drone", "assassin drone", "robot", "spider robot",]).descriptionAsPartOfPlaceSet([
+                "A spiderlike assassin drone stalks the desert floor, ",
+                "attempting to get close to you.  Better not let it."
+            ].join("")).descriptionWhenExaminedSet([
+                "This is a K-177 assassin drone.  It looks like a spider, ",
+                "not unlike the cartridge-retrieval droid from the Pax Aeterna library. ",
+                "There are some differences, though.  ",
+                "This robot is bigger, for a start, ",
+                "and moves along the ground instead of along shelves.  ",
+                "Also, instead of checking cartridges out of a library, ",
+                "this robot checks YOU out.  Of your life.  ",
+                "\n\n",
+                "Okay, that last figure of speech didn't really work, ",
+                "but you get the idea.  This thing is a walking bomb.  ",
+                "Run.  Hide, if possible.  ",
+                "Though hiding may not be possible in this case.  ",
+                "Don't give me that look; nobody's ever tried to murder ME before."
+            ].join("")).scriptUpdateForTurnSet(Script.fromName(Scripts.Instance().regionPlanetDesert_AssassinDroneUpdate.name));
+            p.agentAdd(agentAssassinDrone, w);
+        }
+        turnsSinceArriving++;
+        playerState.stateWithNameSetToValue(stateNameTurnsSinceArriving, turnsSinceArriving);
+        var stateNameTurnsSinceLastDrink = "TurnsSinceLastDrink";
+        var turnsSinceLastDrink = playerState.stateWithNameGetValue(stateNameTurnsSinceLastDrink);
         if (turnsSinceLastDrink == 10) {
             u.messageEnqueue([
                 "You're getting thirsty.  This desert really takes it out of you.",
@@ -5196,7 +5256,7 @@ class Scripts {
             w.end();
         }
         turnsSinceLastDrink++;
-        agentPlayer.stateGroup.stateWithNameSetToValue(stateName, turnsSinceLastDrink);
+        playerState.stateWithNameSetToValue(stateNameTurnsSinceLastDrink, turnsSinceLastDrink);
     }
     regionFriendlyShip_HideUnsuccessfully(u, w, p, c) {
         u.messageEnqueue("That is not a good hiding spot.");
