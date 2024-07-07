@@ -339,7 +339,7 @@ class Places {
             this.emplacement2(["captain's chair"], [
                 "This chair is deluxe.  This chair is so deluxe that it should really ",
                 "be written as two words: de luxe."
-            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["sit in chair"], this.scripts.placeFriendlyShipBridge_SitInChair.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind captain's chair"], this.scripts.placeFriendlyShipBridge_HideBehindCaptainsChair.name)),
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["sit in chair"], this.scripts.placeFriendlyShipBridge_SitInChair.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind captain's chair", "hide behind chair"], this.scripts.placeFriendlyShipBridge_HideBehindCaptainsChair.name)).scriptUpdateForTurnSet(Script.fromName(this.scripts.placeFriendlyShip_CheckIfPlayerIsStillHidden.name)),
             this.emplacement2(["counselor"], [
                 "The counselor's uniform is, for some reason, ",
                 "in a completey different style from everybody else's uniforms.  ",
@@ -395,7 +395,7 @@ class Places {
                 "She was evidently quite an accomplished pianist.  ",
                 "She'd have to be, to justify using this much space and mass ",
                 "on a working starship."
-            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["hide under grand piano", "hide under piano"], this.scripts.placeFriendlyShipCaptainsQuarters_HideBehindPiano.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind grand piano", "hide behind piano"], this.scripts.regionFriendlyShip_HideUnsuccessfully.name)),
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["hide under grand piano", "hide under piano"], this.scripts.placeFriendlyShipCaptainsQuarters_HideBehindPiano.name)).scriptUpdateForTurnSet(Script.fromName(this.scripts.placeFriendlyShip_CheckIfPlayerIsStillHidden.name)).commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind grand piano", "hide behind piano"], this.scripts.regionFriendlyShip_HideUnsuccessfully.name)),
         ]);
     }
     static friendlyShipCaptainsQuarters_Name() {
@@ -716,7 +716,7 @@ class Places {
                 "but you lost yours.",
                 "\n\n",
                 "Well, broke it, really.  But then you lost the pieces."
-            ].join("")),
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["hide under table"], this.scripts.placeFriendlyShipLibrary_HideUnderTable.name)).scriptUpdateForTurnSet(Script.fromName(this.scripts.placeFriendlyShip_CheckIfPlayerIsStillHidden.name)),
             this.emplacement2(["science officer", "scientist", "man", "person", "body", "corpse", "being"], [
                 "The science officer is not moving in any perceptible way.  ",
                 "You can't tell from here if he's even breathing, ",
@@ -842,7 +842,7 @@ class Places {
                 "A few feet from the wall opposite the door is a long counter, ",
                 "behind which the ship's cook (who always insisted he was the ship's 'chef') ",
                 "would prepare technically nourishing meals for the crew."
-            ].join(""))
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecuteName(["hide behind counter"], this.scripts.placeFriendlyShipMessHall_HideBehindCounter.name)).scriptUpdateForTurnSet(Script.fromName(this.scripts.placeFriendlyShip_CheckIfPlayerIsStillHidden.name))
         ]);
     }
     static friendlyShipMessHall_Name() {
@@ -862,13 +862,37 @@ class Places {
             this.portal(["navigator's quarters"], null).lock(),
             this.portal(["science officer's quarters"], null).lock(),
             this.portal(["tactical officer's quarters"], null).lock(),
-            this.emplacement(["plant", "artificial plant", "bush", "planter"]).descriptionAsPartOfPlaceSet("This artificial plant is quite bushy.").commandAdd(Command.fromTextsAndScriptExecute(["hide behind plant"], Script.fromNameAndRun("HideBehindPlant", (u, w, p, x, y) => {
-                u.messageEnqueue("You hide behind the plant.");
-            })))
+            this.emplacement(["plant", "artificial plant", "bush", "planter"]).descriptionWhenExaminedSet([
+                "This artificial plant is quite bushy.  ",
+                "It's high-quality work.  You'd almost think it was real, ",
+                "but real plants don't ever look this good, ",
+                "at least not on a ship where you're responsible for maintaining them."
+            ].join("")).commandAdd(Command.fromTextsAndScriptExecute([
+                "hide behind plant",
+                "hide behind artificial plant",
+                "hide behind bush"
+            ], Script.fromName(this.scripts.placeFriendlyShipOfficersQuartersAntechamber_HideBehindPlant.name))).scriptUpdateForTurnSet(Script.fromName(this.scripts.placeFriendlyShip_CheckIfPlayerIsStillHidden.name))
         ]);
     }
     static friendlyShipOfficersQuartersAntechamber_Name() {
         return "Pax Aeterna - Officer's Quarters Antechamber";
+    }
+    friendlyShipScienceLaboratory() {
+        return this.place3(Places.friendlyShipUpperDeckHallAft_Name(), [
+            "This is the Pax Aeterna's science laboratory, or, as you call it, the lab.",
+            "A mess of shattered beakers and at least one shattered scientist ",
+            "lies scattered on the floor. ",
+            "Electrodes pulse erratically, presumably knocked off-kilter ",
+            "in the chaos when all the glass and people got broke.",
+            "\n\n",
+            "A door leads back out to the hall.",
+        ].join(""), [
+            this.portal(["hall", "corridor", "door"], Places.friendlyShipUpperDeckHallAft_Name()),
+            this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
+        ]);
+    }
+    static friendlyShipScienceLaboratory_Name() {
+        return "Pax Aeterna - Science Laboratory";
     }
     friendlyShipUpperDeckHallAft() {
         return this.place3(Places.friendlyShipUpperDeckHallAft_Name(), [
@@ -884,11 +908,17 @@ class Places {
             "A hard trick to pull off, but then again, he put in lots of practice ",
             "when he was alive.  Every time he talked to you, at a minimum.",
             "\n\n",
+            "A door along the hall labelled 'Science Laboratory' leads to the lab.  ",
+            "Zhleez, not only did they spell out 'laboratory', ",
+            "they also put 'science' in front of it.  What other kind of laboratory is there?  ",
+            "As far as you're concerned, it's just more to dust.",
+            "\n\n",
             "The hall continues to forward, and ends in a bulkhead to aft, ",
             "where a door opens on to an elevator."
         ].join(""), [
             this.portal(["forward"], Places.friendlyShipUpperDeckHallAmidships_Name()),
             this.portal(["elevator", "aft", "door"], Places.friendlyShipLowerDeckHallAft_Name()),
+            this.portal(["science laboratory", "lab", "laboratory", "lab", "door"], Places.friendlyShipScienceLaboratory_Name()),
             this.emplacement(["body"]).commandAdd(Command.fromTextsAndScriptExecuteName(["search body"], this.scripts.emplacementBodyEmptySearch.name))
         ]);
     }
@@ -2709,6 +2739,7 @@ class Regions {
             // Upper Deck.
             places.friendlyShipCaptainsQuarters(),
             places.friendlyShipOfficersQuartersAntechamber(),
+            places.friendlyShipScienceLaboratory(),
             places.friendlyShipUpperDeckHallAmidships(),
             places.friendlyShipUpperDeckHallForward(),
             places.friendlyShipUpperDeckHallAft(),
@@ -2847,9 +2878,12 @@ class Scripts {
             this.placeFriendlyShipEscapePod_PressLaunchButton,
             this.placeFriendlyShipEscapePod_PutOnSafetyHarness,
             this.placeFriendlyShipJanitorsCloset_Update,
+            this.placeFriendlyShipLibrary_HideUnderTable,
             this.placeFriendlyShipLibrary_TalkToMan,
             this.placeFriendlyShipLibrary_Type,
             this.placeFriendlyShipLibrary_UseConsole,
+            this.placeFriendlyShipMessHall_HideBehindCounter,
+            this.placeFriendlyShipOfficersQuartersAntechamber_HideBehindPlant,
             this.placeFriendlyShipUpperDeckHallAmidships_Update,
             this.placePlanetCavernsBarrier_GoBarrier,
             this.placePlanetCavernsBarrier_PutGlassInBarrier,
@@ -3270,6 +3304,26 @@ class Scripts {
         ].join("");
         u.messageEnqueue(message);
     }
+    placeFriendlyShip_CheckIfPlayerIsStillHidden(u, w, p, c) {
+        var stateNamePlayerIsHidden = "PlayerIsHidden";
+        var agentPlayer = w.agentPlayer;
+        var playerState = agentPlayer.stateGroup;
+        var playerWasHiding = playerState.stateWithNameGetValue(stateNamePlayerIsHidden);
+        if (playerWasHiding) {
+            var commandText = c.text();
+            var commandIsTooActiveToHide = (commandText.startsWith("look") == false
+                && commandText != "hide behind captain's chair"
+                && commandText != "inventory"
+                && commandText != "save"
+                && commandText != "wait");
+            if (commandIsTooActiveToHide) {
+                u.messageEnqueue([
+                    "You are no longer concealed.",
+                ].join(""));
+                agentPlayer.stateGroup.stateWithNameSetToFalse(stateNamePlayerIsHidden);
+            }
+        }
+    }
     placeFriendlyShipBridge_HideBehindCaptainsChair(u, w, p, c) {
         u.messageEnqueue([
             "You conceal yourself behind the captain's chair.  ",
@@ -3580,7 +3634,7 @@ class Scripts {
                 "in the office/supply closet/quarters ",
                 "of the Maintenance Specialist (Sanitation Grade) ",
                 "of the starship Pax Aeterna, ",
-                "part of the fleet of the Inner Orion Arm Commonwealth, ",
+                "part of the Star Corps of the Inner Orion Arm Commonwealth, ",
                 "currently on an urgent mission to...",
                 "\n\n",
                 "...something or other, ",
@@ -3604,6 +3658,16 @@ class Scripts {
             ].join("");
             u.messageEnqueue(message);
         }
+    }
+    placeFriendlyShipLibrary_HideUnderTable(u, w, p, c) {
+        u.messageEnqueue([
+            "You crawl beneath the library table.  ",
+            "You notice no residue of chewing gum or graffiti on the underside.  ",
+            "Wow, this really is the future."
+        ].join(""));
+        var stateNamePlayerIsHidden = "PlayerIsHidden";
+        var agentPlayer = w.agentPlayer;
+        agentPlayer.stateGroup.stateWithNameSetToTrue(stateNamePlayerIsHidden);
     }
     placeFriendlyShipLibrary_TalkToMan(u, w, p, c) {
         var stateScientistIsDeadName = "ScientistIsDead";
@@ -3703,6 +3767,30 @@ class Scripts {
             "takes about four times as long.  So you'd better get started."
         ].join("");
         u.messageEnqueue(message);
+    }
+    placeFriendlyShipMessHall_HideBehindCounter(u, w, p, c) {
+        u.messageEnqueue([
+            "You vault over the counter, hurting yourself only slightly in the process, ",
+            "and crouch down behind it.  The floor here is not as clean as might be hoped.  ",
+            "You think about filing a health complaint about it, ",
+            "but there may not be anybody left alive to file it with, ",
+            "and plus you have a suspicion that cleaning back here is one of your duties."
+        ].join(""));
+        var stateNamePlayerIsHidden = "PlayerIsHidden";
+        var agentPlayer = w.agentPlayer;
+        agentPlayer.stateGroup.stateWithNameSetToTrue(stateNamePlayerIsHidden);
+    }
+    placeFriendlyShipOfficersQuartersAntechamber_HideBehindPlant(u, w, p, c) {
+        u.messageEnqueue([
+            "You conceal yourself behind the plant.  ",
+            "From this close, you notice that the underside ",
+            "of each leaf bears a tiny reproduction ",
+            "of the embelem of the Commonwealth Star Corps.  ",
+            "It sounds a bit guache, but it's actually quite tasteful."
+        ].join(""));
+        var stateNamePlayerIsHidden = "PlayerIsHidden";
+        var agentPlayer = w.agentPlayer;
+        agentPlayer.stateGroup.stateWithNameSetToTrue(stateNamePlayerIsHidden);
     }
     placeFriendlyShipUpperDeckHallAmidships_Update(u, w, p, c) {
         if (p.hasBeenVisited() == false) {
@@ -4998,19 +5086,32 @@ class Scripts {
             var placeOnPatrolRouteIndex = agentEnemy.stateGroup.stateWithNameGetValue(stateNamePlaceOnPatrolRouteIndex);
             var placesOnPatrolRouteNames = [
                 // todo - Enter the rooms, don't just stay in the halls.
-                Places.friendlyShipLowerDeckHallAmidships_Name(),
-                Places.friendlyShipLowerDeckHallAft_Name(),
-                Places.friendlyShipUpperDeckHallAft_Name(),
-                Places.friendlyShipUpperDeckHallAmidships_Name(),
-                Places.friendlyShipUpperDeckHallForward_Name(),
-                Places.friendlyShipBridge_Name(),
-                Places.friendlyShipUpperDeckHallForward_Name(),
-                Places.friendlyShipUpperDeckHallAmidships_Name(),
-                Places.friendlyShipUpperDeckHallAft_Name(),
-                Places.friendlyShipLowerDeckHallAft_Name(),
-                Places.friendlyShipLowerDeckHallAmidships_Name(),
                 Places.friendlyShipLowerDeckHallForward_Name(),
+                Places.friendlyShipMessHall_Name(),
+                Places.friendlyShipLowerDeckHallForward_Name(),
+                Places.friendlyShipLowerDeckHallAmidships_Name(),
+                Places.friendlyShipLibrary_Name(),
+                Places.friendlyShipLowerDeckHallAmidships_Name(),
+                Places.friendlyShipLowerDeckHallAft_Name(),
+                // Don't check the janitor's closet.
+                Places.friendlyShipUpperDeckHallAft_Name(),
+                Places.friendlyShipScienceLaboratory_Name(),
+                Places.friendlyShipUpperDeckHallAft_Name(),
+                Places.friendlyShipUpperDeckHallAmidships_Name(),
+                Places.friendlyShipOfficersQuartersAntechamber_Name(),
+                Places.friendlyShipUpperDeckHallAmidships_Name(),
+                Places.friendlyShipUpperDeckHallForward_Name(),
+                Places.friendlyShipCaptainsQuarters_Name(),
+                Places.friendlyShipUpperDeckHallForward_Name(),
+                Places.friendlyShipBridge_Name()
             ];
+            var placesOnPatrolRouteNamesReversed = [];
+            for (var i = 0; i < placesOnPatrolRouteNames.length - 1; i++) {
+                var iReversed = placesOnPatrolRouteNames.length - 1 - i;
+                var placeName = placesOnPatrolRouteNames[iReversed];
+                placesOnPatrolRouteNamesReversed.push(placeName);
+            }
+            placesOnPatrolRouteNames.push(...placesOnPatrolRouteNamesReversed);
             var patrolRouteIsComplete = placeOnPatrolRouteIndex == null
                 || placeOnPatrolRouteIndex >= placesOnPatrolRouteNames.length;
             if (patrolRouteIsComplete) {
