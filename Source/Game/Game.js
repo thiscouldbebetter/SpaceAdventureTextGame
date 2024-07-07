@@ -183,8 +183,19 @@ class Items {
             "This is a Vadik gas grenade.  ",
             "The Vadik are notoriously, and apparently cheerfully, violent, ",
             "so you're not sure why they even have non-lethal weapons like these.  ",
-            "Maybe they're issued to underperforming crew for purposes of public shaming."
-        ].join(""));
+            "Maybe they're issued to underperforming crew for purposes of public shaming.  ",
+            "Anyway, the grenade is marked with a prominent 'DON'T TOUCH' sign."
+        ].join("")).descriptionAsPartOfPlaceSet([
+            "A Vadik gas grenade sits on the counter, behind a prominent warning sign that translates to, ",
+            "'AUTHORIZED USE ONLY - DO NOT TOUCH' in Vadik.  Well, approximately.  The Vadik ",
+            "language doesn't really have capitals.  Or maybe it doesn't have lowercase letters.  ",
+            "Either way, this sign's warning message is emphasized with diacritical marks ",
+            "that look a bit like severed limbs."
+        ].join("")).scriptGetSet(Script.fromName(Scripts.Instance().itemGasGrenadeGet.name)).commandAdd(Command.fromTextsAndScriptExecuteName(MessageHelper.combinePhraseArrays([
+            ["throw", "drop", "use"],
+            [null, "gas"],
+            ["grenade"]
+        ]), Scripts.Instance().itemGasGrenadeThrow.name));
     }
     keycard() {
         return Item.fromNamesAndDescription(["keycard", "key", "card"], [
@@ -2261,7 +2272,7 @@ class Places {
                 "This robot guards guns from gun-worshippers for a living, ",
                 "and looks like it.  You don't want to mess with this thing."
             ].join("")),
-            Items.Instance().gasGrenade.name
+            Items.Instance().gasGrenade
         ]);
     }
     static enemyShipArmory_Name() {
@@ -2855,6 +2866,8 @@ class Scripts {
             this.itemDataCartridge_PutInSlot,
             this.itemDehydratedWaterUse,
             this.itemGadgetPressButton,
+            this.itemGasGrenadeGet,
+            this.itemGasGrenadeThrow,
             this.itemKeycardUse,
             this.itemSurvivalKitOpen,
             this.placeEnemyShipLaundry_GetInBin,
@@ -3048,6 +3061,113 @@ class Scripts {
             message +=
                 "illuminates.  Whatever this thing does, it's doing it now.";
             itemGadget.activate();
+        }
+        u.messageEnqueue(message);
+    }
+    itemGasGrenadeGet(u, w, p, c) {
+        var message;
+        var armorerIsPresent = (p.agents.length > 0);
+        if (armorerIsPresent) {
+            message =
+                [
+                    "As you reach out to take the gas grenade,  ",
+                    "slices you neatly in half with a nearly silent but hellishly powerful laser blast.  ",
+                    "Did you not read the sign?",
+                    "\n\n",
+                    "You are dead."
+                ].join("");
+            w.end();
+        }
+        else {
+            message =
+                [
+                    "You quickly swipe the gas grenade before the supervisor robot can return.  ",
+                    "You've never stolen anything from someone with a gun before.  ",
+                    "You feel cool and sexy."
+                ].join("");
+        }
+        u.messageEnqueue(message);
+    }
+    itemGasGrenadeThrow(u, w, p, c) {
+        var placeIsOutsideShip = false; // todo
+        var placeCatwalkName = Places.enemyShipStellarJuvenatorChamberCatwalk_Name();
+        var placeIsCatwalk = (p.name == placeCatwalkName);
+        var enemiesArePresent = false;
+        var message;
+        if (placeIsOutsideShip) {
+            message =
+                [
+                    "You throw the gas grenade.  It drifts for a few moments, ",
+                    "then starts emitting gas.  Because it's floating in an airless, gravityless vaccum, ",
+                    "the gas exiting the grenade acts like rocket exhaust, ",
+                    "and the grenade twirls soundlessly away into the void, ",
+                    "leaving behind a vapor trail that dissipates almost instantly.",
+                    "\n\n",
+                    "That was kind of cool-looking, you suppose, but on the whole ",
+                    "it seems like a waste of a perfectly good gas grenade."
+                ].join("");
+        }
+        else if (placeIsCatwalk == false) {
+            var message = [
+                "You throw the gas grenade.  It bounces off a wall, falls to the floor, ",
+                "and starts emitting gas.  A lot of gas.  ",
+                "So much gas that it quickly becomes hard to see.",
+                "\n\n"
+            ].join("");
+            var playerIsExposedToGas = true; // todo
+            if (playerIsExposedToGas) {
+                message +=
+                    [
+                        "And hard to breathe, you can't help noticing.  ",
+                        "You woozily realize that you aren't protected from the gas in any way, ",
+                        "and it's currently filling your lungs.  ",
+                        "You lose consciousness in short order, and slip to the floor.",
+                        "\n\n",
+                        "The good news is that the gas isn't lethal; ",
+                        "it just sends you off into a peaceful sleep.",
+                        "The bad news is that when the Vadik ",
+                        "find you sleeping peacefully in the halls of their warship, ",
+                        "they don't even bother to wake you up before shooting you through the head.  ",
+                        "Which is considerate of them, because otherwise you'd feel awkward about it.",
+                        "\n\n",
+                        "You are dead."
+                    ].join("");
+                w.end();
+            }
+            else if (enemiesArePresent) {
+                // todo - Remove enemies.
+                message +=
+                    [
+                        "When the smoke clears, the Vadik are unconscious.",
+                        "You think they're just unconscious, anyway."
+                    ].join("");
+            }
+            else {
+                message +=
+                    [
+                        "After a time, the gas dissipates.  ",
+                        "Seems like a waste of a perfectly good gas grenade, honestly."
+                    ].join("");
+            }
+        }
+        else // if (placeIsCatwalk)
+         {
+            message =
+                [
+                    "You throw the gas grenade off of the catwalk.  ",
+                    "It drops straight toward the floor of the cavernous chamber below,",
+                    "trailing a streamer of gas as it falls.  ",
+                    "\n\n",
+                    "The grenade hits the floor near where the Vadik guard is standing watch ",
+                    "near the Stellar Juvenator.  He reacts quickly, ",
+                    "but not quickly enough.  He is engulfed in the expanding cloud of knockout* gas ",
+                    "and falls to the deck, unconscious**.",
+                    "\n\n",
+                    "* At least, you think it's knockout gas.",
+                    "\n\n",
+                    "** At least, you think he's unconscious."
+                ].join("");
+            // todo - Knock out the guard.
         }
         u.messageEnqueue(message);
     }
