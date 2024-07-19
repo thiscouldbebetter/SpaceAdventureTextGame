@@ -637,8 +637,8 @@ class Places
 				"showing the brilliantly shining surrounding stars.  ",
 				"\n\n",
 				"Banks of incomprehensible--to you, at least--controls ",
-				"line the aft wall, with the nearby seats ",
-				"most of which are empty, but two of which are filled with the slumped bodies ",
+				"line the aft wall, Two of the nearby seats, ",
+				"are occupied with the slumped bodies ",
 				"of the counselor and tactical officer.  ",
 				"\n\n",
 				"There're also some bodies scattered on the floor: ",
@@ -653,19 +653,19 @@ class Places
 				"A prominent pedestal behind the captain's chair ",
 				"formerly held the Stellar Juvenator, but now stands vacant.",
 				"\n\n",
-				"A door leads back out to the corridor."
+				"A door in the aft wall leads back out to the corridor."
 			].join(""),
 
 			[
 				this.portal
 				(
-					[ "door", "outside", "hall", "corridor" ],
+					[ "door", "outside", "hall", "corridor", "aft" ],
 					Places.friendlyShipUpperDeckHallForward_Name()
 				),
 
 				this.emplacement2
 				(
-					[ "captain" ],
+					[ "captain", "captain's body" ],
 
 					[
 						"The captain still looks calm and self-assured, even with a ",
@@ -676,8 +676,8 @@ class Places
 				(
 					Command.fromTextsAndScriptExecuteName
 					(
-						[ "search captain" ],
-						this.scripts.emplacementBodyKeycardSearch.name
+						[ "search captain", "search captain's body" ],
+						this.scripts.emplacementCaptainsBodyKeycardSearch.name
 					)
 				).commandAdd
 				(
@@ -717,7 +717,7 @@ class Places
 
 				this.emplacement2
 				(
-					[ "counselor" ],
+					[ "counselor", "counselor's body" ],
 
 					[
 						"The counselor's uniform is, for some reason, ",
@@ -733,14 +733,14 @@ class Places
 				(
 					Command.fromTextsAndScriptExecuteName
 					(
-						[ "search counselor" ],
+						[ "search counselor", "search counselor's body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				),
 
 				this.emplacement2
 				(
-					[ "first officer" ],
+					[ "first officer", "first officer's body" ],
 
 					[
 						"The first officer's body lies on the floor here.  ",
@@ -758,14 +758,14 @@ class Places
 				(
 					Command.fromTextsAndScriptExecuteName
 					(
-						[ "search first officer" ],
+						[ "search first officer", "search first officer's body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				),
 
 				this.emplacement2
 				(
-					[ "helmsman" ],
+					[ "helmsman", "helmsman's body" ],
 
 					[
 						"The helmsman hit on you one time.  ",
@@ -775,28 +775,28 @@ class Places
 				(
 					Command.fromTextsAndScriptExecuteName
 					(
-						[ "search helmsman" ],
+						[ "search helmsman", "search helmsman's body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				),
 
 				this.emplacement2
 				(
-					[ "navigator" ],
+					[ "navigator", "navigator's body" ],
 
 					"You never understood anything this kid said.  Plus his accent seemed fakey."
 				).commandAdd
 				(
 					Command.fromTextsAndScriptExecuteName
 					(
-						[ "search navigator" ],
+						[ "search navigator", "search navigator's body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				),
 
 				this.emplacement2
 				(
-					[ "tactical officer" ],
+					[ "tactical officer", "tactical officer's body" ],
 
 					[
 						"This guy gave you the creeps.  He would sit in the mess hall ",
@@ -812,7 +812,7 @@ class Places
 				(
 					Command.fromTextsAndScriptExecuteName
 					(
-						[ "search tactical officer" ],
+						[ "search tactical officer", "search tactical officer's body" ],
 						this.scripts.emplacementBodyEmptySearch.name
 					)
 				)
@@ -1505,7 +1505,13 @@ class Places
 				"and the shelves are occupied almost completely ",
 				"with rows upon rows of plastic cartridges containing magnetic data tape.  ",
 				"(The fleet tried a solid-state, full-digital data storage system for a while, ",
-				" but it was agreed that it just didn't give the same rich tones.)"
+				" but it was agreed that it just didn't give the same rich tones.)",
+				"\n\n",
+				"A data-retrieval console occupies the back wall.  ",
+				"A spiderlike cartridge sits robot atop it, awaiting orders.",
+				"\n\n",
+				"Opposite is a table with several comfortable seats around it.",
+
 			].join(""),
 
 			[
@@ -1532,13 +1538,6 @@ class Places
 					].join(""),
 
 					this.scripts.placeFriendlyShipLibrary_UseConsole.name
-				).descriptionAsPartOfPlaceSet
-				(
-					[
-						"On the wall opposite the door is a retrieval console with a keyboard and screen, ",
-						"a spiderlike cartridge-retrieval robot clinging to the shelves just above it."
-					].join(""),
-
 				).commandAdd
 				(
 					Command.fromTextsAndScriptExecuteName
@@ -1562,18 +1561,6 @@ class Places
 						"But they made you stop before you could even ",
 						"figure out how to detach the bot from the shelves, ",
 						"much less get a nice volley going."
-					].join("")
-				).descriptionAsPartOfPlaceSet
-				(
-					[
-						"A spacious round table ringed with upholstered seats ",
-						"fills a pit in the center of the room.  ",
-						"It is intended to provide a comfortable place to read data cartridges, ",
-						"though there are no cartridge readers present.  ",
-						"Every crew member was issued one on boarding, ",
-						"but you lost yours.",
-						"\n\n",
-						"Well, broke it, really.  But then you lost the pieces."
 					].join("")
 				).commandAdd
 				(
@@ -1600,7 +1587,7 @@ class Places
 				).descriptionAsPartOfPlaceSet
 				(
 					[
-						"A man wearing the uniform of the ship's science officer  ",
+						"A man wearing the uniform of the ship's science officer ",
 						"lays face-down on the floor near the cartridge retrieval console."
 					].join("")
 				).commandAdd
@@ -1774,9 +1761,9 @@ class Places
 					[ "vadik soldier", "vadik", "enemy" ],
 
 					[
-						"A Vadik soldier points his weapon in your direction.  ",
-						"You hope it's pointing at someone behind you--people usually are--",
-						"but in this instance, you have a bad feeling that it means you."
+						"A Vadik soldier is here.  ",
+						"You hope it's looking for someone else besides you--people usually are--",
+						"but in this instance, you have a bad feeling that it's hunting you."
 					].join(""),
 
 					[
@@ -1953,10 +1940,10 @@ class Places
 	{
 		return this.place3
 		(
-			Places.friendlyShipUpperDeckHallAft_Name(),
+			Places.friendlyShipScienceLaboratory_Name(),
 
 			[
-				"This is the Pax Aeterna's science laboratory, or, as you call it, the lab.",
+				"This is the Pax Aeterna's science laboratory, or, as you call it, the lab.  ",
 				"A mess of shattered beakers and at least one shattered scientist ",
 				"lies scattered on the floor. ",
 				"Electrodes pulse erratically, presumably knocked off-kilter ",
@@ -2077,7 +2064,7 @@ class Places
 
 				this.portal
 				(
-					[ "officers' quarters", "quarters", "suite" ],
+					[ "officers' quarters", "quarters", "suite", "door" ],
 					Places.friendlyShipOfficersQuartersAntechamber_Name()
 				),
 
@@ -4400,6 +4387,12 @@ class Places
 					Places.enemyShipUpperDeckHall2_Name()
 				),
 
+				this.portal
+				(
+					[ "vent_portal" ],
+					Places.enemyShipVentilationShaft2_Name()
+				).hide().lock(), // Never used.  Included to satisfy connectivity check.
+
 				this.emplacement2
 				(
 					[ "dirty bin" ],
@@ -5191,7 +5184,7 @@ class Places
 
 			[
 				this.portal( [ "back" ], Places.enemyShipVentilationShaft4_Name() ),
-				this.portal( [ "forward" ], Places.enemyShipVentilationShaft1_Name() ),
+				this.portal( [ "forward" ], Places.enemyShipVentilationShaft2_Name() ),
 				this.portal( [ "vent" ], Places.enemyShipAirlockAntechamber_Name() )
 			]
 		);
@@ -5469,7 +5462,7 @@ class Scripts
 			this.agentEnemyTalkTo,
 
 			this.emplacementBodyEmptySearch,
-			this.emplacementBodyKeycardSearch,
+			this.emplacementCaptainsBodyKeycardSearch,
 
 			this.itemDataCartridge_PutInSlot,
 			this.itemDehydratedWaterUse,
@@ -5613,28 +5606,24 @@ class Scripts
 		u.messageEnqueue(message);
 	}
 
-	emplacementBodyKeycardSearch
+	emplacementCaptainsBodyKeycardSearch
 	(
 		u: Universe, w: World, place: Place, command: Command, target: any
 	): void
 	{
 		var message: string;
 
-		if (target != null)
-		{
-			message = "You can't use the crewperson's body on anything.";
-		}
-		else
-		{
-			message = "You find a keycard in the crewperson's pockets.";
+		message =
+			"After a brief, but still creepy, search, "
+			+ "you find a keycard in the captain's pocket.  "
+			+ "It's lucky everybody's dead, or you'd have to answer to security and HR.";
 
-			var itemKeycard = Items.Instance().Keycard;
-			place.itemAdd(itemKeycard);
+		var itemKeycard = Items.Instance().Keycard;
+		place.itemAdd(itemKeycard);
 
-			var emplacementBody =
-				place.emplacements.find(x => x.names.indexOf("body") >= 0);
-			emplacementBody.commands.length = 0;
-		}
+		var emplacementBody =
+			place.emplacements.find(x => x.names.indexOf("captain") >= 0);
+		emplacementBody.commands.length = 0;
 
 		u.messageEnqueue(message);
 	}
@@ -6939,15 +6928,13 @@ class Scripts
 				"From this close, you notice that the underside ",
 				"of each leaf bears a tiny reproduction ",
 				"of the embelem of the Commonwealth Star Corps.  ",
-				"It sounds a bit guache, but it's actually quite tasteful."
+				"It sounds a bit gauche, but it's actually quite tasteful."
 			].join("")
 		);
 
-		var stateNamePlayerIsHidden = "PlayerIsHidden";
 		var agentPlayer = w.agentPlayer;
-		agentPlayer.stateGroup.stateWithNameSetToTrue(stateNamePlayerIsHidden);
+		agentPlayer.hide();
 	}
-
 
 	placeFriendlyShipUpperDeckHallAmidships_Update
 	(
@@ -8573,6 +8560,21 @@ class Scripts
 
 	regionFriendlyShip_UpdateForTurn(u: Universe, w: World, p: Place, c: Command): void
 	{
+		var player = w.agentPlayer;
+		if (player.hidden() )
+		{
+			var commandText = w.commandToExecute.text();
+			var doesPlayerRemainHidden =
+				commandText == "wait"
+				|| commandText.startsWith("hide");
+
+			if (doesPlayerRemainHidden == false)
+			{
+				u.messageEnqueue("You leave your hiding spot.");
+				player.show();
+			}
+		}
+
 		var turnsSoFar = w.turnsSoFar;
 
 		if (turnsSoFar == 3)
@@ -8720,162 +8722,234 @@ class Scripts
 
 		var agentPlayer = w.agentPlayer;
 
-		var stateNamePlaceOccupiedPreviousName =
-			"PlaceOccupiedPreviousName";
-		var placeOccupiedByPlayerPreviousName =
-			agentPlayer.stateWithNameGetValue(stateNamePlaceOccupiedPreviousName);
+		var stateNamePlaceOccupiedOnPreviousTurnName =
+			"PlaceOccupiedOnPreviousTurnName";
+		var placeOccupiedByPlayerOnPreviousTurnName =
+			agentPlayer.stateWithNameGetValue(stateNamePlaceOccupiedOnPreviousTurnName);
 
 		var placeOccupiedByPlayer = w.placeCurrent();
+		agentPlayer.stateWithNameSetToValue
+		(
+			stateNamePlaceOccupiedOnPreviousTurnName,
+			placeOccupiedByPlayer.name
+		);
 
 		var playerHasJustMoved =
-			(placeOccupiedByPlayer.name != placeOccupiedByPlayerPreviousName);
+			(placeOccupiedByPlayer.name != placeOccupiedByPlayerOnPreviousTurnName);
+
+		var playerIsVisible = agentPlayer.visible();
 
 		if (placeOccupiedByEnemy == placeOccupiedByPlayer)
 		{
-			var playerIsVisible = agentPlayer.visible();
+			message = Scripts.Instance().regionFriendlyShip_AgentEnemyUpdateForTurn_PlayerAndEnemyInSamePlace
+			(
+				u, w, p, agentEnemy, playerIsVisible, playerHasJustMoved
+			);
+		}
+		else
+		{
+			message = Scripts.Instance().regionFriendlyShip_AgentEnemyUpdateForTurn_PlayerAndEnemyInDifferentPlaces
+			(
+				u, w, p, agentEnemy, playerIsVisible, playerHasJustMoved
+			);
+		}
 
-			if (playerIsVisible)
+		if (message != null)
+		{
+			u.messageEnqueue(message);
+		}
+	}
+
+	regionFriendlyShip_AgentEnemyUpdateForTurn_PlayerAndEnemyInSamePlace
+	(
+		u: Universe,
+		w: World,
+		placeOccupiedByEnemy: Place,
+		agentEnemy: Agent,
+		playerIsVisible: boolean,
+		playerHasJustMoved: boolean
+	): string
+	{
+		var message: string;
+
+		if (playerIsVisible)
+		{
+			if (playerHasJustMoved)
+			{
+				message =
+				[
+					"You walk into a room that contains a Vadik soldier.  ",
+					"Oh, so that's where all that tramping of boots was coming from.  "
+				].join("");
+			}
+			else
 			{
 				message =
 				[
 					"You're standing around in plain view when a Vadik soldier ",
 					"enters the room.",
-					"\n\n",
-					"The Vadik soldier zaps you.  With his zap gun.  ",
-					"It's a gun specially designed for zapping.  ",
-					"How did you think this was gonna go?",
-					"\n\n",
-					"You are dead."
 				].join("");
-				placeOccupiedByPlayer.agentRemove(agentEnemy, w);
-				w.end();
 			}
-			else
-			{
-				message =
-					"You hear the door open, and the Vadik solider steps into the room."
-					"The solider's breathing apparatus rasps as he examines the room, "
-					"but he doesn't seem to see you where you are hiding.";
-			}
+			message +=
+			[
+				"\n\n",
+				"The Vadik soldier zaps you.  With its zap gun.  ",
+				"It's a gun specially designed for zapping.  ",
+				"How did you think this was gonna go?",
+				"\n\n",
+				"You are dead."
+			].join("");
+			var placeOccupiedByPlayer = w.placeCurrent();
+			placeOccupiedByPlayer.agentRemove(agentEnemy, w);
+			w.end();
 		}
 		else
 		{
-			var stateNamePlaceOnPatrolRouteIndex =
-				"PlaceOnPatrolRouteIndex";
-
-			var placeOnPatrolRouteIndex =
-				agentEnemy.stateGroup.stateWithNameGetValue
-				(
-					stateNamePlaceOnPatrolRouteIndex
-				);
-
-			var placesOnPatrolRouteNames =
+			message =
 			[
-				// todo - Enter the rooms, don't just stay in the halls.
-				Places.friendlyShipLowerDeckHallForward_Name(),
-				Places.friendlyShipMessHall_Name(),
-				Places.friendlyShipLowerDeckHallForward_Name(),
-
-				Places.friendlyShipLowerDeckHallAmidships_Name(),
-				Places.friendlyShipLibrary_Name(),
-				Places.friendlyShipLowerDeckHallAmidships_Name(),
-
-				Places.friendlyShipLowerDeckHallAft_Name(),
-				// Don't check the janitor's closet.
-
-				Places.friendlyShipUpperDeckHallAft_Name(),
-				Places.friendlyShipScienceLaboratory_Name(),
-				Places.friendlyShipUpperDeckHallAft_Name(),
-
-				Places.friendlyShipUpperDeckHallAmidships_Name(),
-				Places.friendlyShipOfficersQuartersAntechamber_Name(),
-				Places.friendlyShipUpperDeckHallAmidships_Name(),
-
-				Places.friendlyShipUpperDeckHallForward_Name(),
-				Places.friendlyShipCaptainsQuarters_Name(),
-				Places.friendlyShipUpperDeckHallForward_Name(),
-
-				Places.friendlyShipBridge_Name()
-			];
-
-			var placesOnPatrolRouteNamesReversed = [];
-			for (var i = 0; i < placesOnPatrolRouteNames.length - 1; i++)
-			{
-				var iReversed = placesOnPatrolRouteNames.length - 1 - i;
-				var placeName = placesOnPatrolRouteNames[iReversed];
-				placesOnPatrolRouteNamesReversed.push(placeName);
-			}
-
-			placesOnPatrolRouteNames.push(...placesOnPatrolRouteNamesReversed);
-
-			var patrolRouteIsComplete =
-				placeOnPatrolRouteIndex == null
-				|| placeOnPatrolRouteIndex >= placesOnPatrolRouteNames.length;
-
-			if (patrolRouteIsComplete)
-			{
-				placeOnPatrolRouteIndex = 0;
-			}
-
-			var placeForEnemyToGoToNextName =
-				placesOnPatrolRouteNames[placeOnPatrolRouteIndex];
-
-			var placeForEnemyToGoToNext =
-				w.placeByName(placeForEnemyToGoToNextName);
-
-			var enemyIsAboutToEnterPlaceOccupiedByPlayer =
-				(placeForEnemyToGoToNext == placeOccupiedByPlayer);
-
-			// Only move into player's room
-			// if the player hasn't just moved there,
-			// because otherwise the player gets no warning.
-			var enemyShouldMove =
-				(enemyIsAboutToEnterPlaceOccupiedByPlayer == false)
-				|| (playerHasJustMoved == false);
-
-			if (enemyShouldMove)
-			{
-				placeOnPatrolRouteIndex++;
-				agentEnemy.stateGroup.stateWithNameSetToValue
-				(
-					stateNamePlaceOnPatrolRouteIndex,
-					placeOnPatrolRouteIndex
-				);
-
-				var portalForEnemyToGoThroughNext =
-					placeOccupiedByEnemy.portalByPlaceDestinationName(placeForEnemyToGoToNextName);
-
-				agentEnemy.goThroughPortal(portalForEnemyToGoThroughNext, w);
-			}
-
-			placeOccupiedByEnemy = agentEnemy.place(w);
-
-			if (placeOccupiedByEnemy == placeOccupiedByPlayer)
-			{
-				message =
-				[
-					"A Vadik soldier strides into view and immediately trains its weapon on you.",
-					"Terrifying as it is, you can't help but admire its confident bearing.  ",
-					"And that uniform really pops."
-				].join("");
-			}
-			else if (enemyIsAboutToEnterPlaceOccupiedByPlayer)
-			{
-				var isDefiniteArticleNeeded = false; // todo
-
-				var portalEnemyWillArriveThrough =
-					placeOccupiedByPlayer.portalByPlaceDestinationName(placeOccupiedByEnemy.name);
-
-				message =
-				[
-					"You hear the tramping of heavy feet approaching from ",
-					(isDefiniteArticleNeeded ? "the " : ""),
-					portalEnemyWillArriveThrough.name + "."
-				].join("");
-			}
+				"You hear a Vadik solider step into the room.  ",
+				"The solider's breathing apparatus rasps as he examines the room, ",
+				"but he doesn't seem to see you where you are hiding."
+			].join("");
 		}
 
-		u.messageEnqueue(message);
+		return message;
+	}
+
+	regionFriendlyShip_AgentEnemyUpdateForTurn_PlayerAndEnemyInDifferentPlaces
+	(
+		u: Universe,
+		w: World,
+		placeOccupiedByEnemy: Place,
+		agentEnemy: Agent,
+		playerIsVisible: boolean,
+		playerHasJustMoved: boolean
+	): string
+	{
+		var message: string;
+
+		var stateNamePlaceOnPatrolRouteIndex =
+			"PlaceOnPatrolRouteIndex";
+
+		var placeOnPatrolRouteIndex =
+			agentEnemy.stateGroup.stateWithNameGetValue
+			(
+				stateNamePlaceOnPatrolRouteIndex
+			);
+
+		var placesOnPatrolRouteNames =
+		[
+			// todo - Enter the rooms, don't just stay in the halls.
+			Places.friendlyShipLowerDeckHallForward_Name(),
+			Places.friendlyShipMessHall_Name(),
+			Places.friendlyShipLowerDeckHallForward_Name(),
+
+			Places.friendlyShipLowerDeckHallAmidships_Name(),
+			Places.friendlyShipLibrary_Name(),
+			Places.friendlyShipLowerDeckHallAmidships_Name(),
+
+			Places.friendlyShipLowerDeckHallAft_Name(),
+			// Don't check the janitor's closet.
+
+			Places.friendlyShipUpperDeckHallAft_Name(),
+			Places.friendlyShipScienceLaboratory_Name(),
+			Places.friendlyShipUpperDeckHallAft_Name(),
+
+			Places.friendlyShipUpperDeckHallAmidships_Name(),
+			Places.friendlyShipOfficersQuartersAntechamber_Name(),
+			Places.friendlyShipUpperDeckHallAmidships_Name(),
+
+			Places.friendlyShipUpperDeckHallForward_Name(),
+			Places.friendlyShipCaptainsQuarters_Name(),
+			Places.friendlyShipUpperDeckHallForward_Name(),
+
+			Places.friendlyShipBridge_Name()
+		];
+
+		var placesOnPatrolRouteNamesReversed = [];
+		for (var i = 1; i < placesOnPatrolRouteNames.length; i++)
+		{
+			var iReversed = placesOnPatrolRouteNames.length - 1 - i;
+			var placeName = placesOnPatrolRouteNames[iReversed];
+			placesOnPatrolRouteNamesReversed.push(placeName);
+		}
+
+		placesOnPatrolRouteNames.push(...placesOnPatrolRouteNamesReversed);
+
+		var patrolRouteIsComplete =
+			placeOnPatrolRouteIndex == null
+			|| placeOnPatrolRouteIndex >= placesOnPatrolRouteNames.length;
+
+		if (patrolRouteIsComplete)
+		{
+			placeOnPatrolRouteIndex = 1;
+		}
+
+		var placeForEnemyToGoToNextName =
+			placesOnPatrolRouteNames[placeOnPatrolRouteIndex];
+
+		var placeForEnemyToGoToNext =
+			w.placeByName(placeForEnemyToGoToNextName);
+
+		var placeOccupiedByPlayer = w.placeCurrent();
+
+		var enemyIsAboutToEnterPlaceOccupiedByPlayer =
+			(placeForEnemyToGoToNext == placeOccupiedByPlayer);
+
+		// Only move into player's room
+		// if the player hasn't just moved there,
+		// because otherwise the player gets no warning.
+		var enemyShouldMove =
+			(enemyIsAboutToEnterPlaceOccupiedByPlayer == false)
+			|| (playerHasJustMoved == false);
+
+		if (enemyShouldMove)
+		{
+			placeOnPatrolRouteIndex++;
+			agentEnemy.stateGroup.stateWithNameSetToValue
+			(
+				stateNamePlaceOnPatrolRouteIndex,
+				placeOnPatrolRouteIndex
+			);
+
+			var portalForEnemyToGoThroughNext =
+				placeOccupiedByEnemy.portalByPlaceDestinationName(placeForEnemyToGoToNextName);
+
+			agentEnemy.goThroughPortal(portalForEnemyToGoThroughNext, w);
+		}
+
+		placeOccupiedByEnemy = agentEnemy.place(w);
+		var enemyIsInPlaceAdjacentToPlaceOccupiedByPlayer =
+			placeOccupiedByEnemy.adjacentTo(placeOccupiedByPlayer);
+
+		if (placeOccupiedByEnemy == placeOccupiedByPlayer)
+		{
+			message = Scripts.Instance().regionFriendlyShip_AgentEnemyUpdateForTurn_PlayerAndEnemyInSamePlace
+			(
+				u, w, placeOccupiedByEnemy, agentEnemy, playerIsVisible, playerHasJustMoved
+			);
+		}
+		else if (enemyIsInPlaceAdjacentToPlaceOccupiedByPlayer)
+		{
+			var portalEnemyWillArriveThrough =
+				placeOccupiedByPlayer.portalByPlaceDestinationName(placeOccupiedByEnemy.name);
+
+			var portalName = portalEnemyWillArriveThrough.name();
+
+			var isDefiniteArticleNeeded =
+				portalName != "forward"
+				&& portalName != "aft"
+				&& portalName != "outside";
+
+			message =
+			[
+				"You hear the tramping of heavy feet from ",
+				(isDefiniteArticleNeeded ? "the " : ""),
+				portalName + "."
+			].join("");
+		}
+
+		return message;
 	}
 
 	regionPlanetDesert_AssassinDroneUpdate(u: Universe, w: World, p: Place, c: Command): void
@@ -8993,7 +9067,7 @@ class Scripts
 				[
 					"You're getting very thirsty now.  ",
 					"This desert is a monster.  ",
-					"Some kind of... water-sucking... low-moisture... monster.",
+					"Some kind of... water-sucking... low-moisture... monster.  ",
 					"Look, it's too hot to think of what kind of monster it is right now."
 				].join("")
 			);

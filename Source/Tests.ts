@@ -422,9 +422,19 @@ class Tests
 		// Bridge.
 		run("search captain");
 		run("get keycard");
+		run("go aft");
+		run("go aft"); // "You hear the tramping of heavy feet from aft."
+		run("go door"); // Officers' quarters.
+		run("hide behind plant");
+		run("wait");
+		run("wait");
+		run("go outside");
+		run("go aft");
+		run("go elevator");
 
 		// Lower deck again.
 		run("go forward");
+		run("go library");
 		run("talk to man");
 		run("type pandimensional metacalculus for hypernavigators");
 		run("get cartridge");
